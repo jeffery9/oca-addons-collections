@@ -1,0 +1,28 @@
+---Models in module 'l10n_bg'---
+---Fields in module 'l10n_bg'---
+---XML records in module 'l10n_bg'---
+NEW account.report.column: l10n_bg.l10n_bg_tax_report_balance
+NEW account.report.expression: l10n_bg.l10n_bg_tax_report_11_tag
+NEW account.report.expression: l10n_bg.l10n_bg_tax_report_12_1_tag
+NEW account.report.expression: l10n_bg.l10n_bg_tax_report_12_2_tag
+NEW account.report.expression: l10n_bg.l10n_bg_tax_report_13_tag
+NEW account.report.expression: l10n_bg.l10n_bg_tax_report_14_tag
+NEW account.report.expression: l10n_bg.l10n_bg_tax_report_15_tag
+NEW account.report.expression: l10n_bg.l10n_bg_tax_report_16_tag
+NEW account.report.expression: l10n_bg.l10n_bg_tax_report_17_tag
+NEW account.report.expression: l10n_bg.l10n_bg_tax_report_18_tag
+NEW account.report.expression: l10n_bg.l10n_bg_tax_report_19_tag
+NEW account.report.expression: l10n_bg.l10n_bg_tax_report_21_tag
+NEW account.report.expression: l10n_bg.l10n_bg_tax_report_22_tag
+NEW account.report.expression: l10n_bg.l10n_bg_tax_report_23_tag
+NEW account.report.expression: l10n_bg.l10n_bg_tax_report_24_tag
+NEW account.report.expression: l10n_bg.l10n_bg_tax_report_30_tag
+NEW account.report.expression: l10n_bg.l10n_bg_tax_report_31_tag
+NEW account.report.expression: l10n_bg.l10n_bg_tax_report_32_tag
+NEW account.report.expression: l10n_bg.l10n_bg_tax_report_33_balance
+NEW account.report.expression: l10n_bg.l10n_bg_tax_report_41_tag
+NEW account.report.expression: l10n_bg.l10n_bg_tax_report_42_tag
+NEW account.report.expression: l10n_bg.l10n_bg_tax_report_43_balance
+NEW account.report.expression: l10n_bg.l10n_bg_tax_report_50_tag
+NEW account.report.expression: l10n_bg.l10n_bg_tax_report_60_tag
+DEL ir.ui.menu: l10n_bg.bg_reports_menu
