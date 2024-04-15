@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<data>
+    <record id="stock_picking_view_form_packaging" model="ir.ui.view">
+        <field name="name">stock.picking.form</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//field[@name='move_ids_without_package']/tree/field[@name='product_packaging_id']"
+                position="after"
+            >
+                <field
+                    name="product_packaging_qty"
+                    groups="product.group_stock_packaging"
+                    attrs="{
+                        'readonly': [
+                            '|',
+                            ('product_packaging_id', '=', False),
+                            ('is_initial_demand_editable', '=', False),
+                        ],
+                    }"
+                />
+            </xpath>
+
+            <xpath
+                expr="//field[@name='move_ids_without_package']/tree/field[@name='quantity_done']"
+                position="before"
+            >
+                <field
+                    name="product_packaging_qty_done"
+                    groups="product.group_stock_packaging"
+                    attrs="{'invisible': [('product_packaging_id', '=', False)]}"
+                />
+            </xpath>
+        </field>
+    </record>
+</data>
