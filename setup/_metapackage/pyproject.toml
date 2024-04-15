@@ -1,0 +1,21 @@
+[project]
+name = "odoo-addons-oca-purchase-workflow"
+version = "17.0.20240409.0"
+dependencies = [
+    "odoo-addon-procurement_purchase_no_grouping>=17.0dev,<17.1dev",
+    "odoo-addon-purchase_delivery_split_date>=17.0dev,<17.1dev",
+    "odoo-addon-purchase_exception>=17.0dev,<17.1dev",
+    "odoo-addon-purchase_force_invoiced>=17.0dev,<17.1dev",
+    "odoo-addon-purchase_invoice_plan>=17.0dev,<17.1dev",
+    "odoo-addon-purchase_open_qty>=17.0dev,<17.1dev",
+    "odoo-addon-purchase_order_type>=17.0dev,<17.1dev",
+    "odoo-addon-purchase_request>=17.0dev,<17.1dev",
+    "odoo-addon-purchase_requisition_tier_validation>=17.0dev,<17.1dev",
+    "odoo-addon-purchase_tag>=17.0dev,<17.1dev",
+    "odoo-addon-purchase_tier_validation>=17.0dev,<17.1dev",
+]
+classifiers=[
+    "Programming Language :: Python",
+    "Framework :: Odoo",
+    "Framework :: Odoo :: 17.0",
+]
