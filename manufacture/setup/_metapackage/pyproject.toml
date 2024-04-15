@@ -1,0 +1,14 @@
+[project]
+name = "odoo-addons-oca-manufacture"
+version = "17.0.20240404.0"
+dependencies = [
+    "odoo-addon-mrp_bom_component_menu>=17.0dev,<17.1dev",
+    "odoo-addon-mrp_bom_tracking>=17.0dev,<17.1dev",
+    "odoo-addon-mrp_multi_level>=17.0dev,<17.1dev",
+    "odoo-addon-mrp_warehouse_calendar>=17.0dev,<17.1dev",
+]
+classifiers=[
+    "Programming Language :: Python",
+    "Framework :: Odoo",
+    "Framework :: Odoo :: 17.0",
+]
