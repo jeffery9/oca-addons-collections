@@ -1,0 +1,268 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* printing_simple_configuration
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2024-01-22 10:41+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
+
+#. module: printing_simple_configuration
+#: model_terms:ir.ui.view,arch_db:printing_simple_configuration.print_config_form
+msgid "192.168.0.12"
+msgstr "192.168.0.12"
+
+#. module: printing_simple_configuration
+#: model:ir.model.fields,field_description:printing_simple_configuration.field_print_config__message_needaction
+msgid "Action Needed"
+msgstr "Azione richiesta"
+
+#. module: printing_simple_configuration
+#: model:ir.model.fields,field_description:printing_simple_configuration.field_print_config__message_attachment_count
+msgid "Attachment Count"
+msgstr "Conteggio allegati"
+
+#. module: printing_simple_configuration
+#: model:ir.model.fields,field_description:printing_simple_configuration.field_print_config__comment
+#: model:ir.model.fields,field_description:printing_simple_configuration.field_printer__comment
+msgid "Comment"
+msgstr "Commento"
+
+#. module: printing_simple_configuration
+#: model:ir.model,name:printing_simple_configuration.model_res_company
+msgid "Companies"
+msgstr "Aziende"
+
+#. module: printing_simple_configuration
+#: model:ir.model.fields,field_description:printing_simple_configuration.field_print_config__company_id
+msgid "Company"
+msgstr "Azienda"
+
+#. module: printing_simple_configuration
+#: model:ir.model.fields,field_description:printing_simple_configuration.field_printer__config_id
+msgid "Config"
+msgstr "Configurazione"
+
+#. module: printing_simple_configuration
+#: model:ir.model.fields,field_description:printing_simple_configuration.field_print_config__create_uid
+#: model:ir.model.fields,field_description:printing_simple_configuration.field_printer__create_uid
+msgid "Created by"
+msgstr "Creato da"
+
+#. module: printing_simple_configuration
+#: model:ir.model.fields,field_description:printing_simple_configuration.field_print_config__create_date
+#: model:ir.model.fields,field_description:printing_simple_configuration.field_printer__create_date
+msgid "Created on"
+msgstr "Creato il"
+
+#. module: printing_simple_configuration
+#: model:ir.model.fields,help:printing_simple_configuration.field_printer__usage
+msgid "Developers may use this to guess adapted printers for their workflows"
+msgstr ""
+"Gli sviluppatori possono usarlo per identificare stampanti modificate per il "
+"loro flusso di lavoro"
+
+#. module: printing_simple_configuration
+#: model:ir.model.fields,field_description:printing_simple_configuration.field_printer__display_name
+msgid "Display Name"
+msgstr "Nome visualizzato"
+
+#. module: printing_simple_configuration
+#: model_terms:ir.ui.view,arch_db:printing_simple_configuration.print_config_form
+msgid ""
+"Ensure all informations here match with your own network configuration."
+msgstr ""
+"Assicura che tutte le informazioni presenti corrispondano con la "
+"configurazione della tua rete."
+
+#. module: printing_simple_configuration
+#: model:ir.model.fields,field_description:printing_simple_configuration.field_print_config__message_follower_ids
+msgid "Followers"
+msgstr "Seguito da"
+
+#. module: printing_simple_configuration
+#: model:ir.model.fields,field_description:printing_simple_configuration.field_print_config__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Seguito da (partner)"
+
+#. module: printing_simple_configuration
+#: model:ir.model.fields,field_description:printing_simple_configuration.field_print_config__has_message
+msgid "Has Message"
+msgstr "Ha un messaggio"
+
+#. module: printing_simple_configuration
+#: model:ir.model.fields,field_description:printing_simple_configuration.field_print_config__id
+#: model:ir.model.fields,field_description:printing_simple_configuration.field_printer__id
+msgid "ID"
+msgstr "ID"
+
+#. module: printing_simple_configuration
+#: model:ir.model.fields,help:printing_simple_configuration.field_print_config__server
+msgid "IP or name resolved by your internal DNS"
+msgstr "IP o nome risolto dal tuo DNS interno"
+
+#. module: printing_simple_configuration
+#: model:ir.model.fields,help:printing_simple_configuration.field_print_config__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "Se selezionata, nuovi messaggi richiedono attenzione."
+
+#. module: printing_simple_configuration
+#: model:ir.model.fields,help:printing_simple_configuration.field_print_config__message_has_error
+msgid "If checked, some messages have a delivery error."
+msgstr "Se selezionata, alcuni messaggi hanno un errore di consegna."
+
+#. module: printing_simple_configuration
+#: model:ir.model.fields,field_description:printing_simple_configuration.field_print_config__message_is_follower
+msgid "Is Follower"
+msgstr "Segue"
+
+#. module: printing_simple_configuration
+#: model:ir.model.fields,field_description:printing_simple_configuration.field_print_config____last_update
+#: model:ir.model.fields,field_description:printing_simple_configuration.field_printer____last_update
+msgid "Last Modified on"
+msgstr "Ultima modifica il"
+
+#. module: printing_simple_configuration
+#: model:ir.model.fields,field_description:printing_simple_configuration.field_print_config__write_uid
+#: model:ir.model.fields,field_description:printing_simple_configuration.field_printer__write_uid
+msgid "Last Updated by"
+msgstr "Ultimo aggiornamento di"
+
+#. module: printing_simple_configuration
+#: model:ir.model.fields,field_description:printing_simple_configuration.field_print_config__write_date
+#: model:ir.model.fields,field_description:printing_simple_configuration.field_printer__write_date
+msgid "Last Updated on"
+msgstr "Ultimo aggiornamento il"
+
+#. module: printing_simple_configuration
+#: model:ir.model.fields,field_description:printing_simple_configuration.field_print_config__message_main_attachment_id
+msgid "Main Attachment"
+msgstr "Allegato principale"
+
+#. module: printing_simple_configuration
+#: model:ir.model.fields,help:printing_simple_configuration.field_printer__readonly
+msgid ""
+"Make some fields readonly in views if set to True.\n"
+"In some case, erp project may be imply minimal config as module data\n"
+"with some fields might updated within the interface"
+msgstr ""
+"Imposta a sola lettura alcuni campi delle viste se impostato a True.\n"
+"In alcuni casi, il progetto ERP può richiedere configurazione minima come "
+"dati modulo\n"
+"con alcuni campi che potrebbero essere aggiornati all'interno "
+"dell'interfaccia"
+
+#. module: printing_simple_configuration
+#: model:ir.model.fields,field_description:printing_simple_configuration.field_print_config__message_has_error
+msgid "Message Delivery error"
+msgstr "Errore di consegna messaggio"
+
+#. module: printing_simple_configuration
+#: model:ir.model.fields,field_description:printing_simple_configuration.field_print_config__message_ids
+msgid "Messages"
+msgstr "Messaggi"
+
+#. module: printing_simple_configuration
+#: model:ir.model.fields,field_description:printing_simple_configuration.field_print_config__display_name
+#: model:ir.model.fields,field_description:printing_simple_configuration.field_printer__name
+msgid "Name"
+msgstr "Nome"
+
+#. module: printing_simple_configuration
+#: model:ir.model.fields,field_description:printing_simple_configuration.field_print_config__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Numero di azioni"
+
+#. module: printing_simple_configuration
+#: model:ir.model.fields,field_description:printing_simple_configuration.field_print_config__message_has_error_counter
+msgid "Number of errors"
+msgstr "Numero di errori"
+
+#. module: printing_simple_configuration
+#: model:ir.model.fields,help:printing_simple_configuration.field_print_config__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "Numero di messaggi che richiedono un'azione"
+
+#. module: printing_simple_configuration
+#: model:ir.model.fields,help:printing_simple_configuration.field_print_config__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "Numero di messaggi con errore di consegna"
+
+#. module: printing_simple_configuration
+#: model:ir.model.fields,field_description:printing_simple_configuration.field_print_config__port
+msgid "Port"
+msgstr "Porta"
+
+#. module: printing_simple_configuration
+#: model:ir.model.fields,field_description:printing_simple_configuration.field_res_company__print_config_id
+msgid "Print Config"
+msgstr "Stampa configurazione"
+
+#. module: printing_simple_configuration
+#: model:ir.model.fields,field_description:printing_simple_configuration.field_print_config__printer_ids
+msgid "Printer"
+msgstr "Stampante"
+
+#. module: printing_simple_configuration
+#: model:ir.model,name:printing_simple_configuration.model_printer
+msgid "Printers belongs to a printer server address attached "
+msgstr "Le stampanti appartengono ad un indirizzo printer server allegato "
+
+#. module: printing_simple_configuration
+#: model:ir.actions.act_window,name:printing_simple_configuration.print_config_action
+msgid "Printing Configuration"
+msgstr "Configurazione stampaggio"
+
+#. module: printing_simple_configuration
+#: model:ir.model.fields,field_description:printing_simple_configuration.field_printer__readonly
+msgid "Readonly"
+msgstr "Lola lettura"
+
+#. module: printing_simple_configuration
+#: model:ir.model,name:printing_simple_configuration.model_print_config
+msgid "Simple Printing Configuration"
+msgstr "Semplice configurazione stampaggio"
+
+#. module: printing_simple_configuration
+#: model:ir.model.fields,field_description:printing_simple_configuration.field_printer__usage
+msgid "Usage"
+msgstr "Uilizzo"
+
+#. module: printing_simple_configuration
+#: model:ir.model.fields,field_description:printing_simple_configuration.field_printer__warehouse_id
+msgid "Warehouse"
+msgstr "Magazzino"
+
+#. module: printing_simple_configuration
+#: model:ir.model.fields,field_description:printing_simple_configuration.field_print_config__website_message_ids
+msgid "Website Messages"
+msgstr "Messaggi sito web"
+
+#. module: printing_simple_configuration
+#: model:ir.model.fields,help:printing_simple_configuration.field_print_config__website_message_ids
+msgid "Website communication history"
+msgstr "Cronologia comunicazioni sito web"
+
+#. module: printing_simple_configuration
+#: model:ir.model.fields,help:printing_simple_configuration.field_printer__name
+msgid "must be completed by internal user"
+msgstr "deve essere completato da un utente interno"
+
+#. module: printing_simple_configuration
+#: model:ir.model.fields,field_description:printing_simple_configuration.field_print_config__server
+msgid "🖥 Server"
+msgstr "🖥 Server"
+
+#. module: printing_simple_configuration
+#: model_terms:ir.ui.view,arch_db:printing_simple_configuration.print_config_form
+msgid "🖨 Printers"
+msgstr "🖨 Stampanti"
