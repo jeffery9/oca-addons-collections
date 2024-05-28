@@ -6,7 +6,7 @@ for f in $(cat $cwd/repos)
 do  
 cd $cwd
 echo git subtree pull -q --squash --prefix=$f  https://github.com/oca/$f $branch
-git subtree pull -q --squash --prefix=$f  https://github.com/oca/$f $branch
+git subtree pull -q --squash --prefix=$f  https://github.com/oca/$f $branch  -m "merge with upsteam"
 
 done 
 # git subtree 
