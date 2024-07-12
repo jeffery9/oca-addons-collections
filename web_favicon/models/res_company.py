@@ -68,6 +68,9 @@ class ResCompany(models.Model):
     @api.model
     def _get_favicon(self):
         """Returns a local url that points to the image field of a given record."""
+        if self.env.context.get("website_id"):
+            website = self.env["website"].browse(self.env.context.get("website_id"))
+            return website.image_url(website, "favicon")
         company_id = (
             request.httprequest.cookies.get("cids")
             if request.httprequest.cookies.get("cids")
@@ -82,6 +85,6 @@ class ResCompany(models.Model):
             sha = hashlib.sha512(str(company.write_date).encode("utf-8")).hexdigest()[
                 :7
             ]
-            return f"/web/image/{self._name}/{company_id}/favicon?unique={sha}"
+            return f"/web/image/{self._name}/{company.id}/favicon?unique={sha}"
         else:
             return False
