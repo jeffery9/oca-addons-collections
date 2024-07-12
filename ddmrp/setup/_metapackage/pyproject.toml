@@ -1,0 +1,14 @@
+[project]
+name = "odoo-addons-oca-ddmrp"
+version = "17.0.20240705.0"
+dependencies = [
+    "odoo-addon-ddmrp>=17.0dev,<17.1dev",
+    "odoo-addon-ddmrp_adjustment>=17.0dev,<17.1dev",
+    "odoo-addon-ddmrp_history>=17.0dev,<17.1dev",
+    "odoo-addon-ddmrp_warning>=17.0dev,<17.1dev",
+]
+classifiers=[
+    "Programming Language :: Python",
+    "Framework :: Odoo",
+    "Framework :: Odoo :: 17.0",
+]
