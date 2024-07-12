@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-06-03 12:07+0000\n"
-"PO-Revision-Date: 2024-05-17 10:40+0000\n"
+"PO-Revision-Date: 2024-07-08 09:58+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: \n"
 "Language: it\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. module: account_financial_report
 #: model_terms:ir.ui.view,arch_db:account_financial_report.report_aged_partner_balance_lines_header
@@ -252,7 +252,7 @@ msgstr "Scadenzario clienti/fornitori -"
 #. module: account_financial_report
 #: model:ir.model,name:account_financial_report.model_report_account_financial_report_aged_partner_balance
 msgid "Aged Partner Balance Report"
-msgstr "Resoconto bilancio partner vecchio"
+msgstr "Resoconto scadenzario partner"
 
 #. module: account_financial_report
 #: model:ir.model,name:account_financial_report.model_aged_partner_balance_report_wizard
@@ -262,7 +262,7 @@ msgstr "Procedura scadenzario clienti/fornitori"
 #. module: account_financial_report
 #: model:ir.model,name:account_financial_report.model_report_a_f_r_report_aged_partner_balance_xlsx
 msgid "Aged Partner Balance XLSL Report"
-msgstr "Resoconto XLSX bilancio partner vecchio"
+msgstr "Resoconto XLSX scadenzario partner"
 
 #. module: account_financial_report
 #: model:ir.actions.report,name:account_financial_report.action_report_aged_partner_balance_xlsx
@@ -274,7 +274,7 @@ msgstr "Scadenzario clienti/fornitori XLSX"
 #: code:addons/account_financial_report/wizard/journal_ledger_wizard.py:0
 #, python-format
 msgid "All"
-msgstr "Tutte le"
+msgstr "Tutte"
 
 #. module: account_financial_report
 #: model:ir.model.fields.selection,name:account_financial_report.selection__aged_partner_balance_report_wizard__target_move__all
@@ -513,7 +513,7 @@ msgstr "Avere"
 #: model_terms:ir.ui.view,arch_db:account_financial_report.report_general_ledger_lines
 #, python-format
 msgid "Cumul cur."
-msgstr ""
+msgstr "Valuta acc."
 
 #. module: account_financial_report
 #. odoo-python
@@ -538,7 +538,7 @@ msgstr "Val."
 #: model_terms:ir.ui.view,arch_db:account_financial_report.report_open_items_lines_header
 #, python-format
 msgid "Cur. Original"
-msgstr "Originale val."
+msgstr "Valuta originale"
 
 #. module: account_financial_report
 #. odoo-python
@@ -546,7 +546,7 @@ msgstr "Originale val."
 #: model_terms:ir.ui.view,arch_db:account_financial_report.report_open_items_lines_header
 #, python-format
 msgid "Cur. Residual"
-msgstr "Residuo val."
+msgstr "Residuo valuta"
 
 #. module: account_financial_report
 #. odoo-python
@@ -767,13 +767,12 @@ msgstr "Saldo finale"
 
 #. module: account_financial_report
 #: model_terms:ir.ui.view,arch_db:account_financial_report.report_trial_balance_lines_header
-#, fuzzy
 msgid ""
 "Ending balance\n"
 "                        cur."
 msgstr ""
-"Abilita bilancio\n"
-"                        corrente"
+"Saldo finale\n"
+"                        valuta"
 
 #. module: account_financial_report
 #. odoo-python
@@ -1039,7 +1038,7 @@ msgid ""
 "                        balance cur."
 msgstr ""
 "Saldo\n"
-"                        iniziale corrente"
+"                        iniziale valuta"
 
 #. module: account_financial_report
 #: model_terms:ir.ui.view,arch_db:account_financial_report.report_trial_balance_lines_header
@@ -1851,17 +1850,17 @@ msgstr "Usare quando i gruppi conto sono gerarchici"
 #: model:ir.actions.report,name:account_financial_report.action_print_report_vat_report_qweb
 #: model:ir.ui.menu,name:account_financial_report.menu_vat_report_wizard
 msgid "VAT Report"
-msgstr "Rendiconto imposte"
+msgstr "Rendiconto IVA"
 
 #. module: account_financial_report
 #: model_terms:ir.ui.view,arch_db:account_financial_report.report_vat_report_base
 msgid "VAT Report -"
-msgstr "Rendiconto imposte -"
+msgstr "Rendiconto IVA -"
 
 #. module: account_financial_report
 #: model_terms:ir.ui.view,arch_db:account_financial_report.vat_report_wizard
 msgid "VAT Report Options"
-msgstr "Opzioni rendiconto imposte"
+msgstr "Opzioni rendiconto IVA"
 
 #. module: account_financial_report
 #: model:ir.model,name:account_financial_report.model_vat_report_wizard
@@ -1871,7 +1870,7 @@ msgstr "Procedura guidata resoconto IVA"
 #. module: account_financial_report
 #: model:ir.actions.report,name:account_financial_report.action_report_vat_report_xlsx
 msgid "VAT Report XLSX"
-msgstr "Rendiconto imposte XLSX"
+msgstr "Rendiconto IVA in XLSX"
 
 #. module: account_financial_report
 #. odoo-python
