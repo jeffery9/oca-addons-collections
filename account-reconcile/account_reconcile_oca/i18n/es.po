@@ -233,11 +233,6 @@ msgid "Display Name"
 msgstr "Nombre Mostrado"
 
 #. module: account_reconcile_oca
-#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_move_line__invoice_due_date
-msgid "Due Date"
-msgstr "Fecha de vencimiento"
-
-#. module: account_reconcile_oca
 #: model:ir.actions.act_window,name:account_reconcile_oca.account_bank_statement_action_edit
 msgid "Edit Bank Statement"
 msgstr "Editar extracto bancario"
@@ -317,13 +312,6 @@ msgstr "Elemento de diario"
 #: model:ir.model.fields.selection,name:account_reconcile_oca.selection__account_journal__reconcile_mode__keep
 msgid "Keep Suspense Accounts"
 msgstr "Mantener cuentas transitorias"
-
-#. module: account_reconcile_oca
-#. odoo-python
-#: code:addons/account_reconcile_oca/models/account_bank_statement_line.py:0
-#, python-format
-msgid "Keep suspense move lines mode cannot be unreconciled"
-msgstr "Mantener en modo suspenso las líneas que no pueden ser desconciliadas"
 
 #. module: account_reconcile_oca
 #. odoo-javascript
@@ -548,6 +536,13 @@ msgid "Reset reconciliation"
 msgstr "Restablecer reconciliación"
 
 #. module: account_reconcile_oca
+#. odoo-python
+#: code:addons/account_reconcile_oca/models/account_bank_statement_line.py:0
+#, python-format
+msgid "Reversal of: %s"
+msgstr ""
+
+#. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
 msgid "Sales"
 msgstr "Ventas"
@@ -674,6 +669,14 @@ msgstr "será disminuido por"
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "with an open amount"
 msgstr "con un importe pendiente"
+
+#, python-format
+#~ msgid "Keep suspense move lines mode cannot be unreconciled"
+#~ msgstr ""
+#~ "Mantener en modo suspenso las líneas que no pueden ser desconciliadas"
+
+#~ msgid "Due Date"
+#~ msgstr "Fecha de vencimiento"
 
 #~ msgid "Last Modified on"
 #~ msgstr "Última modficación en"

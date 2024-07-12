@@ -4,16 +4,16 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 16.0\n"
+"Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-06-13 18:09+0000\n"
-"Last-Translator: Ediz Duman <neps1192@gmail.com>\n"
+"PO-Revision-Date: 2024-06-14 09:45+0000\n"
+"Last-Translator: xtanuiha <feihu.zhang@live.com>\n"
 "Language-Team: none\n"
-"Language: tr\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 4.17\n"
 
 #. module: account_reconcile_oca
@@ -23,6 +23,9 @@ msgid ""
 "                                    <br/>\n"
 "                                You might want to set the invoice as"
 msgstr ""
+".\n"
+"                                    <br/>\n"
+"                                您可能需要将此发票设置为"
 
 #. module: account_reconcile_oca
 #. odoo-javascript
@@ -31,163 +34,163 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 #, python-format
 msgid "Account"
-msgstr "Hesap"
+msgstr "科目"
 
 #. module: account_reconcile_oca
 #: model:ir.model,name:account_reconcile_oca.model_account_account_reconcile
 msgid "Account Account Reconcile"
-msgstr "Hesap Hesap Mutabakatı"
+msgstr "会计科目对账"
 
 #. module: account_reconcile_oca
 #: model:ir.model,name:account_reconcile_oca.model_account_reconcile_abstract
 msgid "Account Reconcile Abstract"
-msgstr ""
+msgstr "对账摘要"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__add_account_move_line_id
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__add_account_move_line_id
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_reconcile_abstract__add_account_move_line_id
 msgid "Add Account Move Line"
-msgstr ""
+msgstr "添加会计分录"
 
 #. module: account_reconcile_oca
 #: model:ir.actions.act_window,name:account_reconcile_oca.action_bank_statement_line_create
 msgid "Add Bank Statement Line"
-msgstr ""
+msgstr "添加银行对账单明细"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__aggregate_id
 msgid "Aggregate"
-msgstr ""
+msgstr "汇总"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__aggregate_name
 msgid "Aggregate Name"
-msgstr ""
+msgstr "汇总名称"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,help:account_reconcile_oca.field_account_journal__reconcile_aggregate
 msgid "Aggregation to use on reconcile view"
-msgstr ""
+msgstr "用于对账界面上的汇总"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "Amount"
-msgstr "Tutar"
+msgstr "科目"
 
 #. module: account_reconcile_oca
 #. odoo-javascript
 #: code:addons/account_reconcile_oca/static/src/xml/reconcile.xml:0
 #, python-format
 msgid "Amount in currency"
-msgstr ""
+msgstr "外币金额"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__analytic_distribution
 msgid "Analytic Distribution"
-msgstr "Analitik Dağıtım"
+msgstr "分析分配"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__analytic_precision
 msgid "Analytic Precision"
-msgstr "Analitik Hassasiyet"
+msgstr "分析精度"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "Are you sure that the move should be unreconciled?"
-msgstr ""
+msgstr "您确定要将这笔分标记为未对账状态吗？"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
 msgid "Bank"
-msgstr "Banka"
+msgstr "银行"
 
 #. module: account_reconcile_oca
 #: model:ir.model,name:account_reconcile_oca.model_account_bank_statement
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_bank_statement_form_edit
 msgid "Bank Statement"
-msgstr ""
+msgstr "银行对账单"
 
 #. module: account_reconcile_oca
 #: model:ir.model,name:account_reconcile_oca.model_account_bank_statement_line
 msgid "Bank Statement Line"
-msgstr "Banka Ekstre Satırı"
+msgstr "银行对账单明细"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_form_view
 msgid "Bank reconcile"
-msgstr ""
+msgstr "银行对账"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__can_reconcile
 msgid "Can Reconcile"
-msgstr "Uzlaşabilir"
+msgstr "允许对账"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_add_view
 msgid "Cancel"
-msgstr "İptal"
+msgstr "取消"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
 msgid "Cash"
-msgstr "Nakit"
+msgstr "现金"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "Chatter"
-msgstr ""
+msgstr "沟通"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_account_reconcile_form_view
 msgid "Clean"
-msgstr ""
+msgstr "清理"
 
 #. module: account_reconcile_oca
 #: model:ir.model,name:account_reconcile_oca.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "公司"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__company_id
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__company_id
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_reconcile_abstract__company_id
 msgid "Company"
-msgstr "Firma"
+msgstr "公司"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,help:account_reconcile_oca.field_account_bank_statement_line__company_id
 msgid "Company related to this journal"
-msgstr ""
+msgstr "关联到此日记账的公司"
 
 #. module: account_reconcile_oca
 #: model:ir.model,name:account_reconcile_oca.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "设置"
 
 #. module: account_reconcile_oca
 #. odoo-javascript
 #: code:addons/account_reconcile_oca/static/src/xml/reconcile.xml:0
 #, python-format
 msgid "Create"
-msgstr "Oluştur"
+msgstr "创建"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile_data__create_uid
 msgid "Created by"
-msgstr "Oluşturan"
+msgstr "创建者"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile_data__create_date
 msgid "Created on"
-msgstr "Oluşturuldu"
+msgstr "创建于"
 
 #. module: account_reconcile_oca
 #. odoo-javascript
 #: code:addons/account_reconcile_oca/static/src/xml/reconcile.xml:0
 #, python-format
 msgid "Credit"
-msgstr "Alacak"
+msgstr "贷方"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__company_currency_id
@@ -197,71 +200,71 @@ msgstr "Alacak"
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_reconcile_abstract__company_currency_id
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_reconcile_abstract__currency_id
 msgid "Currency"
-msgstr "Para Birimi"
+msgstr "币种"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile_data__data
 msgid "Data"
-msgstr "Veri"
+msgstr "数据"
 
 #. module: account_reconcile_oca
 #. odoo-javascript
 #: code:addons/account_reconcile_oca/static/src/xml/reconcile.xml:0
 #, python-format
 msgid "Date"
-msgstr "Tarih"
+msgstr "日期"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields.selection,name:account_reconcile_oca.selection__account_journal__reconcile_aggregate__day
 msgid "Day"
-msgstr ""
+msgstr "天"
 
 #. module: account_reconcile_oca
 #. odoo-javascript
 #: code:addons/account_reconcile_oca/static/src/xml/reconcile.xml:0
 #, python-format
 msgid "Debit"
-msgstr "Borç"
+msgstr "货方"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__display_name
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile_data__display_name
 msgid "Display Name"
-msgstr "Ad Görünümü"
+msgstr "显示名称"
 
 #. module: account_reconcile_oca
 #: model:ir.actions.act_window,name:account_reconcile_oca.account_bank_statement_action_edit
 msgid "Edit Bank Statement"
-msgstr ""
+msgstr "编辑银行对账单"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields.selection,name:account_reconcile_oca.selection__account_journal__reconcile_mode__edit
 msgid "Edit Move"
-msgstr "Hareketi Düzenle"
+msgstr "编辑凭证"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__foreign_currency_id
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__foreign_currency_id
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_reconcile_abstract__foreign_currency_id
 msgid "Foreign Currency"
-msgstr ""
+msgstr "外币"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
 msgid "From Trade Payable accounts"
-msgstr ""
+msgstr "从交易的应付科目"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
 msgid "From Trade Receivable accounts"
-msgstr ""
+msgstr "从交易的应收科目"
 
 #. module: account_reconcile_oca
 #. odoo-javascript
 #: code:addons/account_reconcile_oca/static/src/xml/reconcile.xml:0
 #, python-format
 msgid "Global Balance"
-msgstr ""
+msgstr "整体余额"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__id
@@ -272,174 +275,174 @@ msgstr "ID"
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "Invoice"
-msgstr "Fatura"
+msgstr "发票"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__is_reconciled
 msgid "Is Reconciled"
-msgstr "Uzlaştırıldı mı"
+msgstr "已对账"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_journal_dashboard_kanban_view
 msgid "Items"
-msgstr "Öğe"
+msgstr "项"
 
 #. module: account_reconcile_oca
 #: model:ir.model,name:account_reconcile_oca.model_account_journal
 msgid "Journal"
-msgstr "Yevmiye"
+msgstr "日记账"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__currency_id
 msgid "Journal Currency"
-msgstr ""
+msgstr "日记账币种"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
 msgid "Journal Entry"
-msgstr "Yevmiye Girişi"
+msgstr "会计凭证"
 
 #. module: account_reconcile_oca
 #: model:ir.model,name:account_reconcile_oca.model_account_move_line
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
 msgid "Journal Item"
-msgstr "Yevmiye Öğesi"
+msgstr "会计分录"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields.selection,name:account_reconcile_oca.selection__account_journal__reconcile_mode__keep
 msgid "Keep Suspense Accounts"
-msgstr "Askı Hesapları Tutun"
+msgstr "保留挂账科目"
 
 #. module: account_reconcile_oca
 #. odoo-javascript
 #: code:addons/account_reconcile_oca/static/src/xml/reconcile.xml:0
 #, python-format
 msgid "Label"
-msgstr "Etiket"
+msgstr "摘要"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile_data__write_uid
 msgid "Last Updated by"
-msgstr "Son Güncelleyen"
+msgstr "最后更新者"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile_data__write_date
 msgid "Last Updated on"
-msgstr "Son Güncelleme"
+msgstr "最后更新于"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_account_id
 msgid "Manual Account"
-msgstr "Manuel Hesap"
+msgstr "手工科目"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_amount
 msgid "Manual Amount"
-msgstr "Manuel Tutar"
+msgstr "手工金额"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_currency_id
 msgid "Manual Currency"
-msgstr ""
+msgstr "手工币种"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__manual_delete
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_delete
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_reconcile_abstract__manual_delete
 msgid "Manual Delete"
-msgstr "Manuel Silme"
+msgstr "手工删除"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_kind
 msgid "Manual Kind"
-msgstr "Manuel Tür"
+msgstr "手工类型"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_line_id
 msgid "Manual Line"
-msgstr "Manuel Satır"
+msgstr "手工明细"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_model_id
 msgid "Manual Model"
-msgstr "Manuel Model"
+msgstr "手工模型"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_move_id
 msgid "Manual Move"
-msgstr "Manuel Hareket"
+msgstr "手工凭证"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_move_type
 msgid "Manual Move Type"
-msgstr "Manuel Hareket Türü"
+msgstr "手工凭证类型"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_name
 msgid "Manual Name"
-msgstr "Manuel Adı"
+msgstr "手工操作名称"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_original_amount
 msgid "Manual Original Amount"
-msgstr "Manuel Orijinal Miktarı"
+msgstr "手工原金额"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_partner_id
 msgid "Manual Partner"
-msgstr "Manuel İş Ortağı"
+msgstr "手工业务伙伴"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__manual_reference
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_reference
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_reconcile_abstract__manual_reference
 msgid "Manual Reference"
-msgstr "Manuel Referans"
+msgstr "手工参考号"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "Manual operation"
-msgstr "Manuel İşlem"
+msgstr "手工操作"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
 msgid "Miscellaneous"
-msgstr "Çeşitli"
+msgstr "杂项"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields.selection,name:account_reconcile_oca.selection__account_journal__reconcile_aggregate__month
 msgid "Month"
-msgstr ""
+msgstr "月"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__name
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "Name"
-msgstr "Adı"
+msgstr "名称"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "Narration"
-msgstr ""
+msgstr "描述"
 
 #. module: account_reconcile_oca
 #. odoo-python
 #: code:addons/account_reconcile_oca/models/account_bank_statement_line.py:0
 #, python-format
 msgid "No supense lines are allowed when reconciling"
-msgstr ""
+msgstr "在对账时不允许有挂账行"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.actions.act_window,help:account_reconcile_oca.action_bank_statement_line_reconcile_to_check
 msgid "Nothing to check"
-msgstr "Kontrol edilecek bir şey yok"
+msgstr "无待复核内容"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.actions.act_window,help:account_reconcile_oca.action_bank_statement_line_move_view_reconcile
 #: model_terms:ir.actions.act_window,help:account_reconcile_oca.action_bank_statement_line_reconcile
 #: model_terms:ir.actions.act_window,help:account_reconcile_oca.action_bank_statement_line_reconcile_all
 msgid "Nothing to reconcile"
-msgstr ""
+msgstr "无未对账内容"
 
 #. module: account_reconcile_oca
 #. odoo-javascript
@@ -448,22 +451,22 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 #, python-format
 msgid "Partner"
-msgstr "İş Ortağı"
+msgstr "合作伙伴"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
 msgid "Payable"
-msgstr "Borç"
+msgstr "应付"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
 msgid "Purchases"
-msgstr "Satınalma"
+msgstr "采购"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
 msgid "Receivable"
-msgstr "Alacak"
+msgstr "应收"
 
 #. module: account_reconcile_oca
 #: model:ir.actions.act_window,name:account_reconcile_oca.account_account_account_account_reconcile_act_window
@@ -477,197 +480,191 @@ msgstr "Alacak"
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.view_account_list
 msgid "Reconcile"
-msgstr "Uzlaştırma"
+msgstr "对账"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__reconcile_aggregate
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_res_company__reconcile_aggregate
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_res_config_settings__reconcile_aggregate
 msgid "Reconcile Aggregate"
-msgstr ""
+msgstr "对账汇总"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__reconcile_data
 msgid "Reconcile Data"
-msgstr "Uzlaştırma Verisi"
+msgstr "对账数据"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__reconcile_data_info
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__reconcile_data_info
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_reconcile_abstract__reconcile_data_info
 msgid "Reconcile Data Info"
-msgstr "Uzlaştırma Veri Bilgisi"
+msgstr "对账数据信息"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__reconcile_mode
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_journal__reconcile_mode
 msgid "Reconcile Mode"
-msgstr "Uzlaştırma Modu"
+msgstr "对账模式"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_journal__reconcile_aggregate
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.res_config_settings_form_view
 msgid "Reconcile aggregation"
-msgstr ""
+msgstr "对账汇总"
 
 #. module: account_reconcile_oca
 #: model:ir.actions.act_window,name:account_reconcile_oca.action_bank_statement_line_move_view_reconcile
 #: model:ir.actions.act_window,name:account_reconcile_oca.action_bank_statement_line_reconcile_all
 #: model:ir.actions.act_window,name:account_reconcile_oca.action_bank_statement_line_reconcile_to_check
 msgid "Reconcile bank statement lines"
-msgstr "Banka ekstresi satırlarını uzlaştırma"
+msgstr "对账银行对账单明细"
 
 #. module: account_reconcile_oca
 #: model:ir.model,name:account_reconcile_oca.model_account_account_reconcile_data
 msgid "Reconcile data model to store user info"
-msgstr "Kullanıcı bilgilerini depolamak için veri modelini uzlaştırın"
+msgstr "存储用户信息的对账模型"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_reconcile_view
 msgid "Reconciled"
-msgstr "Uzlaştırılan"
+msgstr "已对账"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "Reset reconciliation"
-msgstr ""
+msgstr "重置对账"
 
 #. module: account_reconcile_oca
 #. odoo-python
 #: code:addons/account_reconcile_oca/models/account_bank_statement_line.py:0
 #, python-format
 msgid "Reversal of: %s"
-msgstr ""
+msgstr "冲销：%s"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
 msgid "Sales"
-msgstr "Satış"
+msgstr "销售"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_add_view
 msgid "Save"
-msgstr "Kaydet"
+msgstr "保存"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
 msgid "Search Journal Items"
-msgstr "Yemiye Öğelerini Ara"
+msgstr "搜索会计分录"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "Set as Checked"
-msgstr "Gözden Geçirme İşaretlendi"
+msgstr "标记为已复核"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.res_config_settings_form_view
 msgid "Standard aggregation to use on bank reconciliation"
-msgstr ""
+msgstr "银行对账时使用的标准汇总方法"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields.selection,name:account_reconcile_oca.selection__account_journal__reconcile_aggregate__statement
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_reconcile_view
 msgid "Statement"
-msgstr ""
+msgstr "对账单"
 
 #. module: account_reconcile_oca
 #: model:ir.actions.act_window,name:account_reconcile_oca.action_bank_statement_line_reconcile
 msgid "Statement lines"
-msgstr ""
+msgstr "对账单明细"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,help:account_reconcile_oca.field_account_bank_statement_line__foreign_currency_id
 msgid "The optional other currency if it is a multi-currency entry."
-msgstr ""
+msgstr "如果是一个多货币分录，则为可选的其他货币。"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "To Check"
-msgstr "Kontrol Edilecek"
+msgstr "待复核"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_reconcile_view
 msgid "To check"
-msgstr "Kontrol edilecek"
+msgstr "待复核"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_journal_dashboard_kanban_view
 msgid "Transactions"
-msgstr "İşlemler"
+msgstr "交易"
 
 #. module: account_reconcile_oca
 #. odoo-python
 #: code:addons/account_reconcile_oca/models/account_bank_statement_line.py:0
 #, python-format
 msgid "Undefined"
-msgstr "Tanımsız"
+msgstr "未定义的"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "Unreconcile"
-msgstr ""
+msgstr "未对账"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile_data__user_id
 msgid "User"
-msgstr "Kullanıcı"
+msgstr "用户"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "Validate"
-msgstr "Doğrulama"
+msgstr "验证"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_tree_reconcile_view
 msgid "View"
-msgstr "Görme"
+msgstr "查看"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "View move"
-msgstr "Hareketi görüntüle"
+msgstr "查看凭证"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields.selection,name:account_reconcile_oca.selection__account_journal__reconcile_aggregate__week
 msgid "Week"
-msgstr ""
+msgstr "周"
 
 #. module: account_reconcile_oca
 #. odoo-python
 #: code:addons/account_reconcile_oca/models/account_journal.py:0
 #, python-format
 msgid "Well done! Everything has been reconciled"
-msgstr "Tebrikler! Her şey uzlaştırldı"
+msgstr "干得好！全部对账都已完成"
 
 #. module: account_reconcile_oca
 #. odoo-python
 #: code:addons/account_reconcile_oca/models/account_move_line.py:0
 #, python-format
 msgid "You can only reconcile journal items belonging to the same account."
-msgstr ""
+msgstr "您只能对属于同一科目的会计分录进行对账。"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "fully paid"
-msgstr "tamamen ödenmiş"
+msgstr "已全额支付"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_journal_dashboard_kanban_view
 msgid "to check"
-msgstr ""
+msgstr "待复核"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "will be reduced by"
-msgstr ""
+msgstr "将被减少"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "with an open amount"
-msgstr ""
-
-#~ msgid "Last Modified on"
-#~ msgstr "Son Değiştirilme"
-
-#~ msgid "Reset"
-#~ msgstr "Sıfırla"
+msgstr "的未结金额"
