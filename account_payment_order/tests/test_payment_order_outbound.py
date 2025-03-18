@@ -53,6 +53,12 @@ class TestPaymentOrderOutboundBase(AccountTestInvoicingCommon):
                 ).id,
             }
         )
+        cls.product = cls.env["product.product"].create(
+            {
+                "name": "Test product",
+                "type": "service",
+            }
+        )
         cls.invoice = cls._create_supplier_invoice(cls, "F1242")
         cls.invoice_02 = cls._create_supplier_invoice(cls, "F1243")
         cls.bank_journal = cls.company_data["default_journal_bank"]
@@ -77,7 +83,7 @@ class TestPaymentOrderOutboundBase(AccountTestInvoicingCommon):
                         0,
                         None,
                         {
-                            "product_id": self.env.ref("product.product_product_4").id,
+                            "product_id": self.product.id,
                             "quantity": 1.0,
                             "price_unit": 100.0,
                             "name": "product that cost 100",
@@ -104,7 +110,7 @@ class TestPaymentOrderOutboundBase(AccountTestInvoicingCommon):
                         0,
                         None,
                         {
-                            "product_id": self.env.ref("product.product_product_4").id,
+                            "product_id": self.product.id,
                             "quantity": 1.0,
                             "price_unit": 90.0,
                             "name": "refund of 90.0",
@@ -203,6 +209,7 @@ class TestPaymentOrderOutbound(TestPaymentOrderOutboundBase):
         line_created_due.create_payment_lines()
         self.assertGreater(len(order.payment_line_ids), 0)
         order.draft2open()
+        self.assertEqual(order.payment_ids[0].partner_bank_id, self.partner.bank_ids)
         order.open2generated()
         order.generated2uploaded()
         self.assertEqual(order.move_ids[0].date, order.payment_ids[0].date)
@@ -462,3 +469,25 @@ class TestPaymentOrderOutbound(TestPaymentOrderOutboundBase):
         self.assertEqual(len(payment_order.payment_line_ids), 1)
 
         self.assertEqual("F1242 R1234", payment_order.payment_line_ids.communication)
+
+    def test_action_open_business_document(self):
+        # Open invoice
+        self.invoice.action_post()
+        # Add to payment order using the wizard
+        self.env["account.invoice.payment.line.multi"].with_context(
+            active_model="account.move", active_ids=self.invoice.ids
+        ).create({}).run()
+        order = self.env["account.payment.order"].search(self.domain)
+        # Create payment line without move line
+        vals = {
+            "order_id": order.id,
+            "partner_id": self.partner.id,
+            "currency_id": order.payment_mode_id.company_id.currency_id.id,
+            "amount_currency": 200.38,
+        }
+        self.env["account.payment.line"].create(vals)
+        invoice_action = order.payment_line_ids[0].action_open_business_doc()
+        self.assertEqual(invoice_action["res_model"], "account.move")
+        self.assertEqual(invoice_action["res_id"], self.invoice.id)
+        manual_line_action = order.payment_line_ids[1].action_open_business_doc()
+        self.assertFalse(manual_line_action)

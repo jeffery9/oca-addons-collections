@@ -17,13 +17,12 @@ class SaleOrder(models.Model):
         domain="[('payment_type', '=', 'inbound'), ('company_id', '=', company_id)]",
     )
 
-    @api.depends("partner_id")
+    @api.depends("partner_id", "company_id")
     def _compute_payment_mode(self):
         for order in self:
-            if order.partner_id:
-                order.payment_mode_id = order.partner_id.customer_payment_mode_id
-            else:
-                order.payment_mode_id = False
+            order.payment_mode_id = order.partner_id.with_company(
+                order.company_id
+            ).customer_payment_mode_id
 
     def _get_payment_mode_vals(self, vals):
         if self.payment_mode_id:
@@ -41,3 +40,14 @@ class SaleOrder(models.Model):
         vals = super()._prepare_invoice()
         self._get_payment_mode_vals(vals)
         return vals
+
+    @api.model
+    def _get_invoice_grouping_keys(self) -> list:
+        """
+        When several sale orders are generating invoices,
+        we want to add the payment mode in grouping criteria.
+        """
+        keys = super()._get_invoice_grouping_keys()
+        if "payment_mode_id" not in keys:
+            keys.append("payment_mode_id")
+        return keys

@@ -3,6 +3,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from lxml import etree
+from markupsafe import Markup
 
 from odoo import _, exceptions, fields, models
 from odoo.exceptions import UserError
@@ -93,11 +94,8 @@ class AccountPaymentOrder(models.Model):
                     )
                     % payment_line.mandate_id.unique_mandate_reference
                 )
-            # The field line.date is the requested payment date
-            # taking into account the 'date_preferred' setting
-            # cf account_banking_payment_export/models/account_payment.py
-            # in the inherit of action_open()
-            key = (line.date, priority, categ_purpose, seq_type, scheme)
+            # The field line.payment_line_date is the requested payment date
+            key = (line.payment_line_date, priority, categ_purpose, seq_type, scheme)
             if key in lines_per_group:
                 lines_per_group[key].append(line)
             else:
@@ -299,11 +297,16 @@ class AccountPaymentOrder(models.Model):
             first_mandates.write({"recurrent_sequence_type": "recurring"})
             for first_mandate in first_mandates:
                 first_mandate.message_post(
-                    body=_(
-                        "Automatically switched from <b>First</b> to "
-                        "<b>Recurring</b> when the debit order "
-                        "<a href=# data-oe-model=account.payment.order "
-                        "data-oe-id=%d>{}</a> has been marked as uploaded."
-                    ).format(order.id, order.name)
+                    body=Markup(
+                        _(
+                            "Automatically switched from <b>First</b> to "
+                            "<b>Recurring</b> when the debit order "
+                            "<a href=# data-oe-model=account.payment.order "
+                            "data-oe-id=%(id)d>%(name)s</a> "
+                            "has been marked as uploaded.",
+                            id=order.id,
+                            name=order.name,
+                        )
+                    )
                 )
         return res

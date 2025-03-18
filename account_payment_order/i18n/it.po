@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-11-23 03:38+0000\n"
-"PO-Revision-Date: 2024-06-12 21:40+0000\n"
+"PO-Revision-Date: 2024-10-22 10:06+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. module: account_payment_order
 #. odoo-python
@@ -28,8 +28,8 @@ msgid ""
 "data-oe-model=account.payment.order data-oe-id=%(order_id)d>%(name)s</a>."
 msgstr ""
 "%(count)d righe di pagamento aggiunte all'ordine di pagamento esistente in "
-"bozza <a href=# data-oe-model=account.payment.order data-oe-id=%(order_id)d>"
-"%(name)s</a>."
+"bozza <a href=# data-oe-model=account.payment.order data-oe-"
+"id=%(order_id)d>%(name)s</a>."
 
 #. module: account_payment_order
 #. odoo-python
@@ -41,8 +41,8 @@ msgid ""
 "has been automatically created."
 msgstr ""
 "%(count)d righe di pagamento aggiunte al nuovo ordine di pagamento in bozza "
-"<a href=# data-oe-model=account.payment.order data-oe-id=%(order_id)d>"
-"%(name)s</a> che è stato creato automaticamente."
+"<a href=# data-oe-model=account.payment.order data-oe-"
+"id=%(order_id)d>%(name)s</a> che è stato creato automaticamente."
 
 #. module: account_payment_order
 #: model_terms:ir.ui.view,arch_db:account_payment_order.print_account_payment_order_document
@@ -260,7 +260,7 @@ msgstr "Annulla pagamenti"
 #. module: account_payment_order
 #: model_terms:ir.ui.view,arch_db:account_payment_order.account_payment_line_create_form
 msgid "Choose Move Lines Filter Options"
-msgstr "Scegli opzioni di filtro per righe movimenti"
+msgstr "Scegliere opzioni di filtro per righe movimenti"
 
 #. module: account_payment_order
 #: model_terms:ir.ui.view,arch_db:account_payment_order.account_payment_line_create_form
@@ -305,7 +305,7 @@ msgstr "Conto bancario aziendale"
 #. module: account_payment_order
 #: model_terms:ir.ui.view,arch_db:account_payment_order.account_payment_order_form
 msgid "Confirm Payments"
-msgstr "Conferma Pagamenti"
+msgstr "Conferma pagamenti"
 
 #. module: account_payment_order
 #: model:ir.model.fields.selection,name:account_payment_order.selection__account_payment_order__state__open
@@ -565,7 +565,6 @@ msgstr "Se selezionata, nuovi messaggi richiedono attenzione."
 
 #. module: account_payment_order
 #: model:ir.model.fields,help:account_payment_order.field_account_payment_order__message_has_error
-#: model:ir.model.fields,help:account_payment_order.field_account_payment_order__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr "Se selezionata, alcuni messaggi hanno un errore di consegna."
 
@@ -662,7 +661,7 @@ msgstr "Filtro registri"
 #. module: account_payment_order
 #: model_terms:ir.ui.view,arch_db:account_payment_order.account_payment_line_create_form
 msgid "Keep empty for using all journals"
-msgstr "Mantieni vuoto per l'utilizzo di tutti i registri"
+msgstr "Lasciare vuoto per l'utilizzo di tutti i registri"
 
 #. module: account_payment_order
 #: model_terms:ir.ui.view,arch_db:account_payment_order.account_payment_line_create_form
@@ -788,7 +787,7 @@ msgid ""
 "No Payment Line created for invoice %s because its payment mode is not "
 "intended for payment orders."
 msgstr ""
-"Nessun riga di pagamento creata per la fattura %s perché il suo modo di "
+"Nessuna riga di pagamento creata per la fattura %s perché il suo modo di "
 "pagamento non è inteso per gli ordini di pagamento."
 
 #. module: account_payment_order
@@ -934,6 +933,11 @@ msgid "Payment Line Count"
 msgstr "Conteggio righe pagamento"
 
 #. module: account_payment_order
+#: model:ir.model.fields,field_description:account_payment_order.field_account_payment__payment_line_date
+msgid "Payment Line Date"
+msgstr "Data riga pagamento"
+
+#. module: account_payment_order
 #: model:ir.actions.act_window,name:account_payment_order.account_payment_line_action
 #: model:ir.model,name:account_payment_order.model_account_payment_line
 #: model_terms:ir.ui.view,arch_db:account_payment_order.account_payment_line_form
@@ -1058,11 +1062,6 @@ msgid "Responsible User"
 msgstr "Utente responsabile"
 
 #. module: account_payment_order
-#: model:ir.model.fields,field_description:account_payment_order.field_account_payment_order__message_has_sms_error
-msgid "SMS Delivery error"
-msgstr "Errore consegna SMS"
-
-#. module: account_payment_order
 #: model:ir.model.fields.selection,name:account_payment_order.selection__account_payment_line_create__payment_mode__same
 #: model:ir.model.fields.selection,name:account_payment_order.selection__account_payment_mode__default_payment_mode__same
 msgid "Same"
@@ -1140,6 +1139,11 @@ msgstr ""
 "Pianificato: attività future."
 
 #. module: account_payment_order
+#: model:ir.model.fields.selection,name:account_payment_order.selection__account_payment_line__communication_type__structured
+msgid "Structured"
+msgstr "Strutturato"
+
+#. module: account_payment_order
 #: model:ir.model.fields.selection,name:account_payment_order.selection__account_move__reference_type__structured
 msgid "Structured Reference"
 msgstr "Riferimento strutturato"
@@ -1162,7 +1166,7 @@ msgstr "Modello tecnico per la stampa dell'ordine di pagamento"
 msgid ""
 "The amount for Partner '%(partner)s' is negative or null (%(amount).2f) !"
 msgstr ""
-"L'importo per il Partner '%(partner)s' è negativo o nullo (%(amount).2f) !"
+"L'importo per il partner '%(partner)s' è negativo o nullo (%(amount).2f) !"
 
 #. module: account_payment_order
 #. odoo-python
@@ -1298,6 +1302,11 @@ msgid "Value Date"
 msgstr "Data valore"
 
 #. module: account_payment_order
+#: model_terms:ir.ui.view,arch_db:account_payment_order.account_payment_line_tree
+msgid "View"
+msgstr "Vista"
+
+#. module: account_payment_order
 #: model:ir.model.fields,field_description:account_payment_order.field_account_payment_order__website_message_ids
 msgid "Website Messages"
 msgstr "Messaggi sito web"
@@ -1342,6 +1351,9 @@ msgid "otherwise, new payment orders will be created (one per payment mode)."
 msgstr ""
 "altrimenti, nuovi ordini di pagamento verranno creati (uno per modalità di "
 "pagamento)."
+
+#~ msgid "SMS Delivery error"
+#~ msgstr "Errore consegna SMS"
 
 #~ msgid "Last Modified on"
 #~ msgstr "Ultima modifica il"

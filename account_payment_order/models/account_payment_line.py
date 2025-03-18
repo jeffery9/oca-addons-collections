@@ -78,7 +78,9 @@ class AccountPaymentLine(models.Model):
         required=False, help="Label of the payment that will be seen by the destinee"
     )
     communication_type = fields.Selection(
-        selection=[("normal", "Free")], required=True, default="normal"
+        selection=[("normal", "Free"), ("structured", "Structured")],
+        required=True,
+        default="normal",
     )
     payment_ids = fields.Many2many(
         comodel_name="account.payment",
@@ -235,3 +237,8 @@ class AccountPaymentLine(models.Model):
                     "destination_account_id"
                 ] = self.partner_id.property_account_payable_id.id
         return vals
+
+    def action_open_business_doc(self):
+        if not self.move_line_id:
+            return False
+        return self.move_line_id.action_open_business_doc()
