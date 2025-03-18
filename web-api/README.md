@@ -21,7 +21,9 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[endpoint_route_handler](endpoint_route_handler/) | 17.0.1.0.1 | [![simahawk](https://github.com/simahawk.png?size=30px)](https://github.com/simahawk) | Provide mixin and tool to generate custom endpoints on the fly.
+[endpoint](endpoint/) | 17.0.1.0.0 | [![simahawk](https://github.com/simahawk.png?size=30px)](https://github.com/simahawk) | Provide custom endpoint machinery.
+[endpoint_route_handler](endpoint_route_handler/) | 17.0.1.0.2 | [![simahawk](https://github.com/simahawk.png?size=30px)](https://github.com/simahawk) | Provide mixin and tool to generate custom endpoints on the fly.
+[webservice](webservice/) | 17.0.1.0.0 | [![etobella](https://github.com/etobella.png?size=30px)](https://github.com/etobella) | Defines webservice abstract definition to be used generally
 
 [//]: # (end addons)
 
