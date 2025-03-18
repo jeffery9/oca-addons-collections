@@ -2,29 +2,27 @@
 # Copyright 2022 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 # pylint: disable=C8107
-from odoo.tests import common
+from odoo.tests import new_test_user
 from odoo.tools import mute_logger
 
+from odoo.addons.base.tests.common import BaseCommon
 
-class TestMailNotificationCustomSubject(common.TransactionCase):
+
+class TestMailNotificationCustomSubject(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.partner_1, cls.partner_2 = (
-            cls.env["res.partner"]
-            .with_context(tracking_disable=True)
-            .create(
-                [
-                    {"name": "Test partner 1", "email": "partner1@example.com"},
-                    {"name": "Test partner 2", "email": "partner2@example.com"},
-                ]
-            )
+        cls.partner_1, cls.partner_2 = cls.env["res.partner"].create(
+            [
+                {"name": "Test partner 1", "email": "partner1@example.com"},
+                {"name": "Test partner 2", "email": "partner2@example.com"},
+            ]
         )
-        cls.admin = common.new_test_user(cls.env, "boss", "base.group_system")
+        cls.admin = new_test_user(cls.env, "boss", "base.group_system")
 
     def setUp(self):
         super().setUp()
-        self.uid = common.new_test_user(self.env, "worker")
+        self.uid = new_test_user(self.env, "worker")
 
     def test_email_subject_template_overrides(self):
         with self.with_user("boss"):
@@ -50,12 +48,33 @@ class TestMailNotificationCustomSubject(common.TransactionCase):
         # Get message and check subject
         self.assertEqual(mail_message_2.subject, "Test partner 2 and something more")
 
-        # Explicit subject should also be overwritten
+        # Explicit subject should not also overwritten
         mail_message_3 = self.partner_2.message_post(
             body="Test", subtype_xmlid="mail.mt_comment", subject="Test"
         )
         # Get message and check subject
-        self.assertEqual(mail_message_3.subject, "Test partner 2 and something more")
+        self.assertEqual(mail_message_3.subject, "Test")
+
+    def test_email_subject_template_inside_replace(self):
+        with self.with_user("boss"):
+            self.env["mail.message.custom.subject"].create(
+                {
+                    "name": "Test template",
+                    "model_id": self.env.ref("base.model_res_partner").id,
+                    "subtype_ids": [(6, 0, [self.env.ref("mail.mt_comment").id])],
+                    "subject_to_replace": "{{object.company_id.name}}",
+                    "subject_template": "CLN",
+                    "position": "inside_replace",
+                }
+            )
+        self.partner_1.company_id = self.env.company
+        self.partner_1.company_id.name = "COMPANY_LONG_NAME"
+        mail_message_1 = self.partner_1.message_post(
+            subject="COMPANY_LONG_NAME: Custom",
+            body="Test",
+            subtype_xmlid="mail.mt_comment",
+        )
+        self.assertEqual(mail_message_1.subject, "CLN: Custom")
 
     def test_email_subject_template_normal(self):
         with self.with_user("boss"):

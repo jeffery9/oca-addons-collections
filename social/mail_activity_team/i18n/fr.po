@@ -51,6 +51,11 @@ msgid "Activity Type"
 msgstr ""
 
 #. module: mail_activity_team
+#: model:ir.model,name:mail_activity_team.model_mail_activity_schedule
+msgid "Activity schedule plan Wizard"
+msgstr ""
+
+#. module: mail_activity_team
 #: model_terms:ir.ui.view,arch_db:mail_activity_team.mail_activity_team_view_form
 msgid "Archived"
 msgstr ""
@@ -156,7 +161,13 @@ msgid "Team Members"
 msgstr ""
 
 #. module: mail_activity_team
+#: model:ir.model.fields,field_description:mail_activity_team.field_mail_activity_schedule__activity_team_id
+msgid "Team assigned to"
+msgstr ""
+
+#. module: mail_activity_team
 #: model:ir.model.fields,field_description:mail_activity_team.field_mail_activity__team_user_id
+#: model:ir.model.fields,field_description:mail_activity_team.field_mail_activity_schedule__activity_team_user_id
 msgid "Team user"
 msgstr ""
 
@@ -185,9 +196,18 @@ msgid "User"
 msgstr ""
 
 #. module: mail_activity_team
+#: model:ir.model.fields,field_description:mail_activity_team.field_account_bank_statement_line__activity_team_user_ids
+#: model:ir.model.fields,field_description:mail_activity_team.field_account_journal__activity_team_user_ids
+#: model:ir.model.fields,field_description:mail_activity_team.field_account_move__activity_team_user_ids
+#: model:ir.model.fields,field_description:mail_activity_team.field_account_payment__activity_team_user_ids
+#: model:ir.model.fields,field_description:mail_activity_team.field_account_setup_bank_manual_config__activity_team_user_ids
 #: model:ir.model.fields,field_description:mail_activity_team.field_mail_activity_mixin__activity_team_user_ids
 #: model:ir.model.fields,field_description:mail_activity_team.field_mailing_mailing__activity_team_user_ids
+#: model:ir.model.fields,field_description:mail_activity_team.field_product_pricelist__activity_team_user_ids
+#: model:ir.model.fields,field_description:mail_activity_team.field_product_product__activity_team_user_ids
+#: model:ir.model.fields,field_description:mail_activity_team.field_product_template__activity_team_user_ids
 #: model:ir.model.fields,field_description:mail_activity_team.field_res_partner__activity_team_user_ids
+#: model:ir.model.fields,field_description:mail_activity_team.field_res_partner_bank__activity_team_user_ids
 #: model:ir.model.fields,field_description:mail_activity_team.field_res_users__activity_team_user_ids
 msgid "test field"
 msgstr ""

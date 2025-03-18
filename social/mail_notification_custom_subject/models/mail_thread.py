@@ -1,9 +1,13 @@
 # Copyright 2020-2021 Tecnativa - João Marques
 # Copyright 2021 Tecnativa - Pedro M. Baeza
 # Copyright 2022 Moduon - Eduardo de Miguel
+# Copyright 2025 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+import logging
 
 from odoo import api, models
+
+_logger = logging.getLogger(__name__)
 
 
 class MailThread(models.AbstractModel):
@@ -35,15 +39,17 @@ class MailThread(models.AbstractModel):
         if not subtype_id:
             subtype_id = self.env["ir.model.data"]._xmlid_to_res_id("mail.mt_note")
         if subtype_id:
+            domain = [
+                ("model_id.model", "=", self._name),
+                ("subtype_ids", "=", subtype_id),
+            ]
+            if subject:
+                # If it already had a defined subject, we must respect it
+                domain += [("position", "!=", "replace")]
             custom_subjects = (
                 self.env["mail.message.custom.subject"]
                 .sudo()
-                .search(
-                    [
-                        ("model_id.model", "=", self._name),
-                        ("subtype_ids", "=", subtype_id),
-                    ]
-                )
+                .search(domain)
                 .sudo(False)
             )
             if not subject:
@@ -66,8 +72,25 @@ class MailThread(models.AbstractModel):
                         subject = rendered_subject_template + subject
                     elif template.position == "append_after":
                         subject += rendered_subject_template
+                    elif template.position == "inside_replace":
+                        rendered_subject_to_replace = self.env[
+                            "mail.template"
+                        ]._render_template(
+                            template_src=template.subject_to_replace,
+                            model=self._name,
+                            res_ids=[self.id],
+                        )[self.id]
+                        if rendered_subject_to_replace:
+                            # To avoid empty string replacements
+                            subject = subject.replace(
+                                rendered_subject_to_replace,
+                                rendered_subject_template,
+                            )
                 except Exception:
-                    rendered_subject_template = False
+                    _logger.warning(
+                        f"There is an error with {self.display_name} in the mail "
+                        f"message custom subject {template.name}"
+                    )
         return super().message_post(
             body=body,
             subject=subject,
