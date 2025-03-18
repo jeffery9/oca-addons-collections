@@ -172,6 +172,7 @@ msgstr "Fecha de creación"
 
 #. module: queue_job
 #: model:ir.model.fields,field_description:queue_job.field_queue_job_channel__create_uid
+#: model:ir.model.fields,field_description:queue_job.field_queue_job_lock__create_uid
 #: model:ir.model.fields,field_description:queue_job.field_queue_jobs_to_cancelled__create_uid
 #: model:ir.model.fields,field_description:queue_job.field_queue_jobs_to_done__create_uid
 #: model:ir.model.fields,field_description:queue_job.field_queue_requeue_job__create_uid
@@ -180,6 +181,7 @@ msgstr "Creado por"
 
 #. module: queue_job
 #: model:ir.model.fields,field_description:queue_job.field_queue_job_channel__create_date
+#: model:ir.model.fields,field_description:queue_job.field_queue_job_lock__create_date
 #: model:ir.model.fields,field_description:queue_job.field_queue_jobs_to_cancelled__create_date
 #: model:ir.model.fields,field_description:queue_job.field_queue_jobs_to_done__create_date
 #: model:ir.model.fields,field_description:queue_job.field_queue_requeue_job__create_date
@@ -226,6 +228,7 @@ msgstr "Descripción"
 #: model:ir.model.fields,field_description:queue_job.field_queue_job__display_name
 #: model:ir.model.fields,field_description:queue_job.field_queue_job_channel__display_name
 #: model:ir.model.fields,field_description:queue_job.field_queue_job_function__display_name
+#: model:ir.model.fields,field_description:queue_job.field_queue_job_lock__display_name
 #: model:ir.model.fields,field_description:queue_job.field_queue_jobs_to_cancelled__display_name
 #: model:ir.model.fields,field_description:queue_job.field_queue_jobs_to_done__display_name
 #: model:ir.model.fields,field_description:queue_job.field_queue_requeue_job__display_name
@@ -356,6 +359,7 @@ msgstr "Tiene un mensaje"
 #: model:ir.model.fields,field_description:queue_job.field_queue_job__id
 #: model:ir.model.fields,field_description:queue_job.field_queue_job_channel__id
 #: model:ir.model.fields,field_description:queue_job.field_queue_job_function__id
+#: model:ir.model.fields,field_description:queue_job.field_queue_job_lock__id
 #: model:ir.model.fields,field_description:queue_job.field_queue_jobs_to_cancelled__id
 #: model:ir.model.fields,field_description:queue_job.field_queue_jobs_to_done__id
 #: model:ir.model.fields,field_description:queue_job.field_queue_requeue_job__id
@@ -378,15 +382,6 @@ msgid "Identity Key"
 msgstr "Clave identificadora"
 
 #. module: queue_job
-#. odoo-python
-#: code:addons/queue_job/models/queue_job.py:0
-#, python-format
-msgid "If both parameters are 0, ALL jobs will be requeued!"
-msgstr ""
-"Si ambos parámetros son 0, ¡TODOS los trabajos se volverán a poner en la "
-"cola!"
-
-#. module: queue_job
 #: model:ir.model.fields,help:queue_job.field_queue_job__message_needaction
 msgid "If checked, new messages require your attention."
 msgstr ""
@@ -394,7 +389,6 @@ msgstr ""
 
 #. module: queue_job
 #: model:ir.model.fields,help:queue_job.field_queue_job__message_has_error
-#: model:ir.model.fields,help:queue_job.field_queue_job__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr "Si se encuentra seleccionado, algunos mensajes tienen error de envío."
 
@@ -409,6 +403,13 @@ msgstr "Función del trabajo no válida: {}"
 #: model:ir.model.fields,field_description:queue_job.field_queue_job__message_is_follower
 msgid "Is Follower"
 msgstr "Es un seguidor"
+
+#. module: queue_job
+#. odoo-javascript
+#: code:addons/queue_job/static/src/views/fields/job_direct_graph/job_direct_graph.esm.js:0
+#, python-format
+msgid "Job %(id)s"
+msgstr ""
 
 #. module: queue_job
 #: model:ir.model,name:queue_job.model_queue_job_channel
@@ -473,11 +474,6 @@ msgid "Jobs"
 msgstr "Trabajos"
 
 #. module: queue_job
-#: model:ir.actions.server,name:queue_job.ir_cron_queue_job_garbage_collector_ir_actions_server
-msgid "Jobs Garbage Collector"
-msgstr "Recolector de basura de trabajos"
-
-#. module: queue_job
 #. odoo-python
 #: code:addons/queue_job/models/queue_job.py:0
 #, python-format
@@ -491,6 +487,7 @@ msgstr "Kwargs"
 
 #. module: queue_job
 #: model:ir.model.fields,field_description:queue_job.field_queue_job_channel__write_uid
+#: model:ir.model.fields,field_description:queue_job.field_queue_job_lock__write_uid
 #: model:ir.model.fields,field_description:queue_job.field_queue_jobs_to_cancelled__write_uid
 #: model:ir.model.fields,field_description:queue_job.field_queue_jobs_to_done__write_uid
 #: model:ir.model.fields,field_description:queue_job.field_queue_requeue_job__write_uid
@@ -499,6 +496,7 @@ msgstr "Última actualización por"
 
 #. module: queue_job
 #: model:ir.model.fields,field_description:queue_job.field_queue_job_channel__write_date
+#: model:ir.model.fields,field_description:queue_job.field_queue_job_lock__write_date
 #: model:ir.model.fields,field_description:queue_job.field_queue_jobs_to_cancelled__write_date
 #: model:ir.model.fields,field_description:queue_job.field_queue_jobs_to_done__write_date
 #: model:ir.model.fields,field_description:queue_job.field_queue_requeue_job__write_date
@@ -660,8 +658,14 @@ msgstr "Cola"
 
 #. module: queue_job
 #: model:ir.model,name:queue_job.model_queue_job
+#: model:ir.model.fields,field_description:queue_job.field_queue_job_lock__queue_job_id
 msgid "Queue Job"
 msgstr "Cola de trabajos"
+
+#. module: queue_job
+#: model:ir.model,name:queue_job.model_queue_job_lock
+msgid "Queue Job Lock"
+msgstr ""
 
 #. module: queue_job
 #. odoo-python
@@ -760,11 +764,6 @@ msgstr "Patrón de reintentos"
 #: model:ir.model.fields,field_description:queue_job.field_queue_job_function__retry_pattern
 msgid "Retry Pattern (serialized)"
 msgstr "Patrón de reintentos (en serie)"
-
-#. module: queue_job
-#: model:ir.model.fields,field_description:queue_job.field_queue_job__message_has_sms_error
-msgid "SMS Delivery error"
-msgstr "Error de entrega del SMS"
 
 #. module: queue_job
 #: model:ir.model,name:queue_job.model_queue_jobs_to_done
@@ -910,13 +909,13 @@ msgstr "UUID"
 msgid ""
 "Unexpected format of Related Action for {}.\n"
 "Example of valid format:\n"
-"{{\"enable\": True, \"func_name\": \"related_action_foo\", \"kwargs"
-"\" {{\"limit\": 10}}}}"
+"{{\"enable\": True, \"func_name\": \"related_action_foo\", "
+"\"kwargs\" {{\"limit\": 10}}}}"
 msgstr ""
 "Formato inesperado en la acción relacionada con {}.\n"
 "Ejemplo de un formato válido:\n"
-"{{\"enable\": True, \"func_name\": \"related_action_foo\", \"kwargs"
-"\" {{\"limit\": 10}}}}"
+"{{\"enable\": True, \"func_name\": \"related_action_foo\", "
+"\"kwargs\" {{\"limit\": 10}}}}"
 
 #. module: queue_job
 #. odoo-python
@@ -951,6 +950,18 @@ msgstr "Asistente para volver a poner en cola una selección de trabajos"
 #: model:ir.model.fields,field_description:queue_job.field_queue_job__worker_pid
 msgid "Worker Pid"
 msgstr "Pid del trabajador"
+
+#, python-format
+#~ msgid "If both parameters are 0, ALL jobs will be requeued!"
+#~ msgstr ""
+#~ "Si ambos parámetros son 0, ¡TODOS los trabajos se volverán a poner en la "
+#~ "cola!"
+
+#~ msgid "Jobs Garbage Collector"
+#~ msgstr "Recolector de basura de trabajos"
+
+#~ msgid "SMS Delivery error"
+#~ msgstr "Error de entrega del SMS"
 
 #~ msgid "Last Modified on"
 #~ msgstr "Última modificación el"
