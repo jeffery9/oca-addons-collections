@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: account-financial-tools (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-10 23:23+0000\n"
-"PO-Revision-Date: 2024-06-06 17:55+0000\n"
+"PO-Revision-Date: 2025-03-06 13:06+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (http://www.transifex.com/oca/"
 "OCA-account-financial-tools-8-0/language/it/)\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.10.2\n"
 
 #. module: account_asset_management
 #. odoo-python
@@ -33,6 +33,15 @@ msgid ""
 msgstr ""
 "\n"
 "Errore durante l'elaborazione del cespite '{ref}': {exception}"
+
+#. module: account_asset_management
+#: model_terms:ir.ui.view,arch_db:account_asset_management.account_asset_profile_view_form
+msgid ""
+"<span class=\"o_form_label oe_inline\" invisible=\"salvage_type != "
+"'percent'\">%</span>"
+msgstr ""
+"<span class=\"o_form_label oe_inline\" invisible="
+"\"salvage_type != 'percent'\">%</span>"
 
 #. module: account_asset_management
 #: model_terms:ir.ui.view,arch_db:account_asset_management.view_move_form
@@ -425,7 +434,7 @@ msgstr "Valuta azienda"
 #. module: account_asset_management
 #: model:ir.model.fields,field_description:account_asset_management.field_account_asset_recompute_trigger__date_completed
 msgid "Completion Date"
-msgstr "Data di completamento"
+msgstr "Data completamento"
 
 #. module: account_asset_management
 #. odoo-python
@@ -492,7 +501,7 @@ msgstr "Conferma Immobilizzazione"
 #. module: account_asset_management
 #: model_terms:ir.ui.view,arch_db:account_asset_management.account_asset_view_form
 msgid "Create Move"
-msgstr "Crea Movimento"
+msgstr "Crea movimento"
 
 #. module: account_asset_management
 #: model:ir.model.fields,field_description:account_asset_management.field_account_asset_profile__asset_product_item
@@ -614,7 +623,7 @@ msgstr "Ammortamento"
 #. module: account_asset_management
 #: model:ir.model.fields,field_description:account_asset_management.field_account_asset_profile__account_depreciation_id
 msgid "Depreciation Account"
-msgstr "F.do Ammortamento"
+msgstr "Conto amm.to"
 
 #. module: account_asset_management
 #. odoo-python
@@ -697,7 +706,7 @@ msgstr "Generatore resoconto XLS cespite dinamico"
 #. module: account_asset_management
 #: model:ir.model.fields,field_description:account_asset_management.field_wiz_account_asset_report__date_to
 msgid "End Date"
-msgstr "Data finale"
+msgstr "Data fine"
 
 #. module: account_asset_management
 #: model:ir.model.fields,field_description:account_asset_management.field_account_asset__method_end
@@ -734,6 +743,11 @@ msgstr "Cespiti finanziari"
 #: model_terms:ir.ui.view,arch_db:account_asset_management.wiz_account_asset_report_view_form
 msgid "Financial Assets report"
 msgstr "Resoconto cespiti finanziari"
+
+#. module: account_asset_management
+#: model:ir.model.fields.selection,name:account_asset_management.selection__account_asset_profile__salvage_type__fixed
+msgid "Fixed"
+msgstr "Fisso"
 
 #. module: account_asset_management
 #: model:ir.model.fields,field_description:account_asset_management.field_account_asset__message_follower_ids
@@ -829,7 +843,6 @@ msgstr "Se selezionata, nuovi messaggi richiedono attenzione."
 
 #. module: account_asset_management
 #: model:ir.model.fields,help:account_asset_management.field_account_asset__message_has_error
-#: model:ir.model.fields,help:account_asset_management.field_account_asset__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr "Se selezionata, alcuni messaggi hanno un errore di consegna."
 
@@ -870,8 +883,9 @@ msgstr ""
 "da ammortizzare, in base al numero di anni. Così il valore per anno sarà "
 "imponibile ammortamento / numero degli anni.\n"
 "Se impostata, il sistema considererà l'anno attuale come bisestile. Il "
-"valore da ammortizzare per anno verrà calcolato come imponibile ammortamento "
-"/ (data fine ammortamento - data di inizio + 1) * giorni dell'anno corrente."
+"valore da ammortizzare per anno verrà calcolato come imponibile "
+"ammortamento / (data fine ammortamento - data di inizio + 1) * giorni "
+"dell'anno corrente."
 
 #. module: account_asset_management
 #: model:ir.model.fields,help:account_asset_management.field_account_asset_profile__allow_reversal
@@ -1166,6 +1180,11 @@ msgid "Partner"
 msgstr "Partner"
 
 #. module: account_asset_management
+#: model:ir.model.fields.selection,name:account_asset_management.selection__account_asset_profile__salvage_type__percent
+msgid "Percentage of Price"
+msgstr "Percentuale del prezzo"
+
+#. module: account_asset_management
 #. odoo-python
 #: code:addons/account_asset_management/report/account_asset_report_xls.py:0
 #, python-format
@@ -1365,19 +1384,20 @@ msgid "Running"
 msgstr "In esecuzione"
 
 #. module: account_asset_management
-#: model:ir.model.fields,field_description:account_asset_management.field_account_asset__message_has_sms_error
-msgid "SMS Delivery error"
-msgstr "Errore consegna SMS"
-
-#. module: account_asset_management
 #: model:ir.model.fields,field_description:account_asset_management.field_account_asset_remove__sale_value
 msgid "Sale Value"
 msgstr "Valore vendita"
 
 #. module: account_asset_management
+#: model:ir.model.fields,field_description:account_asset_management.field_account_asset_profile__salvage_type
+msgid "Salvage Type"
+msgstr "Tipo realizzo"
+
+#. module: account_asset_management
 #. odoo-python
 #: code:addons/account_asset_management/report/account_asset_report_xls.py:0
 #: model:ir.model.fields,field_description:account_asset_management.field_account_asset__salvage_value
+#: model:ir.model.fields,field_description:account_asset_management.field_account_asset_profile__salvage_value
 #, python-format
 msgid "Salvage Value"
 msgstr "Valore di realizzo"
@@ -1504,6 +1524,7 @@ msgstr ""
 
 #. module: account_asset_management
 #: model:ir.model.fields,help:account_asset_management.field_account_asset__salvage_value
+#: model:ir.model.fields,help:account_asset_management.field_account_asset_profile__salvage_value
 msgid ""
 "The estimated value that an asset will realize upon its sale at the end of "
 "its useful life.\n"
@@ -1627,7 +1648,7 @@ msgstr "Visualizza movimenti cespite"
 #. module: account_asset_management
 #: model_terms:ir.ui.view,arch_db:account_asset_management.account_asset_view_form
 msgid "View Move"
-msgstr "Visualizza movimento"
+msgstr "Vedi movimento"
 
 #. module: account_asset_management
 #: model:ir.model.fields,field_description:account_asset_management.field_account_asset__website_message_ids
@@ -1818,6 +1839,9 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_asset_management.wiz_account_asset_report_view_form
 msgid "or"
 msgstr "o"
+
+#~ msgid "SMS Delivery error"
+#~ msgstr "Errore consegna SMS"
 
 #~ msgid "Last Modified on"
 #~ msgstr "Ultima modifica il"
