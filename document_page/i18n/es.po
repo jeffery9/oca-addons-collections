@@ -315,14 +315,6 @@ msgid "Last Contributor"
 msgstr "Último contribuidor"
 
 #. module: document_page
-#: model:ir.model.fields,field_description:document_page.field_document_page____last_update
-#: model:ir.model.fields,field_description:document_page.field_document_page_create_menu____last_update
-#: model:ir.model.fields,field_description:document_page.field_document_page_history____last_update
-#: model:ir.model.fields,field_description:document_page.field_wizard_document_page_history_show_diff____last_update
-msgid "Last Modified on"
-msgstr "Última modificación el"
-
-#. module: document_page
 #: model:ir.model.fields,field_description:document_page.field_document_page__write_uid
 #: model:ir.model.fields,field_description:document_page.field_document_page_create_menu__write_uid
 #: model:ir.model.fields,field_description:document_page.field_document_page_history__write_uid
@@ -337,11 +329,6 @@ msgstr "Última actualización por"
 #: model:ir.model.fields,field_description:document_page.field_wizard_document_page_history_show_diff__write_date
 msgid "Last Updated on"
 msgstr "Última actualización el"
-
-#. module: document_page
-#: model:ir.model.fields,field_description:document_page.field_document_page__message_main_attachment_id
-msgid "Main Attachment"
-msgstr "Adjunto principal"
 
 #. module: document_page
 #: model:res.groups,name:document_page.group_document_manager
@@ -466,6 +453,11 @@ msgid "Parent Menu"
 msgstr "Menú superior"
 
 #. module: document_page
+#: model:ir.model.fields,field_description:document_page.field_document_page__rating_ids
+msgid "Ratings"
+msgstr ""
+
+#. module: document_page
 #: model:ir.model.fields,field_description:document_page.field_document_page__activity_user_id
 msgid "Responsible User"
 msgstr "Usuario responsable"
@@ -551,6 +543,17 @@ msgid "Use it to link resources univocally"
 msgstr "Utilícelo para vincular recursos de forma unívoca"
 
 #. module: document_page
+#: model:ir.model.fields,field_description:document_page.field_document_page__website_message_ids
+#, fuzzy
+msgid "Website Messages"
+msgstr "Páginas"
+
+#. module: document_page
+#: model:ir.model.fields,help:document_page.field_document_page__website_message_ids
+msgid "Website communication history"
+msgstr ""
+
+#. module: document_page
 #: model:ir.model,name:document_page.model_document_page_create_menu
 msgid "Wizard Create Menu"
 msgstr "Asistente para crear un menú"
@@ -587,6 +590,12 @@ msgstr "o"
 msgid "summary"
 msgstr "resumen"
 
+#~ msgid "Last Modified on"
+#~ msgstr "Última modificación el"
+
+#~ msgid "Main Attachment"
+#~ msgstr "Adjunto principal"
+
 #~ msgid "SMS Delivery error"
 #~ msgstr "Error de entrega de SMS"
 
@@ -595,10 +604,6 @@ msgstr "resumen"
 
 #~ msgid "Number of messages which requires an action"
 #~ msgstr "Número de mensajes que requieren una acción"
-
-#, fuzzy
-#~ msgid "Website Messages"
-#~ msgstr "Páginas"
 
 #~ msgid "wizard.document.page.history.show_diff"
 #~ msgstr "wizard.document.page.history.show_diff"

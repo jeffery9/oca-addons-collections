@@ -16,9 +16,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
-"%100>=11 && n%100<=14)? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
 "X-Generator: Weblate 4.3.2\n"
 
 #. module: document_page
@@ -317,14 +317,6 @@ msgid "Last Contributor"
 msgstr "Последний раз обновлено"
 
 #. module: document_page
-#: model:ir.model.fields,field_description:document_page.field_document_page____last_update
-#: model:ir.model.fields,field_description:document_page.field_document_page_create_menu____last_update
-#: model:ir.model.fields,field_description:document_page.field_document_page_history____last_update
-#: model:ir.model.fields,field_description:document_page.field_wizard_document_page_history_show_diff____last_update
-msgid "Last Modified on"
-msgstr "Последний раз изменено"
-
-#. module: document_page
 #: model:ir.model.fields,field_description:document_page.field_document_page__write_uid
 #: model:ir.model.fields,field_description:document_page.field_document_page_create_menu__write_uid
 #: model:ir.model.fields,field_description:document_page.field_document_page_history__write_uid
@@ -339,11 +331,6 @@ msgstr "Последний раз обновлено"
 #: model:ir.model.fields,field_description:document_page.field_wizard_document_page_history_show_diff__write_date
 msgid "Last Updated on"
 msgstr "Последний раз обновлено"
-
-#. module: document_page
-#: model:ir.model.fields,field_description:document_page.field_document_page__message_main_attachment_id
-msgid "Main Attachment"
-msgstr "Основное приложение"
 
 #. module: document_page
 #: model:res.groups,name:document_page.group_document_manager
@@ -468,6 +455,11 @@ msgid "Parent Menu"
 msgstr "Родительское меню"
 
 #. module: document_page
+#: model:ir.model.fields,field_description:document_page.field_document_page__rating_ids
+msgid "Ratings"
+msgstr ""
+
+#. module: document_page
 #: model:ir.model.fields,field_description:document_page.field_document_page__activity_user_id
 msgid "Responsible User"
 msgstr "Ответственный пользователь"
@@ -553,6 +545,16 @@ msgid "Use it to link resources univocally"
 msgstr "Используйте для ссылки на ресурсы"
 
 #. module: document_page
+#: model:ir.model.fields,field_description:document_page.field_document_page__website_message_ids
+msgid "Website Messages"
+msgstr "Сообщения веб-сайта"
+
+#. module: document_page
+#: model:ir.model.fields,help:document_page.field_document_page__website_message_ids
+msgid "Website communication history"
+msgstr "История общения на сайте"
+
+#. module: document_page
 #: model:ir.model,name:document_page.model_document_page_create_menu
 msgid "Wizard Create Menu"
 msgstr "Мастер создания меню"
@@ -589,6 +591,12 @@ msgstr "или"
 msgid "summary"
 msgstr ""
 
+#~ msgid "Last Modified on"
+#~ msgstr "Последний раз изменено"
+
+#~ msgid "Main Attachment"
+#~ msgstr "Основное приложение"
+
 #~ msgid "SMS Delivery error"
 #~ msgstr "Ошибка доставки SMS"
 
@@ -609,9 +617,3 @@ msgstr ""
 
 #~ msgid "Followers (Channels)"
 #~ msgstr "Подписчики (каналы)"
-
-#~ msgid "Website Messages"
-#~ msgstr "Сообщения веб-сайта"
-
-#~ msgid "Website communication history"
-#~ msgstr "История общения на сайте"

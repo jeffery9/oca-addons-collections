@@ -314,14 +314,6 @@ msgid "Last Contributor"
 msgstr "Son Katkı Yapan"
 
 #. module: document_page
-#: model:ir.model.fields,field_description:document_page.field_document_page____last_update
-#: model:ir.model.fields,field_description:document_page.field_document_page_create_menu____last_update
-#: model:ir.model.fields,field_description:document_page.field_document_page_history____last_update
-#: model:ir.model.fields,field_description:document_page.field_wizard_document_page_history_show_diff____last_update
-msgid "Last Modified on"
-msgstr "Son değişiklik"
-
-#. module: document_page
 #: model:ir.model.fields,field_description:document_page.field_document_page__write_uid
 #: model:ir.model.fields,field_description:document_page.field_document_page_create_menu__write_uid
 #: model:ir.model.fields,field_description:document_page.field_document_page_history__write_uid
@@ -336,11 +328,6 @@ msgstr "Son Güncelleyen"
 #: model:ir.model.fields,field_description:document_page.field_wizard_document_page_history_show_diff__write_date
 msgid "Last Updated on"
 msgstr "Son Güncelleme"
-
-#. module: document_page
-#: model:ir.model.fields,field_description:document_page.field_document_page__message_main_attachment_id
-msgid "Main Attachment"
-msgstr "Ana Ek"
 
 #. module: document_page
 #: model:res.groups,name:document_page.group_document_manager
@@ -465,6 +452,11 @@ msgid "Parent Menu"
 msgstr "Sayfa Menu"
 
 #. module: document_page
+#: model:ir.model.fields,field_description:document_page.field_document_page__rating_ids
+msgid "Ratings"
+msgstr ""
+
+#. module: document_page
 #: model:ir.model.fields,field_description:document_page.field_document_page__activity_user_id
 msgid "Responsible User"
 msgstr "Sorumlu Kullanıcı"
@@ -550,6 +542,16 @@ msgid "Use it to link resources univocally"
 msgstr "Kaynakları tek anlamlı olarak bağlamak için kullanın"
 
 #. module: document_page
+#: model:ir.model.fields,field_description:document_page.field_document_page__website_message_ids
+msgid "Website Messages"
+msgstr "Web Sitesi Mesajları"
+
+#. module: document_page
+#: model:ir.model.fields,help:document_page.field_document_page__website_message_ids
+msgid "Website communication history"
+msgstr "Web sitesi iletişim geçmişi"
+
+#. module: document_page
 #: model:ir.model,name:document_page.model_document_page_create_menu
 msgid "Wizard Create Menu"
 msgstr "Sihirbaz Oluşturma Menüsü"
@@ -586,6 +588,12 @@ msgstr "ya da"
 msgid "summary"
 msgstr ""
 
+#~ msgid "Last Modified on"
+#~ msgstr "Son değişiklik"
+
+#~ msgid "Main Attachment"
+#~ msgstr "Ana Ek"
+
 #~ msgid "SMS Delivery error"
 #~ msgstr "SMS Mesaj Teslim hatası"
 
@@ -606,9 +614,3 @@ msgstr ""
 
 #~ msgid "Followers (Channels)"
 #~ msgstr "Takipçiler (kanal)"
-
-#~ msgid "Website Messages"
-#~ msgstr "Web Sitesi Mesajları"
-
-#~ msgid "Website communication history"
-#~ msgstr "Web sitesi iletişim geçmişi"
