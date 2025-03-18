@@ -1,0 +1,17 @@
+[project]
+name = "odoo-addons-oca-stock-logistics-transport"
+version = "17.0.20241029.1"
+dependencies = [
+    "odoo-addon-tms>=17.0dev,<17.1dev",
+    "odoo-addon-tms_account>=17.0dev,<17.1dev",
+    "odoo-addon-tms_account_asset>=17.0dev,<17.1dev",
+    "odoo-addon-tms_expense>=17.0dev,<17.1dev",
+    "odoo-addon-tms_product>=17.0dev,<17.1dev",
+    "odoo-addon-tms_purchase>=17.0dev,<17.1dev",
+    "odoo-addon-tms_sale>=17.0dev,<17.1dev",
+]
+classifiers=[
+    "Programming Language :: Python",
+    "Framework :: Odoo",
+    "Framework :: Odoo :: 17.0",
+]
