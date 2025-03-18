@@ -17,7 +17,14 @@ Modules to help remove Odoo branding and advertising.
 
 [//]: # (addons)
 
-This part will be replaced when running the oca-gen-addons-table script from OCA/maintainer-tools.
+Available addons
+----------------
+addon | version | maintainers | summary
+--- | --- | --- | ---
+[disable_odoo_online](disable_odoo_online/) | 17.0.1.0.0 |  | Remove odoo.com Bindings
+[hr_expense_remove_mobile_link](hr_expense_remove_mobile_link/) | 17.0.1.0.0 |  | Remove Odoo Enterprise mobile app download links
+[portal_odoo_debranding](portal_odoo_debranding/) | 17.0.1.0.0 | [![eLBati](https://github.com/eLBati.png?size=30px)](https://github.com/eLBati) [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Remove Odoo Branding from Website
+[remove_odoo_enterprise](remove_odoo_enterprise/) | 17.0.1.0.1 |  | Remove enterprise modules and setting items
 
 [//]: # (end addons)
 

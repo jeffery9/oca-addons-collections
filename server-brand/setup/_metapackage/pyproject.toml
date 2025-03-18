@@ -1,0 +1,14 @@
+[project]
+name = "odoo-addons-oca-server-brand"
+version = "17.0.20250314.0"
+dependencies = [
+    "odoo-addon-disable_odoo_online>=17.0dev,<17.1dev",
+    "odoo-addon-hr_expense_remove_mobile_link>=17.0dev,<17.1dev",
+    "odoo-addon-portal_odoo_debranding>=17.0dev,<17.1dev",
+    "odoo-addon-remove_odoo_enterprise>=17.0dev,<17.1dev",
+]
+classifiers=[
+    "Programming Language :: Python",
+    "Framework :: Odoo",
+    "Framework :: Odoo :: 17.0",
+]
