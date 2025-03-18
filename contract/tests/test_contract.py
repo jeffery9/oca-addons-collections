@@ -8,6 +8,7 @@ from collections import namedtuple
 from datetime import timedelta
 
 from dateutil.relativedelta import relativedelta
+from freezegun import freeze_time
 
 from odoo import fields
 from odoo.exceptions import UserError, ValidationError
@@ -141,7 +142,7 @@ class TestContractBase(common.TransactionCase):
                         0,
                         {
                             "product_id": False,
-                            "name": "Header for Services",
+                            "name": "Header for #INVOICEMONTHNAME# Services",
                             "display_type": "line_section",
                         },
                     ),
@@ -2294,6 +2295,15 @@ class TestContract(TestContractBase):
                 "terminate_comment",
                 to_date("2018-02-13"),
             )
+        # Try terminate contract line with last_date_invoiced allowed
+        self.contract._terminate_contract(
+            self.terminate_reason,
+            "terminate_comment",
+            to_date("2018-02-13"),
+            terminate_lines_with_last_date_invoiced=True,
+        )
+        self.assertTrue(self.contract.is_terminated)
+        self.assertEqual(self.acct_line.date_end, to_date("2018-02-14"))
 
     def test_recurrency_propagation(self):
         # Existing contract
@@ -2385,3 +2395,11 @@ class TestContract(TestContractBase):
         self.assertEqual(len(self.contract._get_related_invoices()), 4)
         self.contract.recurring_create_invoice()
         self.assertEqual(len(self.contract._get_related_invoices()), 4)
+
+    @freeze_time("2023-05-01")
+    def test_check_month_name_marker(self):
+        """Set fixed date to check test correctly."""
+        self.contract3.contract_line_ids.date_start = fields.Date.today()
+        self.contract3.contract_line_ids.recurring_next_date = fields.Date.today()
+        invoice_id = self.contract3.recurring_create_invoice()
+        self.assertEqual(invoice_id.invoice_line_ids[0].name, "Header for May Services")
