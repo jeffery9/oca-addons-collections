@@ -1,13 +1,25 @@
 [project]
 name = "odoo-addons-oca-hr"
-version = "17.0.20240625.0"
+version = "17.0.20250303.0"
 dependencies = [
+    "odoo-addon-hr_announcement>=17.0dev,<17.1dev",
+    "odoo-addon-hr_course>=17.0dev,<17.1dev",
     "odoo-addon-hr_department_code>=17.0dev,<17.1dev",
+    "odoo-addon-hr_employee_age>=17.0dev,<17.1dev",
+    "odoo-addon-hr_employee_calendar_planning>=17.0dev,<17.1dev",
     "odoo-addon-hr_employee_document>=17.0dev,<17.1dev",
     "odoo-addon-hr_employee_firstname>=17.0dev,<17.1dev",
+    "odoo-addon-hr_employee_partner_external>=17.0dev,<17.1dev",
+    "odoo-addon-hr_employee_ppe>=17.0dev,<17.1dev",
+    "odoo-addon-hr_employee_relative>=17.0dev,<17.1dev",
     "odoo-addon-hr_employee_second_lastname>=17.0dev,<17.1dev",
+    "odoo-addon-hr_employee_ssn>=17.0dev,<17.1dev",
     "odoo-addon-hr_holidays_settings>=17.0dev,<17.1dev",
+    "odoo-addon-hr_job_category>=17.0dev,<17.1dev",
     "odoo-addon-hr_personal_equipment_request>=17.0dev,<17.1dev",
+    "odoo-addon-hr_professional_category>=17.0dev,<17.1dev",
+    "odoo-addon-hr_study>=17.0dev,<17.1dev",
+    "odoo-addon-hr_work_entry_profile>=17.0dev,<17.1dev",
 ]
 classifiers=[
     "Programming Language :: Python",
