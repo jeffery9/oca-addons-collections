@@ -4,11 +4,11 @@
 
 {
     "name": "MRP Multi Level",
-    "version": "17.0.1.0.1",
+    "version": "17.0.1.2.8",
     "development_status": "Production/Stable",
     "license": "LGPL-3",
     "author": "Ucamco, ForgeFlow, Odoo Community Association (OCA)",
-    "maintainers": ["JordiBForgeFlow", "LoisRForgeFlow", "ChrisOForgeFlow"],
+    "maintainers": ["JordiBForgeFlow", "LoisRForgeFlow"],
     "summary": "Adds an MRP Scheduler",
     "website": "https://github.com/OCA/manufacture",
     "category": "Manufacturing",
