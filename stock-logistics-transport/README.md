@@ -17,7 +17,17 @@ TODO: add repo description.
 
 [//]: # (addons)
 
-This part will be replaced when running the oca-gen-addons-table script from OCA/maintainer-tools.
+Available addons
+----------------
+addon | version | maintainers | summary
+--- | --- | --- | ---
+[tms](tms/) | 17.0.1.1.0 | [![max3903](https://github.com/max3903.png?size=30px)](https://github.com/max3903) [![santiagordz](https://github.com/santiagordz.png?size=30px)](https://github.com/santiagordz) [![EdgarRetes](https://github.com/EdgarRetes.png?size=30px)](https://github.com/EdgarRetes) | Manage Vehicles, Drivers, Routes and Trips
+[tms_account](tms_account/) | 17.0.1.0.0 | [![max3903](https://github.com/max3903.png?size=30px)](https://github.com/max3903) [![santiagordz](https://github.com/santiagordz.png?size=30px)](https://github.com/santiagordz) [![EdgarRetes](https://github.com/EdgarRetes.png?size=30px)](https://github.com/EdgarRetes) | Track invoices linked to TMS orders
+[tms_account_asset](tms_account_asset/) | 17.0.1.0.0 | [![max3903](https://github.com/max3903.png?size=30px)](https://github.com/max3903) [![santiagordz](https://github.com/santiagordz.png?size=30px)](https://github.com/santiagordz) [![EdgarRetes](https://github.com/EdgarRetes.png?size=30px)](https://github.com/EdgarRetes) | Manage TMS assets
+[tms_expense](tms_expense/) | 17.0.1.0.0 | [![max3903](https://github.com/max3903.png?size=30px)](https://github.com/max3903) [![santiagordz](https://github.com/santiagordz.png?size=30px)](https://github.com/santiagordz) [![EdgarRetes](https://github.com/EdgarRetes.png?size=30px)](https://github.com/EdgarRetes) | Manage expenses of a trip: hotel, tolls, fuel
+[tms_product](tms_product/) | 17.0.1.0.0 | [![max3903](https://github.com/max3903.png?size=30px)](https://github.com/max3903) [![santiagordz](https://github.com/santiagordz.png?size=30px)](https://github.com/santiagordz) [![EdgarRetes](https://github.com/EdgarRetes.png?size=30px)](https://github.com/EdgarRetes) | Manage Vehicles as Products
+[tms_purchase](tms_purchase/) | 17.0.1.0.0 | [![max3903](https://github.com/max3903.png?size=30px)](https://github.com/max3903) [![santiagordz](https://github.com/santiagordz.png?size=30px)](https://github.com/santiagordz) [![EdgarRetes](https://github.com/EdgarRetes.png?size=30px)](https://github.com/EdgarRetes) | Manage purchase requests to drivers and other suppliers
+[tms_sale](tms_sale/) | 17.0.1.0.0 | [![max3903](https://github.com/max3903.png?size=30px)](https://github.com/max3903) [![santiagordz](https://github.com/santiagordz.png?size=30px)](https://github.com/santiagordz) [![EdgarRetes](https://github.com/EdgarRetes.png?size=30px)](https://github.com/EdgarRetes) | Sell transportation management system.
 
 [//]: # (end addons)
 
