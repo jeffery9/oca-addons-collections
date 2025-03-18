@@ -1,9 +1,10 @@
 # Do NOT update manually; changes here will be overwritten by Copier
-_commit: v1.21.1
+_commit: v1.29
 _src_path: gh:oca/oca-addons-repo-template
 additional_ruff_rules: []
 ci: GitHub
 convert_readme_fragments_to_markdown: true
+enable_checklog_odoo: false
 generate_requirements_txt: true
 github_check_license: true
 github_ci_extra_env: {}
@@ -16,7 +17,8 @@ odoo_test_flavor: Both
 odoo_version: 17.0
 org_name: Odoo Community Association (OCA)
 org_slug: OCA
-rebel_module_groups: []
+rebel_module_groups:
+- pos_lot_barcode
 repo_description: Odoo modules for Point of Sale.
 repo_name: Point of Sale
 repo_slug: pos
