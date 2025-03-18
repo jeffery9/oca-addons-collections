@@ -4,12 +4,12 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 14.0\n"
+"Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-01-20 11:06+0000\n"
-"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"PO-Revision-Date: 2024-08-26 11:06+0000\n"
+"Last-Translator: Metin GÜLSOY <metin.gulsoy@kitayazilim.com>\n"
 "Language-Team: none\n"
-"Language: it\n"
+"Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -19,13 +19,13 @@ msgstr ""
 #. module: sale_commission_salesman
 #: model:ir.model,name:sale_commission_salesman.model_res_partner
 msgid "Contact"
-msgstr "Contatto"
+msgstr "Kontak"
 
 #. module: sale_commission_salesman
 #: model:ir.model.fields,field_description:sale_commission_salesman.field_res_partner__salesman_as_agent
 #: model:ir.model.fields,field_description:sale_commission_salesman.field_res_users__salesman_as_agent
 msgid "Convert salesman into agent"
-msgstr "Converti addetto alle vendite in agente"
+msgstr "Satıcıyı temsilciye çevirin"
 
 #. module: sale_commission_salesman
 #: model:ir.model.fields,help:sale_commission_salesman.field_res_partner__salesman_as_agent
@@ -35,23 +35,22 @@ msgid ""
 "commission rule is triggered, this agent will be added as the commission "
 "agent"
 msgstr ""
-"Se l'utente collegato a questo partner è inserito come venditore e non "
-"vengono attivare altre regole di provvigione, questo agente verrà aggiunto "
-"come agente della provvigione"
+"Bu ortağa bağlı kullanıcı satıcı olarak belirlenmişse ve başka bir komisyon\n"
+"kuralı tetiklenmemişse, bu temsilci komisyon temsilcisi olarak eklenecektir"
 
 #. module: sale_commission_salesman
 #: model:ir.model,name:sale_commission_salesman.model_account_move_line
 msgid "Journal Item"
-msgstr "Movimento contabile"
+msgstr "Yevmiye Öğesi"
 
 #. module: sale_commission_salesman
 #: model:ir.model,name:sale_commission_salesman.model_sale_order_line
 msgid "Sales Order Line"
-msgstr "Riga ordine di vendita"
+msgstr "Satış Sipariş Satırı"
 
 #. module: sale_commission_salesman
 #. odoo-python
 #: code:addons/sale_commission_salesman/models/res_partner.py:0
 #, python-format
 msgid "You can't have a salesman auto-agent without commission."
-msgstr "Non si può avere un venditore auto-agente senza provvigione."
+msgstr ""
