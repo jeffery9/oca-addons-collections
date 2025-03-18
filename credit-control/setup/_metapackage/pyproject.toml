@@ -1,10 +1,16 @@
 [project]
 name = "odoo-addons-oca-credit-control"
-version = "17.0.20240709.0"
+version = "17.0.20250220.0"
 dependencies = [
+    "odoo-addon-account_credit_control>=17.0dev,<17.1dev",
+    "odoo-addon-account_credit_control_dunning_fees>=17.0dev,<17.1dev",
     "odoo-addon-account_financial_risk>=17.0dev,<17.1dev",
     "odoo-addon-account_invoice_overdue_warn>=17.0dev,<17.1dev",
+    "odoo-addon-account_invoice_overdue_warn_sale>=17.0dev,<17.1dev",
+    "odoo-addon-account_payment_return_financial_risk>=17.0dev,<17.1dev",
+    "odoo-addon-partner_risk_insurance>=17.0dev,<17.1dev",
     "odoo-addon-sale_financial_risk>=17.0dev,<17.1dev",
+    "odoo-addon-sale_financial_risk_info>=17.0dev,<17.1dev",
 ]
 classifiers=[
     "Programming Language :: Python",
