@@ -41,6 +41,7 @@
                         </group>
                         <group name="config">
                             <field name="exchange_filename_pattern" />
+                            <field name="exchange_filename_sequence_id" />
                             <field name="exchange_file_ext" />
                             <field name="exchange_file_auto_generate" />
                             <field name="ack_type_id" />
@@ -48,6 +49,19 @@
                             <field name="partner_ids" widget="many2many_tags" />
                             <field name="job_channel_id" />
                             <field name="quick_exec" />
+                            <field name="encoding" />
+                            <field
+                                name="encoding_out_error_handler"
+                                invisible="direction == 'input'"
+                            />
+                            <field
+                                name="encoding_in_error_handler"
+                                invisible="direction == 'output'"
+                            />
+                            <field
+                                name="allow_empty_files_on_receive"
+                                invisible="direction == 'output'"
+                            />
                         </group>
                     </group>
                     <notebook>
@@ -67,12 +81,10 @@
                             string="Model rules"
                             groups="edi_oca.group_edi_advanced_settings_manager"
                         >
-                            <field
-                                name="rule_ids"
-                                context="{'default_type_id': active_id}"
-                            >
+                            <field name="id" invisible="1" />
+                            <field name="rule_ids" context="{'default_type_id': id}">
                                 <tree decoration-muted="(not active)">
-                                    <field name="active" invisible="1" />
+                                    <field name="active" widget="boolean_toggle" />
                                     <field name="name" />
                                     <field name="model_id" />
                                     <field name="kind" />
@@ -135,7 +147,14 @@
         <field name="view_mode">tree,form</field>
         <field name="search_view_id" ref="edi_exchange_type_view_search" />
         <field name="domain">[]</field>
-        <field name="context">{'search_default_filter_all': 1}</field>
+        <!--
+          `active_test` here is fundamental to see archived `rule_ids`.
+          Reason: when related fields are loaded with a `read`
+          the ctx that you could set at field level on the view is lost.
+        -->
+        <field
+            name="context"
+        >{'search_default_filter_all': 1, 'active_test': False}</field>
     </record>
     <record
         model="ir.actions.act_window.view"

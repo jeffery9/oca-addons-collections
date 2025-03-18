@@ -6,13 +6,18 @@
             <tree decoration-muted="(not active)">
                 <field name="name" />
                 <field name="active" />
+                <field
+                    name="company_id"
+                    groups="base.group_multi_company"
+                    optional="hide"
+                />
             </tree>
         </field>
     </record>
     <record id="edi_backend_view_form" model="ir.ui.view">
         <field name="model">edi.backend</field>
         <field name="arch" type="xml">
-            <form string="EDI Backend">
+            <form>
                 <sheet>
                     <widget
                         name="web_ribbon"
@@ -45,8 +50,11 @@
                         </h2>
                     </div>
                     <group>
+                        <!-- can be used to hide elements based on the backend type, e.g. notebook pages -->
+                        <field name="backend_type_code" invisible="1" />
                         <field name="output_sent_processed_auto" />
                         <field name="active" invisible="1" />
+                        <field name="company_id" groups="base.group_multi_company" />
                     </group>
                     <!-- Hook to add more config -->
                     <notebook />
