@@ -23,7 +23,7 @@ class DdmrpWarningDefinition(models.Model):
     )
     severity = fields.Selection(
         selection=[("1_low", "Low"), ("2_mid", "Medium"), ("3_high", "High")],
-        default="mid",
+        default="2_mid",
     )
     active = fields.Boolean(default=True)
     warning_domain = fields.Char(
@@ -31,6 +31,11 @@ class DdmrpWarningDefinition(models.Model):
         default="[]",
         help="Domain based on Stock Buffer, to define if the "
         "warning is applicable or not.",
+    )
+    ddmrp_warning_item_ids = fields.One2many(
+        comodel_name="ddmrp.warning.item",
+        inverse_name="warning_definition_id",
+        readonly=True,
     )
 
     def _eval_warning_domain(self, buffer, domain):
@@ -64,4 +69,11 @@ class DdmrpWarningDefinition(models.Model):
                 _("Error evaluating %(name)s.\n %(error)s")
                 % ({"name": self._name, "error": error})
             ) from error
+        return res
+
+    def write(self, vals):
+        # Unlink warning items when definition is archived
+        res = super().write(vals)
+        if "active" in vals and not vals.get("active"):
+            self.ddmrp_warning_item_ids.unlink()
         return res
