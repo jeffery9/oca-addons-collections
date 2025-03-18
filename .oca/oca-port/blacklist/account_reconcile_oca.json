@@ -1,0 +1,9 @@
+{
+  "pull_requests": {
+    "orphaned_commits": "Not needed",
+    "OCA/account-reconcile#500": "Not needed",
+    "OCA/account-reconcile#662": "Not needed",
+    "OCA/account-reconcile#702": "Already in v17",
+    "OCA/account-reconcile#758": "Cherry picked features"
+  }
+}

@@ -2,12 +2,15 @@
 import {formatDate, parseDate} from "@web/core/l10n/dates";
 import {formatMonetary} from "@web/views/fields/formatters";
 import {registry} from "@web/core/registry";
+import {useService} from "@web/core/utils/hooks";
 
 const {Component} = owl;
 
 export class AccountReconcileDataWidget extends Component {
     setup() {
         super.setup(...arguments);
+        this.orm = useService("orm");
+        this.action = useService("action");
         this.foreignCurrency =
             this.props &&
             this.props.record &&
@@ -32,6 +35,7 @@ export class AccountReconcileDataWidget extends Component {
             });
             data[line].amount_currency_format = formatMonetary(
                 data[line].currency_amount,
+                undefined,
                 {
                     currencyId: data[line].line_currency_id,
                 }
@@ -51,6 +55,7 @@ export class AccountReconcileDataWidget extends Component {
         return data;
     }
     onTrashLine(ev, line) {
+        ev.stopPropagation();
         this.props.record.update({
             manual_reference: line.reference,
             manual_delete: true,
@@ -67,6 +72,15 @@ export class AccountReconcileDataWidget extends Component {
             },
         });
         this.env.bus.trigger("RECONCILE_PAGE_NAVIGATE", triggerEv);
+    }
+    async openMove(ev, moveId) {
+        ev.preventDefault();
+        ev.stopPropagation();
+        console.log(moveId);
+        const action = await this.orm.call("account.move", "get_formview_action", [
+            [moveId],
+        ]);
+        this.action.doAction(action);
     }
 }
 AccountReconcileDataWidget.template = "account_reconcile_oca.ReconcileDataWidget";
