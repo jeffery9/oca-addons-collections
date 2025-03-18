@@ -1,12 +1,30 @@
 [project]
 name = "odoo-addons-oca-account-invoicing"
-version = "17.0.20240503.0"
+version = "17.0.20250311.0"
 dependencies = [
+    "odoo-addon-account_global_discount>=17.0dev,<17.1dev",
+    "odoo-addon-account_invoice_block_payment>=17.0dev,<17.1dev",
+    "odoo-addon-account_invoice_blocking>=17.0dev,<17.1dev",
     "odoo-addon-account_invoice_crm_tag>=17.0dev,<17.1dev",
     "odoo-addon-account_invoice_fixed_discount>=17.0dev,<17.1dev",
+    "odoo-addon-account_invoice_pricelist>=17.0dev,<17.1dev",
     "odoo-addon-account_invoice_refund_link>=17.0dev,<17.1dev",
+    "odoo-addon-account_invoice_section_sale_order>=17.0dev,<17.1dev",
+    "odoo-addon-account_invoice_show_currency_rate>=17.0dev,<17.1dev",
+    "odoo-addon-account_invoice_subscription_per_contact>=17.0dev,<17.1dev",
     "odoo-addon-account_invoice_transmit_method>=17.0dev,<17.1dev",
     "odoo-addon-account_invoice_warn_message>=17.0dev,<17.1dev",
+    "odoo-addon-account_manual_currency>=17.0dev,<17.1dev",
+    "odoo-addon-account_move_cancel_confirm>=17.0dev,<17.1dev",
+    "odoo-addon-account_move_tier_validation>=17.0dev,<17.1dev",
+    "odoo-addon-partner_invoicing_mode>=17.0dev,<17.1dev",
+    "odoo-addon-portal_account_personal_data_only>=17.0dev,<17.1dev",
+    "odoo-addon-product_form_account_move_line_link>=17.0dev,<17.1dev",
+    "odoo-addon-purchase_stock_picking_return_invoicing>=17.0dev,<17.1dev",
+    "odoo-addon-sale_invoicing_date_selection>=17.0dev,<17.1dev",
+    "odoo-addon-sale_order_invoicing_grouping_criteria>=17.0dev,<17.1dev",
+    "odoo-addon-sale_order_invoicing_qty_percentage>=17.0dev,<17.1dev",
+    "odoo-addon-stock_picking_invoicing>=17.0dev,<17.1dev",
 ]
 classifiers=[
     "Programming Language :: Python",
