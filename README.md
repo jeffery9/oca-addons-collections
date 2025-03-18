@@ -17,7 +17,13 @@ TODO: add repo description.
 
 [//]: # (addons)
 
-This part will be replaced when running the oca-gen-addons-table script from OCA/maintainer-tools.
+Available addons
+----------------
+addon | version | maintainers | summary
+--- | --- | --- | ---
+[dms](dms/) | 17.0.1.2.1 |  | Document Management System for Odoo
+[dms_attachment_link](dms_attachment_link/) | 17.0.1.0.1 | [![victoralmau](https://github.com/victoralmau.png?size=30px)](https://github.com/victoralmau) | Dms Attachment Link
+[dms_storage](dms_storage/) | 17.0.1.0.0 |  | Integrate DMS with external Storages
 
 [//]: # (end addons)
 

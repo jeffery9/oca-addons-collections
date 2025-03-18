@@ -1,0 +1,13 @@
+[project]
+name = "odoo-addons-oca-dms"
+version = "17.0.20241011.0"
+dependencies = [
+    "odoo-addon-dms>=17.0dev,<17.1dev",
+    "odoo-addon-dms_attachment_link>=17.0dev,<17.1dev",
+    "odoo-addon-dms_storage>=17.0dev,<17.1dev",
+]
+classifiers=[
+    "Programming Language :: Python",
+    "Framework :: Odoo",
+    "Framework :: Odoo :: 17.0",
+]
