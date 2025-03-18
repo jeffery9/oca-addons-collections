@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-11-12 17:40+0000\n"
+"PO-Revision-Date: 2024-09-19 01:06+0000\n"
 "Last-Translator: Ignacio Buioli <ibuioli@gmail.com>\n"
 "Language-Team: none\n"
 "Language: es_AR\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. module: brand
 #: model:ir.model.fields,help:brand.field_res_brand__type
@@ -27,6 +27,16 @@ msgid ""
 "default when you deliver an order that belongs to this company.\n"
 "- Other: Other address for the company (e.g. subsidiary, ...)"
 msgstr ""
+"- Contacto: Utilice esta opción para organizar los datos de contacto de los "
+"empleados de una empresa determinada (por ej., director ejecutivo, director "
+"financiero, etc.).\n"
+"- Dirección de facturación: Dirección preferida para todas las facturas. "
+"Seleccionada de forma predeterminada cuando factura un pedido que pertenece "
+"a esta empresa.\n"
+"- Dirección de entrega: Dirección preferida para todas las entregas. "
+"Seleccionada de forma predeterminada cuando entrega un pedido que pertenece "
+"a esta empresa.\n"
+"- Otro: Otra dirección de la empresa (por ej., filial, etc.)"
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__property_account_payable_id
@@ -72,11 +82,6 @@ msgstr "Estado de Actividad"
 #: model:ir.model.fields,field_description:brand.field_res_brand__activity_type_icon
 msgid "Activity Type Icon"
 msgstr "Icono de Tipo de Actividad"
-
-#. module: brand
-#: model:ir.model.fields,field_description:brand.field_res_brand__additional_info
-msgid "Additional info"
-msgstr "Información adicional"
 
 #. module: brand
 #: model_terms:ir.ui.view,arch_db:brand.res_brand_form_view
@@ -151,16 +156,6 @@ msgstr "Código de Barras"
 #: model:ir.model.fields,field_description:brand.field_res_brand__is_blacklisted
 msgid "Blacklist"
 msgstr "Lista Negra"
-
-#. module: brand
-#: model:ir.model.fields,field_description:brand.field_res_brand__mobile_blacklisted
-msgid "Blacklisted Phone Is Mobile"
-msgstr "El Teléfono de la Lista Negra es Celular"
-
-#. module: brand
-#: model:ir.model.fields,field_description:brand.field_res_brand__phone_blacklisted
-msgid "Blacklisted Phone is Phone"
-msgstr "El Teléfono de la Lista Negra es Fijo"
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__message_bounce
@@ -245,6 +240,10 @@ msgid ""
 "             List available at https://docs.peppol.eu/poacc/billing/3.0/"
 "codelist/eas/"
 msgstr ""
+"Código utilizado para identificar el Endpoint para Facturación BIS 3.0 y sus "
+"derivados.\n"
+"             Lista disponible en https://docs.peppol.eu/poacc/billing/3.0/"
+"codelist/eas/"
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__color
@@ -293,11 +292,6 @@ msgid "Company Type"
 msgstr "Tipo de Compañía"
 
 #. module: brand
-#: model:ir.model.fields,field_description:brand.field_res_brand__partner_gid
-msgid "Company database ID"
-msgstr "ID de la base de datos de la Empresa"
-
-#. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__contact_address
 msgid "Complete Address"
 msgstr "Dirección Completa"
@@ -305,7 +299,7 @@ msgstr "Dirección Completa"
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__complete_name
 msgid "Complete Name"
-msgstr ""
+msgstr "Nombre Completo"
 
 #. module: brand
 #: model:ir.model,name:brand.model_res_config_settings
@@ -360,7 +354,7 @@ msgstr "Límite de Crédito"
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__credit_to_invoice
 msgid "Credit To Invoice"
-msgstr ""
+msgstr "Crédito A Facturar"
 
 #. module: brand
 #: model:ir.model.fields,help:brand.field_res_brand__credit_limit
@@ -390,7 +384,7 @@ msgstr "Fecha"
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__days_sales_outstanding
 msgid "Days Sales Outstanding (DSO)"
-msgstr ""
+msgstr "Días de Ventas Pendientes de Cobro (DSO)"
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__trust
@@ -434,18 +428,9 @@ msgid "Employee"
 msgstr "Empleado"
 
 #. module: brand
-#: model:ir.model.fields,help:brand.field_res_brand__phone_sanitized
-msgid ""
-"Field used to store sanitized phone number. Helps speeding up searches and "
-"comparisons."
-msgstr ""
-"Campo utilizado para almacenar el número de teléfono. Ayuda a acelerar las "
-"búsquedas y las comparaciones."
-
-#. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__fiscal_country_codes
 msgid "Fiscal Country Codes"
-msgstr ""
+msgstr "Códigos Fiscales de los Países"
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__property_account_position_id
@@ -470,7 +455,7 @@ msgstr "Icono de Font awesome ej. fa-tasks"
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__ubl_cii_format
 msgid "Format"
-msgstr ""
+msgstr "Formato"
 
 #. module: brand
 #: model:ir.model.fields,help:brand.field_res_brand__email_formatted
@@ -503,6 +488,11 @@ msgid "Has Unreconciled Entries"
 msgstr "Tiene Entradas no Reconciliadas"
 
 #. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__hide_peppol_fields
+msgid "Hide Peppol Fields"
+msgstr ""
+
+#. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__id
 msgid "ID"
 msgstr "ID"
@@ -529,7 +519,6 @@ msgstr "Si está marcado, los nuevos mensajes requieren su atención."
 
 #. module: brand
 #: model:ir.model.fields,help:brand.field_res_brand__message_has_error
-#: model:ir.model.fields,help:brand.field_res_brand__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr "Si está marcado, algunos mensajes tienen un error de entrega."
 
@@ -550,15 +539,6 @@ msgid ""
 msgstr ""
 "Si la dirección de correo electrónico está en la lista negra, el contacto ya "
 "no recibirá correos masivos, de ninguna lista"
-
-#. module: brand
-#: model:ir.model.fields,help:brand.field_res_brand__phone_sanitized_blacklisted
-msgid ""
-"If the sanitized phone number is on the blacklist, the contact won't receive "
-"mass mailing sms anymore, from any list"
-msgstr ""
-"Si el número de teléfonosanitizado está en la lista negra, el contacto ya no "
-"recibirá sms de correo masivo, de ninguna lista"
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__image_1920
@@ -586,28 +566,6 @@ msgid "Image 512"
 msgstr "Imagen 512"
 
 #. module: brand
-#: model:ir.model.fields,help:brand.field_res_brand__mobile_blacklisted
-msgid ""
-"Indicates if a blacklisted sanitized phone number is a mobile number. Helps "
-"distinguish which number is blacklisted             when there is both a "
-"mobile and phone field in a model."
-msgstr ""
-"Indica si un número de teléfono sanitizado en la lista negra es un número de "
-"celular. Ayuda a distinguir qué número está en la lista negra             "
-"cuando hay un campo de teléfono móvil y de teléfono en un modelo."
-
-#. module: brand
-#: model:ir.model.fields,help:brand.field_res_brand__phone_blacklisted
-msgid ""
-"Indicates if a blacklisted sanitized phone number is a phone number. Helps "
-"distinguish which number is blacklisted             when there is both a "
-"mobile and phone field in a model."
-msgstr ""
-"Indica si un número de teléfono sanitizado en la lista negra es un número de "
-"celular. Ayuda a distinguir qué número está en la lista negra             "
-"cuando hay un campo de teléfono móvil y de teléfono en un modelo."
-
-#. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__industry_id
 msgid "Industry"
 msgstr "Industria"
@@ -615,7 +573,7 @@ msgstr "Industria"
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__contact_address_inline
 msgid "Inlined Complete Address"
-msgstr ""
+msgstr "Dirección Completa en Línea"
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__invoice_warn
@@ -626,6 +584,11 @@ msgstr "Factura"
 #: model:ir.model.fields,field_description:brand.field_res_brand__invoice_ids
 msgid "Invoices"
 msgstr "Facturas"
+
+#. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__is_coa_installed
+msgid "Is Coa Installed"
+msgstr ""
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__message_is_follower
@@ -826,27 +789,17 @@ msgstr "Tokens de Pago"
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__peppol_endpoint
 msgid "Peppol Endpoint"
-msgstr ""
+msgstr "Endpoint de Peppol"
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__peppol_eas
 msgid "Peppol e-address (EAS)"
-msgstr ""
+msgstr "Dirección Electrónica Peppol (EAS)"
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__phone
 msgid "Phone"
 msgstr "Teléfono"
-
-#. module: brand
-#: model:ir.model.fields,field_description:brand.field_res_brand__phone_sanitized_blacklisted
-msgid "Phone Blacklisted"
-msgstr "Teléfono en Lista Negra"
-
-#. module: brand
-#: model:ir.model.fields,field_description:brand.field_res_brand__phone_mobile_search
-msgid "Phone/Mobile"
-msgstr "Teléfono/Celular"
 
 #. module: brand
 #: model:ir.model.fields,help:brand.field_res_brand__property_payment_method_id
@@ -886,11 +839,6 @@ msgid "Responsible User"
 msgstr "Usuario Responsable"
 
 #. module: brand
-#: model:ir.model.fields,field_description:brand.field_res_brand__message_has_sms_error
-msgid "SMS Delivery error"
-msgstr "Error de entrega de SMS"
-
-#. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__sale_order_count
 msgid "Sale Order Count"
 msgstr "Cuenta del Pedido de Venta"
@@ -914,11 +862,6 @@ msgstr "Advertencias de Ventas"
 #: model:ir.model.fields,field_description:brand.field_res_brand__user_id
 msgid "Salesperson"
 msgstr "Vendedor"
-
-#. module: brand
-#: model:ir.model.fields,field_description:brand.field_res_brand__phone_sanitized
-msgid "Sanitized Number"
-msgstr "Número Sanitizado"
 
 #. module: brand
 #: model:ir.model.fields,help:brand.field_res_brand__invoice_warn
@@ -976,7 +919,7 @@ msgstr "URL de Registro"
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__starred_message_ids
 msgid "Starred Message"
-msgstr ""
+msgstr "Mensaje Destacado"
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__state_id
@@ -1189,6 +1132,8 @@ msgid ""
 "Unique identifier used by the BIS Billing 3.0 and its derivatives, also "
 "known as 'Endpoint ID'."
 msgstr ""
+"Identificador único utilizado por Facturación BIS 3.0 y sus derivados, "
+"también conocido como 'Endpoint ID'."
 
 #. module: brand
 #: model:ir.model.fields,help:brand.field_res_brand__barcode
@@ -1257,6 +1202,8 @@ msgid ""
 "[(Total Receivable/Total Revenue) * number of days since the first invoice] "
 "for this customer"
 msgstr ""
+"[(Total de cuentas por cobrar/Ingresos totales) * número de días desde la "
+"primera factura] para este cliente"
 
 #. module: brand
 #: model_terms:ir.ui.view,arch_db:brand.res_brand_form_view
@@ -1267,6 +1214,64 @@ msgstr "ej. BE0477472701"
 #: model_terms:ir.ui.view,arch_db:brand.res_brand_form_view
 msgid "e.g. https://www.odoo.com"
 msgstr "ej. https://www.odoo.com"
+
+#~ msgid "Additional info"
+#~ msgstr "Información adicional"
+
+#~ msgid "Blacklisted Phone Is Mobile"
+#~ msgstr "El Teléfono de la Lista Negra es Celular"
+
+#~ msgid "Blacklisted Phone is Phone"
+#~ msgstr "El Teléfono de la Lista Negra es Fijo"
+
+#~ msgid "Company database ID"
+#~ msgstr "ID de la base de datos de la Empresa"
+
+#~ msgid ""
+#~ "Field used to store sanitized phone number. Helps speeding up searches "
+#~ "and comparisons."
+#~ msgstr ""
+#~ "Campo utilizado para almacenar el número de teléfono. Ayuda a acelerar "
+#~ "las búsquedas y las comparaciones."
+
+#~ msgid ""
+#~ "If the sanitized phone number is on the blacklist, the contact won't "
+#~ "receive mass mailing sms anymore, from any list"
+#~ msgstr ""
+#~ "Si el número de teléfonosanitizado está en la lista negra, el contacto ya "
+#~ "no recibirá sms de correo masivo, de ninguna lista"
+
+#~ msgid ""
+#~ "Indicates if a blacklisted sanitized phone number is a mobile number. "
+#~ "Helps distinguish which number is blacklisted             when there is "
+#~ "both a mobile and phone field in a model."
+#~ msgstr ""
+#~ "Indica si un número de teléfono sanitizado en la lista negra es un número "
+#~ "de celular. Ayuda a distinguir qué número está en la lista "
+#~ "negra             cuando hay un campo de teléfono móvil y de teléfono en "
+#~ "un modelo."
+
+#~ msgid ""
+#~ "Indicates if a blacklisted sanitized phone number is a phone number. "
+#~ "Helps distinguish which number is blacklisted             when there is "
+#~ "both a mobile and phone field in a model."
+#~ msgstr ""
+#~ "Indica si un número de teléfono sanitizado en la lista negra es un número "
+#~ "de celular. Ayuda a distinguir qué número está en la lista "
+#~ "negra             cuando hay un campo de teléfono móvil y de teléfono en "
+#~ "un modelo."
+
+#~ msgid "Phone Blacklisted"
+#~ msgstr "Teléfono en Lista Negra"
+
+#~ msgid "Phone/Mobile"
+#~ msgstr "Teléfono/Celular"
+
+#~ msgid "SMS Delivery error"
+#~ msgstr "Error de entrega de SMS"
+
+#~ msgid "Sanitized Number"
+#~ msgstr "Número Sanitizado"
 
 #~ msgid "# Vendor Bills"
 #~ msgstr "# Facturas de Proveedor"
@@ -1299,8 +1304,8 @@ msgstr "ej. https://www.odoo.com"
 #~ "<span class=\"o_form_label\">Brand</span>\n"
 #~ "                                <span class=\"fa fa-lg fa-building-o\" "
 #~ "title=\"Values set here are company-specific.\" aria-label=\"Values set "
-#~ "here are company-specific.\" groups=\"base.group_multi_company\" role="
-#~ "\"img\"/>"
+#~ "here are company-specific.\" groups=\"base.group_multi_company\" "
+#~ "role=\"img\"/>"
 #~ msgstr ""
 #~ "<span class=\"o_form_label\">Marca</span>\n"
 #~ "                                <span class=\"fa fa-lg fa-building-o\" "

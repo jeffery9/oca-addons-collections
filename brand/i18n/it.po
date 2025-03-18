@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-02-27 17:36+0000\n"
+"PO-Revision-Date: 2025-01-31 16:06+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. module: brand
 #: model:ir.model.fields,help:brand.field_res_brand__type
@@ -81,11 +81,6 @@ msgstr "Stato attività"
 #: model:ir.model.fields,field_description:brand.field_res_brand__activity_type_icon
 msgid "Activity Type Icon"
 msgstr "Icona tipo attività"
-
-#. module: brand
-#: model:ir.model.fields,field_description:brand.field_res_brand__additional_info
-msgid "Additional info"
-msgstr "Informazioni aggiuntive"
 
 #. module: brand
 #: model_terms:ir.ui.view,arch_db:brand.res_brand_form_view
@@ -160,16 +155,6 @@ msgstr "Codice a barre"
 #: model:ir.model.fields,field_description:brand.field_res_brand__is_blacklisted
 msgid "Blacklist"
 msgstr "Blacklist"
-
-#. module: brand
-#: model:ir.model.fields,field_description:brand.field_res_brand__mobile_blacklisted
-msgid "Blacklisted Phone Is Mobile"
-msgstr "Il numero in blacklist è un cellulare"
-
-#. module: brand
-#: model:ir.model.fields,field_description:brand.field_res_brand__phone_blacklisted
-msgid "Blacklisted Phone is Phone"
-msgstr "Il numero in blacklist è un telefono fisso"
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__message_bounce
@@ -303,11 +288,6 @@ msgid "Company Type"
 msgstr "Tipo azienda"
 
 #. module: brand
-#: model:ir.model.fields,field_description:brand.field_res_brand__partner_gid
-msgid "Company database ID"
-msgstr "ID database azienda"
-
-#. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__contact_address
 msgid "Complete Address"
 msgstr "Indirizzo completo"
@@ -338,7 +318,7 @@ msgstr "Contatto"
 #. module: brand
 #: model:ir.model.fields,help:brand.field_res_brand__message_bounce
 msgid "Counter of the number of bounced emails for this contact"
-msgstr "Contatore del numero di email respinte per questo contatto"
+msgstr "Contatore del numero di e-mail respinte per questo contatto"
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__country_id
@@ -384,7 +364,7 @@ msgstr "Valuta"
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__property_payment_term_id
 msgid "Customer Payment Terms"
-msgstr "Temini pagamento cliente"
+msgstr "Termini pagamento cliente"
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__customer_rank
@@ -441,15 +421,6 @@ msgstr "E-mail"
 #: model:ir.model.fields,field_description:brand.field_res_brand__employee
 msgid "Employee"
 msgstr "Dipendente"
-
-#. module: brand
-#: model:ir.model.fields,help:brand.field_res_brand__phone_sanitized
-msgid ""
-"Field used to store sanitized phone number. Helps speeding up searches and "
-"comparisons."
-msgstr ""
-"Campo utilizzato per salvare il numero di telefono ripulito. Aiuta ad "
-"accelerare ricerche e comparazioni."
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__fiscal_country_codes
@@ -512,6 +483,11 @@ msgid "Has Unreconciled Entries"
 msgstr "Ha entrate non riconciliate"
 
 #. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__hide_peppol_fields
+msgid "Hide Peppol Fields"
+msgstr "Nascondi campi Peppol"
+
+#. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__id
 msgid "ID"
 msgstr "ID"
@@ -538,7 +514,6 @@ msgstr "Se selezionata, nuovi messaggi richiedono attenzione."
 
 #. module: brand
 #: model:ir.model.fields,help:brand.field_res_brand__message_has_error
-#: model:ir.model.fields,help:brand.field_res_brand__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr "Se selezionata, alcuni messaggi hanno un errore di consegna."
 
@@ -559,15 +534,6 @@ msgid ""
 msgstr ""
 "Se l'indirizzo e-mail è sulla lista nera, il contatto non riceverà più la "
 "posta di massa, da qualsiasi lista"
-
-#. module: brand
-#: model:ir.model.fields,help:brand.field_res_brand__phone_sanitized_blacklisted
-msgid ""
-"If the sanitized phone number is on the blacklist, the contact won't receive "
-"mass mailing sms anymore, from any list"
-msgstr ""
-"Se il numero di telefono ripulito è nella blacklist, il contatto non "
-"riceverà più SMS di massa, da qualsiasi lista"
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__image_1920
@@ -595,28 +561,6 @@ msgid "Image 512"
 msgstr "Immagine 512"
 
 #. module: brand
-#: model:ir.model.fields,help:brand.field_res_brand__mobile_blacklisted
-msgid ""
-"Indicates if a blacklisted sanitized phone number is a mobile number. Helps "
-"distinguish which number is blacklisted             when there is both a "
-"mobile and phone field in a model."
-msgstr ""
-"Indica se un numero di telefono ripulito della blacklist è di un cellulare. "
-"Aiuta a distinguere quali numeri sono in blacklist           quando ci sono "
-"campi telefono per il fisso e il cellulare nel modello."
-
-#. module: brand
-#: model:ir.model.fields,help:brand.field_res_brand__phone_blacklisted
-msgid ""
-"Indicates if a blacklisted sanitized phone number is a phone number. Helps "
-"distinguish which number is blacklisted             when there is both a "
-"mobile and phone field in a model."
-msgstr ""
-"Indica se un numero di telefono ripulito è un numero di telefono. Aiuta a "
-"distinguere quale numero è in blacklist             quando ci sono campi "
-"telefono per il fisso e il cellulare nel modello."
-
-#. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__industry_id
 msgid "Industry"
 msgstr "Settore"
@@ -635,6 +579,11 @@ msgstr "Fattura"
 #: model:ir.model.fields,field_description:brand.field_res_brand__invoice_ids
 msgid "Invoices"
 msgstr "Fatture"
+
+#. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__is_coa_installed
+msgid "Is Coa Installed"
+msgstr "Coa è installato"
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__message_is_follower
@@ -745,7 +694,7 @@ msgstr "Tipo prossima attività"
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__email_normalized
 msgid "Normalized Email"
-msgstr "Email normalizzata"
+msgstr "E-mail normalizzata"
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__comment
@@ -805,7 +754,7 @@ msgstr "Partner con lo stesso registro azienda"
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__same_vat_partner_id
 msgid "Partner with same Tax ID"
-msgstr "Fornitori con lo stesso ID fiscale"
+msgstr "Fornitore con la stessa partita IVA"
 
 #. module: brand
 #: model_terms:ir.ui.view,arch_db:brand.res_brand_form_view
@@ -848,16 +797,6 @@ msgid "Phone"
 msgstr "Telefono"
 
 #. module: brand
-#: model:ir.model.fields,field_description:brand.field_res_brand__phone_sanitized_blacklisted
-msgid "Phone Blacklisted"
-msgstr "Telefoni in blacklist"
-
-#. module: brand
-#: model:ir.model.fields,field_description:brand.field_res_brand__phone_mobile_search
-msgid "Phone/Mobile"
-msgstr "Telefono/cellulare"
-
-#. module: brand
 #: model:ir.model.fields,help:brand.field_res_brand__property_payment_method_id
 msgid ""
 "Preferred payment method when paying this vendor. This is used to filter "
@@ -895,11 +834,6 @@ msgid "Responsible User"
 msgstr "Utente responsabile"
 
 #. module: brand
-#: model:ir.model.fields,field_description:brand.field_res_brand__message_has_sms_error
-msgid "SMS Delivery error"
-msgstr "Errore consegna SMS"
-
-#. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__sale_order_count
 msgid "Sale Order Count"
 msgstr "Conteggio ordini di vendita"
@@ -912,7 +846,7 @@ msgstr "Ordine di vendita"
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__team_id
 msgid "Sales Team"
-msgstr "Team vendite"
+msgstr "Team di vendita"
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__sale_warn
@@ -923,11 +857,6 @@ msgstr "Allerte vendite"
 #: model:ir.model.fields,field_description:brand.field_res_brand__user_id
 msgid "Salesperson"
 msgstr "Addetto vendite"
-
-#. module: brand
-#: model:ir.model.fields,field_description:brand.field_res_brand__phone_sanitized
-msgid "Sanitized Number"
-msgstr "Numero ripulito"
 
 #. module: brand
 #: model:ir.model.fields,help:brand.field_res_brand__invoice_warn
@@ -1088,7 +1017,7 @@ msgid ""
 "The registry number of the company. Use it if it is different from the Tax "
 "ID. It must be unique across all partners of a same country"
 msgstr ""
-"Il numero registro dell'azienda. Utilizzare se è diverso dall'ID fiscale. "
+"Il numero registro dell'azienda. Utilizzare se è diverso dalla partita IVA. "
 "Deve essere univoco tra tutti i partner della stessa nazione"
 
 #. module: brand
@@ -1115,8 +1044,8 @@ msgid ""
 "This field is used to search on email address as the primary email field can "
 "contain more than strictly an email address."
 msgstr ""
-"Questo campo viene utilizzato per la ricerca degli indirizzi email, come "
-"campo principale dell'email può contenere più indirizzi."
+"Questo campo viene utilizzato per la ricerca degli indirizzi e-mail, come "
+"campo principale dell'e-mail può contenere più indirizzi."
 
 #. module: brand
 #: model:ir.model.fields,help:brand.field_res_brand__property_supplier_payment_term_id
@@ -1168,7 +1097,7 @@ msgstr "Totale fatturato"
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__debit
 msgid "Total Payable"
-msgstr "Dabito totale"
+msgstr "Debito totale"
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__credit
@@ -1183,7 +1112,7 @@ msgstr "Ammontare totale dovuto da questo cliente."
 #. module: brand
 #: model:ir.model.fields,help:brand.field_res_brand__debit
 msgid "Total amount you have to pay to this vendor."
-msgstr "Ammontare totale dovuto a questo fonritore."
+msgstr "Ammontare totale dovuto a questo fornitore."
 
 #. module: brand
 #: model:ir.model.fields,help:brand.field_res_brand__activity_exception_decoration
@@ -1202,7 +1131,7 @@ msgstr ""
 #. module: brand
 #: model:ir.model.fields,help:brand.field_res_brand__barcode
 msgid "Use a barcode to identify this contact."
-msgstr "Utilizza un barcode per identificare questo contatto."
+msgstr "Utilizza un codice a barre per identificare questo contatto."
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__user_ids
@@ -1277,3 +1206,59 @@ msgstr "es. BE0477472701"
 #: model_terms:ir.ui.view,arch_db:brand.res_brand_form_view
 msgid "e.g. https://www.odoo.com"
 msgstr "es. https://www.odoo.com"
+
+#~ msgid "Additional info"
+#~ msgstr "Informazioni aggiuntive"
+
+#~ msgid "Blacklisted Phone Is Mobile"
+#~ msgstr "Il numero in blacklist è un cellulare"
+
+#~ msgid "Blacklisted Phone is Phone"
+#~ msgstr "Il numero in blacklist è un telefono fisso"
+
+#~ msgid "Company database ID"
+#~ msgstr "ID database azienda"
+
+#~ msgid ""
+#~ "Field used to store sanitized phone number. Helps speeding up searches "
+#~ "and comparisons."
+#~ msgstr ""
+#~ "Campo utilizzato per salvare il numero di telefono ripulito. Aiuta ad "
+#~ "accelerare ricerche e comparazioni."
+
+#~ msgid ""
+#~ "If the sanitized phone number is on the blacklist, the contact won't "
+#~ "receive mass mailing sms anymore, from any list"
+#~ msgstr ""
+#~ "Se il numero di telefono ripulito è nella blacklist, il contatto non "
+#~ "riceverà più SMS di massa, da qualsiasi lista"
+
+#~ msgid ""
+#~ "Indicates if a blacklisted sanitized phone number is a mobile number. "
+#~ "Helps distinguish which number is blacklisted             when there is "
+#~ "both a mobile and phone field in a model."
+#~ msgstr ""
+#~ "Indica se un numero di telefono ripulito della blacklist è di un "
+#~ "cellulare. Aiuta a distinguere quali numeri sono in blacklist           "
+#~ "quando ci sono campi telefono per il fisso e il cellulare nel modello."
+
+#~ msgid ""
+#~ "Indicates if a blacklisted sanitized phone number is a phone number. "
+#~ "Helps distinguish which number is blacklisted             when there is "
+#~ "both a mobile and phone field in a model."
+#~ msgstr ""
+#~ "Indica se un numero di telefono ripulito è un numero di telefono. Aiuta a "
+#~ "distinguere quale numero è in blacklist             quando ci sono campi "
+#~ "telefono per il fisso e il cellulare nel modello."
+
+#~ msgid "Phone Blacklisted"
+#~ msgstr "Telefoni in blacklist"
+
+#~ msgid "Phone/Mobile"
+#~ msgstr "Telefono/cellulare"
+
+#~ msgid "SMS Delivery error"
+#~ msgstr "Errore consegna SMS"
+
+#~ msgid "Sanitized Number"
+#~ msgstr "Numero ripulito"
