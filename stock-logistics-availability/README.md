@@ -22,6 +22,9 @@ Available addons
 addon | version | maintainers | summary
 --- | --- | --- | ---
 [stock_available](stock_available/) | 17.0.1.0.0 |  | Stock available to promise
+[stock_available_immediately](stock_available_immediately/) | 17.0.1.0.0 |  | Ignore planned receptions in quantity available to promise
+[stock_available_mrp](stock_available_mrp/) | 17.0.1.0.1 |  | Consider the production potential is available to promise
+[stock_free_quantity](stock_free_quantity/) | 17.0.1.0.0 |  | Stock Free Quantity
 
 [//]: # (end addons)
 
