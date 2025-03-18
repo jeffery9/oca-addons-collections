@@ -315,14 +315,6 @@ msgid "Last Contributor"
 msgstr ""
 
 #. module: document_page
-#: model:ir.model.fields,field_description:document_page.field_document_page____last_update
-#: model:ir.model.fields,field_description:document_page.field_document_page_create_menu____last_update
-#: model:ir.model.fields,field_description:document_page.field_document_page_history____last_update
-#: model:ir.model.fields,field_description:document_page.field_wizard_document_page_history_show_diff____last_update
-msgid "Last Modified on"
-msgstr ""
-
-#. module: document_page
 #: model:ir.model.fields,field_description:document_page.field_document_page__write_uid
 #: model:ir.model.fields,field_description:document_page.field_document_page_create_menu__write_uid
 #: model:ir.model.fields,field_description:document_page.field_document_page_history__write_uid
@@ -337,11 +329,6 @@ msgstr "Последно ажурирање од"
 #: model:ir.model.fields,field_description:document_page.field_wizard_document_page_history_show_diff__write_date
 msgid "Last Updated on"
 msgstr "Последно ажурирање на"
-
-#. module: document_page
-#: model:ir.model.fields,field_description:document_page.field_document_page__message_main_attachment_id
-msgid "Main Attachment"
-msgstr ""
 
 #. module: document_page
 #: model:res.groups,name:document_page.group_document_manager
@@ -466,6 +453,11 @@ msgid "Parent Menu"
 msgstr ""
 
 #. module: document_page
+#: model:ir.model.fields,field_description:document_page.field_document_page__rating_ids
+msgid "Ratings"
+msgstr ""
+
+#. module: document_page
 #: model:ir.model.fields,field_description:document_page.field_document_page__activity_user_id
 msgid "Responsible User"
 msgstr ""
@@ -542,6 +534,16 @@ msgstr ""
 #. module: document_page
 #: model:ir.model.fields,help:document_page.field_document_page__backend_url
 msgid "Use it to link resources univocally"
+msgstr ""
+
+#. module: document_page
+#: model:ir.model.fields,field_description:document_page.field_document_page__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: document_page
+#: model:ir.model.fields,help:document_page.field_document_page__website_message_ids
+msgid "Website communication history"
 msgstr ""
 
 #. module: document_page
