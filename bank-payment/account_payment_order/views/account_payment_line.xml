@@ -18,7 +18,8 @@
                             name="move_line_id"
                             domain="[('reconciled','=', False), ('account_id.reconcile', '=', True)] "
                         />
-                        <!-- we removed the filter on amount_to_pay, because we want to be able to select refunds -->
+                        <!-- we removed the filter on amount_to_pay, because we want to be able to
+                        select refunds -->
                         <field name="date" readonly="1" force_save="1" />
                         <field name="ml_maturity_date" readonly="1" />
                         <field name="amount_currency" />
@@ -87,12 +88,20 @@
                 <field name="amount_currency" string="Amount" />
                 <field name="currency_id" invisible="1" />
                 <field name="name" optional="show" />
+                <field name="company_currency_id" invisible="1" />
                 <field
                     name="amount_company_currency"
                     sum="Total in Company Currency"
                     invisible="1"
                 />
                 <field name="payment_type" invisible="1" />
+                <button
+                    name="action_open_business_doc"
+                    type="object"
+                    string="View"
+                    class="btn btn-secondary"
+                    invisible="not move_line_id"
+                />
             </tree>
         </field>
     </record>

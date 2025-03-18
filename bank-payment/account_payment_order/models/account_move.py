@@ -50,9 +50,7 @@ class AccountMove(models.Model):
         """Retrieve the communication string for this direct item."""
         communication = self.payment_reference or self.ref or self.name
         if self.is_invoice():
-            if (self.reference_type or "none") != "none":
-                communication = self.ref
-            elif self.is_purchase_document():
+            if self.is_purchase_document():
                 communication = self.ref or self.payment_reference
             else:
                 communication = self.payment_reference or self.name
@@ -80,19 +78,17 @@ class AccountMove(models.Model):
             reference_moves |= self.reversal_move_id
         # Retrieve partial payments - e.g.: manual credit notes
         (
+            # List of triplets
+            # (account.partial.reconcile record, amount, account.move.line record)
             invoice_partials,
-            exchange_diff_moves,
+            # List of account.move IDs
+            exchange_diff_move_ids,
         ) = self._get_reconciled_invoices_partials()
-        for (
-            _x,
-            _y,
-            payment_move_line,
-        ) in invoice_partials + exchange_diff_moves:
-            payment_move = payment_move_line.move_id
-            if payment_move not in reference_moves:
-                references.append(
-                    payment_move._get_payment_order_communication_direct()
-                )
+        move_ids = [x[2].move_id.id for x in invoice_partials] + exchange_diff_move_ids
+        for move in self.browse(move_ids):
+            if move not in reference_moves:
+                references.append(move._get_payment_order_communication_direct())
+                reference_moves |= move
         # Add references to communication from lines move
         if references:
             communication += " " + " ".join(references)
