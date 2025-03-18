@@ -28,12 +28,31 @@ msgid "# Opportunities"
 msgstr "# Verkaufschancen"
 
 #. module: fieldservice
+#: model:ir.model.fields,field_description:fieldservice.field_fsm_location__task_count
+#: model:ir.model.fields,field_description:fieldservice.field_fsm_person__task_count
+msgid "# Tasks"
+msgstr "# Aufgaben"
+
+#. module: fieldservice
+#: model:ir.model.fields,field_description:fieldservice.field_fsm_location__supplier_invoice_count
+#: model:ir.model.fields,field_description:fieldservice.field_fsm_person__supplier_invoice_count
+msgid "# Vendor Bills"
+msgstr "# Eingangsrechnungen"
+
+#. module: fieldservice
 #: model:ir.model.fields,field_description:fieldservice.field_fsm_location__owned_location_count
 #: model:ir.model.fields,field_description:fieldservice.field_fsm_person__owned_location_count
 #: model:ir.model.fields,field_description:fieldservice.field_res_partner__owned_location_count
 #: model:ir.model.fields,field_description:fieldservice.field_res_users__owned_location_count
 msgid "# of Owned Locations"
 msgstr "# Service-Orte"
+
+#. module: fieldservice
+#. odoo-python
+#: code:addons/fieldservice/models/fsm_order.py:0
+#, python-format
+msgid "%(date)s is a holiday: %(holidays)s"
+msgstr ""
 
 #. module: fieldservice
 #: model:ir.actions.report,print_report_name:fieldservice.action_report_fsm_order
@@ -1416,6 +1435,12 @@ msgid "Hide"
 msgstr ""
 
 #. module: fieldservice
+#: model:ir.model.fields,field_description:fieldservice.field_fsm_location__hide_peppol_fields
+#: model:ir.model.fields,field_description:fieldservice.field_fsm_person__hide_peppol_fields
+msgid "Hide Peppol Fields"
+msgstr ""
+
+#. module: fieldservice
 #: model:ir.model.fields.selection,name:fieldservice.selection__fsm_order__priority__2
 msgid "High"
 msgstr ""
@@ -1632,6 +1657,12 @@ msgstr ""
 #. module: fieldservice
 #: model:ir.model.fields,field_description:fieldservice.field_fsm_order__is_button
 msgid "Is Button"
+msgstr ""
+
+#. module: fieldservice
+#: model:ir.model.fields,field_description:fieldservice.field_fsm_location__is_coa_installed
+#: model:ir.model.fields,field_description:fieldservice.field_fsm_person__is_coa_installed
+msgid "Is Coa Installed"
 msgstr ""
 
 #. module: fieldservice
@@ -2697,6 +2728,12 @@ msgid "Priority Management Explanation"
 msgstr ""
 
 #. module: fieldservice
+#: model:ir.model.fields,field_description:fieldservice.field_fsm_location__project_ids
+#: model:ir.model.fields,field_description:fieldservice.field_fsm_person__project_ids
+msgid "Projects"
+msgstr ""
+
+#. module: fieldservice
 #: model:ir.model.fields,field_description:fieldservice.field_res_config_settings__module_fieldservice_project
 #: model_terms:ir.ui.view,arch_db:fieldservice.res_config_settings_view_form
 msgid "Projects and Tasks"
@@ -2705,6 +2742,15 @@ msgstr ""
 #. module: fieldservice
 #: model_terms:ir.ui.view,arch_db:fieldservice.res_config_settings_view_form
 msgid "Purchase Field Services"
+msgstr ""
+
+#. module: fieldservice
+#: model:ir.model.fields,field_description:fieldservice.field_fsm_equipment__rating_ids
+#: model:ir.model.fields,field_description:fieldservice.field_fsm_location__rating_ids
+#: model:ir.model.fields,field_description:fieldservice.field_fsm_order__rating_ids
+#: model:ir.model.fields,field_description:fieldservice.field_fsm_person__rating_ids
+#: model:ir.model.fields,field_description:fieldservice.field_fsm_team__rating_ids
+msgid "Ratings"
 msgstr ""
 
 #. module: fieldservice
@@ -2979,6 +3025,12 @@ msgid "Services in this stage are considered as closed."
 msgstr ""
 
 #. module: fieldservice
+#: model:ir.model.fields,help:fieldservice.field_fsm_location__use_partner_credit_limit
+#: model:ir.model.fields,help:fieldservice.field_fsm_person__use_partner_credit_limit
+msgid "Set a value greater than 0.0 to activate a credit limit check"
+msgstr ""
+
+#. module: fieldservice
 #: model:ir.actions.act_window,name:fieldservice.action_fsm_config
 #: model:ir.ui.menu,name:fieldservice.settings
 msgid "Settings"
@@ -3147,6 +3199,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:fieldservice.field_fsm_person__category_id
 #: model:ir.ui.menu,name:fieldservice.menu_fsm_tag
 msgid "Tags"
+msgstr ""
+
+#. module: fieldservice
+#: model:ir.model.fields,field_description:fieldservice.field_fsm_location__task_ids
+#: model:ir.model.fields,field_description:fieldservice.field_fsm_person__task_ids
+msgid "Tasks"
 msgstr ""
 
 #. module: fieldservice
@@ -3660,14 +3718,8 @@ msgstr ""
 msgid "template"
 msgstr ""
 
-#~ msgid "# Tasks"
-#~ msgstr "# Aufgaben"
-
 #~ msgid "Last Modified on"
 #~ msgstr "Zuletzt geändert am"
-
-#~ msgid "# Vendor Bills"
-#~ msgstr "# Eingangsrechnungen"
 
 #~ msgid "Agreements"
 #~ msgstr "Vereinbarungen"
