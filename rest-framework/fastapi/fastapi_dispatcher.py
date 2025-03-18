@@ -7,6 +7,7 @@ from io import BytesIO
 from odoo.http import Dispatcher, request
 
 from .context import odoo_env_ctx
+from .error_handlers import convert_exception_to_status_body
 
 
 class FastApiDispatcher(Dispatcher):
@@ -30,16 +31,38 @@ class FastApiDispatcher(Dispatcher):
         with self._manage_odoo_env(uid):
             for r in app(environ, self._make_response):
                 data.write(r)
+            if self.inner_exception:
+                raise self.inner_exception
             return self.request.make_response(
                 data.getvalue(), headers=self.headers, status=self.status
             )
 
     def handle_error(self, exc):
-        pass
+        headers = getattr(exc, "headers", None)
+        status_code, body = convert_exception_to_status_body(exc)
+        return self.request.make_json_response(
+            body, status=status_code, headers=headers
+        )
 
     def _make_response(self, status_mapping, headers_tuple, content):
         self.status = status_mapping[:3]
         self.headers = dict(headers_tuple)
+        self.inner_exception = None
+        # in case of exception, the method asgi_done_callback of the
+        # ASGIResponder will trigger an "a2wsgi.error" event with the exception
+        # instance stored in a tuple with the type of the exception and the traceback.
+        # The event loop will then be notified and then call the `error_response`
+        # method of the ASGIResponder. This method will then call the
+        # `_make_response` method provided as callback to the app with the tuple
+        # of the exception as content. In this case, we store the exception
+        # instance in the `inner_exception` attribute to be able to raise it
+        # in the `dispatch` method.
+        if (
+            isinstance(content, tuple)
+            and len(content) == 3
+            and isinstance(content[1], Exception)
+        ):
+            self.inner_exception = content[1]
 
     def _get_environ(self):
         try:
@@ -54,7 +77,21 @@ class FastApiDispatcher(Dispatcher):
             # date odoo version. (EAFP: Easier to Ask for Forgiveness than Permission)
             httprequest = self.request.httprequest
         environ = httprequest.environ
-        environ["wsgi.input"] = httprequest._get_stream_for_parsing()
+        stream = httprequest._get_stream_for_parsing()
+        # Check if the stream supports seeking
+        if hasattr(stream, "seekable") and stream.seekable():
+            # Reset the stream to the beginning to ensure it can be consumed
+            # again by the application in case of a retry mechanism
+            stream.seek(0)
+        else:
+            # If the stream does not support seeking, we need wrap it
+            # in a BytesIO object. This way we can seek back to the beginning
+            # of the stream to read the data again if needed.
+            if not hasattr(httprequest, "_cached_stream"):
+                httprequest._cached_stream = BytesIO(stream.read())
+            stream = httprequest._cached_stream
+            stream.seek(0)
+        environ["wsgi.input"] = stream
         return environ
 
     @contextmanager

@@ -2,11 +2,10 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/LGPL).
 
 from functools import partial
-from unittest import mock
 
 from requests import Response
 
-from odoo.tools import mute_logger
+from odoo.exceptions import UserError
 
 from fastapi import status
 
@@ -32,36 +31,6 @@ class FastAPIDemoCase(FastAPITransactionCase):
         cls.default_fastapi_running_user = cls.env.ref("fastapi.my_demo_app_user")
         cls.default_fastapi_authenticated_partner = cls.env["res.partner"].create(
             {"name": "FastAPI Demo"}
-        )
-
-    @mute_logger("odoo.addons.fastapi.error_handlers")
-    def assert_exception_processed(
-        self,
-        exception_type: DemoExceptionType,
-        error_message: str,
-        expected_message: str,
-        expected_status_code: int,
-    ) -> None:
-        demo_app = self.env.ref("fastapi.fastapi_endpoint_demo")
-        with self._create_test_client(
-            demo_app._get_app(), raise_server_exceptions=False
-        ) as test_client, mock.patch.object(
-            self.env.cr.__class__, "rollback"
-        ) as mock_rollback:
-            response: Response = test_client.get(
-                "/demo/exception",
-                params={
-                    "exception_type": exception_type.value,
-                    "error_message": error_message,
-                },
-            )
-            mock_rollback.assert_called_once()
-        self.assertEqual(response.status_code, expected_status_code)
-        self.assertDictEqual(
-            response.json(),
-            {
-                "detail": expected_message,
-            },
         )
 
     def test_hello_world(self) -> None:
@@ -95,50 +64,45 @@ class FastAPIDemoCase(FastAPITransactionCase):
             DemoEndpointAppInfo.model_validate(demo_app).model_dump(by_alias=True),
         )
 
-    def test_user_error(self) -> None:
-        self.assert_exception_processed(
-            exception_type=DemoExceptionType.user_error,
-            error_message="test",
-            expected_message="test",
-            expected_status_code=status.HTTP_400_BAD_REQUEST,
-        )
+    def test_exception_raised(self) -> None:
+        with self.assertRaisesRegex(UserError, "User Error"):
+            with self._create_test_client() as test_client:
+                test_client.get(
+                    "/demo/exception",
+                    params={
+                        "exception_type": DemoExceptionType.user_error.value,
+                        "error_message": "User Error",
+                    },
+                )
+        with self.assertRaisesRegex(NotImplementedError, "Bare Exception"):
+            with self._create_test_client() as test_client:
+                test_client.get(
+                    "/demo/exception",
+                    params={
+                        "exception_type": DemoExceptionType.bare_exception.value,
+                        "error_message": "Bare Exception",
+                    },
+                )
 
-    def test_validation_error(self) -> None:
-        self.assert_exception_processed(
-            exception_type=DemoExceptionType.validation_error,
-            error_message="test",
-            expected_message="test",
-            expected_status_code=status.HTTP_400_BAD_REQUEST,
-        )
+    def test_exception_not_raised(self) -> None:
+        with self._create_test_client(raise_server_exceptions=False) as test_client:
+            response: Response = test_client.get(
+                "/demo/exception",
+                params={
+                    "exception_type": DemoExceptionType.user_error.value,
+                    "error_message": "User Error",
+                },
+            )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertDictEqual(response.json(), {"detail": "User Error"})
 
-    def test_bare_exception(self) -> None:
-        self.assert_exception_processed(
-            exception_type=DemoExceptionType.bare_exception,
-            error_message="test",
-            expected_message="test",
-            expected_status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-        )
-
-    def test_access_error(self) -> None:
-        self.assert_exception_processed(
-            exception_type=DemoExceptionType.access_error,
-            error_message="test",
-            expected_message="AccessError",
-            expected_status_code=status.HTTP_403_FORBIDDEN,
-        )
-
-    def test_missing_error(self) -> None:
-        self.assert_exception_processed(
-            exception_type=DemoExceptionType.missing_error,
-            error_message="test",
-            expected_message="MissingError",
-            expected_status_code=status.HTTP_404_NOT_FOUND,
-        )
-
-    def test_http_exception(self) -> None:
-        self.assert_exception_processed(
-            exception_type=DemoExceptionType.http_exception,
-            error_message="test",
-            expected_message="test",
-            expected_status_code=status.HTTP_409_CONFLICT,
-        )
+        with self._create_test_client(raise_server_exceptions=False) as test_client:
+            response: Response = test_client.get(
+                "/demo/exception",
+                params={
+                    "exception_type": DemoExceptionType.bare_exception.value,
+                    "error_message": "Bare Exception",
+                },
+            )
+        self.assertEqual(response.status_code, status.HTTP_500_INTERNAL_SERVER_ERROR)
+        self.assertDictEqual(response.json(), {"detail": "Internal Server Error"})

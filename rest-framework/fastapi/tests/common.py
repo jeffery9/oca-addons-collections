@@ -1,9 +1,14 @@
 # Copyright 2023 ACSONE SA/NV
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/LGPL).
+import logging
 from collections.abc import Callable
 from contextlib import contextmanager
 from functools import partial
 from typing import Any
+
+from starlette import status
+from starlette.requests import Request
+from starlette.responses import JSONResponse, Response
 
 from odoo.api import Environment
 from odoo.tests import tagged
@@ -16,7 +21,29 @@ from fastapi import APIRouter, FastAPI
 from fastapi.testclient import TestClient
 
 from ..context import odoo_env_ctx
-from ..dependencies import authenticated_partner_impl
+from ..dependencies import (
+    authenticated_partner_impl,
+    optionally_authenticated_partner_impl,
+)
+from ..error_handlers import convert_exception_to_status_body
+
+_logger = logging.getLogger(__name__)
+
+
+def default_exception_handler(request: Request, exc: Exception) -> Response:
+    """
+    Default exception handler that returns a response with the exception details.
+    """
+    status_code, body = convert_exception_to_status_body(exc)
+
+    if status_code == status.HTTP_500_INTERNAL_SERVER_ERROR:
+        # In testing we want to see the exception details of 500 errors
+        _logger.error("[%d] Error occurred: %s", exc_info=exc)
+
+    return JSONResponse(
+        status_code=status_code,
+        content=body,
+    )
 
 
 @tagged("post_install", "-at_install")
@@ -69,6 +96,7 @@ class FastAPITransactionCase(TransactionCase):
         env: Environment = None,
         dependency_overrides: dict[Callable[..., Any], Callable[..., Any]] = None,
         raise_server_exceptions: bool = True,
+        testclient_kwargs=None,
     ):
         """
         Create a test client for the given app or router.
@@ -99,6 +127,7 @@ class FastAPITransactionCase(TransactionCase):
             or self.default_fastapi_authenticated_partner
             or self.env["res.partner"]
         )
+        partner = partner.with_env(env)
         if partner and authenticated_partner_impl in dependencies:
             raise ValueError(
                 "You cannot provide an override for the authenticated_partner_impl "
@@ -106,13 +135,33 @@ class FastAPITransactionCase(TransactionCase):
             )
         if partner or authenticated_partner_impl not in dependencies:
             dependencies[authenticated_partner_impl] = partial(lambda a: a, partner)
+        if partner and optionally_authenticated_partner_impl in dependencies:
+            raise ValueError(
+                "You cannot provide an override for the "
+                "optionally_authenticated_partner_impl "
+                "dependency when creating a test client with a partner."
+            )
+        if partner or optionally_authenticated_partner_impl not in dependencies:
+            dependencies[optionally_authenticated_partner_impl] = partial(
+                lambda a: a, partner
+            )
         app = app or self.default_fastapi_app or FastAPI()
         router = router or self.default_fastapi_router
         if router:
             app.include_router(router)
         app.dependency_overrides = dependencies
+
+        if not raise_server_exceptions:
+            # Handle exceptions as in FastAPIDispatcher
+            app.exception_handlers.setdefault(Exception, default_exception_handler)
+
         ctx_token = odoo_env_ctx.set(env)
+        testclient_kwargs = testclient_kwargs or {}
         try:
-            yield TestClient(app, raise_server_exceptions=raise_server_exceptions)
+            yield TestClient(
+                app,
+                raise_server_exceptions=raise_server_exceptions,
+                **testclient_kwargs,
+            )
         finally:
             odoo_env_ctx.reset(ctx_token)
