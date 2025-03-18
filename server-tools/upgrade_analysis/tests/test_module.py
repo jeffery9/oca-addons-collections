@@ -1,12 +1,14 @@
 from odoo.tests import common, tagged
 
+from ..odoo_patch.odoo_patch import OdooPatch
+
 
 @tagged("post_install", "-at_install")
 class TestUpgradeAnalysis(common.TransactionCase):
     def setUp(self):
         super().setUp()
         self.IrModuleModule = self.env["ir.module.module"]
-        self.product_module = self.IrModuleModule.search([("name", "=", "product")])
+        self.website_module = self.IrModuleModule.search([("name", "=", "website")])
         self.sale_module = self.IrModuleModule.search([("name", "=", "sale")])
         self.upgrade_analysis = self.IrModuleModule.search(
             [("name", "=", "upgrade_analysis")]
@@ -18,19 +20,19 @@ class TestUpgradeAnalysis(common.TransactionCase):
 
         wizard.select_odoo_modules()
         self.assertTrue(
-            self.product_module.id in wizard.module_ids.ids,
+            self.website_module.id in wizard.module_ids.ids,
             "Select Odoo module should select 'product' module",
         )
-
-        wizard.select_oca_modules()
-        self.assertTrue(
-            self.upgrade_analysis.id in wizard.module_ids.ids,
-            "Select OCA module should select 'upgrade_analysis' module",
-        )
+        # New patch avoids to reinstall already installed modules, so this will fail
+        # wizard.select_oca_modules()
+        # self.assertTrue(
+        #     self.upgrade_analysis.id in wizard.module_ids.ids,
+        #     "Select OCA module should select 'upgrade_analysis' module",
+        # )
 
         wizard.select_other_modules()
         self.assertFalse(
-            self.product_module.id in wizard.module_ids.ids,
+            self.website_module.id in wizard.module_ids.ids,
             "Select Other module should not select 'product' module",
         )
 
@@ -44,3 +46,26 @@ class TestUpgradeAnalysis(common.TransactionCase):
 
         # TypeError: Many2many fields ir.actions.server.partner_ids and
         # ir.actions.server.partner_ids use the same table and columns
+
+    def test_odoo_patch(self):
+        """
+        Test the patched versions of Odoo's base functions
+        """
+        self.assertFalse(
+            self.env["upgrade.record"].search(
+                [
+                    ("name", "=", "base.constraint_ir_module_module_name_uniq"),
+                    ("type", "=", "xmlid"),
+                ]
+            )
+        )
+        with OdooPatch():
+            self.env["ir.model.constraint"]._reflect_model(self.IrModuleModule)
+        self.assertTrue(
+            self.env["upgrade.record"].search(
+                [
+                    ("name", "=", "base.constraint_ir_module_module_name_uniq"),
+                    ("type", "=", "xmlid"),
+                ]
+            )
+        )

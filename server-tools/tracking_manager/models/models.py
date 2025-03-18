@@ -6,6 +6,7 @@
 from collections import defaultdict
 
 from odoo import api, models, tools
+from odoo.exceptions import AccessError
 
 from ..tools import format_m2m
 
@@ -85,7 +86,13 @@ class Base(models.AbstractModel):
 
     def _tm_post_message(self, data):
         for model_name, model_data in data.items():
+            # check if record has mail.thread mixin
+            if not getattr(self.env[model_name], "message_post_with_source", False):
+                continue
             for record_id, messages_by_field in model_data.items():
+                # Avoid error if no record is linked (example: child_ids of res.partner)
+                if not record_id:
+                    continue
                 record = self.env[model_name].browse(record_id)
                 messages = [
                     {
@@ -94,12 +101,13 @@ class Base(models.AbstractModel):
                     }
                     for field_name, messages in messages_by_field.items()
                 ]
-                # use sudo as user may not have access to mail.message
-                record.sudo().message_post_with_source(
+                # We do not use message_post_with_view() because emails would be sent
+                rendered_template = self.env["ir.qweb"]._render(
                     "tracking_manager.track_o2m_m2m_template",
-                    render_values={"lines": messages},
-                    subtype_xmlid="mail.mt_note",
+                    {"lines": messages, "object": record},
+                    minimal_qcontext=True,
                 )
+                record._message_log(body=rendered_template)
 
     def _tm_prepare_o2m_tracking(self):
         fnames = self._tm_get_fields_to_track()
@@ -113,7 +121,11 @@ class Base(models.AbstractModel):
             values = initial_values.setdefault(record.id, {})
             if values is not None:
                 for fname in fnames:
-                    values.setdefault(fname, record[fname])
+                    try:
+                        values.setdefault(fname, record[fname])
+                    except AccessError:
+                        # User does not have access to the field (example with groups)
+                        continue
 
     def _tm_finalize_o2m_tracking(self):
         initial_values = self.env.cr.precommit.data.pop(
