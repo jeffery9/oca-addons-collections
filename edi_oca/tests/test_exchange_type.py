@@ -25,6 +25,7 @@ class EDIExchangeTypeTestCase(EDIBackendCommonTestCase):
             self.exchange_type_out_ack.ack_for_type_ids.ids,
         )
 
+    @mute_logger("odoo.sql_db")
     def test_same_code_same_backend(self):
         with mute_logger("odoo.sql_db"):
             with self.assertRaises(Exception) as err:
@@ -131,3 +132,30 @@ class EDIExchangeTypeTestCase(EDIBackendCommonTestCase):
             date_pattern: '%Y-%m-%d-%H-%M'
         """
         self._test_exchange_filename("Test-File-2022-04-28-10-37.csv")
+
+        # Test with sequence in filename pattern
+        self.exchange_type_out.exchange_filename_pattern = "Test-File-{seq}"
+        self.exchange_type_out.exchange_filename_sequence_id = self.sequence
+        self._test_exchange_filename("Test-File-0000001.csv")
+
+    def test_archive_rules(self):
+        exc_type = self.exchange_type_out
+        rule1 = exc_type.rule_ids.create(
+            {
+                "type_id": exc_type.id,
+                "name": "Fake partner rule",
+                "model_id": self.env["ir.model"]._get("res.partner").id,
+            }
+        )
+        rule2 = exc_type.rule_ids.create(
+            {
+                "type_id": exc_type.id,
+                "name": "Fake user rule",
+                "model_id": self.env["ir.model"]._get("res.users").id,
+            }
+        )
+        exc_type.active = False
+        rule1.invalidate_recordset()
+        rule2.invalidate_recordset()
+        self.assertFalse(rule1.active)
+        self.assertFalse(rule2.active)
