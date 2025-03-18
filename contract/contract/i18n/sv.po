@@ -31,22 +31,22 @@ msgid ""
 "                <p style=\"border-left: 1px solid #8e0000; margin-left: 30px;"
 "\">\n"
 "                    &amp;nbsp;&amp;nbsp;<strong>REFERENCES</strong><br>\n"
-"                    &amp;nbsp;&amp;nbsp;Contract: <strong t-out=\"object.name"
-"\"></strong><br>\n"
+"                    &amp;nbsp;&amp;nbsp;Contract: <strong t-out=\"object."
+"name\"></strong><br>\n"
 "                    <t t-if=\"object.date_start\">\n"
-"                        &amp;nbsp;&amp;nbsp;Contract Date Start: <t t-out="
-"\"object.date_start or ''\"></t><br>\n"
+"                        &amp;nbsp;&amp;nbsp;Contract Date Start: <t t-"
+"out=\"object.date_start or ''\"></t><br>\n"
 "                    </t>\n"
 "\n"
 "                    <t t-if=\"object.user_id\">\n"
 "                        <t t-if=\"object.user_id.email\">\n"
-"                            &amp;nbsp;&amp;nbsp;Your Contact: <a t-att-href="
-"\"'mailto:%s?subject=Contract %s' % (object.user_id.email, object.name)\" t-"
-"out=\"object.user_id.name\"></a>\n"
+"                            &amp;nbsp;&amp;nbsp;Your Contact: <a t-att-"
+"href=\"'mailto:%s?subject=Contract %s' % (object.user_id.email, object."
+"name)\" t-out=\"object.user_id.name\"></a>\n"
 "                        </t>\n"
 "                        <t t-else=\"\">\n"
-"                            &amp;nbsp;&amp;nbsp;Your Contact: <t t-out="
-"\"object.user_id.name\"></t>\n"
+"                            &amp;nbsp;&amp;nbsp;Your Contact: <t t-"
+"out=\"object.user_id.name\"></t>\n"
 "                        </t>\n"
 "                    </t>\n"
 "                </p>\n"
@@ -63,8 +63,8 @@ msgid ""
 "radius: 5px 5px; background-repeat: repeat no-repeat;\">\n"
 "                    <h3 style=\"margin: 0px; padding: 2px 14px; font-size: "
 "12px; color: #DDD;\">\n"
-"                        <strong style=\"text-transform:uppercase;\" t-out="
-"\"object.company_id.name\"></strong></h3>\n"
+"                        <strong style=\"text-transform:uppercase;\" t-"
+"out=\"object.company_id.name\"></strong></h3>\n"
 "                </div>\n"
 "                <div style=\"width: 347px; margin: 0px; padding: 5px 14px; "
 "line-height: 16px; background-color: #F2F2F2;\">\n"
@@ -100,8 +100,8 @@ msgid ""
 msgstr ""
 "<div style=\"font-family: 'Lucida Grande', Ubuntu, Arial, Verdana, sans-"
 "serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF;\">\n"
-"                <p>Hej <t t-out=\"objekt.partner_id.namn eller ''\"></t>,</p>"
-"\n"
+"                <p>Hej <t t-out=\"objekt.partner_id.namn eller ''\"></t>,</"
+"p>\n"
 "                <p>Ett nytt kontrakt har skapats: </p>\n"
 "\n"
 "                <p style=\"border-left: 1px solid #8e0000; margin-left: 30px;"
@@ -110,20 +110,20 @@ msgstr ""
 "                    &amp;nbsp;&amp;nbsp;Kontrakt: <strong t-out=\"object."
 "name\"></strong><br>\n"
 "                    <t t-if=\"object.date_start\">\n"
-"                        &amp;nbsp;&amp;nbsp;Kontraktsdatum Start: <t t-out="
-"\"object.date_start or ''\"></t><br>\n"
+"                        &amp;nbsp;&amp;nbsp;Kontraktsdatum Start: <t t-"
+"out=\"object.date_start or ''\"></t><br>\n"
 "                    </t>\n"
 "\n"
 "                    <t t-if=\"object.user_id\"> <t t-if=\"object.user_id\">\n"
 "                        <t t-if=\"object.user_id.email\"> <t t-if=\"object."
 "user_id.email\">\n"
 "                            &amp;nbsp;&amp;nbsp;Din kontaktperson: <a t-att-"
-"href=\"'mailto:%s?subject=Contract %s' % (object.user_id.email, object.name)"
-"\" t-out=\"object.user_id.name\"></a>\n"
+"href=\"'mailto:%s?subject=Contract %s' % (object.user_id.email, object."
+"name)\" t-out=\"object.user_id.name\"></a>\n"
 "                        </t>\n"
 "                        <t t-else=\"\">\n"
-"                            &amp;nbsp;&amp;nbsp;Din kontaktperson: <t t-out="
-"\"object.user_id.name\"></t> </t>.\n"
+"                            &amp;nbsp;&amp;nbsp;Din kontaktperson: <t t-"
+"out=\"object.user_id.name\"></t> </t>.\n"
 "                        </t>\n"
 "                    </t>\n"
 "                </p>\n"
@@ -140,8 +140,8 @@ msgstr ""
 "radius: 5px 5px; background-repeat: repeat no-repeat;\">\n"
 "                    <h3 style=\"margin: 0px; padding: 2px 14px; font-size: "
 "12px; color: #DDD;\">\n"
-"                        <strong style=\"text-transform:uppercase;\" t-out="
-"\"object.company_id.name\"></strong></h3>\n"
+"                        <strong style=\"text-transform:uppercase;\" t-"
+"out=\"object.company_id.name\"></strong></h3>\n"
 "                </div> </div>.\n"
 "                <div style=\"width: 347px; margin: 0px; padding: 5px 14px; "
 "linjehöjd: 16px; bakgrundsfärg: #F2F2F2;\">\n"
@@ -155,8 +155,8 @@ msgstr ""
 "                        <div style=\"margin-top: 0px; margin-right: 0px; "
 "margin-bottom: 0px; margin-left: 0px; padding-top: 0px; padding-right: 0px; "
 "padding-bottom: 0px; padding-left: 0px;\">\n"
-"                            telefon: <t t-out=\"object.company_id.phone\""
-"></t>\n"
+"                            telefon: <t t-out=\"object.company_id.phone\"></"
+"t>\n"
 "                        </div>\n"
 "                    </t>\n"
 "                    <t t-if=\"object.company_id.website\">\n"
@@ -169,8 +169,9 @@ msgstr ""
 "                <br>\n"
 "                <a t-att-href=\"'%s/my/contracts/%s?access_token=%s' % "
 "(object.get_base_url(), object.id, object.access_token)\" target=\"_blank\" "
-"style=\"background-color:#875A7B;padding: 8px 16px 8px 16px; text-decoration:"
-" none; color: #fff; border-radius: 5px; font-size:13px;\">Visa kontrakt</a>\n"
+"style=\"background-color:#875A7B;padding: 8px 16px 8px 16px; text-"
+"decoration: none; color: #fff; border-radius: 5px; font-size:13px;\">Visa "
+"kontrakt</a>\n"
 "            </div>\n"
 "        "
 
@@ -229,6 +230,23 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:contract.contract_template_form_view
 msgid "<strong>#END#</strong>: End date of the invoiced period"
 msgstr "<strong>#END#</strong>: Slutdatum för den fakturerade perioden"
+
+#. module: contract
+#: model_terms:ir.ui.view,arch_db:contract.contract_contract_form_view
+msgid ""
+"<strong>#INVOICEMONTHNAME#</strong>\n"
+"                                    : Invoice month name\n"
+"                                    of\n"
+"                                    the\n"
+"                                    invoiced period"
+msgstr ""
+
+#. module: contract
+#: model_terms:ir.ui.view,arch_db:contract.contract_template_form_view
+msgid ""
+"<strong>#INVOICEMONTHNAME#</strong>: Invoice month name of the invoiced "
+"period"
+msgstr ""
 
 #. module: contract
 #: model_terms:ir.ui.view,arch_db:contract.contract_contract_form_view
@@ -445,6 +463,13 @@ msgid "Analytic Precision"
 msgstr "Objekt precision"
 
 #. module: contract
+#. odoo-python
+#: code:addons/contract/models/contract_line.py:0
+#, python-format
+msgid "April"
+msgstr ""
+
+#. module: contract
 #: model_terms:ir.ui.view,arch_db:contract.contract_contract_form_view
 #: model_terms:ir.ui.view,arch_db:contract.contract_contract_search_view
 msgid "Archived"
@@ -475,6 +500,13 @@ msgstr "Associerad partner"
 #: model:ir.model.fields,field_description:contract.field_contract_contract__message_attachment_count
 msgid "Attachment Count"
 msgstr "Antal bifogade filer"
+
+#. module: contract
+#. odoo-python
+#: code:addons/contract/models/contract_line.py:0
+#, python-format
+msgid "August"
+msgstr ""
 
 #. module: contract
 #: model:ir.model.fields,field_description:contract.field_contract_abstract_contract_line__is_auto_renew
@@ -621,6 +653,7 @@ msgstr "Kontakt"
 #: model:ir.model.fields,field_description:contract.field_contract_modification__contract_id
 #: model:ir.model.fields,field_description:contract.field_contract_template_line__contract_id
 #: model_terms:ir.ui.view,arch_db:contract.contract_contract_form_view
+#: model_terms:ir.ui.view,arch_db:contract.contract_line_search_view
 #: model_terms:ir.ui.view,arch_db:contract.res_config_settings_form_view
 msgid "Contract"
 msgstr "Kontrakt"
@@ -873,12 +906,8 @@ msgstr "Avtalslinjer (fasta)"
 #. odoo-python
 #: code:addons/contract/models/contract.py:0
 #, python-format
-msgid ""
-"Contract manually invoiced: <a    href=\"#\" data-oe-model=\"%(model_name)s"
-"\"     data-oe-id=\"%(rec_id)s\">Invoice</a>"
+msgid "Contract manually invoiced: %(invoice_link)s"
 msgstr ""
-"Kontrakt faktureras manuellt: <a href=\"#\" data-oe-model=\"%(model_name)s\" "
-"data-oe-id=\"%(rec_id)s\">Faktura</a>"
 
 #. module: contract
 #: model:mail.message.subtype,name:contract.mail_message_subtype_contract_modification
@@ -906,6 +935,7 @@ msgstr "Kontrakt: Kan säga upp kontrakt"
 #: model:ir.model.fields,field_description:contract.field_res_partner__contract_ids
 #: model:ir.model.fields,field_description:contract.field_res_users__contract_ids
 #: model:ir.ui.menu,name:contract.menu_config_contract
+#: model:ir.ui.menu,name:contract.menu_contract_reporting
 #: model_terms:ir.ui.view,arch_db:contract.portal_my_contracts
 #: model_terms:ir.ui.view,arch_db:contract.portal_my_home_contract
 #: model_terms:ir.ui.view,arch_db:contract.portal_my_home_menu_contract
@@ -1005,6 +1035,16 @@ msgid "Customer"
 msgstr "Kund"
 
 #. module: contract
+#: model:ir.actions.act_window,name:contract.action_customer_contract_lines
+msgid "Customer Contract Lines"
+msgstr ""
+
+#. module: contract
+#: model:ir.ui.menu,name:contract.menu_customer_contract_line_report
+msgid "Customer Contract lines"
+msgstr ""
+
+#. module: contract
 #: model:ir.actions.act_window,name:contract.action_customer_contract
 #: model:ir.ui.menu,name:contract.menu_contract_contract_customer
 msgid "Customer Contracts"
@@ -1087,6 +1127,13 @@ msgstr "Datum för nästa faktura"
 #: model:ir.model.fields.selection,name:contract.selection__contract_template_line__termination_notice_rule_type__daily
 msgid "Day(s)"
 msgstr "Dag(ar)"
+
+#. module: contract
+#. odoo-python
+#: code:addons/contract/models/contract_line.py:0
+#, python-format
+msgid "December"
+msgstr ""
 
 #. module: contract
 #: model:ir.model.fields,help:contract.field_contract_abstract_contract_line__note_invoicing_mode
@@ -1179,6 +1226,13 @@ msgstr ""
 "%(ue)s"
 
 #. module: contract
+#. odoo-python
+#: code:addons/contract/models/contract_line.py:0
+#, python-format
+msgid "February"
+msgstr ""
+
+#. module: contract
 #: model_terms:ir.ui.view,arch_db:contract.contract_contract_search_view
 msgid "Finished"
 msgstr "Färdig"
@@ -1222,6 +1276,7 @@ msgstr "Grupp"
 
 #. module: contract
 #: model_terms:ir.ui.view,arch_db:contract.contract_contract_search_view
+#: model_terms:ir.ui.view,arch_db:contract.contract_line_search_view
 msgid "Group By..."
 msgstr "Gruppera genom..."
 
@@ -1274,7 +1329,6 @@ msgstr "Om den är markerad kräver nya meddelanden din uppmärksamhet."
 
 #. module: contract
 #: model:ir.model.fields,help:contract.field_contract_contract__message_has_error
-#: model:ir.model.fields,help:contract.field_contract_contract__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr "Om kryssrutan är markerad får vissa meddelanden ett leveransfel."
 
@@ -1415,6 +1469,13 @@ msgid "Is suspension without end date"
 msgstr "Är avstängning utan slutdatum"
 
 #. module: contract
+#. odoo-python
+#: code:addons/contract/models/contract_line.py:0
+#, python-format
+msgid "January"
+msgstr ""
+
+#. module: contract
 #: model:ir.model.fields,field_description:contract.field_contract_abstract_contract__journal_id
 #: model:ir.model.fields,field_description:contract.field_contract_contract__journal_id
 #: model:ir.model.fields,field_description:contract.field_contract_template__journal_id
@@ -1431,6 +1492,20 @@ msgstr "Journalanteckning"
 #: model:ir.model,name:contract.model_account_move_line
 msgid "Journal Item"
 msgstr "Tidskriftsartikel"
+
+#. module: contract
+#. odoo-python
+#: code:addons/contract/models/contract_line.py:0
+#, python-format
+msgid "July"
+msgstr ""
+
+#. module: contract
+#. odoo-python
+#: code:addons/contract/models/contract_line.py:0
+#, python-format
+msgid "June"
+msgstr ""
 
 #. module: contract
 #: model:ir.model.fields,field_description:contract.field_contract_abstract_contract_line__last_date_invoiced
@@ -1499,6 +1574,13 @@ msgid "Manually Invoice Sale Contracts"
 msgstr "Fakturera försäljningskontrakt manuellt"
 
 #. module: contract
+#. odoo-python
+#: code:addons/contract/models/contract_line.py:0
+#, python-format
+msgid "March"
+msgstr ""
+
+#. module: contract
 #: model:ir.model.fields,help:contract.field_contract_abstract_contract__line_recurrence
 #: model:ir.model.fields,help:contract.field_contract_contract__line_recurrence
 #: model:ir.model.fields,help:contract.field_contract_template__line_recurrence
@@ -1508,6 +1590,13 @@ msgid ""
 msgstr ""
 "Markera detta alternativ om du vill kontrollera återkommande händelser på "
 "radnivå istället för för hela avtalet."
+
+#. module: contract
+#. odoo-python
+#: code:addons/contract/models/contract_line.py:0
+#, python-format
+msgid "May"
+msgstr ""
 
 #. module: contract
 #: model:ir.model.fields,field_description:contract.field_contract_contract__message_has_error
@@ -1633,6 +1722,13 @@ msgid "Notes"
 msgstr "Anteckningar"
 
 #. module: contract
+#. odoo-python
+#: code:addons/contract/models/contract_line.py:0
+#, python-format
+msgid "November"
+msgstr ""
+
+#. module: contract
 #: model:ir.model.fields,field_description:contract.field_contract_contract__message_needaction_counter
 msgid "Number of Actions"
 msgstr "Antal åtgärder"
@@ -1669,6 +1765,13 @@ msgid "Number of messages with delivery error"
 msgstr "Antal meddelanden med leveransfel"
 
 #. module: contract
+#. odoo-python
+#: code:addons/contract/models/contract_line.py:0
+#, python-format
+msgid "October"
+msgstr ""
+
+#. module: contract
 #: model:ir.model.fields,field_description:contract.field_account_bank_statement_line__old_contract_id
 #: model:ir.model.fields,field_description:contract.field_account_move__old_contract_id
 #: model:ir.model.fields,field_description:contract.field_account_payment__old_contract_id
@@ -1682,8 +1785,11 @@ msgstr "Övrig information"
 
 #. module: contract
 #: model:ir.model.fields,field_description:contract.field_contract_abstract_contract__partner_id
+#: model:ir.model.fields,field_description:contract.field_contract_abstract_contract_line__partner_id
 #: model:ir.model.fields,field_description:contract.field_contract_contract__partner_id
+#: model:ir.model.fields,field_description:contract.field_contract_line__partner_id
 #: model:ir.model.fields,field_description:contract.field_contract_template__partner_id
+#: model:ir.model.fields,field_description:contract.field_contract_template_line__partner_id
 msgid "Partner"
 msgstr "Partner"
 
@@ -1717,8 +1823,8 @@ msgstr "Planföljare inte tillåten för denna linje"
 msgid ""
 "Please define a %(contract_type)s journal for the company '%(company)s'."
 msgstr ""
-"Vänligen definiera en %(contract_type)s journal för företaget \"%(company)s\""
-"."
+"Vänligen definiera en %(contract_type)s journal för företaget "
+"\"%(company)s\"."
 
 #. module: contract
 #: model:ir.model.fields,field_description:contract.field_contract_contract__access_url
@@ -1805,6 +1911,11 @@ msgstr "Kvantitet"
 #: model:ir.model.fields.selection,name:contract.selection__contract_template_line__recurring_rule_type__quarterly
 msgid "Quarter(s)"
 msgstr "Kvartal(en)"
+
+#. module: contract
+#: model:ir.model.fields,field_description:contract.field_contract_contract__rating_ids
+msgid "Ratings"
+msgstr ""
 
 #. module: contract
 #: model:ir.model.fields,field_description:contract.field_contract_abstract_contract__recurring_rule_type
@@ -1899,11 +2010,6 @@ msgid "Responsible User"
 msgstr "Ansvarig användare"
 
 #. module: contract
-#: model:ir.model.fields,field_description:contract.field_contract_contract__message_has_sms_error
-msgid "SMS Delivery error"
-msgstr "Fel vid leverans av SMS"
-
-#. module: contract
 #: model:ir.model.fields,field_description:contract.field_res_partner__sale_contract_count
 #: model:ir.model.fields,field_description:contract.field_res_users__sale_contract_count
 #: model_terms:ir.ui.view,arch_db:contract.view_partner_form
@@ -1944,6 +2050,13 @@ msgstr "Skicka via e-post"
 #: model:ir.model.fields,field_description:contract.field_contract_modification__sent
 msgid "Sent"
 msgstr "Sen"
+
+#. module: contract
+#. odoo-python
+#: code:addons/contract/models/contract_line.py:0
+#, python-format
+msgid "September"
+msgstr ""
 
 #. module: contract
 #: model:ir.model.fields,field_description:contract.field_contract_abstract_contract_line__sequence
@@ -2093,6 +2206,16 @@ msgid "Supplier"
 msgstr "Leverantör"
 
 #. module: contract
+#: model:ir.actions.act_window,name:contract.action_supplier_contract_lines
+msgid "Supplier Contract Lines"
+msgstr ""
+
+#. module: contract
+#: model:ir.ui.menu,name:contract.menu_supplier_contract_line_report
+msgid "Supplier Contract lines"
+msgstr ""
+
+#. module: contract
 #: model:ir.actions.act_window,name:contract.action_supplier_contract
 #: model:ir.ui.menu,name:contract.menu_contract_contract_supplier
 msgid "Supplier Contracts"
@@ -2133,6 +2256,18 @@ msgstr "Uppsägning av avtal"
 #: model:ir.model,name:contract.model_contract_contract_terminate
 msgid "Terminate Contract Wizard"
 msgstr "Uppsägningsguide för kontrakt"
+
+#. module: contract
+#: model:ir.model.fields,field_description:contract.field_contract_contract_terminate__terminate_with_last_date_invoiced
+msgid "Terminate lines with last date invoiced"
+msgstr ""
+
+#. module: contract
+#: model:ir.model.fields,help:contract.field_contract_contract_terminate__terminate_with_last_date_invoiced
+msgid ""
+"Terminate the contract lines with the last invoiced date if they cannot be "
+"terminated with the date reported in the wizard."
+msgstr ""
 
 #. module: contract
 #: model:ir.model.fields,field_description:contract.field_contract_contract__is_terminated
@@ -2390,6 +2525,13 @@ msgid "You must supply a date of next invoice for contract line '%s'"
 msgstr "Du måste ange datum för nästa faktura för avtalsraden '%s'"
 
 #. module: contract
+#. odoo-python
+#: code:addons/contract/models/contract.py:0
+#, python-format
+msgid "by contract"
+msgstr ""
+
+#. module: contract
 #: model_terms:ir.ui.view,arch_db:contract.contract_contract_form_view
 msgid "e.g. Contract XYZ"
 msgstr "t.ex. Kontrakt XYZ"
@@ -2413,3 +2555,14 @@ msgid ""
 msgstr ""
 "{{ object.company_id.name }} Kontrakt (Ref {{ objekt.namn eller 'n/a' }}) - "
 "Ändringar"
+
+#, python-format
+#~ msgid ""
+#~ "Contract manually invoiced: <a    href=\"#\" data-oe-"
+#~ "model=\"%(model_name)s\"     data-oe-id=\"%(rec_id)s\">Invoice</a>"
+#~ msgstr ""
+#~ "Kontrakt faktureras manuellt: <a href=\"#\" data-oe-"
+#~ "model=\"%(model_name)s\" data-oe-id=\"%(rec_id)s\">Faktura</a>"
+
+#~ msgid "SMS Delivery error"
+#~ msgstr "Fel vid leverans av SMS"

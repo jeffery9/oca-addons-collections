@@ -8,6 +8,8 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 import logging
 
+from markupsafe import Markup
+
 from odoo import Command, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 from odoo.osv import expression
@@ -472,7 +474,7 @@ class ContractContract(models.Model):
         compose_form = self.env.ref("mail.email_compose_message_wizard_form")
         ctx = dict(
             default_model="contract.contract",
-            default_res_id=self.id,
+            default_res_ids=self.ids,
             default_use_template=bool(template),
             default_template_id=template and template.id or False,
             default_composition_mode="comment",
@@ -587,20 +589,10 @@ class ContractContract(models.Model):
         """
         invoices = self._recurring_create_invoice()
         for invoice in invoices:
-            self.message_post(
-                body=_(
-                    "Contract manually invoiced: "
-                    "<a"
-                    '    href="#" data-oe-model="%(model_name)s" '
-                    '    data-oe-id="%(rec_id)s"'
-                    ">Invoice"
-                    "</a>"
-                )
-                % {
-                    "model_name": invoice._name,
-                    "rec_id": invoice.id,
-                }
-            )
+            body = Markup(_("Contract manually invoiced: %(invoice_link)s")) % {
+                "invoice_link": invoice._get_html_link(title=invoice.name)
+            }
+            self.message_post(body=body)
         return invoices
 
     @api.model
@@ -621,18 +613,11 @@ class ContractContract(models.Model):
     def _add_contract_origin(self, invoices):
         for item in self:
             for move in invoices & item._get_related_invoices():
+                translation = _("by contract")
                 move.message_post(
-                    body=(
-                        _(
-                            (
-                                "%(msg)s by contract <a href=#"
-                                " data-oe-model=contract.contract"
-                                " data-oe-id=%(contract_id)d>%(contract)s</a>."
-                            ),
-                            msg=move._creation_message(),
-                            contract_id=item.id,
-                            contract=item.display_name,
-                        )
+                    body=Markup(
+                        f"{move._creation_message()} {translation} "
+                        f"{item._get_html_link(title=item.display_name)}."
                     )
                 )
 
@@ -702,12 +687,21 @@ class ContractContract(models.Model):
         }
 
     def _terminate_contract(
-        self, terminate_reason_id, terminate_comment, terminate_date
+        self,
+        terminate_reason_id,
+        terminate_comment,
+        terminate_date,
+        terminate_lines_with_last_date_invoiced=False,
     ):
         self.ensure_one()
         if not self.env.user.has_group("contract.can_terminate_contract"):
             raise UserError(_("You are not allowed to terminate contracts."))
-        self.contract_line_ids.filtered("is_stop_allowed").stop(terminate_date)
+        for line in self.contract_line_ids.filtered("is_stop_allowed"):
+            line.stop(
+                max(terminate_date, line.last_date_invoiced)
+                if terminate_lines_with_last_date_invoiced and line.last_date_invoiced
+                else terminate_date
+            )
         self.write(
             {
                 "is_terminated": True,
