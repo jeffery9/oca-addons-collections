@@ -52,7 +52,10 @@
                     </div>
                     <group>
                         <group>
-                            <field name="fsm_recurring_template_id" />
+                            <field
+                                name="fsm_recurring_template_id"
+                                readonly="state != 'draft'"
+                            />
                             <field
                                 name="fsm_order_template_id"
                                 groups="fieldservice.group_fsm_template"
@@ -79,7 +82,7 @@
                         </group>
                     </group>
                     <group string="Orders">
-                        <field name="fsm_order_ids" nolabel="1">
+                        <field name="fsm_order_ids" nolabel="1" colspan="2">
                             <tree create="false">
                                 <field name="name" />
                                 <field name="stage_id" />
