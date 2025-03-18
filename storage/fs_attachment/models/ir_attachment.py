@@ -237,7 +237,9 @@ class IrAttachment(models.Model):
                     "db_datas": data,
                 }
                 return values
-        return super()._get_datas_related_values(data, mimetype)
+        return super(
+            IrAttachment, self.with_context(mimetype=mimetype)
+        )._get_datas_related_values(data, mimetype)
 
     ###########################################################
     # Odoo methods that we override to use the object storage #
@@ -321,6 +323,9 @@ class IrAttachment(models.Model):
                 ),
             ).write(vals)
 
+        if "name" in vals:
+            self._enforce_meaningful_storage_filename()
+
         return True
 
     @api.model
@@ -365,8 +370,22 @@ class IrAttachment(models.Model):
     def _storage_file_read(self, fname: str) -> bytes | None:
         """Read the file from the filesystem storage"""
         fs, _storage, fname = self._fs_parse_store_fname(fname)
-        with fs.open(fname, "rb") as f:
-            return f.read()
+        try:
+            with fs.open(fname, "rb") as f:
+                return f.read()
+        except OSError:
+            _logger.info(
+                "Error reading %s on storage %s", fname, _storage, exc_info=True
+            )
+        return b""
+
+    def _storage_write_option(self, fs):
+        _fs = fs
+        while _fs:
+            if hasattr(_fs, "s3"):
+                return {"ContentType": self._context["mimetype"]}
+            _fs = getattr(_fs, "fs", None)
+        return {}
 
     @api.model
     def _storage_file_write(self, bin_data: bytes) -> str:
@@ -378,7 +397,8 @@ class IrAttachment(models.Model):
         if not fs.exists(dirname):
             fs.makedirs(dirname)
         fname = f"{storage}://{path}"
-        with fs.open(path, "wb") as f:
+        kwargs = self._storage_write_option(fs)
+        with fs.open(path, "wb", **kwargs) as f:
             f.write(bin_data)
         self._fs_mark_for_gc(fname)
         return fname
