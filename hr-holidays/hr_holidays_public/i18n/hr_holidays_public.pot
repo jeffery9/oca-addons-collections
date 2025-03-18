@@ -103,6 +103,11 @@ msgid "Display Name"
 msgstr ""
 
 #. module: hr_holidays_public
+#: model:ir.model,name:hr_holidays_public.model_hr_employee
+msgid "Employee"
+msgstr ""
+
+#. module: hr_holidays_public
 #: model:ir.model.fields,field_description:hr_holidays_public.field_hr_leave_type__exclude_public_holidays
 msgid "Exclude Public Holidays"
 msgstr ""
@@ -147,6 +152,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_holidays_public.field_hr_holidays_public__display_name
 #: model:ir.model.fields,field_description:hr_holidays_public.field_hr_holidays_public_line__name
 msgid "Name"
+msgstr ""
+
+#. module: hr_holidays_public
+#. odoo-python
+#: code:addons/hr_holidays_public/wizards/holidays_public_next_year_wizard.py:0
+#, python-format
+msgid "New public holidays"
 msgstr ""
 
 #. module: hr_holidays_public
