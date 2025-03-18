@@ -1,0 +1,23 @@
+[project]
+name = "odoo-addons-oca-repair"
+version = "17.0.20250221.0"
+dependencies = [
+    "odoo-addon-base_repair_config>=17.0dev,<17.1dev",
+    "odoo-addon-repair_order_template>=17.0dev,<17.1dev",
+    "odoo-addon-repair_picking>=17.0dev,<17.1dev",
+    "odoo-addon-repair_picking_after_done>=17.0dev,<17.1dev",
+    "odoo-addon-repair_quality_control>=17.0dev,<17.1dev",
+    "odoo-addon-repair_refurbish>=17.0dev,<17.1dev",
+    "odoo-addon-repair_restrict_lot>=17.0dev,<17.1dev",
+    "odoo-addon-repair_service>=17.0dev,<17.1dev",
+    "odoo-addon-repair_stock>=17.0dev,<17.1dev",
+    "odoo-addon-repair_substate>=17.0dev,<17.1dev",
+    "odoo-addon-repair_timesheet>=17.0dev,<17.1dev",
+    "odoo-addon-repair_type>=17.0dev,<17.1dev",
+    "odoo-addon-repair_type_product_destination>=17.0dev,<17.1dev",
+]
+classifiers=[
+    "Programming Language :: Python",
+    "Framework :: Odoo",
+    "Framework :: Odoo :: 17.0",
+]

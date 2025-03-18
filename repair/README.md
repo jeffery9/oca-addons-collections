@@ -17,7 +17,23 @@ Odoo modules related to repairs.
 
 [//]: # (addons)
 
-This part will be replaced when running the oca-gen-addons-table script from OCA/maintainer-tools.
+Available addons
+----------------
+addon | version | maintainers | summary
+--- | --- | --- | ---
+[base_repair_config](base_repair_config/) | 17.0.1.0.0 | [![marcelsavegnago](https://github.com/marcelsavegnago.png?size=30px)](https://github.com/marcelsavegnago) | Provides general settings for the Repair App
+[repair_order_template](repair_order_template/) | 17.0.1.0.0 | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Use templates to save time when creating repair orders
+[repair_picking](repair_picking/) | 17.0.1.0.0 |  | Enhanced repair order management with pickings for adding and removing components
+[repair_picking_after_done](repair_picking_after_done/) | 17.0.1.1.0 |  | Transfer repaired move to another location directly from repair order
+[repair_quality_control](repair_quality_control/) | 17.0.1.0.0 | [![peluko00](https://github.com/peluko00.png?size=30px)](https://github.com/peluko00) | Create quality controls from repair order
+[repair_refurbish](repair_refurbish/) | 17.0.2.0.0 |  | Create refurbished products during repair
+[repair_restrict_lot](repair_restrict_lot/) | 17.0.1.0.0 |  | Repair Restrict Lot
+[repair_service](repair_service/) | 17.0.1.0.0 |  | Adds services to repair orders, so that they can be added as sale order lines.
+[repair_stock](repair_stock/) | 17.0.1.1.0 |  | Repair Stock
+[repair_substate](repair_substate/) | 17.0.1.0.0 |  | Repair Sub State
+[repair_timesheet](repair_timesheet/) | 17.0.1.0.0 | [![ppyczko](https://github.com/ppyczko.png?size=30px)](https://github.com/ppyczko) | Repair Timesheet
+[repair_type](repair_type/) | 17.0.1.1.1 |  | Repair type
+[repair_type_product_destination](repair_type_product_destination/) | 17.0.1.0.0 | [![ppyczko](https://github.com/ppyczko.png?size=30px)](https://github.com/ppyczko) | Repair Type - Product Destination
 
 [//]: # (end addons)
 
