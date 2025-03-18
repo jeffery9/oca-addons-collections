@@ -1,0 +1,771 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * mgmtsystem_action
+#
+# Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2018
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-01-15 18:09+0000\n"
+"PO-Revision-Date: 2024-11-27 14:58+0000\n"
+"Last-Translator: jakobkrabbe <jakob@syscare.se>\n"
+"Language-Team: Swedish (https://www.transifex.com/oca/teams/23907/sv/)\n"
+"Language: sv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.6.2\n"
+
+#. module: mgmtsystem_action
+#: model:mail.template,body_html:mgmtsystem_action.action_email_template_reminder_action
+msgid ""
+"\n"
+"            \n"
+"<p>Hello <t t-out=\"object.user_id.name\"/>,</p>\n"
+"\n"
+"<p>\n"
+"This is an automated message to remind you that the\n"
+"following action is due to be completed in 10 days (<t t-out=\"object."
+"date_deadline\"/>):\n"
+"\n"
+"<b><a t-att-href=\"object.get_action_url()\"><t t-out=\"object.name\"/></a></"
+"b>\n"
+"</p>\n"
+"\n"
+"<p>\n"
+"Thank you and have a nice day.<br>\n"
+"--<br>\n"
+"Odoo\n"
+"</p>\n"
+"            \n"
+"        "
+msgstr ""
+"\n"
+"            \n"
+"<p>Hej <t t-out=\"object.user_id.name\"/>,</p>\n"
+"\n"
+"<p>\n"
+"Detta är ett automatiserat meddelande för att påminna dig om att\n"
+"följande åtgärd ska slutföras inom 10 dagar (<t t-out=\"object."
+"date_deadline\"/>):\n"
+"\n"
+"<b><a t-att-href=\"object.get_action_url()\"><t t-out=\"object.name\"/></a></"
+"b>\n"
+"</p>\n"
+"\n"
+"<p>\n"
+"Tack och ha en trevlig dag.<br>\n"
+"--<br>\n"
+"Odoo\n"
+"</p>\n"
+"            \n"
+"        "
+
+#. module: mgmtsystem_action
+#: model:mail.template,body_html:mgmtsystem_action.email_template_new_action_reminder
+msgid ""
+"\n"
+"            \n"
+"<p>Hello <t t-out=\"object.user_id.name\"/>,</p>\n"
+"\n"
+"<p>A new action has been assigned to you: <b><a t-att-href=\"object."
+"get_action_url()\"><t t-out=\"object.name\"/></a></b></p>\n"
+"<p><b>Deadline: </b><t t-out=\"object.date_deadline or ''\"/></p>\n"
+"\n"
+"<p>Please, use the action stages and messages to log progress.</p>\n"
+"\n"
+"<p>\n"
+"Thank you<br>\n"
+"--<br>\n"
+"Odoo\n"
+"</p>\n"
+"            \n"
+"        "
+msgstr ""
+"\n"
+"            \n"
+"<p>Hej <t t-out=\"object.user_id.name\"/>,</p>\n"
+"\n"
+"<p>En ny åtgärd har tilldelats dig: <b><a t-att-href=\"object."
+"get_action_url()\"><t t-out=\"object.name\"/></a></b></p>\n"
+"<p><b>Slutdatum: </b><t t-out=\"object.date_deadline or ''\"/></p>\n"
+"\n"
+"<p>Använd handlingsstegen och meddelandena för att logga framsteg.</p>\n"
+"\n"
+"<p>\n"
+"Tack så mycket<br>.\n"
+"--<br>\n"
+"Odoo\n"
+"</p>\n"
+"            \n"
+"        "
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action_report__number_of_actions
+msgid "# of actions"
+msgstr "# Antal åtgärder"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action__number_of_days_to_close
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action_report__number_of_days_to_close
+msgid "# of days to close"
+msgstr "# Antal dagar till stängning"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action__number_of_days_to_open
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action_report__number_of_days_to_open
+msgid "# of days to open"
+msgstr "# Antal dagar att öppna"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action_report__number_of_exceedings_days
+msgid "# of exceedings days"
+msgstr "# Antal överskridanden dagar"
+
+#. module: mgmtsystem_action
+#: model_terms:ir.ui.view,arch_db:mgmtsystem_action.view_mgmtsystem_action_kanban
+msgid "#0000ff"
+msgstr "#0000ff"
+
+#. module: mgmtsystem_action
+#: model_terms:ir.ui.view,arch_db:mgmtsystem_action.view_mgmtsystem_action_kanban
+msgid "#00ff00"
+msgstr "#00ff00"
+
+#. module: mgmtsystem_action
+#: model_terms:ir.ui.view,arch_db:mgmtsystem_action.view_mgmtsystem_action_kanban
+msgid "#ffa500"
+msgstr "#ffa500"
+
+#. module: mgmtsystem_action
+#: model_terms:ir.ui.view,arch_db:mgmtsystem_action.view_mgmtsystem_action_kanban
+msgid "#ffffff"
+msgstr "#ffffff"
+
+#. module: mgmtsystem_action
+#: model:ir.model,name:mgmtsystem_action.model_mgmtsystem_action
+#: model_terms:ir.ui.view,arch_db:mgmtsystem_action.view_mgmtsystem_action_filter
+#: model_terms:ir.ui.view,arch_db:mgmtsystem_action.view_mgmtsystem_action_form
+msgid "Action"
+msgstr "Åtgärd"
+
+#. module: mgmtsystem_action
+#: model:mail.template,name:mgmtsystem_action.email_template_new_action_reminder
+msgid "Action Assigned"
+msgstr "Åtgärd Tilldelad"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action__message_needaction
+msgid "Action Needed"
+msgstr "Åtgärd behövs"
+
+#. module: mgmtsystem_action
+#: model:ir.model,name:mgmtsystem_action.model_mgmtsystem_action_stage
+msgid "Action Stage"
+msgstr "Åtgärds steg"
+
+#. module: mgmtsystem_action
+#: model:ir.model,name:mgmtsystem_action.model_mgmtsystem_action_tag
+msgid "Action Tags"
+msgstr "Åtgärdstaggar"
+
+#. module: mgmtsystem_action
+#: model_terms:ir.ui.view,arch_db:mgmtsystem_action.view_mgmtsystem_action_form
+msgid "Action title..."
+msgstr "Handlingens titel..."
+
+#. module: mgmtsystem_action
+#: model:ir.actions.act_window,name:mgmtsystem_action.open_mgmtsystem_action_list
+#: model:ir.ui.menu,name:mgmtsystem_action.menu_config_action
+#: model:ir.ui.menu,name:mgmtsystem_action.menu_open_action
+#: model:ir.ui.menu,name:mgmtsystem_action.menu_report_mgmtsystem_action_tree
+#: model_terms:ir.ui.view,arch_db:mgmtsystem_action.view_report_mgmtsystem_action_graph
+#: model_terms:ir.ui.view,arch_db:mgmtsystem_action.view_report_mgmtsystem_action_pivot
+msgid "Actions"
+msgstr "Åtgärder"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action__active
+msgid "Active"
+msgstr "Aktiv"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action__activity_ids
+msgid "Activities"
+msgstr "Aktiviteter"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "Aktivitet Undantag Dekoration"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action__activity_state
+msgid "Activity State"
+msgstr "Åtgärdstillstånd"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "Aktivitetstyp Ikon"
+
+#. module: mgmtsystem_action
+#: model_terms:ir.ui.view,arch_db:mgmtsystem_action.view_mgmtsystem_action_stage_form
+msgid "Add a description..."
+msgstr "Lägg till en beskrivning..."
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action_report__age
+msgid "Age"
+msgstr "Ålder"
+
+#. module: mgmtsystem_action
+#: model_terms:ir.ui.view,arch_db:mgmtsystem_action.view_mgmtsystem_action_filter
+msgid "Archived"
+msgstr "Arkiverad"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action__message_attachment_count
+msgid "Attachment Count"
+msgstr "Antal bifogade filer"
+
+#. module: mgmtsystem_action
+#: model:mgmtsystem.action.stage,name:mgmtsystem_action.stage_cancel
+msgid "Cancelled"
+msgstr "Avbruten"
+
+#. module: mgmtsystem_action
+#: model_terms:ir.actions.act_window,help:mgmtsystem_action.project_tags_action
+msgid "Click to add a new tag."
+msgstr "Klicka för att lägga till en ny tagg."
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action_report__date_closed
+msgid "Close Date"
+msgstr "Stängningsdatum"
+
+#. module: mgmtsystem_action
+#: model:mgmtsystem.action.stage,name:mgmtsystem_action.stage_close
+msgid "Closed"
+msgstr "Stängd"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action__date_closed
+msgid "Closed Date"
+msgstr "Stängt datum"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action_tag__color
+msgid "Color Index"
+msgstr "Färgindex"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action__company_id
+#: model_terms:ir.ui.view,arch_db:mgmtsystem_action.view_mgmtsystem_action_filter
+msgid "Company"
+msgstr "Företag"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields.selection,name:mgmtsystem_action.selection__mgmtsystem_action__type_action__correction
+#: model:ir.model.fields.selection,name:mgmtsystem_action.selection__mgmtsystem_action_report__type_action__correction
+msgid "Corrective Action"
+msgstr "Korrigeringsåtgärd"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action_report__create_date
+msgid "Create Date"
+msgstr "Skapa datum"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action__create_uid
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action_stage__create_uid
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action_tag__create_uid
+msgid "Created by"
+msgstr "Skapad av"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action__create_date
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action_stage__create_date
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action_tag__create_date
+msgid "Created on"
+msgstr "Skapad på"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action__date_deadline
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action_report__date_deadline
+msgid "Deadline"
+msgstr "Slutdatum"
+
+#. module: mgmtsystem_action
+#: model_terms:ir.ui.view,arch_db:mgmtsystem_action.view_mgmtsystem_action_kanban
+msgid "Delete"
+msgstr "Radera"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action__description
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action_stage__description
+#: model_terms:ir.ui.view,arch_db:mgmtsystem_action.view_mgmtsystem_action_form
+msgid "Description"
+msgstr "Beskrivnig"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action__display_name
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action_report__display_name
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action_stage__display_name
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action_tag__display_name
+msgid "Display Name"
+msgstr "Visningsnamn"
+
+#. module: mgmtsystem_action
+#: model:mgmtsystem.action.stage,name:mgmtsystem_action.stage_draft
+msgid "Draft"
+msgstr "Utkast"
+
+#. module: mgmtsystem_action
+#: model_terms:ir.ui.view,arch_db:mgmtsystem_action.view_mgmtsystem_action_kanban
+msgid "Dropdown menu"
+msgstr "Rullgardinsmeny"
+
+#. module: mgmtsystem_action
+#: model_terms:ir.ui.view,arch_db:mgmtsystem_action.view_mgmtsystem_action_kanban
+msgid "Edit Task"
+msgstr "Redigera uppgift"
+
+#. module: mgmtsystem_action
+#: model:ir.actions.server,name:mgmtsystem_action.ir_cron_mgmtsystem_action_reminder_ir_actions_server
+msgid "Email Action Reminders 10 days before due date."
+msgstr "Påminnelser om åtgärder via e-post 10 dagar före förfallodagen."
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action_stage__is_ending
+msgid "Ending stage"
+msgstr "Avslutande skede"
+
+#. module: mgmtsystem_action
+#: model_terms:ir.ui.view,arch_db:mgmtsystem_action.view_mgmtsystem_action_form
+msgid "Extra Information"
+msgstr "Extra information"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action_stage__fold
+msgid "Folded in Kanban"
+msgstr "Fälld i Kanban"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action__message_follower_ids
+msgid "Followers"
+msgstr "Följare"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Följare (Partners)"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,help:mgmtsystem_action.field_mgmtsystem_action__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr "Font awesome-ikon, t.ex. fa-tasks"
+
+#. module: mgmtsystem_action
+#: model_terms:ir.ui.view,arch_db:mgmtsystem_action.view_mgmtsystem_action_filter
+msgid "Future Activities"
+msgstr "Framtida aktiviteter"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,help:mgmtsystem_action.field_mgmtsystem_action__sequence
+msgid "Gives the sequence order when displaying a list of actions."
+msgstr "Anger ordningsföljden vid visning av en lista med åtgärder."
+
+#. module: mgmtsystem_action
+#: model_terms:ir.ui.view,arch_db:mgmtsystem_action.view_mgmtsystem_action_filter
+msgid "Group By"
+msgstr "Grupp av"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action__has_message
+msgid "Has Message"
+msgstr "Har meddelande"
+
+#. module: mgmtsystem_action
+#: model_terms:ir.actions.act_window,help:mgmtsystem_action.action_report_mgmtsystem_action
+msgid ""
+"Have a general overview of all actions processed in the system by sorting "
+"them with specific criteria."
+msgstr ""
+"Få en allmän överblick över alla åtgärder som behandlas i systemet genom att "
+"sortera dem efter specifika kriterier."
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action__id
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action_report__id
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action_stage__id
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action_tag__id
+msgid "ID"
+msgstr "ID"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action__activity_exception_icon
+msgid "Icon"
+msgstr "Ikon"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,help:mgmtsystem_action.field_mgmtsystem_action__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "Ikon för att indikera en undantagsaktivitet."
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,help:mgmtsystem_action.field_mgmtsystem_action__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "Om den är markerad kräver nya meddelanden din uppmärksamhet."
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,help:mgmtsystem_action.field_mgmtsystem_action__message_has_error
+#: model:ir.model.fields,help:mgmtsystem_action.field_mgmtsystem_action__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "Om kryssrutan är markerad får vissa meddelanden ett leveransfel."
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields.selection,name:mgmtsystem_action.selection__mgmtsystem_action__type_action__immediate
+#: model:ir.model.fields.selection,name:mgmtsystem_action.selection__mgmtsystem_action_report__type_action__immediate
+msgid "Immediate Action"
+msgstr "Omedelbara Åtgärder"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields.selection,name:mgmtsystem_action.selection__mgmtsystem_action__type_action__improvement
+#: model:ir.model.fields.selection,name:mgmtsystem_action.selection__mgmtsystem_action_report__type_action__improvement
+msgid "Improvement Opportunity"
+msgstr "Förbättringsmöjlighet"
+
+#. module: mgmtsystem_action
+#: model:mgmtsystem.action.stage,name:mgmtsystem_action.stage_open
+msgid "In Progress"
+msgstr "Pågående"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action__message_is_follower
+msgid "Is Follower"
+msgstr "Är följare"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action__write_uid
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action_stage__write_uid
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action_tag__write_uid
+msgid "Last Updated by"
+msgstr "Senast uppdaterad av"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action__write_date
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action_stage__write_date
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action_tag__write_date
+msgid "Last Updated on"
+msgstr "Senast uppdaterad den"
+
+#. module: mgmtsystem_action
+#: model_terms:ir.ui.view,arch_db:mgmtsystem_action.view_mgmtsystem_action_filter
+msgid "Late Activities"
+msgstr "Sena aktiviteter"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields.selection,name:mgmtsystem_action.selection__mgmtsystem_action__priority__0
+msgid "Low"
+msgstr "Låg"
+
+#. module: mgmtsystem_action
+#: model:ir.model,name:mgmtsystem_action.model_mgmtsystem_action_report
+msgid "Management System Action Report"
+msgstr "Rapport om åtgärder för ledningssystemet"
+
+#. module: mgmtsystem_action
+#: model:ir.actions.act_window,name:mgmtsystem_action.action_report_mgmtsystem_action
+msgid "Management System Analysis"
+msgstr "Analys av ledningssystem"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action__message_has_error
+msgid "Message Delivery error"
+msgstr "Fel vid leverans av meddelande"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action__message_ids
+msgid "Messages"
+msgstr "Meddelanden"
+
+#. module: mgmtsystem_action
+#: model_terms:ir.ui.view,arch_db:mgmtsystem_action.view_mgmtsystem_action_filter
+msgid "My Actions"
+msgstr "Mina åtgärder"
+
+#. module: mgmtsystem_action
+#: model_terms:ir.ui.view,arch_db:mgmtsystem_action.view_mgmtsystem_action_filter
+msgid "My Activities"
+msgstr "Mina aktiviteter"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "Min aktivitet Deadline"
+
+#. module: mgmtsystem_action
+#: model_terms:ir.ui.view,arch_db:mgmtsystem_action.view_mgmtsystem_action_filter
+msgid "My Followed Actions"
+msgstr "Mina följda åtgärder"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action_tag__name
+msgid "Name"
+msgstr "Namn"
+
+#. module: mgmtsystem_action
+#. odoo-python
+#: code:addons/mgmtsystem_action/models/mgmtsystem_action.py:0
+#, python-format
+msgid "New"
+msgstr "Ny"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "Deadline för nästa aktivitet"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action__activity_summary
+msgid "Next Activity Summary"
+msgstr "Nästa aktivitetsöversikt"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action__activity_type_id
+msgid "Next Activity Type"
+msgstr "Nästa aktivitetstyp"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields.selection,name:mgmtsystem_action.selection__mgmtsystem_action__priority__1
+msgid "Normal"
+msgstr "Normal"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Antal åtgärder"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action__message_has_error_counter
+msgid "Number of errors"
+msgstr "Antal fel"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,help:mgmtsystem_action.field_mgmtsystem_action__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "Antal meddelanden som kräver åtgärder"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,help:mgmtsystem_action.field_mgmtsystem_action__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "Antal meddelanden med leveransfel"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action__date_open
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action_report__date_open
+msgid "Opening Date"
+msgstr "Öppningsdatum"
+
+#. module: mgmtsystem_action
+#: model_terms:ir.ui.view,arch_db:mgmtsystem_action.view_mgmtsystem_action_filter
+msgid "Pending"
+msgstr "Avvaktande"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields.selection,name:mgmtsystem_action.selection__mgmtsystem_action__type_action__prevention
+#: model:ir.model.fields.selection,name:mgmtsystem_action.selection__mgmtsystem_action_report__type_action__prevention
+msgid "Preventive Action"
+msgstr "Förebyggande Åtgärd"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action__priority
+msgid "Priority"
+msgstr "Prioritet"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action__reference
+msgid "Reference"
+msgstr "Referens"
+
+#. module: mgmtsystem_action
+#: model:mail.template,subject:mgmtsystem_action.action_email_template_reminder_action
+msgid "Reminder on Action: \"{{object.name}}\""
+msgstr "Påminnelse om åtgärd: \"{{object.name}}\""
+
+#. module: mgmtsystem_action
+#: model:mail.template,name:mgmtsystem_action.action_email_template_reminder_action
+msgid "Reminder to Responsible"
+msgstr "Påminnelse till ansvarig"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action__type_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action_report__type_action
+msgid "Response Type"
+msgstr "Typ av svar"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action__user_id
+msgid "Responsible"
+msgstr "Ansvarig"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action__activity_user_id
+msgid "Responsible User"
+msgstr "Ansvarig användare"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "Fel vid leverans av SMS"
+
+#. module: mgmtsystem_action
+#. odoo-python
+#: code:addons/mgmtsystem_action/tests/test_create_action.py:0
+#, python-format
+msgid "SampleReference"
+msgstr "ExempelReference"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action__sequence
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action_stage__sequence
+msgid "Sequence"
+msgstr "Sekvens"
+
+#. module: mgmtsystem_action
+#: model_terms:ir.ui.view,arch_db:mgmtsystem_action.view_mgmtsystem_action_filter
+msgid "Show all records which has next action date is before today"
+msgstr "Visa alla poster som har nästa åtgärdsdatum före idag"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action__stage_id
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action_report__stage_id
+#: model_terms:ir.ui.view,arch_db:mgmtsystem_action.view_mgmtsystem_action_filter
+msgid "Stage"
+msgstr "Läge"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action_stage__name
+msgid "Stage Name"
+msgstr "Scenens namn"
+
+#. module: mgmtsystem_action
+#: model:ir.actions.act_window,name:mgmtsystem_action.mgmtsystem_action_stage_action
+#: model:ir.ui.menu,name:mgmtsystem_action.menu_mgmtsystem_action_stages
+msgid "Stages"
+msgstr "Stadier"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action_stage__is_starting
+msgid "Starting stage"
+msgstr "Startfas"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,help:mgmtsystem_action.field_mgmtsystem_action__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+"Status baserad på aktiviteter\n"
+"Försenad: Förfallodatumet har redan passerats\n"
+"Idag: Aktivitetsdatumet är idag\n"
+"Planerad: Framtida aktiviteter."
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action__name
+msgid "Subject"
+msgstr "Ämne"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action__system_id
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action_report__system_id
+msgid "System"
+msgstr "System"
+
+#. module: mgmtsystem_action
+#: model:ir.model.constraint,message:mgmtsystem_action.constraint_mgmtsystem_action_tag_name_uniq
+msgid "Tag name already exists !"
+msgstr "Taggens namn finns redan!"
+
+#. module: mgmtsystem_action
+#: model:ir.actions.act_window,name:mgmtsystem_action.mgmtsystem_action_tag_action
+#: model:ir.actions.act_window,name:mgmtsystem_action.project_tags_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action__tag_ids
+#: model:ir.ui.menu,name:mgmtsystem_action.menu_mgmtsystem_action_tags
+#: model_terms:ir.ui.view,arch_db:mgmtsystem_action.project_tags_form_view
+msgid "Tags"
+msgstr "Etiketter"
+
+#. module: mgmtsystem_action
+#: model_terms:ir.ui.view,arch_db:mgmtsystem_action.view_mgmtsystem_action_stage_form
+msgid "Task Stage"
+msgstr "Uppgiftsstadiet"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,help:mgmtsystem_action.field_mgmtsystem_action_stage__fold
+msgid ""
+"This stage is folded in the kanban view when there are no records in that "
+"stage to display."
+msgstr ""
+"Detta steg viks i kanbanvyn när det inte finns några poster i det steget att "
+"visa."
+
+#. module: mgmtsystem_action
+#: model_terms:ir.ui.view,arch_db:mgmtsystem_action.view_mgmtsystem_action_filter
+msgid "Today Activities"
+msgstr "Aktiviteter idag"
+
+#. module: mgmtsystem_action
+#: model_terms:ir.ui.view,arch_db:mgmtsystem_action.view_mgmtsystem_action_filter
+msgid "Type"
+msgstr "Typ"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,help:mgmtsystem_action.field_mgmtsystem_action__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "Typ av undantagsaktivitet som registreras."
+
+#. module: mgmtsystem_action
+#: model_terms:ir.ui.view,arch_db:mgmtsystem_action.view_mgmtsystem_action_filter
+#: model_terms:ir.ui.view,arch_db:mgmtsystem_action.view_mgmtsystem_action_kanban
+msgid "Unread Messages"
+msgstr "Olästa meddelanden"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action_report__user_id
+#: model_terms:ir.ui.view,arch_db:mgmtsystem_action.view_mgmtsystem_action_filter
+msgid "User"
+msgstr "Användare"
+
+#. module: mgmtsystem_action
+#. odoo-python
+#: code:addons/mgmtsystem_action/models/mgmtsystem_action.py:0
+#, python-format
+msgid "We cannot bring back the action to draft stage"
+msgstr "Vi kan inte föra tillbaka handlingen till utkaststadiet"
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,field_description:mgmtsystem_action.field_mgmtsystem_action__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: mgmtsystem_action
+#: model:ir.model.fields,help:mgmtsystem_action.field_mgmtsystem_action__website_message_ids
+msgid "Website communication history"
+msgstr ""
+
+#. module: mgmtsystem_action
+#: model_terms:ir.ui.view,arch_db:mgmtsystem_action.view_mgmtsystem_action_kanban
+msgid "oe_kanban_text_red"
+msgstr "oe_kanban_text_röd"
+
+#. module: mgmtsystem_action
+#: model:mail.template,subject:mgmtsystem_action.email_template_new_action_reminder
+msgid "{{object.name}}"
+msgstr "{{object.name}}"
