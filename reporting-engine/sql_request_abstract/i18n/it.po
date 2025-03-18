@@ -43,6 +43,7 @@ msgstr "Conteggio allegati"
 
 #. module: sql_request_abstract
 #: model:ir.model.fields.selection,name:sql_request_abstract.selection__bi_sql_view__state__draft
+#: model:ir.model.fields.selection,name:sql_request_abstract.selection__sql_export__state__draft
 #: model:ir.model.fields.selection,name:sql_request_abstract.selection__sql_request_mixin__state__draft
 msgid "Draft"
 msgstr "Bozza"
@@ -74,7 +75,6 @@ msgstr "Se selezionata, nuovi messaggi richiedono attenzione."
 
 #. module: sql_request_abstract
 #: model:ir.model.fields,help:sql_request_abstract.field_sql_request_mixin__message_has_error
-#: model:ir.model.fields,help:sql_request_abstract.field_sql_request_mixin__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr "Se selezionata, alcuni messaggi hanno un errore di consegna."
 
@@ -158,11 +158,6 @@ msgid "Query"
 msgstr "Query"
 
 #. module: sql_request_abstract
-#: model:ir.model.fields,field_description:sql_request_abstract.field_sql_request_mixin__message_has_sms_error
-msgid "SMS Delivery error"
-msgstr "Errore consegna SMS"
-
-#. module: sql_request_abstract
 #: model_terms:ir.ui.view,arch_db:sql_request_abstract.view_sql_request_mixin_form
 msgid "SQL Query"
 msgstr "Query SQL"
@@ -184,6 +179,7 @@ msgstr "Impostazioni SQL"
 
 #. module: sql_request_abstract
 #: model:ir.model.fields.selection,name:sql_request_abstract.selection__bi_sql_view__state__sql_valid
+#: model:ir.model.fields.selection,name:sql_request_abstract.selection__sql_export__state__sql_valid
 #: model:ir.model.fields.selection,name:sql_request_abstract.selection__sql_request_mixin__state__sql_valid
 msgid "SQL Valid"
 msgstr "SQL valido"
@@ -279,6 +275,9 @@ msgid ""
 msgstr ""
 "Non si possono usare le segenti parole: DELETE, DROP, CREATE, INSERT, ALTER, "
 "TRUNCATE, EXECUTE, UPDATE."
+
+#~ msgid "SMS Delivery error"
+#~ msgstr "Errore consegna SMS"
 
 #~ msgid "Display Name"
 #~ msgstr "Nome da visualizzare"
