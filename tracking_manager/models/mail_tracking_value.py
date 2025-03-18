@@ -1,27 +1,27 @@
-# Copyright 2023 Akretion (https://www.akretion.com).
-# @author Sébastien BEAU <sebastien.beau@akretion.com>
-# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-
-from odoo import models
-
-from ..tools import format_m2m
+from odoo import api, models
+from odoo.tools import html2plaintext
 
 
-class MailTrackingValue(models.Model):
+class MailTracking(models.Model):
     _inherit = "mail.tracking.value"
 
+    @api.model
     def _create_tracking_values(
-        self,
-        initial_value,
-        new_value,
-        col_name,
-        col_info,
-        record,
+        self, initial_value, new_value, col_name, col_info, record
     ):
-        if col_info["type"] == "many2many":
-            col_info["type"] = "text"
-            initial_value = format_m2m(initial_value)
-            new_value = format_m2m(new_value)
-        return super()._create_tracking_values(
-            initial_value, new_value, col_name, col_info, record
-        )
+        try:
+            return super()._create_tracking_values(
+                initial_value, new_value, col_name, col_info, record
+            )
+        except NotImplementedError:
+            if col_info["type"] == "html":
+                field = self.env["ir.model.fields"]._get(record._name, col_name)
+                values = {"field_id": field.id}
+                values.update(
+                    {
+                        "old_value_char": html2plaintext(initial_value) or "",
+                        "new_value_char": html2plaintext(new_value) or "",
+                    }
+                )
+                return values
+            raise
