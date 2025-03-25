@@ -138,7 +138,7 @@ msgid "Display Name"
 msgstr ""
 
 #. module: product_pricelist_direct_print
-#: model:ir.model.fields,field_description:product_pricelist_direct_print.field_product_pricelist_print__group_field_id
+#: model:ir.model.fields,field_description:product_pricelist_direct_print.field_product_pricelist_print__group_field
 msgid "Group Field"
 msgstr ""
 
@@ -248,6 +248,11 @@ msgstr ""
 #. module: product_pricelist_direct_print
 #: model_terms:ir.ui.view,arch_db:product_pricelist_direct_print.view_product_pricelist_print
 msgid "Print"
+msgstr ""
+
+#. module: product_pricelist_direct_print
+#: model:ir.model.fields,field_description:product_pricelist_direct_print.field_product_pricelist_print__print_child_categories
+msgid "Print Child Categories"
 msgstr ""
 
 #. module: product_pricelist_direct_print

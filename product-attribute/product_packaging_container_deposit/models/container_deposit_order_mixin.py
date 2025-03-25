@@ -1,9 +1,10 @@
 # Copyright 2023 Camptocamp (<https://www.camptocamp.com>).
+# Copyright 2024 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 import logging
 from functools import partial
 
-from odoo import Command, _, models
+from odoo import _, models
 
 _logger = logging.getLogger(__name__)
 
@@ -49,7 +50,8 @@ class OrderMixin(models.AbstractModel):
             deposit_container_qties = (
                 lines_to_comp_deposit._get_order_lines_container_deposit_quantities()
             )
-            values_lst = []
+            lines_to_update = {}
+            lines_to_create = []
             for line in self[self._get_order_line_field()]:
                 if not line.is_container_deposit:
                     continue
@@ -66,30 +68,25 @@ class OrderMixin(models.AbstractModel):
                         # TODO: check if it is needed for UI only
                         new_vals["name"] = _("[DEL] %(name)s", name=line.name)
                     # else:
-                    values_lst.append(
-                        Command.update(
-                            line.id,
-                            new_vals,
-                        )
-                    )
+                    lines_to_update[line.id] = new_vals
 
                 else:
-                    values_lst.append(
-                        Command.update(
-                            line.id,
-                            {
-                                line._get_product_qty_field(): qty,
-                                line._get_product_qty_delivered_received_field(): qty_dlvd_rcvd,
-                            },
-                        )
-                    )
+                    lines_to_update[line.id] = {
+                        line._get_product_qty_field(): qty,
+                        line._get_product_qty_delivered_received_field(): qty_dlvd_rcvd,
+                    }
             for product in deposit_container_qties:
                 if deposit_container_qties[product][0]:
                     values = order.prepare_deposit_container_line(
                         product, deposit_container_qties[product][0]
                     )
-                    values_lst.append(Command.create(values))
-            order.write({self._get_order_line_field(): values_lst})
+                    values["order_id"] = order.id
+                    lines_to_create.append(values)
+            line_model = self._fields[self._get_order_line_field()].comodel_name
+            for line_id, values in lines_to_update.items():
+                self.env[line_model].browse(line_id).exists().write(values)
+            if lines_to_create:
+                self.env[line_model].create(lines_to_create)
         # Schedule line to delete after commit to avoid caching issue w/ UI
         if line_ids_to_delete:
             self.env.cr.postcommit.add(
@@ -111,3 +108,11 @@ class OrderMixin(models.AbstractModel):
         return super(
             OrderMixin, self.with_context(skip_update_container_deposit=True)
         ).copy(default=default)
+
+    def write(self, vals):
+        # When an order is modified, don't recompute container deposit for each line
+        res = super(
+            OrderMixin, self.with_context(skip_update_container_deposit=True)
+        ).write(vals)
+        self.update_order_container_deposit_quantity()
+        return res

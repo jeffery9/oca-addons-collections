@@ -54,14 +54,10 @@ class ProductPricelistPrint(models.TransientModel):
     order_field = fields.Selection(
         [("name", "Name"), ("default_code", "Internal Reference")], string="Order"
     )
-    group_field_id = fields.Many2one(
-        comodel_name="ir.model.fields",
+    group_field = fields.Selection(
+        selection=lambda x: x._selection_group_field(),
+        default="categ_id",
         required=True,
-        domain=[
-            ("model", "=", "product.product"),
-            ("ttype", "=", "many2one"),
-        ],
-        default=lambda x: x._default_group_field_id(),
     )
     partner_count = fields.Integer(compute="_compute_partner_count")
     date = fields.Datetime(required=True, default=fields.Datetime.now)
@@ -70,6 +66,7 @@ class ProductPricelistPrint(models.TransientModel):
         " the last X ordered products will be obtained for the report."
     )
     summary = fields.Text()
+    print_child_categories = fields.Boolean()
     max_categ_level = fields.Integer(
         string="Max category level",
         help="If this field is not 0, products are grouped at max level "
@@ -80,6 +77,10 @@ class ProductPricelistPrint(models.TransientModel):
     )
 
     product_price = fields.Float(compute="_compute_product_price")
+
+    @api.onchange("categ_ids")
+    def _onchange_categ_ids(self):
+        self.print_child_categories = len(self.categ_ids) > 0
 
     @api.depends_context("product")
     def _compute_product_price(self):
@@ -162,13 +163,19 @@ class ProductPricelistPrint(models.TransientModel):
                 res["categ_ids"] = [(6, 0, category_items.mapped("categ_id").ids)]
         return res
 
-    def _default_group_field_id(self):
-        IrModelFields = self.env["ir.model.fields"]
-        return IrModelFields.search(
-            [
-                ("model", "=", "product.product"),
-                ("name", "=", "categ_id"),
-            ]
+    def _selection_group_field(self):
+        fields = (
+            self.env["ir.model.fields"]
+            .sudo()
+            .search(
+                [
+                    ("model", "=", "product.product"),
+                    ("ttype", "=", "many2one"),
+                ]
+            )
+        )
+        return sorted(
+            [(field.name, field.display_name) for field in fields], key=lambda f: f[1]
         )
 
     def print_report(self):
@@ -329,7 +336,11 @@ class ProductPricelistPrint(models.TransientModel):
                         ]
                     )
             domain = expression.AND([domain, aux_domain])
-        if self.categ_ids:
+        if self.print_child_categories:
+            domain = expression.AND(
+                [domain, [("categ_id", "child_of", self.categ_ids.ids)]]
+            )
+        elif self.categ_ids:
             domain = expression.AND([domain, [("categ_id", "in", self.categ_ids.ids)]])
         return domain
 
@@ -349,7 +360,7 @@ class ProductPricelistPrint(models.TransientModel):
         return products
 
     def get_group_key(self, product):
-        group_field = getattr(product, self.group_field_id.name)
+        group_field = getattr(product, self.group_field)
         complete_name = getattr(group_field, "complete_name", group_field.name) or _(
             "Undefined"
         )
