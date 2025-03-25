@@ -35,7 +35,6 @@ msgstr "默认供应商折扣 (%)"
 #. module: purchase_discount
 #: model:ir.model.fields,field_description:purchase_discount.field_product_supplierinfo__discount
 #: model:ir.model.fields,field_description:purchase_discount.field_purchase_order_line__discount
-#: model:ir.model.fields,field_description:purchase_discount.field_purchase_report__discount
 msgid "Discount (%)"
 msgstr "折扣(%)"
 
@@ -65,11 +64,6 @@ msgid "Purchase Report"
 msgstr "采购报告"
 
 #. module: purchase_discount
-#: model:ir.model,name:purchase_discount.model_stock_move
-msgid "Stock Move"
-msgstr "库存移动"
-
-#. module: purchase_discount
 #: model:ir.model,name:purchase_discount.model_product_supplierinfo
 msgid "Supplier Pricelist"
 msgstr "供应商价格表"
@@ -83,9 +77,17 @@ msgid ""
 msgstr "根据供应商的不同，此值将用作每个新供应商信息行的默认值。"
 
 #. module: purchase_discount
+#: model:ir.model.fields,field_description:purchase_discount.field_purchase_report__discount
+msgid "Total discount"
+msgstr ""
+
+#. module: purchase_discount
 #: model_terms:ir.ui.view,arch_db:purchase_discount.res_partner_form_view
 msgid "the parent company"
 msgstr "上级公司"
+
+#~ msgid "Stock Move"
+#~ msgstr "库存移动"
 
 #~ msgid "Stock Rule"
 #~ msgstr "库存规则"
