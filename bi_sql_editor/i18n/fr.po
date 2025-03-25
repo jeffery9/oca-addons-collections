@@ -88,6 +88,14 @@ msgid "Bi SQL View Field"
 msgstr "Champs SQL"
 
 #. module: bi_sql_editor
+#: model:ir.model.fields,help:bi_sql_editor.field_bi_sql_view__parent_menu_id
+msgid ""
+"By assigning a value to this field before manually creating the UI, you're "
+"overwriting the parent menu on which the menu related to the SQL report will "
+"be created."
+msgstr ""
+
+#. module: bi_sql_editor
 #: model:ir.model.fields,help:bi_sql_editor.field_bi_sql_view_field__group_operator
 msgid ""
 "By default, Odoo will sum the values when grouping. If you wish to alter the "
@@ -118,10 +126,10 @@ msgstr "Colonne"
 
 #. module: bi_sql_editor
 #: model:ir.model.fields,help:bi_sql_editor.field_bi_sql_view__view_order
-msgid "Comma-separated text. Possible values: \"graph\", \"pivot\" or \"tree\""
+msgid ""
+"Comma-separated text. Possible values: \"graph\", \"pivot\", \"tree\" or "
+"\"form\""
 msgstr ""
-"Texte séparé par des virgules. Valeurs posisbles : \"graph\", \"pivot\" ou "
-"\"tree\""
 
 #. module: bi_sql_editor
 #: model:ir.model.fields,field_description:bi_sql_editor.field_bi_sql_view__computed_action_context
@@ -425,7 +433,6 @@ msgstr ""
 
 #. module: bi_sql_editor
 #: model:ir.model.fields,field_description:bi_sql_editor.field_bi_sql_view_field__many2one_model_id
-#: model_terms:ir.ui.view,arch_db:bi_sql_editor.view_bi_sql_view_form
 msgid "Model"
 msgstr "Modèle"
 
@@ -487,6 +494,11 @@ msgid "Odoo Cron"
 msgstr "Cron Odoo"
 
 #. module: bi_sql_editor
+#: model:ir.model.fields,field_description:bi_sql_editor.field_bi_sql_view__form_view_id
+msgid "Odoo Form View"
+msgstr ""
+
+#. module: bi_sql_editor
 #: model:ir.model.fields,field_description:bi_sql_editor.field_bi_sql_view__graph_view_id
 msgid "Odoo Graph View"
 msgstr "Vue graphique Odoo"
@@ -525,8 +537,8 @@ msgstr "Vue Liste Odoo"
 #. odoo-python
 #: code:addons/bi_sql_editor/models/bi_sql_view.py:0
 #, python-format
-msgid "Only graph, pivot or tree views are supported"
-msgstr "Seules les vues graphique, pivot et arbre sont supportées"
+msgid "Only graph, pivot, tree or form views are supported"
+msgstr ""
 
 #. module: bi_sql_editor
 #: model_terms:ir.ui.view,arch_db:bi_sql_editor.view_bi_sql_view_form
@@ -542,6 +554,11 @@ msgstr "Optionelle (cachée)"
 #: model:ir.model.fields.selection,name:bi_sql_editor.selection__bi_sql_view_field__tree_visibility__optional_show
 msgid "Optional (shown)"
 msgstr "Optionelle (affiché)"
+
+#. module: bi_sql_editor
+#: model:ir.model.fields,field_description:bi_sql_editor.field_bi_sql_view__parent_menu_id
+msgid "Parent Odoo Menu"
+msgstr ""
 
 #. module: bi_sql_editor
 #. odoo-python
@@ -691,6 +708,11 @@ msgid "Sum"
 msgstr "Somme"
 
 #. module: bi_sql_editor
+#: model_terms:ir.ui.view,arch_db:bi_sql_editor.view_bi_sql_view_form
+msgid "Technical Details"
+msgstr ""
+
+#. module: bi_sql_editor
 #: model:ir.model.fields,field_description:bi_sql_editor.field_bi_sql_view__technical_name
 msgid "Technical Name"
 msgstr "Nom technique"
@@ -740,6 +762,11 @@ msgstr ""
 "disponible pour les fonctions de recherche et de regroupement"
 
 #. module: bi_sql_editor
+#: model_terms:ir.ui.view,arch_db:bi_sql_editor.view_bi_sql_view_form
+msgid "UI Instances"
+msgstr ""
+
+#. module: bi_sql_editor
 #: model:ir.model.fields.selection,name:bi_sql_editor.selection__bi_sql_view_field__tree_visibility__unavailable
 msgid "Unavailable"
 msgstr "Indisponible"
@@ -757,11 +784,6 @@ msgid ""
 msgstr ""
 "Mettre à jour l'accès au modèle. Requis si vous changez la liste de groupes, "
 "après avoir créer le modèle"
-
-#. module: bi_sql_editor
-#: model_terms:ir.ui.view,arch_db:bi_sql_editor.view_bi_sql_view_form
-msgid "User Interface"
-msgstr "Interface utilisateur"
 
 #. module: bi_sql_editor
 #: model:ir.model.fields,field_description:bi_sql_editor.field_bi_sql_view__view_name
@@ -842,6 +864,19 @@ msgstr ""
 #: model:ir.model.fields,field_description:bi_sql_editor.field_bi_sql_view_field__sequence
 msgid "sequence"
 msgstr "Séquence"
+
+#~ msgid "User Interface"
+#~ msgstr "Interface utilisateur"
+
+#~ msgid ""
+#~ "Comma-separated text. Possible values: \"graph\", \"pivot\" or \"tree\""
+#~ msgstr ""
+#~ "Texte séparé par des virgules. Valeurs posisbles : \"graph\", \"pivot\" "
+#~ "ou \"tree\""
+
+#, python-format
+#~ msgid "Only graph, pivot or tree views are supported"
+#~ msgstr "Seules les vues graphique, pivot et arbre sont supportées"
 
 #~ msgid ""
 #~ "Are you sure you want to set to draft this SQL View. It will delete the "
