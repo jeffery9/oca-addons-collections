@@ -20,6 +20,9 @@ class SaleReportDeliverd(models.Model):
     product_uom_qty = fields.Float("Qty", readonly=True)
     partner_id = fields.Many2one("res.partner", "Customer", readonly=True)
     company_id = fields.Many2one("res.company", "Company", readonly=True)
+    user_from_partner_id = fields.Many2one(
+        "res.users", "Salesperson From Partner", readonly=True
+    )
     user_id = fields.Many2one("res.users", "Salesperson", readonly=True)
     price_subtotal = fields.Float("Untaxed total delivered", readonly=True)
     product_tmpl_id = fields.Many2one("product.template", "Product", readonly=True)
@@ -71,6 +74,7 @@ class SaleReportDeliverd(models.Model):
             sub.date,
             sub.state,
             sub.partner_id,
+            sub.user_from_partner_id,
             sub.user_id,
             sub.company_id,
             sub.campaign_id,
@@ -90,15 +94,48 @@ class SaleReportDeliverd(models.Model):
             sub.picking_id,
             sum(signed_qty * unsigned_product_uom_qty) AS product_uom_qty,
             sum(signed_qty * unsigned_price_subtotal) AS price_subtotal,
-            sum(COALESCE(-sub.amount_cost, signed_qty *
-                ROUND(sub.unsigned_purchase_price * unsigned_product_uom_qty,
-                      sub.decimal_places))) AS amount_cost,
-            sum(signed_qty * unsigned_price_subtotal - COALESCE(-sub.amount_cost, signed_qty *
-                ROUND(sub.unsigned_purchase_price * unsigned_product_uom_qty,
-                      sub.decimal_places))) AS margin,
+            CASE
+                WHEN BOOL_OR(sub.amount_cost is not NULL)
+                    THEN sum(-sub.amount_cost)
+                ELSE sum(
+                    signed_qty * ROUND(
+                        sub.unsigned_purchase_price * unsigned_product_uom_qty,
+                        sub.decimal_places
+                    )
+                )
+            END AS amount_cost,
+            CASE
+                WHEN BOOL_OR(sub.amount_cost is not NULL)
+                    THEN sum(
+                        signed_qty * unsigned_price_subtotal + COALESCE(
+                            sub.amount_cost, 0.0
+                        )
+                    )
+                ELSE sum(
+                    signed_qty * unsigned_price_subtotal - (
+                        signed_qty * ROUND(
+                            sub.unsigned_purchase_price * unsigned_product_uom_qty,
+                            sub.decimal_places
+                        )
+                    )
+                )
+            END AS margin,
             0 AS margin_percent
         """
         return select_str
+
+    def _sub_select_signed_qty(self):
+        """Sub select to calculate the cases for the signed quantity"""
+        return """
+        WHEN source_location.usage = 'internal' AND dest_location.usage = 'customer'
+            THEN 1
+        WHEN source_location.usage = 'customer' AND dest_location.usage = 'internal'
+            THEN -1
+        WHEN source_location.usage = 'supplier' AND dest_location.usage = 'customer'
+            THEN 1
+        WHEN source_location.usage = 'customer' AND dest_location.usage = 'supplier'
+            THEN -1
+        """
 
     def _sub_select(self):
         sub_select_str = """
@@ -109,17 +146,20 @@ class SaleReportDeliverd(models.Model):
             t.uom_id as product_uom,
             cur.decimal_places,
             CASE
-              WHEN (source_location.usage = 'internal' AND dest_location.usage = 'customer')
-                        or dest_location.usage IS NULL
+              WHEN dest_location.usage IS NULL
                 THEN 1
-              WHEN dest_location.usage = 'internal' AND source_location.usage = 'customer'
-                THEN -1
+              {sub_select_signed_qty}
               ELSE 0
             END AS signed_qty,
-            (CASE WHEN t.type IN ('product', 'consu') THEN COALESCE(sm.product_uom_qty, 0.0)
-                ELSE sol.product_uom_qty END) / u.factor *
-                u2.factor as unsigned_product_uom_qty,
-            ROUND(COALESCE(sm.product_uom_qty * sol.price_reduce, sol.price_subtotal) /
+            (CASE
+                WHEN t.type IN ('product', 'consu')
+                THEN COALESCE(-svl.quantity, sm.product_uom_qty, 0.0)
+                ELSE sol.product_uom_qty END
+            ) / u.factor * u2.factor as unsigned_product_uom_qty,
+            ROUND(COALESCE(
+                -svl.quantity * sol.price_reduce,
+                sm.product_uom_qty * sol.price_reduce,
+                sol.price_subtotal) /
                 CASE COALESCE(s.currency_rate, 0)
                     WHEN 0 THEN 1.0 ELSE s.currency_rate END, cur.decimal_places)
                      as unsigned_price_subtotal,
@@ -137,6 +177,7 @@ class SaleReportDeliverd(models.Model):
             s.analytic_account_id as analytic_account_id,
             s.team_id as team_id,
             p.product_tmpl_id,
+            partner.user_id as user_from_partner_id,
             partner.country_id as country_id,
             partner.industry_id as industry_id,
             partner.commercial_partner_id as commercial_partner_id,
@@ -146,7 +187,9 @@ class SaleReportDeliverd(models.Model):
             sp.id as picking_id,
             sol.purchase_price AS unsigned_purchase_price,
             ROUND(svl.value, cur.decimal_places) AS amount_cost
-        """
+        """.format(
+            sub_select_signed_qty=self._sub_select_signed_qty()
+        )
         return sub_select_str
 
     def _from(self):
@@ -170,17 +213,44 @@ class SaleReportDeliverd(models.Model):
         """
         return from_str
 
-    def _where(self):
-        """Take into account only stock moves from internal locations to other
-        locations and moves from customer with the field 'to_refund' True
+    def _sub_where(self):
+        """
+        Take into account only stock moves from:
+
+        Outgoing: Internal to Customer
+        Returns: Customer to Internal + to_refund
+        Dropship: Supplier to Customer
+        Dropship return: Customer to Supplier
         """
         return """
-            WHERE (sm.state = 'done' OR sm.state IS NULL) AND (
-                (source_location.usage = 'internal' AND dest_location.usage = 'customer') OR
-                (source_location.usage = 'customer' AND dest_location.usage = 'internal'
-                    AND sm.to_refund)
-            )
+        (
+            source_location.usage = 'internal' AND
+            dest_location.usage = 'customer'
+        ) OR
+        (
+            source_location.usage = 'customer' AND
+            dest_location.usage = 'internal' AND
+            sm.to_refund
+        ) OR
+        (
+            source_location.usage = 'supplier' AND
+            dest_location.usage = 'customer' AND
+            svl.quantity < 0
+        ) OR
+        (
+            source_location.usage = 'customer' AND
+            dest_location.usage = 'supplier' AND
+            svl.quantity > 0
+        )
         """
+
+    def _where(self):
+        """Where clause with only done mvoes or without state"""
+        return """
+            WHERE (sm.state = 'done' OR sm.state IS NULL) AND ({sub_where})
+        """.format(
+            sub_where=self._sub_where()
+        )
 
     def _group_by(self):
         group_by_str = """
@@ -193,6 +263,7 @@ class SaleReportDeliverd(models.Model):
             sub.order_name,
             sub.date,
             sub.partner_id,
+            sub.user_from_partner_id,
             sub.user_id,
             sub.state,
             sub.company_id,

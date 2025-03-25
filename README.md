@@ -23,14 +23,20 @@ addon | version | maintainers | summary
 --- | --- | --- | ---
 [product_sold_by_delivery_week](product_sold_by_delivery_week/) | 16.0.1.0.1 | [![chienandalu](https://github.com/chienandalu.png?size=30px)](https://github.com/chienandalu) | Adds a field that graphically hints the weekly product sales
 [sale_comment_template](sale_comment_template/) | 16.0.1.0.1 |  | Comments texts templates on Sale documents
-[sale_layout_category_hide_detail](sale_layout_category_hide_detail/) | 16.0.1.1.0 |  | Hide details for sections in sale orders and invoices for reports and customer portal
-[sale_order_line_position](sale_order_line_position/) | 16.0.1.2.0 |  | Adds position number on sale order line.
+[sale_layout_category_hide_detail](sale_layout_category_hide_detail/) | 16.0.1.1.2 |  | Hide details for sections in sale orders and invoices for reports and customer portal
+[sale_order_line_position](sale_order_line_position/) | 16.0.1.3.0 |  | Adds position number on sale order line.
 [sale_order_product_recommendation_product_sold_by_delivery_week](sale_order_product_recommendation_product_sold_by_delivery_week/) | 16.0.1.1.0 | [![chienandalu](https://github.com/chienandalu.png?size=30px)](https://github.com/chienandalu) | Adds the weekly sales field to the recommendation wizard
 [sale_order_report_product_image](sale_order_report_product_image/) | 16.0.1.0.0 |  | Show product images on Sale documents
-[sale_packaging_report](sale_packaging_report/) | 16.0.1.0.1 | [![yajo](https://github.com/yajo.png?size=30px)](https://github.com/yajo) | Packaging data in sale reports
-[sale_report_delivered](sale_report_delivered/) | 16.0.1.0.0 | [![sergio-teruel](https://github.com/sergio-teruel.png?size=30px)](https://github.com/sergio-teruel) | Sale Report Delivered
+[sale_order_weight](sale_order_weight/) | 16.0.1.0.0 |  | Add products weight in report for sale order
+[sale_packaging_report](sale_packaging_report/) | 16.0.1.1.0 | [![yajo](https://github.com/yajo.png?size=30px)](https://github.com/yajo) | Packaging data in sale reports
+[sale_report_commitment_date](sale_report_commitment_date/) | 16.0.1.0.0 | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Display the commitment date on Sales Order analysis reports
+[sale_report_country_state](sale_report_country_state/) | 16.0.1.0.0 |  | Sale Report Filter by State
+[sale_report_delivered](sale_report_delivered/) | 16.0.2.2.1 | [![sergio-teruel](https://github.com/sergio-teruel.png?size=30px)](https://github.com/sergio-teruel) | Sale Report Delivered
+[sale_report_delivered_attribute_values](sale_report_delivered_attribute_values/) | 16.0.1.0.1 | [![Shide](https://github.com/Shide.png?size=30px)](https://github.com/Shide) [![rafaelbn](https://github.com/rafaelbn.png?size=30px)](https://github.com/rafaelbn) | Allow to view Attribute values of Lines on Sale Report Delivered
+[sale_report_delivered_deposit](sale_report_delivered_deposit/) | 16.0.2.0.0 | [![Shide](https://github.com/Shide.png?size=30px)](https://github.com/Shide) [![rafaelbn](https://github.com/rafaelbn.png?size=30px)](https://github.com/rafaelbn) | Allow to view Customer Deposits on Sale Report Delivered
 [sale_report_delivered_subtotal](sale_report_delivered_subtotal/) | 16.0.1.0.1 | [![sergio-teruel](https://github.com/sergio-teruel.png?size=30px)](https://github.com/sergio-teruel) | Sale Report Delivered subtotal
 [sale_report_delivered_volume](sale_report_delivered_volume/) | 16.0.1.0.0 |  | Sale Report Delivered Volume
+[sale_report_salesperson_from_partner](sale_report_salesperson_from_partner/) | 16.0.1.1.0 | [![pilarvargas-tecnativa](https://github.com/pilarvargas-tecnativa.png?size=30px)](https://github.com/pilarvargas-tecnativa) | Sale Report Salesperson From Partner
 
 [//]: # (end addons)
 
