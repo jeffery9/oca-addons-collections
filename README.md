@@ -21,8 +21,13 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
+[delivery_line_sale_line_position](delivery_line_sale_line_position/) | 17.0.1.0.0 |  | Adds the sale line position to the delivery report lines
 [stock_move_value_report](stock_move_value_report/) | 17.0.1.0.0 |  | Stock Move Cost Value Report
+[stock_picking_comment_template](stock_picking_comment_template/) | 17.0.1.0.0 |  | Comments texts templates on Picking documents
+[stock_picking_report_custom_description](stock_picking_report_custom_description/) | 17.0.1.0.0 | [![carlosdauden](https://github.com/carlosdauden.png?size=30px)](https://github.com/carlosdauden) | Show moves description in picking reports
+[stock_picking_report_external_note](stock_picking_report_external_note/) | 17.0.1.0.0 | [![Shide](https://github.com/Shide.png?size=30px)](https://github.com/Shide) | Adds a note in Stock Picking shown on external reports like Delivery Slip
 [stock_picking_report_valued](stock_picking_report_valued/) | 17.0.1.0.0 |  | Adding Valued Picking on Delivery Slip report
+[stock_quantity_history_location](stock_quantity_history_location/) | 17.0.1.0.0 | [![luisg123v](https://github.com/luisg123v.png?size=30px)](https://github.com/luisg123v) [![rolandojduartem](https://github.com/rolandojduartem.png?size=30px)](https://github.com/rolandojduartem) | Provides stock quantity by location on past date
 
 [//]: # (end addons)
 
