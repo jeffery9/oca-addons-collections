@@ -24,7 +24,7 @@ class MailMessage(models.Model):
         string="Mail Trackings",
     )
     mail_tracking_needs_action = fields.Boolean(
-        help="The message tracking will be considered" " to filter tracking issues",
+        help="The message tracking will be considered to filter tracking issues",
         default=False,
     )
     is_failed_message = fields.Boolean(
@@ -41,6 +41,7 @@ class MailMessage(models.Model):
         "mail_tracking_needs_action",
         "author_id",
         "notification_ids",
+        "mail_tracking_ids",
         "mail_tracking_ids.state",
     )
     def _compute_is_failed_message(self):
@@ -98,6 +99,21 @@ class MailMessage(models.Model):
             "bounced": "error",
             "soft-bounced": "error",
         }
+
+    @api.model
+    def _tracking_mail_notification_get_status(self, notification):
+        """Map mail.notification states to be used in chatter"""
+        return (
+            "opened"
+            if notification.is_read
+            else {
+                "ready": "waiting",
+                "sent": "delivered",
+                "bounce": "error",
+                "exception": "error",
+                "canceled": "error",
+            }.get(notification.notification_status, "unknown")
+        )
 
     def _partner_tracking_status_get(self, tracking_email):
         """Determine tracking status"""
@@ -199,6 +215,25 @@ class MailMessage(models.Model):
                     email_cc_list.discard(partner.email)
                     isCc = True
                 tracking_status = tracking_unknown_values.copy()
+                # Search internal mail.notifications (for users using it)
+                # Note that by default, read notifications older than 180 days are
+                # deleted.
+                notification = message.notification_ids.filtered(
+                    lambda notification: notification.notification_type == "inbox"
+                    and notification.res_partner_id == partner
+                )
+                if notification:
+                    status = self._tracking_mail_notification_get_status(notification)
+                    tracking_status.update(
+                        {
+                            "status": status,
+                            "status_human": self._partner_tracking_status_human_get(
+                                status
+                            ),
+                            "error_type": notification.failure_type,
+                            "error_description": notification.failure_reason,
+                        }
+                    )
                 tracking_status.update(
                     {
                         "recipient": partner.name,
