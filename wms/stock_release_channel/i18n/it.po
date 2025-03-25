@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-04-08 09:34+0000\n"
+"PO-Revision-Date: 2024-10-05 17:06+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,25 +14,25 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. module: stock_release_channel
 #: model_terms:ir.ui.view,arch_db:stock_release_channel.stock_release_channel_kanban_view
 msgid ""
-"<i class=\"fa fa-dropbox fa-4x\" role=\"img\" aria-label=\"Release\" title="
-"\"Automatic Release\"/>"
+"<i class=\"fa fa-dropbox fa-4x\" role=\"img\" aria-label=\"Release\" "
+"title=\"Automatic Release\"/>"
 msgstr ""
-"<i class=\"fa fa-dropbox fa-4x\" role=\"img\" aria-label=\"Rilascio\" title="
-"\"Rilascio automatico\"/>"
+"<i class=\"fa fa-dropbox fa-4x\" role=\"img\" aria-label=\"Rilascio\" "
+"title=\"Rilascio automatico\"/>"
 
 #. module: stock_release_channel
 #: model_terms:ir.ui.view,arch_db:stock_release_channel.stock_release_channel_kanban_view
 msgid ""
-"<i class=\"fa fa-ellipsis-v\" role=\"img\" aria-label=\"Details\" title="
-"\"Details\"/>"
+"<i class=\"fa fa-ellipsis-v\" role=\"img\" aria-label=\"Details\" "
+"title=\"Details\"/>"
 msgstr ""
-"<i class=\"fa fa-ellipsis-v\" role=\"img\" aria-label=\"Dettagli\" title="
-"\"Dettagli\"/>"
+"<i class=\"fa fa-ellipsis-v\" role=\"img\" aria-label=\"Dettagli\" "
+"title=\"Dettagli\"/>"
 
 #. module: stock_release_channel
 #: model_terms:ir.ui.view,arch_db:stock_release_channel.stock_release_channel_kanban_view
@@ -207,6 +207,11 @@ msgid "Companies"
 msgstr "Aziende"
 
 #. module: stock_release_channel
+#: model:ir.model.fields,field_description:stock_release_channel.field_stock_release_channel__company_id
+msgid "Company"
+msgstr "Azienda"
+
+#. module: stock_release_channel
 #: model:ir.model,name:stock_release_channel.model_res_config_settings
 msgid "Config Settings"
 msgstr "Impostazioni configurazione"
@@ -225,6 +230,11 @@ msgstr "Creato da"
 #: model:ir.model.fields,field_description:stock_release_channel.field_stock_release_channel__create_date
 msgid "Created on"
 msgstr "Creato il"
+
+#. module: stock_release_channel
+#: model_terms:ir.ui.view,arch_db:stock_release_channel.stock_release_channel_form_view
+msgid "Deliveries"
+msgstr "Consegne"
 
 #. module: stock_release_channel
 #: model:ir.model.fields,field_description:stock_release_channel.field_stock_release_channel__display_name
@@ -298,6 +308,11 @@ msgid ""
 msgstr ""
 "Nella dashboard rilascio canali, aggiunge il collegamento all'ultimo "
 "prelievo eseguito e visualizza la data trasferimento"
+
+#. module: stock_release_channel
+#: model_terms:ir.ui.view,arch_db:stock_release_channel.stock_release_channel_form_view
+msgid "Internal transfers"
+msgstr "Trasferimento interno"
 
 #. module: stock_release_channel
 #: model:ir.model.fields,field_description:stock_release_channel.field_stock_release_channel__is_action_lock_allowed
@@ -463,6 +478,11 @@ msgid "Open"
 msgstr "Aperto"
 
 #. module: stock_release_channel
+#: model:ir.model.fields,field_description:stock_release_channel.field_stock_release_channel__open_picking_ids
+msgid "Open Transfers"
+msgstr "Trasferimenti aperti"
+
+#. module: stock_release_channel
 #: model:ir.model.fields,field_description:stock_release_channel.field_stock_release_channel__picking_type_ids
 msgid "Operation Types"
 msgstr "TIpi di operazione"
@@ -512,6 +532,17 @@ msgstr "Codice Python"
 #: model:ir.cron,cron_name:stock_release_channel.ir_cron_stock_picking_assign_release_channel
 msgid "Re-assign release channel"
 msgstr "Riassegna canale rilascio"
+
+#. module: stock_release_channel
+#: model:ir.model.fields,field_description:stock_release_channel.field_res_company__recompute_channel_on_pickings_at_release
+#: model:ir.model.fields,field_description:stock_release_channel.field_res_config_settings__recompute_channel_on_pickings_at_release
+msgid "Recompute Channel On Pickings At Release"
+msgstr "Ricalcola canale sui prelievi al rilascio"
+
+#. module: stock_release_channel
+#: model_terms:ir.ui.view,arch_db:stock_release_channel.res_config_settings_view
+msgid "Recompute channel when releasing a transfer"
+msgstr "Ricalcola canale al rilascio di un trasferimento"
 
 #. module: stock_release_channel
 #: model_terms:ir.ui.view,arch_db:stock_release_channel.stock_release_channel_tree_view
@@ -674,16 +705,25 @@ msgid ""
 "and release operations are allowed.\n"
 " * Locked: Release operations are forbidden. (Assignement processes are "
 "still working)\n"
+"* Delivering: A background task is running to automatically deliver ready "
+"shipments\n"
+"* Delivering Error: An error occurred in the delivery background task\n"
+"* Delivered: Ready transfers are delivered\n"
 "* Asleep: Assigned pickings not processed are unassigned from the release "
 "channel.\n"
 msgstr ""
-"Lo stato consenti di controllare la disponibilità del canale di rilascio.\n"
-"* Aperto: assegnazione manuale e automatica del prelievo al rilascio è "
-"attiva e le operazioni di rilascio sono consentite.\n"
-"* Bloccato: le operazioni di rilascio sono vietate. (i processi di "
-"assegnazione sono ancora in lavoro)\n"
-"* Sospeso: i prelievi assegnati e non elaborati vengono revocati dal canale "
-"di rilascio.\n"
+"Lo stato consente di controllare la disponibilità del canale di rilascio.\n"
+"* Apri: l'assegnazione manuale e automatica di raccolta al rilascio è "
+"efficace e sono consentite operazioni di rilascio.\n"
+"* Bloccato: le operazioni di rilascio sono vietate. (I processi di "
+"assegnazione stanno ancora funzionando)\n"
+"* Consegna: un'attività di fondo è in esecuzione per consegnare "
+"automaticamente le spedizioni pronte\n"
+"* Errore di consegna: si è verificato un errore nell'attività di background "
+"di consegna\n"
+"* Consegnato: vengono consegnati trasferimenti pronti\n"
+"* Dormienti: i prelievi assegnati non elaborati non sono assegnati dal "
+"canale di rilascio.\n"
 
 #. module: stock_release_channel
 #: model:ir.model.fields,help:stock_release_channel.field_stock_release_channel__state_at_wakeup
@@ -782,6 +822,12 @@ msgstr ""
 "quelli in corso non spediti (W - in attesa). Questo campo definisce X."
 
 #. module: stock_release_channel
+#: model:ir.model.fields,help:stock_release_channel.field_res_company__recompute_channel_on_pickings_at_release
+#: model:ir.model.fields,help:stock_release_channel.field_res_config_settings__recompute_channel_on_pickings_at_release
+msgid "When releasing a transfer, recompute channel"
+msgstr "Al rilascio di un trasferimento, ricalcolare il canale"
+
+#. module: stock_release_channel
 #: model:ir.model.fields,help:stock_release_channel.field_stock_release_channel__code
 msgid "Write Python code to filter out pickings."
 msgstr "Scrivere il codice Python per filtrare i prelievi."
@@ -801,6 +847,24 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:stock_release_channel.stock_release_channel_kanban_view
 msgid "name"
 msgstr "nome"
+
+#~ msgid ""
+#~ "The state allows you to control the availability of the release channel.\n"
+#~ "* Open: Manual and automatic picking assignment to the release is "
+#~ "effective and release operations are allowed.\n"
+#~ " * Locked: Release operations are forbidden. (Assignement processes are "
+#~ "still working)\n"
+#~ "* Asleep: Assigned pickings not processed are unassigned from the release "
+#~ "channel.\n"
+#~ msgstr ""
+#~ "Lo stato consenti di controllare la disponibilità del canale di "
+#~ "rilascio.\n"
+#~ "* Aperto: assegnazione manuale e automatica del prelievo al rilascio è "
+#~ "attiva e le operazioni di rilascio sono consentite.\n"
+#~ "* Bloccato: le operazioni di rilascio sono vietate. (i processi di "
+#~ "assegnazione sono ancora in lavoro)\n"
+#~ "* Sospeso: i prelievi assegnati e non elaborati vengono revocati dal "
+#~ "canale di rilascio.\n"
 
 #~ msgid "<span class=\"middle_title\">To Do Situation</span>"
 #~ msgstr "<span class=\"middle_title\">Situazione del da fare</span>"

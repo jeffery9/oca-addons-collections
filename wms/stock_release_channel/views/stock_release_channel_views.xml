@@ -52,7 +52,22 @@
                 </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
-
+                        <button
+                            class="oe_stat_button"
+                            type="object"
+                            name="action_picking_all_related"
+                            icon="fa-cubes"
+                            string="Internal transfers"
+                            context="{'default_release_channel_id':active_id}"
+                        />
+                        <button
+                            class="oe_stat_button"
+                            type="object"
+                            name="action_picking_all"
+                            icon="fa-truck"
+                            string="Deliveries"
+                            context="{'default_release_channel_id':active_id}"
+                        />
                     </div>
                     <field name="active" invisible="1" />
                     <widget
@@ -65,6 +80,14 @@
                     <h1>
                         <field name="name" />
                     </h1>
+                    <group>
+                      <field name="company_id" invisible="1" />
+                      <field
+                            name="company_id"
+                            groups="base.group_multi_company"
+                            options="{'no_create': True}"
+                        />
+                    </group>
                     <notebook>
                         <page
                             string="Options"
