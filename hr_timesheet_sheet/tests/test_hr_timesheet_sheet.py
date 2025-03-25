@@ -14,7 +14,7 @@ from odoo.tests.common import Form, TransactionCase
 from ..models.hr_timesheet_sheet import empty_name
 
 
-class TestHrTimesheetSheet(TransactionCase):
+class TestHrTimesheetSheetCommon(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -233,6 +233,8 @@ class TestHrTimesheetSheet(TransactionCase):
             }
         )
 
+
+class TestHrTimesheetSheet(TestHrTimesheetSheetCommon):
     def test_0(self):
         sheet_form = Form(self.sheet_model.with_user(self.user))
         self.assertEqual(len(sheet_form.line_ids), 0)
@@ -1086,3 +1088,24 @@ class TestHrTimesheetSheet(TransactionCase):
         sheet_form.date_start = date(2019, 12, 29)
         sheet_form.date_end = date(2020, 1, 5)
         self.assertEqual(sheet_form.name, "Weeks 52, 2019 - 01, 2020")
+
+    def test_onchange_project_id_merging_timesheets(self):
+        """Test that we don't try merging timesheets when in onchange"""
+        sheet = Form(self.sheet_model.with_user(self.user)).save()
+        aal1 = self.aal_model.create(
+            {
+                "project_id": self.project_1.id,
+                "date": sheet.date_start,
+                "name": "/",
+                "unit_amount": 1,
+                "employee_id": self.employee.id,
+            }
+        )
+        with Form(sheet) as sheet_form:
+            aal2 = aal1.copy()
+            sheet_form.save()
+            sheet_form.add_line_project_id = self.project_1
+            self.assertTrue(aal1.exists())
+            self.assertTrue(aal2.exists())
+        # but be sure they are merged on save
+        self.assertEqual(len((aal1 + aal2).exists()), 1)
