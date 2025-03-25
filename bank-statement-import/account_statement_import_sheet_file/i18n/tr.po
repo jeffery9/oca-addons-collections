@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-02-06 14:34+0000\n"
+"PO-Revision-Date: 2024-06-27 10:47+0000\n"
 "Last-Translator: Ömer KÜLAK <omer.kulak@kitayazilim.com>\n"
 "Language-Team: none\n"
 "Language: tr\n"
@@ -21,13 +21,15 @@ msgstr ""
 #: code:addons/account_statement_import_sheet_file/models/account_statement_import_sheet_parser.py:0
 #, python-format
 msgid "%(code)s: %(filename)s"
-msgstr ""
+msgstr "%(code)s: %(filename)s"
 
 #. module: account_statement_import_sheet_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_sheet_file.account_statement_import_sheet_mapping_tree
 msgid ""
-"<span class=\"fa fa-info-circle\"/> Add the column names or column number (when the file has no header).\n"
-"                                You can concatenate multiple columns in the file into the same field, indicating the\n"
+"<span class=\"fa fa-info-circle\"/> Add the column names or column number "
+"(when the file has no header).\n"
+"                                You can concatenate multiple columns in the "
+"file into the same field, indicating the\n"
 "                                column names or numbers separated by comma."
 msgstr ""
 "<span class=\"fa fa-info-circle\"/> Sütun adı ya da no ekleyin (aktarım "
@@ -57,6 +59,11 @@ msgstr "Mutlak Tutar"
 #, python-format
 msgid "Account: %s; "
 msgstr "Hesap: %s; "
+
+#. module: account_statement_import_sheet_file
+#: model:ir.model.fields,help:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__skip_empty_lines
+msgid "Allows to skip empty lines"
+msgstr ""
 
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__amount_column
@@ -246,6 +253,11 @@ msgid "Header lines skip count"
 msgstr "Başlık Satır Sayısı"
 
 #. module: account_statement_import_sheet_file
+#: model:ir.model.fields,help:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__offset_column
+msgid "Horizontal spaces to ignore before starting to parse"
+msgstr ""
+
+#. module: account_statement_import_sheet_file
 #: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__id
 #: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_parser__id
 msgid "ID"
@@ -268,8 +280,8 @@ msgstr ""
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,help:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__original_currency_column
 msgid ""
-"In case statement provides original currency for transactions with automatic"
-" currency conversion, column to get original currency of transaction from"
+"In case statement provides original currency for transactions with automatic "
+"currency conversion, column to get original currency of transaction from"
 msgstr ""
 "Otomatik para birimi dönüştürmeli işlemler için orijinal para birimini "
 "sağlanması durumunda, işlemin orijinal para biriminin alınacağı sütun"
@@ -277,8 +289,8 @@ msgstr ""
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,help:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__original_amount_column
 msgid ""
-"In case statement provides original currency for transactions with automatic"
-" currency conversion, column to get original transaction amount in original "
+"In case statement provides original currency for transactions with automatic "
+"currency conversion, column to get original transaction amount in original "
 "transaction currency from"
 msgstr ""
 "Otomatik para birimi dönüştürmeli işlemler için orijinal para birimini "
@@ -288,9 +300,9 @@ msgstr ""
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,help:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__amount_inverse_sign
 msgid ""
-"In some cases such as in credit card statements the amounts are expressed in"
-" the inverse sign. By setting this flag during the upload the amounts will "
-"be inverted in sign."
+"In some cases such as in credit card statements the amounts are expressed in "
+"the inverse sign. By setting this flag during the upload the amounts will be "
+"inverted in sign."
 msgstr ""
 "Kredi kartı ekstrelerinde olduğu gibi bazı durumlarda tutarlar ters işaretle "
 "ifade edilir. Yükleme sırasında bu işaretin ayarlanmasıyla miktarlar ters "
@@ -335,7 +347,7 @@ msgstr "Son Güncelleme"
 #: model:ir.model.fields.selection,name:account_statement_import_sheet_file.selection__account_statement_import_sheet_mapping__delimiter__n/a
 #, python-format
 msgid "N/A"
-msgstr ""
+msgstr "N/A"
 
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__name
@@ -353,6 +365,18 @@ msgstr "Ekteki dosya için geçerli bir kodlama bulunamadı"
 #: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__notes_column
 msgid "Notes Column"
 msgstr "Not Sütunu"
+
+#. module: account_statement_import_sheet_file
+#: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__offset_column
+msgid "Offset Column"
+msgstr ""
+
+#. module: account_statement_import_sheet_file
+#. odoo-python
+#: code:addons/account_statement_import_sheet_file/models/account_statement_import_sheet_mapping.py:0
+#, python-format
+msgid "Offsets cannot be negative"
+msgstr ""
 
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__original_amount_column
@@ -420,6 +444,11 @@ msgstr ""
 "Mutlak Değer: Borç ve alacak için aynı sütunu kullanın\n"
 "(mutlak değer + işaret işareti)\n"
 "Kredi/Borç Farkı Sütunu: Borç ve alacak için ayrı bir sütun kullanın"
+
+#. module: account_statement_import_sheet_file
+#: model:ir.model.fields,field_description:account_statement_import_sheet_file.field_account_statement_import_sheet_mapping__skip_empty_lines
+msgid "Skip Empty Lines"
+msgstr ""
 
 #. module: account_statement_import_sheet_file
 #: model_terms:ir.ui.view,arch_db:account_statement_import_sheet_file.view_account_journal_form_n43
@@ -513,8 +542,8 @@ msgstr "Tutar türü 'Single value' olarak işaretliyse amount_column u kullan"
 #: code:addons/account_statement_import_sheet_file/models/account_statement_import_sheet_mapping.py:0
 #, python-format
 msgid ""
-"Use amount_debit_column and amount_credit_column if you have set Amount type"
-" = 'Distinct Credit/debit Column'"
+"Use amount_debit_column and amount_credit_column if you have set Amount type "
+"= 'Distinct Credit/debit Column'"
 msgstr ""
 "Tutar türü= 'Alacak/Borç Farkı Sütunu' ise amount_credit_column ve "
 "amount_debit_column kullan"
@@ -596,6 +625,11 @@ msgstr "Nokta (.)"
 #: model:ir.model.fields.selection,name:account_statement_import_sheet_file.selection__account_statement_import_sheet_mapping__float_thousands_sep__none
 msgid "none"
 msgstr "Hiçbiri"
+
+#. module: account_statement_import_sheet_file
+#: model:ir.model.fields.selection,name:account_statement_import_sheet_file.selection__account_statement_import_sheet_mapping__float_thousands_sep__quote
+msgid "quote (')"
+msgstr ""
 
 #. module: account_statement_import_sheet_file
 #: model:ir.model.fields.selection,name:account_statement_import_sheet_file.selection__account_statement_import_sheet_mapping__delimiter__semicolon

@@ -11,7 +11,7 @@ from dateutil.relativedelta import relativedelta
 from odoo_test_helper import FakeModelLoader
 
 from odoo import _, fields
-from odoo.tests import common
+from odoo.tests import common, tagged
 
 _logger = logging.getLogger(__name__)
 
@@ -22,11 +22,20 @@ mock_obtain_statement_data = (
 )
 
 
+@tagged("post_install", "-at_install")
 class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-
+        if not cls.env.company.chart_template_id:
+            # Load a CoA if there's none in current company
+            coa = cls.env.ref("l10n_generic_coa.configurable_chart_template", False)
+            if not coa:
+                # Load the first available CoA
+                coa = cls.env["account.chart.template"].search(
+                    [("visible", "=", True)], limit=1
+                )
+            coa.try_loading(company=cls.env.company, install_demo=False)
         # Load fake model
         cls.loader = FakeModelLoader(cls.env, cls.__module__)
         cls.loader.backup_registry()
@@ -384,6 +393,15 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         self.assertEqual(statements[1].balance_start, 100)
         self.assertEqual(statements[1].balance_end, 200)
         self.assertEqual(len(statements[1].line_ids), 1)
+
+    def test_dont_create_statement(self):
+        self.provider.statement_creation_mode = "monthly"
+        self.provider.create_statement = False
+        date_since = datetime(2024, 12, 1)
+        date_until = datetime(2024, 12, 31, 23, 59, 59)
+        self.provider.with_context(step={"days": 1})._pull(date_since, date_until)
+        self._getExpectedStatements(0)
+        self._getExpectedLines(31)
 
     def test_unlink_provider(self):
         """Unlink provider should clear fields on journal."""

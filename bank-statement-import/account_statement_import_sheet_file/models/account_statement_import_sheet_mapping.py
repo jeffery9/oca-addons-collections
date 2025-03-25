@@ -15,7 +15,12 @@ class AccountStatementImportSheetMapping(models.Model):
     )
     float_thousands_sep = fields.Selection(
         string="Thousands Separator",
-        selection=[("dot", "dot (.)"), ("comma", "comma (,)"), ("none", "none")],
+        selection=[
+            ("dot", "dot (.)"),
+            ("comma", "comma (,)"),
+            ("quote", "quote (')"),
+            ("none", "none"),
+        ],
         default="dot",
     )
     float_decimal_sep = fields.Selection(
@@ -168,6 +173,14 @@ class AccountStatementImportSheetMapping(models.Model):
         help="Set the Header lines number.",
         default="0",
     )
+    skip_empty_lines = fields.Boolean(
+        default=False,
+        help="Allows to skip empty lines",
+    )
+    offset_column = fields.Integer(
+        default=0,
+        help="Horizontal spaces to ignore before starting to parse",
+    )
 
     @api.constrains(
         "amount_type",
@@ -212,11 +225,18 @@ class AccountStatementImportSheetMapping(models.Model):
         elif "comma" == self.float_thousands_sep == self.float_decimal_sep:
             self.float_thousands_sep = "dot"
 
+    @api.constrains("offset_column")
+    def _check_columns(self):
+        for mapping in self:
+            if mapping.offset_column < 0:
+                raise ValidationError(_("Offsets cannot be negative"))
+
     def _get_float_separators(self):
         self.ensure_one()
         separators = {
             "dot": ".",
             "comma": ",",
+            "quote": "'",
             "none": "",
         }
         return (
