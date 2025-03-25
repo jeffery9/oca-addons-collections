@@ -4,6 +4,7 @@
 from freezegun import freeze_time
 from vcr_unittest import VCRTestCase
 
+from odoo.exceptions import UserError
 from odoo.tools import mute_logger
 
 from .common import TestShipmentAdvicePlannerToursolverCommon
@@ -116,6 +117,22 @@ class TestShipmentAdvicePlannerToursolver(
         ).partner_id
         self.assertEqual(first_stop, planned_partners[1])
         self.assertEqual(second_stop, planned_partners[0])
+        self.assertEqual(shipment.toursolver_nbr_tours, 1)
+        self.assertEqual(shipment.toursolver_nbr_visits, 2)
+        self.assertEqual(shipment.toursolver_delivery_cost, 12345.0)
+        self.assertEqual(shipment.toursolver_additional_cost, 12345.0)
+        self.assertEqual(shipment.toursolver_total_cost, 12345.0)
+        self.assertEqual(shipment.toursolver_travel_distance, 12.345)
+        self.assertEqual(shipment.toursolver_travel_duration, 5.5)
+        self.assertEqual(
+            shipment.toursolver_travel_start_dt,
+            shipment._stop_start_time_to_dt("17:07", "1"),
+        )
+        self.assertEqual(
+            shipment.toursolver_travel_end_dt,
+            shipment._stop_start_time_to_dt("17:13", "1"),
+        )
+        self.assertEqual(shipment.toursolver_travel_total_time, 6.0 / 60)
 
     def test_get_result_ko(self):
         task = self._create_task()
@@ -145,3 +162,47 @@ class TestShipmentAdvicePlannerToursolver(
     def test_backend_definition_creation(self):
         backend = self.env["toursolver.backend"].create({"name": "backend"})
         self.assertTrue(backend.definition_id)
+
+    def test_recreate_task(self):
+        """
+        Recreate toursolver task
+
+        It may happen that the shipment advice is created after the toursolver task is
+        completed, and the user decides to add a picking to it.
+        It's easier to have an action on the shipment advice to recreate the toursolver
+        task without going through the planner again.
+
+        As a safeguard, we do not allow this action unless the previous task has been
+        removed. When the task is recreated, the new task will not generate a new
+        shipment advice but will be assigned to the existing one.
+        """
+        task = self._create_task()
+        task.button_send_request()
+        self.assertEqual(task.state, "in_progress")
+        self.assertFalse(task.toursolver_error_message)
+        task.button_check_status()
+        self.assertEqual(task.state, "success")
+        task.button_get_result()
+        self.assertEqual(task.state, "done")
+        shipment = task.shipment_advice_ids
+        self.assertEqual(shipment.state, "confirmed")
+        self.assertFalse(shipment.is_create_toursolver_task_allowed)
+        with self.assertRaises(
+            UserError, msg="You can't recreate the toursolver task."
+        ):
+            shipment.create_toursolver_task()
+        task.unlink()
+        self.assertTrue(shipment.is_create_toursolver_task_allowed)
+        shipment.create_toursolver_task()
+        self.assertTrue(shipment.toursolver_task_id)
+        task = shipment.toursolver_task_id
+        self.assertEqual(task.state, "draft")
+        task.button_send_request()
+        self.assertEqual(task.state, "in_progress")
+        self.assertFalse(task.toursolver_error_message)
+        task.button_check_status()
+        self.assertEqual(task.state, "success")
+        task.button_get_result()
+        self.assertEqual(task.state, "done")
+        self.assertEqual(task.shipment_advice_ids, shipment)
+        self.assertEqual(shipment.state, "confirmed")

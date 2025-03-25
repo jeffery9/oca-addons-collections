@@ -40,11 +40,18 @@ msgstr "Actif"
 #. module: shipment_advice_planner_toursolver
 #: model_terms:ir.ui.view,arch_db:shipment_advice_planner_toursolver.toursolver_backend_form_view
 msgid ""
-"Add the required options for route calculation by TourSolver.\n"
-"                        You can check the"
+"Add additional properties added to each item of the orders field of the "
+"optimization request for route calculation by TourSolver.\n"
+"                                You can check the"
 msgstr ""
-"Ajoutez les otpions nécessaires au calcul de la route par TourSolver.\n"
-"                        Vous pouvez vérifier le"
+
+#. module: shipment_advice_planner_toursolver
+#: model_terms:ir.ui.view,arch_db:shipment_advice_planner_toursolver.toursolver_backend_form_view
+msgid ""
+"Add additional properties to the options field of the optimization request "
+"for route calculation by TourSolver.\n"
+"                                You can check the"
+msgstr ""
 
 #. module: shipment_advice_planner_toursolver
 #: model_terms:ir.ui.view,arch_db:shipment_advice_planner_toursolver.toursolver_resource_form_view
@@ -73,11 +80,6 @@ msgid "Backend"
 msgstr ""
 
 #. module: shipment_advice_planner_toursolver
-#: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_backend_option_definition__backend_options_definition
-msgid "Backend Options Definition"
-msgstr "Options de définition du backend"
-
-#. module: shipment_advice_planner_toursolver
 #: model_terms:ir.ui.view,arch_db:shipment_advice_planner_toursolver.toursolver_task_form_view
 msgid "Cancel Task"
 msgstr ""
@@ -103,15 +105,25 @@ msgid "Config Settings"
 msgstr "Configuration"
 
 #. module: shipment_advice_planner_toursolver
+#: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_backend__connection_timeout
+msgid "Connection Timeout"
+msgstr ""
+
+#. module: shipment_advice_planner_toursolver
 #: model:ir.model,name:shipment_advice_planner_toursolver.model_res_partner
 #: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_resource__partner_id
 msgid "Contact"
 msgstr ""
 
 #. module: shipment_advice_planner_toursolver
+#: model_terms:ir.ui.view,arch_db:shipment_advice_planner_toursolver.shipment_advice_view_form
+msgid "Create TourSolver Task"
+msgstr ""
+
+#. module: shipment_advice_planner_toursolver
 #: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_backend__create_uid
-#: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_backend_option_definition__create_uid
 #: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_delivery_window__create_uid
+#: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_request_props_definition__create_uid
 #: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_resource__create_uid
 #: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_task__create_uid
 msgid "Created by"
@@ -119,8 +131,8 @@ msgstr "Créé par"
 
 #. module: shipment_advice_planner_toursolver
 #: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_backend__create_date
-#: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_backend_option_definition__create_date
 #: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_delivery_window__create_date
+#: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_request_props_definition__create_date
 #: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_resource__create_date
 #: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_task__create_date
 msgid "Created on"
@@ -180,12 +192,27 @@ msgstr "Fenêtres de livraison"
 
 #. module: shipment_advice_planner_toursolver
 #: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_backend__display_name
-#: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_backend_option_definition__display_name
 #: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_delivery_window__display_name
+#: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_request_props_definition__display_name
 #: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_resource__display_name
 #: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_task__display_name
 msgid "Display Name"
 msgstr "Nom affiché"
+
+#. module: shipment_advice_planner_toursolver
+#: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_shipment_advice__toursolver_travel_distance_uom
+msgid "Distance UoM"
+msgstr ""
+
+#. module: shipment_advice_planner_toursolver
+#: model:ir.model.fields,help:shipment_advice_planner_toursolver.field_shipment_advice__toursolver_travel_distance
+msgid "Distance to travel for the delivery in Km"
+msgstr ""
+
+#. module: shipment_advice_planner_toursolver
+#: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_shipment_advice__toursolver_travel_distance_uom_name
+msgid "Distance unit of measure label"
+msgstr ""
 
 #. module: shipment_advice_planner_toursolver
 #: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_task__dock_id
@@ -201,6 +228,11 @@ msgstr "Fait"
 #: model:ir.model.fields.selection,name:shipment_advice_planner_toursolver.selection__toursolver_task__state__draft
 msgid "Draft"
 msgstr "Brouillon"
+
+#. module: shipment_advice_planner_toursolver
+#: model:ir.model.fields,help:shipment_advice_planner_toursolver.field_shipment_advice__toursolver_travel_duration
+msgid "Driving time for the travel, excluding the time spent at each stop"
+msgstr ""
 
 #. module: shipment_advice_planner_toursolver
 #: model:ir.model.fields,help:shipment_advice_planner_toursolver.field_toursolver_backend__duration
@@ -244,8 +276,8 @@ msgstr "Groupé par"
 
 #. module: shipment_advice_planner_toursolver
 #: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_backend__id
-#: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_backend_option_definition__id
 #: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_delivery_window__id
+#: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_request_props_definition__id
 #: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_resource__id
 #: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_task__id
 msgid "ID"
@@ -261,8 +293,8 @@ msgstr ""
 "planning/chemin."
 
 #. module: shipment_advice_planner_toursolver
-#: model:ir.model.fields,help:shipment_advice_planner_toursolver.field_toursolver_backend__partner_defaul_delivery_window_start
 #: model:ir.model.fields,help:shipment_advice_planner_toursolver.field_toursolver_backend__partner_default_delivery_window_end
+#: model:ir.model.fields,help:shipment_advice_planner_toursolver.field_toursolver_backend__partner_default_delivery_window_start
 msgid "If no delivery winodow specified on the partner this will be used"
 msgstr ""
 "Si aucun fenêtre de livraison n'est spécifiée sur le partenaire, ceci sera "
@@ -293,9 +325,14 @@ msgid "In progress"
 msgstr "En cours"
 
 #. module: shipment_advice_planner_toursolver
+#: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_shipment_advice__is_create_toursolver_task_allowed
+msgid "Is Create Toursolver Task Allowed"
+msgstr ""
+
+#. module: shipment_advice_planner_toursolver
 #: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_backend____last_update
-#: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_backend_option_definition____last_update
 #: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_delivery_window____last_update
+#: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_request_props_definition____last_update
 #: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_resource____last_update
 #: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_task____last_update
 msgid "Last Modified on"
@@ -303,8 +340,8 @@ msgstr "Dernière modification le"
 
 #. module: shipment_advice_planner_toursolver
 #: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_backend__write_uid
-#: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_backend_option_definition__write_uid
 #: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_delivery_window__write_uid
+#: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_request_props_definition__write_uid
 #: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_resource__write_uid
 #: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_task__write_uid
 msgid "Last Updated by"
@@ -312,8 +349,8 @@ msgstr "Dernière mise à jour par"
 
 #. module: shipment_advice_planner_toursolver
 #: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_backend__write_date
-#: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_backend_option_definition__write_date
 #: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_delivery_window__write_date
+#: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_request_props_definition__write_date
 #: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_resource__write_date
 #: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_task__write_date
 msgid "Last Updated on"
@@ -332,14 +369,58 @@ msgid "Name"
 msgstr "Nom"
 
 #. module: shipment_advice_planner_toursolver
+#: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_shipment_advice__toursolver_nbr_tours
+msgid "Number of Tours"
+msgstr ""
+
+#. module: shipment_advice_planner_toursolver
+#: model:ir.model.fields,help:shipment_advice_planner_toursolver.field_shipment_advice__toursolver_nbr_visits
+msgid "Number of delivery stops in the tours"
+msgstr ""
+
+#. module: shipment_advice_planner_toursolver
+#: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_shipment_advice__toursolver_nbr_visits
+msgid "Number of visits"
+msgstr ""
+
+#. module: shipment_advice_planner_toursolver
 #: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_backend__duration
 msgid "Optimization process max duration"
 msgstr "Durée max du processus d'optimisation"
 
 #. module: shipment_advice_planner_toursolver
-#: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_backend__backend_options
-#: model_terms:ir.ui.view,arch_db:shipment_advice_planner_toursolver.toursolver_backend_form_view
+#: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_backend__rqst_options_properties
 msgid "Options"
+msgstr ""
+
+#. module: shipment_advice_planner_toursolver
+#: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_request_props_definition__options_definition
+msgid "Options Definition"
+msgstr ""
+
+#. module: shipment_advice_planner_toursolver
+#: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_request_props_definition__orders_definition
+msgid "Orders Definition"
+msgstr ""
+
+#. module: shipment_advice_planner_toursolver
+#: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_backend__rqst_orders_properties
+msgid "Orders Properties"
+msgstr ""
+
+#. module: shipment_advice_planner_toursolver
+#: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_backend__organization
+msgid "Organization"
+msgstr ""
+
+#. module: shipment_advice_planner_toursolver
+#: model:ir.model.fields,help:shipment_advice_planner_toursolver.field_toursolver_backend__organization
+msgid ""
+"Organization identifier as specified in the Toursolver interface. If set, "
+"it's used to define how see the results in the Toursolver interface and to "
+"determine the time zone of the optimization. If not provided, the server "
+"will guess the time zone from the first visit coordinates which will add "
+"extra time to the optimization process."
 msgstr ""
 
 #. module: shipment_advice_planner_toursolver
@@ -349,14 +430,14 @@ msgid "Partner"
 msgstr "Partenaire"
 
 #. module: shipment_advice_planner_toursolver
-#: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_backend__partner_defaul_delivery_window_start
-msgid "Partner Defaul Delivery Window Start"
-msgstr "Début de la fenêtre de livraison par défaut du partenaire"
-
-#. module: shipment_advice_planner_toursolver
 #: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_backend__partner_default_delivery_window_end
 msgid "Partner Default Delivery Window End"
 msgstr "Fin de la fenêtre de livraison par défaut du partenaire"
+
+#. module: shipment_advice_planner_toursolver
+#: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_backend__partner_default_delivery_window_start
+msgid "Partner Default Delivery Window Start"
+msgstr ""
 
 #. module: shipment_advice_planner_toursolver
 #: model:ir.actions.act_window,name:shipment_advice_planner_toursolver.toursolver_delivery_window_act_window
@@ -376,6 +457,7 @@ msgstr "Transferts à planifier"
 
 #. module: shipment_advice_planner_toursolver
 #. odoo-python
+#: code:addons/shipment_advice_planner_toursolver/models/shipment_advice.py:0
 #: code:addons/shipment_advice_planner_toursolver/models/toursolver_backend.py:0
 #, python-format
 msgid "Please configure your timezone in your user preferences"
@@ -388,6 +470,18 @@ msgid "Properties"
 msgstr "Propriétés"
 
 #. module: shipment_advice_planner_toursolver
+#: model:ir.model.fields,help:shipment_advice_planner_toursolver.field_toursolver_backend__rqst_orders_properties
+msgid ""
+"Properties to be used in the definition of each order into the optimization "
+"request"
+msgstr ""
+
+#. module: shipment_advice_planner_toursolver
+#: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_backend__read_timeout
+msgid "Read Timeout"
+msgstr ""
+
+#. module: shipment_advice_planner_toursolver
 #: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_task__request_data
 msgid "Request Data"
 msgstr "Demander les données"
@@ -396,6 +490,16 @@ msgstr "Demander les données"
 #: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_task__request_data_filename
 msgid "Request Data Filename"
 msgstr "Demander le nom de fichier des données"
+
+#. module: shipment_advice_planner_toursolver
+#: model_terms:ir.ui.view,arch_db:shipment_advice_planner_toursolver.toursolver_backend_form_view
+msgid "Request Options Properties"
+msgstr ""
+
+#. module: shipment_advice_planner_toursolver
+#: model_terms:ir.ui.view,arch_db:shipment_advice_planner_toursolver.toursolver_backend_form_view
+msgid "Request Orders Properties"
+msgstr ""
 
 #. module: shipment_advice_planner_toursolver
 #: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_backend__resource_properties_definition
@@ -483,6 +587,11 @@ msgid "State"
 msgstr "État"
 
 #. module: shipment_advice_planner_toursolver
+#: model_terms:ir.ui.view,arch_db:shipment_advice_planner_toursolver.shipment_advice_view_form
+msgid "Stats"
+msgstr ""
+
+#. module: shipment_advice_planner_toursolver
 #: model:ir.model.fields,help:shipment_advice_planner_toursolver.field_toursolver_task__toursolver_status
 msgid "Status of the optimization task provided by the TourSolver service."
 msgstr "Statut de la tâche d'optimisation par le service TourSolver."
@@ -565,9 +674,26 @@ msgid "Time Window Weekday"
 msgstr ""
 
 #. module: shipment_advice_planner_toursolver
+#: model:ir.model.fields,help:shipment_advice_planner_toursolver.field_toursolver_backend__connection_timeout
+msgid "Timeout in seconds for the connection to the Toursolver API"
+msgstr ""
+
+#. module: shipment_advice_planner_toursolver
+#: model:ir.model.fields,help:shipment_advice_planner_toursolver.field_toursolver_backend__read_timeout
+msgid "Timeout in seconds for the read operation to the Toursolver API"
+msgstr ""
+
+#. module: shipment_advice_planner_toursolver
 #: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_delivery_window__time_window_end
 msgid "To"
 msgstr "À"
+
+#. module: shipment_advice_planner_toursolver
+#: model:ir.model.fields,help:shipment_advice_planner_toursolver.field_shipment_advice__toursolver_travel_total_time
+msgid ""
+"Total time for the travel, including the time spent at each stop and "
+"reloading time"
+msgstr ""
 
 #. module: shipment_advice_planner_toursolver
 #: model:ir.actions.act_window,name:shipment_advice_planner_toursolver.toursolver_backend_act_window
@@ -603,9 +729,19 @@ msgid "TourSolver status"
 msgstr "Statu de TourSolver"
 
 #. module: shipment_advice_planner_toursolver
-#: model:ir.model,name:shipment_advice_planner_toursolver.model_toursolver_backend_option_definition
-msgid "Toursolver Backend Option Definition"
-msgstr "Définition des options du backend de TourSolver"
+#: model_terms:ir.ui.view,arch_db:shipment_advice_planner_toursolver.shipment_advice_view_form
+msgid "Toursolver"
+msgstr ""
+
+#. module: shipment_advice_planner_toursolver
+#: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_shipment_advice__toursolver_additional_cost
+msgid "Toursolver Additional Cost"
+msgstr ""
+
+#. module: shipment_advice_planner_toursolver
+#: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_shipment_advice__toursolver_delivery_cost
+msgid "Toursolver Delivery Cost"
+msgstr ""
 
 #. module: shipment_advice_planner_toursolver
 #: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_res_partner__toursolver_delivery_duration
@@ -639,6 +775,31 @@ msgid "Toursolver Task"
 msgstr "Tâche TourSolver"
 
 #. module: shipment_advice_planner_toursolver
+#: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_shipment_advice__toursolver_total_cost
+msgid "Toursolver Total Cost"
+msgstr ""
+
+#. module: shipment_advice_planner_toursolver
+#: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_shipment_advice__toursolver_travel_distance
+msgid "Toursolver Travel Distance"
+msgstr ""
+
+#. module: shipment_advice_planner_toursolver
+#: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_shipment_advice__toursolver_travel_duration
+msgid "Toursolver Travel Duration"
+msgstr ""
+
+#. module: shipment_advice_planner_toursolver
+#: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_shipment_advice__toursolver_travel_total_time
+msgid "Toursolver Travel Total Time"
+msgstr ""
+
+#. module: shipment_advice_planner_toursolver
+#: model:ir.model,name:shipment_advice_planner_toursolver.model_toursolver_request_props_definition
+msgid "Toursolver request properties definition"
+msgstr ""
+
+#. module: shipment_advice_planner_toursolver
 #: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_task__task_id
 msgid "Toursolver task id"
 msgstr ""
@@ -647,6 +808,16 @@ msgstr ""
 #: model:ir.model,name:shipment_advice_planner_toursolver.model_stock_picking
 msgid "Transfer"
 msgstr "Transfert"
+
+#. module: shipment_advice_planner_toursolver
+#: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_shipment_advice__toursolver_travel_end_dt
+msgid "Travel End Time"
+msgstr ""
+
+#. module: shipment_advice_planner_toursolver
+#: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_shipment_advice__toursolver_travel_start_dt
+msgid "Travel Start Time"
+msgstr ""
 
 #. module: shipment_advice_planner_toursolver
 #: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_backend__url
@@ -662,6 +833,13 @@ msgstr "Utiliser les coordonnées du contact de livraison comme point d'arrivée
 #: model:ir.model.fields,field_description:shipment_advice_planner_toursolver.field_toursolver_task__warehouse_id
 msgid "Warehouse"
 msgstr "Entrepôt"
+
+#. module: shipment_advice_planner_toursolver
+#. odoo-python
+#: code:addons/shipment_advice_planner_toursolver/models/shipment_advice.py:0
+#, python-format
+msgid "You can't recreate the toursolver task."
+msgstr ""
 
 #. module: shipment_advice_planner_toursolver
 #: model:ir.model.fields,help:shipment_advice_planner_toursolver.field_shipment_advice_planner__delivery_resource_ids
@@ -693,3 +871,19 @@ msgstr ""
 "propriété id.\n"
 "                            Le champ obligatoire resourceId sera utilisé "
 "pour la requête d'optimisation."
+
+#~ msgid ""
+#~ "Add the required options for route calculation by TourSolver.\n"
+#~ "                        You can check the"
+#~ msgstr ""
+#~ "Ajoutez les otpions nécessaires au calcul de la route par TourSolver.\n"
+#~ "                        Vous pouvez vérifier le"
+
+#~ msgid "Backend Options Definition"
+#~ msgstr "Options de définition du backend"
+
+#~ msgid "Partner DefaultDelivery Window Start"
+#~ msgstr "Début de la fenêtre de livraison par défaut du partenaire"
+
+#~ msgid "Toursolver Backend Option Definition"
+#~ msgstr "Définition des options du backend de TourSolver"
