@@ -21,18 +21,24 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[event_mail](event_mail/) | 16.0.1.0.0 |  | Mail settings in events
+[event_contact](event_contact/) | 16.0.1.0.0 | [![rafaelbn](https://github.com/rafaelbn.png?size=30px)](https://github.com/rafaelbn) [![edlopen](https://github.com/edlopen.png?size=30px)](https://github.com/edlopen) | Add contacts to event and event type
+[event_mail](event_mail/) | 16.0.1.1.0 |  | Mail settings in events
+[event_project](event_project/) | 16.0.1.0.1 | [![Shide](https://github.com/Shide.png?size=30px)](https://github.com/Shide) [![rafaelbn](https://github.com/rafaelbn.png?size=30px)](https://github.com/rafaelbn) | Event project
 [event_registration_mass_mailing](event_registration_mass_mailing/) | 16.0.1.0.1 | [![rafaelbn](https://github.com/rafaelbn.png?size=30px)](https://github.com/rafaelbn) [![edlopen](https://github.com/edlopen.png?size=30px)](https://github.com/edlopen) | Put event registrations emails into mailing lists
 [event_registration_multi_qty](event_registration_multi_qty/) | 16.0.1.0.0 |  | Allow registration grouped by quantities
 [event_registration_partner_unique](event_registration_partner_unique/) | 16.0.1.0.0 |  | Enforces 1 registration per partner and event
+[event_registration_qr_code](event_registration_qr_code/) | 16.0.1.0.0 | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Automatically generate unique QR Codes for each registration
 [event_sale_registration_multi_qty](event_sale_registration_multi_qty/) | 16.0.1.0.0 |  | Allows sell registrations with more than one attendee
 [event_sale_session](event_sale_session/) | 16.0.1.0.2 |  | Sell Event Sessions
-[event_session](event_session/) | 16.0.1.2.0 |  | Sessions in events
+[event_session](event_session/) | 16.0.1.4.1 |  | Sessions in events
 [event_session_registration_multi_qty](event_session_registration_multi_qty/) | 16.0.1.0.0 |  | Allow registration grouped by quantities in sessions
-[partner_event](partner_event/) | 16.0.1.0.1 |  | Link partner to events
+[partner_event](partner_event/) | 16.0.1.0.3 | [![yajo](https://github.com/yajo.png?size=30px)](https://github.com/yajo) [![rafaelbn](https://github.com/rafaelbn.png?size=30px)](https://github.com/rafaelbn) | Link partner to events
+[website_event_contact](website_event_contact/) | 16.0.1.0.1 | [![Shide](https://github.com/Shide.png?size=30px)](https://github.com/Shide) [![rafaelbn](https://github.com/rafaelbn.png?size=30px)](https://github.com/rafaelbn) | Display your event contacts on your event page
+[website_event_membership_restriction](website_event_membership_restriction/) | 16.0.1.2.0 |  | Restrict event registration to members only
 [website_event_questions_by_ticket](website_event_questions_by_ticket/) | 16.0.1.0.0 |  | Events Questions conditional to the chosen ticket
-[website_event_require_login](website_event_require_login/) | 16.0.1.0.0 |  | Website Event Require Login
+[website_event_require_login](website_event_require_login/) | 16.0.1.1.0 |  | Website Event Require Login
 [website_event_sale_cart_quantity_readonly](website_event_sale_cart_quantity_readonly/) | 16.0.1.0.0 | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Prevent the user to change the quantity of an event in the cart
+[website_event_ticket_limit](website_event_ticket_limit/) | 16.0.1.0.0 |  | Website Event Ticket Limit
 
 [//]: # (end addons)
 
