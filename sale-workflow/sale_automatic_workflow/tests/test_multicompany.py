@@ -8,9 +8,6 @@ from .common import TestCommon
 
 @tagged("post_install", "-at_install")
 class TestMultiCompany(TestCommon):
-    def setUp(self):
-        super().setUp()
-
     @classmethod
     def create_company(cls, values):
         return cls.env["res.company"].create(values)
@@ -31,7 +28,7 @@ class TestMultiCompany(TestCommon):
                 # Compatibility with sale_automatic_workflow_job: even if
                 # the module is installed, ensure we don't delay a job.
                 # Thus, we test the usual flow.
-                _job_force_sync=True,
+                queue_job__no_delay=True,
             )
         )
         coa = cls.env.user.company_id.chart_template_id
@@ -77,20 +74,24 @@ class TestMultiCompany(TestCommon):
         cls.customer_fr = (
             cls.env["res.partner"]
             .with_context(default_company_id=cls.company_fr.id)
-            .create({"name": "Customer FR"})
+            .create({"name": "Customer FR", "email": "test_fr@example.com"})
         )
         cls.product_fr = cls.create_product({"name": "Evian bottle", "list_price": 2.0})
 
         cls.env.user.company_id = cls.company_ch.id
         coa.try_loading(company=cls.env.user.company_id)
-        cls.customer_ch = cls.env["res.partner"].create({"name": "Customer CH"})
+        cls.customer_ch = cls.env["res.partner"].create(
+            {"name": "Customer CH", "email": "test_ch@example.com"}
+        )
         cls.product_ch = cls.create_product(
             {"name": "Henniez bottle", "list_price": 3.0}
         )
 
         cls.env.user.company_id = cls.company_be.id
         coa.try_loading(company=cls.env.user.company_id)
-        cls.customer_be = cls.env["res.partner"].create({"name": "Customer BE"})
+        cls.customer_be = cls.env["res.partner"].create(
+            {"name": "Customer BE", "email": "test_be@example.com"}
+        )
         cls.product_be = (
             cls.env["product.template"]
             .create(
@@ -107,7 +108,7 @@ class TestMultiCompany(TestCommon):
         cls.env.user.company_id = cls.company_fr_daughter.id
         coa.try_loading(company=cls.env.user.company_id)
         cls.customer_fr_daughter = cls.env["res.partner"].create(
-            {"name": "Customer FR Daughter"}
+            {"name": "Customer FR Daughter", "email": "test_daughter_fr@example.com"}
         )
         cls.product_fr_daughter = cls.create_product(
             {"name": "Contrex bottle", "list_price": 1.5}
