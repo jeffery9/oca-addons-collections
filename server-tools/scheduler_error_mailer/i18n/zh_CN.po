@@ -45,8 +45,8 @@ msgid ""
 "<ul>\n"
 "<li>Model : <t t-out=\"object.model_id.name or ''\"/></li>\n"
 "<li>Python code : <code><t t-out=\"object.code or ''\"/></code></li>\n"
-"<li>Interval : <t t-out=\"object.interval_number or '0'\"/> <t t-out="
-"\"object.interval_type or ''\"/></li>\n"
+"<li>Interval : <t t-out=\"object.interval_number or '0'\"/> <t t-"
+"out=\"object.interval_type or ''\"/></li>\n"
 "<li>Number of calls : <t t-out=\"object.numbercall or '0'\"/></li>\n"
 "<li>Repeat missed : <t t-out=\"object.doall\"/></li>\n"
 "<li>User : <t t-out=\"object.user_id.name or ''\"/></li>\n"
@@ -68,7 +68,33 @@ msgid "Assigned Attachments"
 msgstr ""
 
 #. module: scheduler_error_mailer
+#: model:ir.model.fields,field_description:scheduler_error_mailer.field_ir_cron__changeset_change_ids
+msgid "Changeset Changes"
+msgstr ""
+
+#. module: scheduler_error_mailer
+#: model:ir.model.fields,field_description:scheduler_error_mailer.field_ir_cron__changeset_ids
+msgid "Changesets"
+msgstr ""
+
+#. module: scheduler_error_mailer
+#: model:ir.model.fields,field_description:scheduler_error_mailer.field_ir_cron__count_changesets
+msgid "Count Changesets"
+msgstr ""
+
+#. module: scheduler_error_mailer
+#: model:ir.model.fields,field_description:scheduler_error_mailer.field_ir_cron__count_pending_changeset_changes
+msgid "Count Pending Changeset Changes"
+msgstr ""
+
+#. module: scheduler_error_mailer
+#: model:ir.model.fields,field_description:scheduler_error_mailer.field_ir_cron__count_pending_changesets
+msgid "Count Pending Changesets"
+msgstr ""
+
+#. module: scheduler_error_mailer
 #: model:ir.model.fields,field_description:scheduler_error_mailer.field_ir_cron__email_template_id
+#: model:ir.model.fields,field_description:scheduler_error_mailer.field_nsca_check__email_template_id
 msgid "Error E-mail Template"
 msgstr "错误E-mail 模板"
 
@@ -84,6 +110,7 @@ msgstr ""
 
 #. module: scheduler_error_mailer
 #: model:ir.model.fields,help:scheduler_error_mailer.field_ir_cron__email_template_id
+#: model:ir.model.fields,help:scheduler_error_mailer.field_nsca_check__email_template_id
 msgid "Select the email template that will be sent when this scheduler fails."
 msgstr "选择此调度程序失败时将发送的电子邮件模板。"
 
@@ -104,6 +131,26 @@ msgstr "任务失败 UID = %d."
 #: model:ir.cron,cron_name:scheduler_error_mailer.test_scheduler_error_mailer
 msgid "Test Scheduler Error Mailer"
 msgstr "测试调度程序错误邮件程序"
+
+#. module: scheduler_error_mailer
+#: model:ir.model.fields,help:scheduler_error_mailer.field_ir_cron__count_pending_changeset_changes
+msgid "The number of pending changes of this record"
+msgstr ""
+
+#. module: scheduler_error_mailer
+#: model:ir.model.fields,help:scheduler_error_mailer.field_ir_cron__count_pending_changesets
+msgid "The number of pending changesets of this record"
+msgstr ""
+
+#. module: scheduler_error_mailer
+#: model:ir.model.fields,help:scheduler_error_mailer.field_ir_cron__count_changesets
+msgid "The overall number of changesets of this record"
+msgstr ""
+
+#. module: scheduler_error_mailer
+#: model:ir.model.fields,field_description:scheduler_error_mailer.field_ir_cron__user_can_see_changeset
+msgid "User Can See Changeset"
+msgstr ""
 
 #. module: scheduler_error_mailer
 #: model:mail.template,subject:scheduler_error_mailer.scheduler_error_mailer
@@ -159,8 +206,8 @@ msgstr ""
 #~ "serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "
 #~ "\">\n"
 #~ "\n"
-#~ "<p>Odoo试图运行调度程序 <em>${object.name or ''}</em> 在数据库中 <em>"
-#~ "${ctx.get('dbname')}</em> 但它失败了。这是错误消息 :</p>\n"
+#~ "<p>Odoo试图运行调度程序 <em>${object.name or ''}</em> 在数据库中 "
+#~ "<em>${ctx.get('dbname')}</em> 但它失败了。这是错误消息 :</p>\n"
 #~ "\n"
 #~ "<strong>\n"
 #~ "${ctx.get('job_exception') and ctx.get('job_exception').value or '无法从上"

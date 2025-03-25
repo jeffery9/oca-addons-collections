@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-02-05 09:35+0000\n"
+"PO-Revision-Date: 2025-01-16 16:06+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. module: scheduler_error_mailer
 #: model:mail.template,body_html:scheduler_error_mailer.scheduler_error_mailer
@@ -41,8 +41,8 @@ msgid ""
 "<ul>\n"
 "<li>Model : <t t-out=\"object.model_id.name or ''\"/></li>\n"
 "<li>Python code : <code><t t-out=\"object.code or ''\"/></code></li>\n"
-"<li>Interval : <t t-out=\"object.interval_number or '0'\"/> <t t-out="
-"\"object.interval_type or ''\"/></li>\n"
+"<li>Interval : <t t-out=\"object.interval_number or '0'\"/> <t t-"
+"out=\"object.interval_type or ''\"/></li>\n"
 "<li>Number of calls : <t t-out=\"object.numbercall or '0'\"/></li>\n"
 "<li>Repeat missed : <t t-out=\"object.doall\"/></li>\n"
 "<li>User : <t t-out=\"object.user_id.name or ''\"/></li>\n"
@@ -79,8 +79,8 @@ msgstr ""
 "<ul>\n"
 "<li>Modello : <t t-out=\"object.model_id.name or ''\"/></li>\n"
 "<li>Codice Python : <code><t t-out=\"object.code or ''\"/></code></li>\n"
-"<li>Intervallo : <t t-out=\"object.interval_number or '0'\"/> <t t-out="
-"\"object.interval_type or ''\"/></li>\n"
+"<li>Intervallo : <t t-out=\"object.interval_number or '0'\"/> <t t-"
+"out=\"object.interval_type or ''\"/></li>\n"
 "<li>Numero di chiamate : <t t-out=\"object.numbercall or '0'\"/></li>\n"
 "<li>Ripetizione mancata : <t t-out=\"object.doall\"/></li>\n"
 "<li>Utente : <t t-out=\"object.user_id.name or ''\"/></li>\n"
@@ -101,7 +101,33 @@ msgid "Assigned Attachments"
 msgstr "Allegati assegnati"
 
 #. module: scheduler_error_mailer
+#: model:ir.model.fields,field_description:scheduler_error_mailer.field_ir_cron__changeset_change_ids
+msgid "Changeset Changes"
+msgstr "Modifiche dell'insieme di modifiche"
+
+#. module: scheduler_error_mailer
+#: model:ir.model.fields,field_description:scheduler_error_mailer.field_ir_cron__changeset_ids
+msgid "Changesets"
+msgstr "Insiemi di modifiche"
+
+#. module: scheduler_error_mailer
+#: model:ir.model.fields,field_description:scheduler_error_mailer.field_ir_cron__count_changesets
+msgid "Count Changesets"
+msgstr "Conta insiemi di modifiche"
+
+#. module: scheduler_error_mailer
+#: model:ir.model.fields,field_description:scheduler_error_mailer.field_ir_cron__count_pending_changeset_changes
+msgid "Count Pending Changeset Changes"
+msgstr "Conteggio modifiche dell'insieme di modifiche in attesa"
+
+#. module: scheduler_error_mailer
+#: model:ir.model.fields,field_description:scheduler_error_mailer.field_ir_cron__count_pending_changesets
+msgid "Count Pending Changesets"
+msgstr "Conteggio insieme di modifiche in attesa"
+
+#. module: scheduler_error_mailer
 #: model:ir.model.fields,field_description:scheduler_error_mailer.field_ir_cron__email_template_id
+#: model:ir.model.fields,field_description:scheduler_error_mailer.field_nsca_check__email_template_id
 msgid "Error E-mail Template"
 msgstr "Modello dell'e-mail di errore"
 
@@ -117,6 +143,7 @@ msgstr "Errore schedulatore"
 
 #. module: scheduler_error_mailer
 #: model:ir.model.fields,help:scheduler_error_mailer.field_ir_cron__email_template_id
+#: model:ir.model.fields,help:scheduler_error_mailer.field_nsca_check__email_template_id
 msgid "Select the email template that will be sent when this scheduler fails."
 msgstr ""
 "Selezionale il modello di e-mail che sarà inviato quando lo schedulatore va "
@@ -139,6 +166,26 @@ msgstr "Errore lavoro con UID = %d."
 #: model:ir.cron,cron_name:scheduler_error_mailer.test_scheduler_error_mailer
 msgid "Test Scheduler Error Mailer"
 msgstr "Test messaggi errore scedulatore"
+
+#. module: scheduler_error_mailer
+#: model:ir.model.fields,help:scheduler_error_mailer.field_ir_cron__count_pending_changeset_changes
+msgid "The number of pending changes of this record"
+msgstr "Numero di modifiche di questo record in attesa"
+
+#. module: scheduler_error_mailer
+#: model:ir.model.fields,help:scheduler_error_mailer.field_ir_cron__count_pending_changesets
+msgid "The number of pending changesets of this record"
+msgstr "Numero di insiemi di modifiche in attesa di questo record"
+
+#. module: scheduler_error_mailer
+#: model:ir.model.fields,help:scheduler_error_mailer.field_ir_cron__count_changesets
+msgid "The overall number of changesets of this record"
+msgstr "Numero totale di insiemi di modifiche di questo record"
+
+#. module: scheduler_error_mailer
+#: model:ir.model.fields,field_description:scheduler_error_mailer.field_ir_cron__user_can_see_changeset
+msgid "User Can See Changeset"
+msgstr "L'utente può vedere l'insieme delle modifiche"
 
 #. module: scheduler_error_mailer
 #: model:mail.template,subject:scheduler_error_mailer.scheduler_error_mailer
