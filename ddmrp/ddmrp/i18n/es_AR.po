@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-12-09 23:49+0000\n"
+"PO-Revision-Date: 2024-09-18 22:57+0000\n"
 "Last-Translator: Ignacio Buioli <ibuioli@gmail.com>\n"
 "Language-Team: none\n"
 "Language: es_AR\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__used_in_bom_count
@@ -264,12 +264,12 @@ msgstr "Cancelar"
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.mrp_bom_change_location_wizard
 msgid "Change"
-msgstr ""
+msgstr "Cambiar"
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.mrp_bom_change_location_wizard
 msgid "Change Bom Location"
-msgstr ""
+msgstr "Cambiar Ubicación de la Bom"
 
 #. module: ddmrp
 #: model:ir.model.fields.selection,name:ddmrp.selection__ddmrp_duplicate_buffer__type__location
@@ -282,7 +282,7 @@ msgstr "Cambiar Ubicación"
 #: code:addons/ddmrp/models/mrp_bom.py:0
 #, python-format
 msgid "Change MRP BoM Location"
-msgstr ""
+msgstr "Cambiar Ubicación de MRP BoM"
 
 #. module: ddmrp
 #: model:ir.model.fields.selection,name:ddmrp.selection__ddmrp_duplicate_buffer__type__product
@@ -310,6 +310,12 @@ msgid ""
 "                    This change is only informative and won't affect any "
 "process or buffer size or recommendations."
 msgstr ""
+"Cambia la ubicación de inventario que se considera calcular cuando un "
+"producto está almacenado en búfer o no.\n"
+"                     Potencialmente, esto puede cambiar el valor del tiempo "
+"de entrega desacoplado (DLT).\n"
+"                     Este cambio es solo informativo y no afectará ningún "
+"proceso, tamaño de búfer ni recomendaciones."
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_res_config_settings__module_ddmrp_chatter
@@ -652,6 +658,11 @@ msgid "Get configuration warnings for stock buffers."
 msgstr "Obtener configuración de advertencias para búferes de stock."
 
 #. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.view_move_tree
+msgid "Go to Source"
+msgstr "Ir al Recurso"
+
+#. module: ddmrp
 #: model:ir.model.fields.selection,name:ddmrp.selection__mrp_production__execution_priority_level__3_green
 #: model:ir.model.fields.selection,name:ddmrp.selection__purchase_order_line__execution_priority_level__3_green
 #: model:ir.model.fields.selection,name:ddmrp.selection__stock_buffer__execution_priority_level__3_green
@@ -918,7 +929,7 @@ msgstr "Ubicación"
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_mrp_bom_change_location
 msgid "MRP Bom Change Location"
-msgstr ""
+msgstr "Cambiar Ubicación de MRP Bom"
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
@@ -975,7 +986,7 @@ msgstr "Min-max"
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_stock_warehouse_orderpoint
 msgid "Minimum Inventory Rule"
-msgstr ""
+msgstr "Regla de Inventario Mínimo"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__order_cycle
@@ -1056,7 +1067,7 @@ msgstr "No hay demanda detectada."
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
-msgid "No stock available on source location for distributed buffer"
+msgid "No stock available in source location for distributed buffer"
 msgstr ""
 "No hay stock disponible en la ubicación de origen para el búfer distribuido"
 
@@ -1124,11 +1135,6 @@ msgstr "Alerta de En Mano: Rojo"
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_purchase_order_filter
 msgid "On-Hand Alert: Yellow"
 msgstr "Alerta de En Mano: Amarillo"
-
-#. module: ddmrp
-#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
-msgid "Open Non-completed Moves"
-msgstr "Abrir Movimientos no completados"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__order_spike_horizon
@@ -1233,7 +1239,7 @@ msgstr "Seleccione un Nuevo Producto."
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
 msgid "Procure"
-msgstr ""
+msgstr "Obtener"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__procure_recommended_qty
@@ -1367,11 +1373,6 @@ msgid "Qualified Demand Stock Move"
 msgstr "Demanda Calificada en Movimiento de Inventario"
 
 #. module: ddmrp
-#: model:ir.model.fields,field_description:ddmrp.field_make_procurement_buffer_item__qty_without_security
-msgid "Quantity"
-msgstr "Cantidad"
-
-#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__product_location_qty_available_not_res
 msgid "Quantity On Hand (Unreserved)"
 msgstr "Cantidad a Mano (Sin reservar)"
@@ -1404,14 +1405,19 @@ msgid "Quantity must be positive."
 msgstr "La cantidad debe ser positiva."
 
 #. module: ddmrp
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__rfq_inside_dlt_qty
+msgid "RFQ Qty (Inside DLT)"
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__rfq_outside_dlt_qty
 msgid "RFQ Qty (Outside DLT)"
 msgstr "Cantidad RFQ (Fuera de LTD)"
 
 #. module: ddmrp
-#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
-msgid "RFQ Qty Outside DLT"
-msgstr "Cantidad RFQ Fuera de LTD"
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__rfq_total_qty
+msgid "RFQ Total Qty"
+msgstr ""
 
 #. module: ddmrp
 #: model:product.template,name:ddmrp.product_product_rm01_product_template
@@ -1500,6 +1506,18 @@ msgstr "Método de Reabastecimiento"
 #: model:ir.actions.act_window,name:ddmrp.act_make_procurement_from_buffer
 msgid "Request Procurement"
 msgstr "Solicitar Abastecimiento"
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__rfq_total_qty
+msgid "Request for Quotation total quantity that is planned"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__rfq_inside_dlt_qty
+msgid ""
+"Request for Quotation total quantity that is planned inside of the DLT "
+"horizon."
+msgstr ""
 
 #. module: ddmrp
 #: model:ir.model.fields,help:ddmrp.field_stock_buffer__rfq_outside_dlt_qty
@@ -1604,6 +1622,56 @@ msgstr ""
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
 msgid ""
+"Some RFQ quantities are outside of the DLT Horizon and may require "
+"rescheduling.                     Press this button to display the involved "
+"RFQs"
+msgstr ""
+"Algunas cantidades de RFQ están fuera del horizonte de DLT y pueden requerir "
+"una reprogramación.                     Presione este botón para visualizar "
+"las RFQ involucradas"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid ""
+"Some RFQs are inside of the DLT Horizon and waiting validation to be "
+"accounted into the NFP.                                         Press this "
+"button to display them."
+msgstr ""
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
+msgid ""
+"Some RFQs are inside of the DLT Horizon and waiting validation to be "
+"accounted into the NFP.                     Press this button to display "
+"them."
+msgstr ""
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid ""
+"Some incoming RFQs are outside of the DLT Horizon and may require "
+"rescheduling.                                          Press this button to "
+"display the involved supply orders"
+msgstr ""
+"Algunas solicitudes de cotización entrantes están fuera del horizonte de DLT "
+"y pueden requerir una "
+"reprogramación.                                          Presione este botón "
+"para visualizar las órdenes de suministro involucradas"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
+msgid ""
+"Some incoming qty is outside of the DLT Horizon and may require "
+"rescheduling.                                          Press this button to "
+"display the involved supply orders"
+msgstr ""
+"Algunas cantidades entrantes están fuera del horizonte de DLT y es posible "
+"que sea necesario reprogramarlas.                                          "
+"Presione este botón para visualizar los pedidos de suministro involucrados"
+
+#. module: ddmrp
+#: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_tree
+msgid ""
 "Some incoming quantities are outside of the DLT Horizon and may require "
 "rescheduling. Press this button to display the involved supply orders"
 msgstr ""
@@ -1681,7 +1749,7 @@ msgstr "Búferes de Stock y Empaquetados"
 #: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_line__context_location_id
 #: model:ir.model.fields,field_description:ddmrp.field_mrp_bom_line__location_id
 msgid "Stock Location"
-msgstr ""
+msgstr "Ubicación de Inventario"
 
 #. module: ddmrp
 #: model:ir.model,name:ddmrp.model_stock_move
@@ -1692,6 +1760,13 @@ msgstr "Movimiento de stock"
 #: model:ir.actions.act_window,name:ddmrp.stock_move_year_consumption_action
 msgid "Stock Move Last Year Consumption"
 msgstr "Consumo del Año Pasado del Movimiento de Stock"
+
+#. module: ddmrp
+#. odoo-python
+#: code:addons/ddmrp/models/stock_move.py:0
+#, python-format
+msgid "Stock Move Source"
+msgstr "Recurso de Movimiento de Inventario"
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_move_consumption_pivot
@@ -1799,7 +1874,7 @@ msgstr "Tope De Verde"
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__top_of_red
 msgid "Top Of Red"
-msgstr ""
+msgstr "Arriba del Rojo"
 
 #. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__top_of_yellow
@@ -1927,8 +2002,8 @@ msgstr "Ver ADU (Pasado - Demanda Indirecta)"
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
-msgid "View Incoming (Within DLT)"
-msgstr "Ver Recepción (Sin DLT)"
+msgid "View Incoming Moves (Within DLT)"
+msgstr "Ver Movimientos de Entrada (Sin DLT)"
 
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
@@ -2096,6 +2171,23 @@ msgstr "días"
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_run_ddmrp_wizard
 msgid "or"
 msgstr "o"
+
+#~ msgid "Quantity"
+#~ msgstr "Cantidad"
+
+#~ msgid "No stock available on source location for distributed buffer"
+#~ msgstr ""
+#~ "No hay stock disponible en la ubicación de origen para el búfer "
+#~ "distribuido"
+
+#~ msgid "Open Non-completed Moves"
+#~ msgstr "Abrir Movimientos no completados"
+
+#~ msgid "RFQ Qty Outside DLT"
+#~ msgstr "Cantidad RFQ Fuera de LTD"
+
+#~ msgid "View Incoming (Within DLT)"
+#~ msgstr "Ver Recepción (Sin DLT)"
 
 #~ msgid "ADU Calculation Method"
 #~ msgstr "Método de cálculo CPD"
