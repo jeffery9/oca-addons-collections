@@ -25,8 +25,27 @@ msgid "Apply"
 msgstr ""
 
 #. module: stock_inventory_discrepancy
+#: model:ir.model.fields,help:stock_inventory_discrepancy.field_res_company__inventory_discrepancy_enable
+#: model:ir.model.fields,help:stock_inventory_discrepancy.field_res_config_settings__inventory_discrepancy_enable
+#: model_terms:ir.ui.view,arch_db:stock_inventory_discrepancy.view_stock_config_settings
+msgid ""
+"Block validation of the inventory adjustment if discrepancy exceeds the "
+"threshold."
+msgstr ""
+
+#. module: stock_inventory_discrepancy
 #: model_terms:ir.ui.view,arch_db:stock_inventory_discrepancy.confirm_discrepancy_wizard
 msgid "Cancel"
+msgstr ""
+
+#. module: stock_inventory_discrepancy
+#: model:ir.model,name:stock_inventory_discrepancy.model_res_company
+msgid "Companies"
+msgstr ""
+
+#. module: stock_inventory_discrepancy
+#: model:ir.model,name:stock_inventory_discrepancy.model_res_config_settings
+msgid "Config Settings"
 msgstr ""
 
 #. module: stock_inventory_discrepancy
@@ -80,6 +99,12 @@ msgid "ID"
 msgstr ""
 
 #. module: stock_inventory_discrepancy
+#: model:ir.model.fields,field_description:stock_inventory_discrepancy.field_res_company__inventory_discrepancy_enable
+#: model:ir.model.fields,field_description:stock_inventory_discrepancy.field_res_config_settings__inventory_discrepancy_enable
+msgid "Inventory Discrepancy Control"
+msgstr ""
+
+#. module: stock_inventory_discrepancy
 #: model:ir.model,name:stock_inventory_discrepancy.model_stock_location
 msgid "Inventory Locations"
 msgstr ""
@@ -129,6 +154,11 @@ msgid "Only a stock manager can validate an inventory adjustment."
 msgstr ""
 
 #. module: stock_inventory_discrepancy
+#: model_terms:ir.ui.view,arch_db:stock_inventory_discrepancy.quant_search_last_has_over_discrepancy
+msgid "Over Discrepancy"
+msgstr ""
+
+#. module: stock_inventory_discrepancy
 #: model:ir.model.fields,help:stock_inventory_discrepancy.field_stock_location__propagate_discrepancy_threshold
 msgid "Propagate Maximum Discrepancy Rate Threshold to child locations"
 msgstr ""
@@ -156,6 +186,13 @@ msgid ""
 msgstr ""
 
 #. module: stock_inventory_discrepancy
+#. odoo-python
+#: code:addons/stock_inventory_discrepancy/models/stock_quant.py:0
+#, python-format
+msgid "This operator is not supported"
+msgstr ""
+
+#. module: stock_inventory_discrepancy
 #: model:ir.model.fields,field_description:stock_inventory_discrepancy.field_stock_quant__discrepancy_threshold
 msgid "Threshold (%)"
 msgstr ""
@@ -168,6 +205,13 @@ msgstr ""
 #. module: stock_inventory_discrepancy
 #: model:res.groups,name:stock_inventory_discrepancy.group_stock_inventory_validation_always
 msgid "Validate Inventory Adjustments excceded threshold"
+msgstr ""
+
+#. module: stock_inventory_discrepancy
+#. odoo-python
+#: code:addons/stock_inventory_discrepancy/models/stock_quant.py:0
+#, python-format
+msgid "Value should be True or False (not %s)"
 msgstr ""
 
 #. module: stock_inventory_discrepancy
