@@ -6,6 +6,43 @@
         t-inherit-mode="primary"
         owl="1"
     >
+        <xpath expr="//t[@t-as='groupOrRecord']" position="before">
+            <div class="m-2 d-flex w-100" t-if="env.parentController.journalId">
+                <span
+                    class="flex-fill text-900 text-start ps-0 fw-bold fs-4 align-self-center"
+                >Global Balance</span>
+                <span
+                    class="pe-0 fw-bold fs-4 align-self-center"
+                    t-esc="env.parentController.journalBalanceStr"
+                />
+            </div>
+            <t t-set="aggregates" t-value="getAggregates()" />
+        </xpath>
+        <xpath expr="//t[@t-else='']/KanbanRecord" position="before">
+            <t
+                t-if="aggregates.length and groupOrRecord.record.data.aggregate_id and aggregates[0].id == groupOrRecord.record.data.aggregate_id"
+            >
+                <t t-set="aggregate" t-value="aggregates.shift()" />
+                <div class="m-2 d-flex w-100">
+                    <span
+                        class="flex-fill text-900 text-start ps-0 fw-bold fs-4 align-self-center"
+                        t-esc="aggregate.name"
+                    />
+                    <span
+                        t-if="groupOrRecord.record.data.reconcile_aggregate == 'statement'"
+                        t-on-click="() => this.onClickStatement(aggregate.id)"
+                        class="pe-0 fw-bold fs-4 align-self-center btn btn-link"
+                        t-esc="aggregate.balanceStr"
+                    />
+                    <!--
+                    <span
+                        t-if="groupOrRecord.record.data.reconcile_aggregate != 'statement'"
+                        class="pe-0 fw-bold fs-4 align-self-center text-link"
+                        t-esc="aggregate.balanceStr"
+                    />-->
+                </div>
+            </t>
+        </xpath>
         <xpath expr="div[hasclass('o_kanban_renderer')]" position="attributes">
             <attribute
                 name="class"
@@ -79,7 +116,18 @@
                         t-on-click="(ev) => this.selectReconcileLine(ev, reconcile_line)"
                         t-att-class="'o_reconcile_widget_line ' + reconcile_line.kind + (props.record.data.manual_reference == reconcile_line.reference ? ' selected ' :  ' ')"
                     >
-                        <td t-esc="reconcile_line.account_id[1]" />
+                        <td>
+                            <div t-esc="reconcile_line.account_id[1]" />
+                            <div t-if="reconcile_line.move_id">
+                                <a
+                                    t-att-href="'/web#id=' + reconcile_line.move_id + '&amp;view_type=form&amp;model=account.move'"
+                                    class="o_form_uri"
+                                    t-on-click="(ev) => this.openMove(ev, reconcile_line.move_id)"
+                                >
+                                    <small t-esc="reconcile_line.move" />
+                                </a>
+                            </div>
+                        </td>
                         <td>
                             <span
                                 t-esc="reconcile_line.partner_id[1]"
@@ -153,6 +201,16 @@
         <xpath expr="//t[@list='model.root']" position="attributes">
             <attribute name="parentRecord">props.parentRecord</attribute>
             <attribute name="parentField">props.parentField</attribute>
+        </xpath>
+    </t>
+    <t
+        t-name="reconcile_move_line.ListView.Buttons"
+        t-inherit="web.ListView.Buttons"
+        t-inherit-mode="primary"
+        owl="1"
+    >
+        <xpath expr="//div[hasclass('o_list_buttons')]" position="inside">
+            <button class="btn btn-primary" t-on-click="clickAddAll">Add all</button>
         </xpath>
     </t>
 </templates>

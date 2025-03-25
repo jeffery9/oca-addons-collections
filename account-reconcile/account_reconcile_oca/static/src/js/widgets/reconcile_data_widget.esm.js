@@ -3,12 +3,15 @@
 import fieldUtils from "web.field_utils";
 import {registry} from "@web/core/registry";
 import session from "web.session";
+import {useService} from "@web/core/utils/hooks";
 
 const {Component} = owl;
 
 export class AccountReconcileDataWidget extends Component {
     setup() {
         super.setup(...arguments);
+        this.orm = useService("orm");
+        this.action = useService("action");
         this.foreignCurrency =
             this.props &&
             this.props.record &&
@@ -53,7 +56,6 @@ export class AccountReconcileDataWidget extends Component {
             if (data[line].original_amount) {
                 data[line].original_amount_format = fieldUtils.format.monetary(
                     data[line].original_amount,
-                    undefined,
                     {
                         currency: session.get_currency(data[line].currency_id),
                     }
@@ -66,6 +68,7 @@ export class AccountReconcileDataWidget extends Component {
         return data;
     }
     onTrashLine(ev, line) {
+        ev.stopPropagation();
         this.props.record.update({
             manual_reference: line.reference,
             manual_delete: true,
@@ -82,6 +85,15 @@ export class AccountReconcileDataWidget extends Component {
             },
         });
         this.env.bus.trigger("RECONCILE_PAGE_NAVIGATE", triggerEv);
+    }
+    async openMove(ev, moveId) {
+        ev.preventDefault();
+        ev.stopPropagation();
+        console.log(moveId);
+        const action = await this.orm.call("account.move", "get_formview_action", [
+            [moveId],
+        ]);
+        this.action.doAction(action);
     }
 }
 AccountReconcileDataWidget.template = "account_reconcile_oca.ReconcileDataWidget";
