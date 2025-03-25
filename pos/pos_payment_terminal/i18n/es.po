@@ -22,6 +22,15 @@ msgstr ""
 
 #. module: pos_payment_terminal
 #. odoo-javascript
+#: code:addons/pos_payment_terminal/static/src/js/models.js:0
+#, python-format
+msgid ""
+"A payment terminal has been linked to one payment provider but the IoT Box "
+"location has not been configured."
+msgstr ""
+
+#. module: pos_payment_terminal
+#. odoo-javascript
 #: code:addons/pos_payment_terminal/static/src/js/payment_terminal.js:0
 #, python-format
 msgid "Cannot process transactions with zero or negative amount."
@@ -62,6 +71,7 @@ msgstr "Forma de pago"
 
 #. module: pos_payment_terminal
 #. odoo-javascript
+#: code:addons/pos_payment_terminal/static/src/js/models.js:0
 #: code:addons/pos_payment_terminal/static/src/js/payment_terminal.js:0
 #, python-format
 msgid "Payment Terminal Error"

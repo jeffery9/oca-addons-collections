@@ -7,7 +7,7 @@
                 name="t-attf-style"
             >display: {{changes.is_company ? 'block': 'none'}}</attribute>
         </xpath>
-        <xpath expr="//div[@class='partner-details-left']/div[1]" position="before">
+        <xpath expr="//div[hasclass('partner-details-left')]/div[1]" position="before">
             <div class="partner-detail">
                 <span class='label'>Company</span>
                 <input
