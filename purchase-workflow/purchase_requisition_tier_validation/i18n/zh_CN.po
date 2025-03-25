@@ -27,6 +27,11 @@ msgid "Has Comment"
 msgstr ""
 
 #. module: purchase_requisition_tier_validation
+#: model:ir.model.fields,field_description:purchase_requisition_tier_validation.field_purchase_requisition__is_reevaluation_required
+msgid "Is Reevaluation Required"
+msgstr ""
+
+#. module: purchase_requisition_tier_validation
 #: model_terms:ir.ui.view,arch_db:purchase_requisition_tier_validation.view_purchase_requisition_filter
 msgid "My Purchase Agreements to review"
 msgstr "等待我审核的采购协议"
@@ -75,6 +80,11 @@ msgstr ""
 #: model:ir.model,name:purchase_requisition_tier_validation.model_tier_definition
 msgid "Tier Definition"
 msgstr "层级定义"
+
+#. module: purchase_requisition_tier_validation
+#: model:ir.model,name:purchase_requisition_tier_validation.model_tier_validation
+msgid "Tier Validation (abstract)"
+msgstr ""
 
 #. module: purchase_requisition_tier_validation
 #: model:ir.model.fields,field_description:purchase_requisition_tier_validation.field_purchase_requisition__to_validate_message

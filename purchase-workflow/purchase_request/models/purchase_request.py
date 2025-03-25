@@ -8,8 +8,9 @@ _STATES = [
     ("draft", "Draft"),
     ("to_approve", "To be approved"),
     ("approved", "Approved"),
-    ("rejected", "Rejected"),
+    ("in_progress", "In progress"),
     ("done", "Done"),
+    ("rejected", "Rejected"),
 ]
 
 
@@ -48,7 +49,13 @@ class PurchaseRequest(models.Model):
     @api.depends("state")
     def _compute_is_editable(self):
         for rec in self:
-            if rec.state in ("to_approve", "approved", "rejected", "done"):
+            if rec.state in (
+                "to_approve",
+                "approved",
+                "rejected",
+                "in_progress",
+                "done",
+            ):
                 rec.is_editable = False
             else:
                 rec.is_editable = True
@@ -101,9 +108,10 @@ class PurchaseRequest(models.Model):
         comodel_name="purchase.request.line",
         inverse_name="request_id",
         string="Products to Purchase",
-        readonly=False,
+        readonly=True,
         copy=True,
         tracking=True,
+        states={"draft": [("readonly", False)]},
     )
     product_id = fields.Many2one(
         comodel_name="product.product",
@@ -282,6 +290,9 @@ class PurchaseRequest(models.Model):
     def button_rejected(self):
         self.mapped("line_ids").do_cancel()
         return self.write({"state": "rejected"})
+
+    def button_in_progress(self):
+        return self.write({"state": "in_progress"})
 
     def button_done(self):
         return self.write({"state": "done"})
