@@ -488,9 +488,8 @@ def _force_install_account_payment_term_module_module(env):
             env.cr,
             """
             UPDATE account_payment_term_line
-            SET
-            nb_days = nb_days - days_after,
-            days_next_month = days_after
+            SET nb_days = nb_days - days_after,
+                days_next_month = days_after
             WHERE delay_type = 'days_end_of_month_on_the'
             """,
         )
