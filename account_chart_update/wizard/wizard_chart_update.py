@@ -433,8 +433,9 @@ class WizardUpdateChartsAccounts(models.TransientModel):
                 self._update_taxes_pending_for_accounts(todo_dict)
             if self.update_fiscal_position and perform_rest:
                 self._update_fiscal_positions()
-            # Store new chart in the company
-            self.company_id.chart_template_id = self.chart_template_id
+            # Store new chart in the company if has been changed
+            if self.company_id.chart_template_id != self.chart_template_id:
+                self.company_id.chart_template_id = self.chart_template_id
             _logger.removeHandler(handler)
             self.log = log_output.getvalue()
         # Check if errors where detected and wether we should stop.
@@ -680,7 +681,7 @@ class WizardUpdateChartsAccounts(models.TransientModel):
                     continue
                 criteria = (field_name, "in", field_values)
 
-            result = fp_model.search(
+            result = fp_model.with_context(active_test=False).search(
                 [criteria, ("company_id", "=", self.company_id.id)], limit=1
             )
             if result:
@@ -783,6 +784,20 @@ class WizardUpdateChartsAccounts(models.TransientModel):
         } | specials_mapping.get(name, set())
         return set(models.MAGIC_COLUMNS) | specials
 
+    def fields_to_include(self, name):
+        """Get fields that will be used when checking differences.
+
+        :param str name: The name of the template model.
+        :return set: Fields to include in diff.
+        """
+        template_field_mapping = {
+            "account.tax.template": self.tax_field_ids,
+            "account.account.template": self.account_field_ids,
+            "account.fiscal.position.template": self.fp_field_ids,
+            "account.group.template": self.account_group_field_ids,
+        }
+        return template_field_mapping[name].mapped("name")
+
     @api.model
     def diff_fields(self, template, real):  # noqa: C901
         """Get fields that are different in template and real records.
@@ -797,13 +812,7 @@ class WizardUpdateChartsAccounts(models.TransientModel):
         """
         result = dict()
         ignore = self.fields_to_ignore(template._name)
-        template_field_mapping = {
-            "account.tax.template": self.tax_field_ids,
-            "account.account.template": self.account_field_ids,
-            "account.fiscal.position.template": self.fp_field_ids,
-            "account.group.template": self.account_group_field_ids,
-        }
-        to_include = template_field_mapping[template._name].mapped("name")
+        to_include = self.fields_to_include(template._name)
         for key, field in template._fields.items():
             if key in ignore or key not in to_include or not hasattr(real, key):
                 continue
@@ -1100,14 +1109,14 @@ class WizardUpdateChartsAccounts(models.TransientModel):
         ir_model_data.search(
             [("model", "=", real_obj._name), ("res_id", "=", real_obj.id)]
         ).unlink()
-        template_xmlid.copy(
+        new_rec = template_xmlid.copy(
             {
                 "model": real_obj._name,
                 "res_id": real_obj.id,
-                "name": new_xml_id,
                 "noupdate": True,
             }
         )
+        new_rec.name = new_xml_id
 
     def _update_taxes(self):
         """Process taxes to create/update/deactivate."""
@@ -1159,7 +1168,8 @@ class WizardUpdateChartsAccounts(models.TransientModel):
             if wiz_account.type == "new":
                 # Create the account
                 tax_template_ref = {
-                    tax: self.find_tax_by_templates(tax) for tax in template.tax_ids
+                    tax: self.env["account.tax"].browse(self.find_tax_by_templates(tax))
+                    for tax in template.tax_ids
                 }
                 vals = self.chart_template_id._get_account_vals(
                     self.company_id,
