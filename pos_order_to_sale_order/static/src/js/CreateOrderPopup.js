@@ -43,11 +43,12 @@ odoo.define("point_of_sale.CreateOrderPopup", function (require) {
         async _createSaleOrder(order_state) {
             const current_order = this.env.pos.get_order();
             framework.blockUI();
-            return await this.rpc({
-                model: "sale.order",
-                method: "create_order_from_pos",
-                args: [current_order.export_as_JSON(), order_state],
-            })
+            return await this.env.services
+                .rpc({
+                    model: "sale.order",
+                    method: "create_order_from_pos",
+                    args: [current_order.export_as_JSON(), order_state],
+                })
                 .catch(function (error) {
                     throw error;
                 })

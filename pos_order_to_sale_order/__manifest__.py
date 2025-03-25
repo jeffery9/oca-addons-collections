@@ -4,7 +4,7 @@
 
 {
     "name": "PoS Order To Sale Order",
-    "version": "16.0.1.0.7",
+    "version": "16.0.1.0.11",
     "author": "GRAP,Odoo Community Association (OCA)",
     "category": "Point Of Sale",
     "license": "AGPL-3",
@@ -22,7 +22,7 @@
             "pos_order_to_sale_order/static/src/xml/CreateOrderPopup.xml",
         ],
         "web.assets_tests": [
-            "pos_order_to_sale_order/tests/tours/PosOrderToSaleOrderTour.tour.js",
+            "pos_order_to_sale_order/static/tests/**/*.js",
         ],
     },
     "installable": True,

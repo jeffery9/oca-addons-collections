@@ -46,6 +46,12 @@ msgid ""
 msgstr ""
 
 #. module: pos_stock_available_online
+#: model:ir.model.fields,field_description:pos_stock_available_online.field_pos_config__main_warehouse_id
+#: model:ir.model.fields,field_description:pos_stock_available_online.field_res_config_settings__pos_main_warehouse_id
+msgid "Main Warehouse"
+msgstr ""
+
+#. module: pos_stock_available_online
 #: model_terms:ir.ui.view,arch_db:pos_stock_available_online.res_config_settings_view_form
 msgid "Mark quantity red if below or equal this value."
 msgstr ""
@@ -83,6 +89,16 @@ msgid "Show quantity in the following warehouses in additional to"
 msgstr ""
 
 #. module: pos_stock_available_online
+#: model:ir.model,name:pos_stock_available_online.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: pos_stock_available_online
+#: model:ir.model,name:pos_stock_available_online.model_stock_notifier_pos_mixin
+msgid "Stock Notifier POS Mixin"
+msgstr ""
+
+#. module: pos_stock_available_online
 #. odoo-javascript
 #: code:addons/pos_stock_available_online/static/src/xml/Screens/ProductScreen/ProductItem.xml:0
 #, python-format
@@ -91,8 +107,6 @@ msgstr ""
 
 #. module: pos_stock_available_online
 #: model:ir.model,name:pos_stock_available_online.model_stock_warehouse
-#: model:ir.model.fields,field_description:pos_stock_available_online.field_pos_config__main_warehouse_id
-#: model:ir.model.fields,field_description:pos_stock_available_online.field_res_config_settings__pos_main_warehouse_id
 msgid "Warehouse"
 msgstr ""
 
