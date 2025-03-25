@@ -7,9 +7,13 @@
 
 <!-- /!\ do not modify above this line -->
 
-# Stock Availability modules
+# Stock Availability
 
- This repository contains modules to provide more information about product stock availability in terms of quantities
+This repository contains modules to provide more information about product stock availability in terms of quantities
+
+Are you looking for modules related to logistics? Or would like to contribute
+to? There are many repositories with specific purposes. Have a look at this
+[README](https://github.com/OCA/wms/blob/18.0/README.md).
 
 <!-- /!\ do not modify below this line -->
 
@@ -24,11 +28,14 @@ addon | version | maintainers | summary
 [sale_stock_available_info_popup](sale_stock_available_info_popup/) | 16.0.1.0.0 |  | Adds an 'Available to promise' quantity to the popover shown in sale order line that display stock info of the product
 [stock_available](stock_available/) | 16.0.1.1.0 |  | Stock available to promise
 [stock_available_base_exclude_location](stock_available_base_exclude_location/) | 16.0.1.0.0 | [![rousseldenis](https://github.com/rousseldenis.png?size=30px)](https://github.com/rousseldenis) | Base module to exclude locations for product available quantities
-[stock_available_immediately](stock_available_immediately/) | 16.0.1.0.0 |  | Ignore planned receptions in quantity available to promise
+[stock_available_exclude_location](stock_available_exclude_location/) | 16.0.1.0.0 |  | Exclude locations for product available quantities
+[stock_available_immediately](stock_available_immediately/) | 16.0.1.0.1 |  | Ignore planned receptions in quantity available to promise
 [stock_available_immediately_exclude_location](stock_available_immediately_exclude_location/) | 16.0.1.0.0 |  | Exclude locations from immediately usable quantity
-[stock_available_mrp](stock_available_mrp/) | 16.0.1.0.0 |  | Consider the production potential is available to promise
+[stock_available_location_get_domain](stock_available_location_get_domain/) | 16.0.1.0.0 |  | This is a technical helper module in order to reuse the standard _get_domain_locations() function for locations and not quants
+[stock_available_mrp](stock_available_mrp/) | 16.0.1.0.1 |  | Consider the production potential is available to promise
 [stock_available_unreserved](stock_available_unreserved/) | 16.0.1.0.0 | [![LoisRForgeFlow](https://github.com/LoisRForgeFlow.png?size=30px)](https://github.com/LoisRForgeFlow) | Quantity of stock available for immediate use
 [stock_free_quantity](stock_free_quantity/) | 16.0.1.0.0 |  | Stock Free Quantity
+[stock_quant_available_quantity](stock_quant_available_quantity/) | 16.0.1.0.0 | [![tisho99](https://github.com/tisho99.png?size=30px)](https://github.com/tisho99) | Shows Available Quantity in the stock quant views
 
 [//]: # (end addons)
 
