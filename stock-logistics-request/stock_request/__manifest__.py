@@ -4,10 +4,11 @@
 {
     "name": "Stock Request",
     "summary": "Internal request for stock",
-    "version": "16.0.1.0.0",
+    "version": "16.0.1.1.3",
     "license": "LGPL-3",
     "website": "https://github.com/OCA/stock-logistics-request",
     "author": "ForgeFlow, Odoo Community Association (OCA)",
+    "maintainers": ["LoisRForgeFlow", "etobella"],
     "category": "Warehouse Management",
     "depends": ["stock"],
     "data": [
