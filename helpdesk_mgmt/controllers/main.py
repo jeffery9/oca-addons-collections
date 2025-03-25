@@ -42,6 +42,7 @@ class HelpdeskTicketController(http.Controller):
 
     @http.route("/new/ticket", type="http", auth="user", website=True)
     def create_new_ticket(self, **kw):
+        session_info = http.request.env["ir.http"].session_info()
         company = request.env.company
         category_model = http.request.env["helpdesk.ticket.category"]
         categories = category_model.with_company(company.id).search(
@@ -63,6 +64,7 @@ class HelpdeskTicketController(http.Controller):
                 "ticket_category_id_required": (
                     company.helpdesk_mgmt_portal_category_id_required
                 ),
+                "max_upload_size": session_info["max_file_upload_size"],
             },
         )
 
@@ -105,10 +107,12 @@ class HelpdeskTicketController(http.Controller):
         new_ticket = request.env["helpdesk.ticket"].sudo().create(vals)
         new_ticket.message_subscribe(partner_ids=request.env.user.partner_id.ids)
         if kw.get("attachment"):
+            IrAttachment = request.env["ir.attachment"]
+            attachment_ids = IrAttachment
             for c_file in request.httprequest.files.getlist("attachment"):
                 data = c_file.read()
                 if c_file.filename:
-                    request.env["ir.attachment"].sudo().create(
+                    attachment_ids += IrAttachment.sudo().create(
                         {
                             "name": c_file.filename,
                             "datas": base64.b64encode(data),
@@ -116,4 +120,5 @@ class HelpdeskTicketController(http.Controller):
                             "res_id": new_ticket.id,
                         }
                     )
+            attachment_ids.sudo().generate_access_token()
         return werkzeug.utils.redirect("/my/ticket/%s" % new_ticket.id)
