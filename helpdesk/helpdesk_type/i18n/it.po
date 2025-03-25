@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-04-10 08:35+0000\n"
+"PO-Revision-Date: 2025-01-20 17:06+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. module: helpdesk_type
 #: model:ir.model.fields,field_description:helpdesk_type.field_helpdesk_ticket_type__create_uid
@@ -36,23 +36,23 @@ msgstr "Nome visualizzato"
 #. module: helpdesk_type
 #: model:ir.model,name:helpdesk_type.model_helpdesk_ticket
 msgid "Helpdesk Ticket"
-msgstr "Richiesta assistenza"
+msgstr "Ticket assistenza clienti"
 
 #. module: helpdesk_type
 #: model:ir.model,name:helpdesk_type.model_helpdesk_ticket_team
 msgid "Helpdesk Ticket Team"
-msgstr "Team ticket Helpdesk"
+msgstr "Team ticket assistenza clienti"
 
 #. module: helpdesk_type
 #: model:ir.actions.act_window,name:helpdesk_type.action_helpdesk_ticket_type
 #: model:ir.model,name:helpdesk_type.model_helpdesk_ticket_type
 msgid "Helpdesk Ticket Type"
-msgstr "Tipo ticket Helpdesk"
+msgstr "Tipo ticket assistenza clienti"
 
 #. module: helpdesk_type
 #: model:ir.model.fields,help:helpdesk_type.field_helpdesk_ticket_type__team_ids
 msgid "Helpdesk teams allowed to use this type."
-msgstr "I team Helpdesk autorizzati a usare questo tipo."
+msgstr "I team assistenza clienti autorizzati a usare questo tipo."
 
 #. module: helpdesk_type
 #: model:ir.model.fields,field_description:helpdesk_type.field_helpdesk_ticket__id

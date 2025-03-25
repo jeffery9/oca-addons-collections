@@ -14,6 +14,13 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: helpdesk_mgmt
+#. odoo-javascript
+#: code:addons/helpdesk_mgmt/static/src/js/new_ticket.js:0
+#, python-format
+msgid "%s file exceed the maximum file size of %s."
+msgstr ""
+
+#. module: helpdesk_mgmt
 #: model_terms:ir.ui.view,arch_db:helpdesk_mgmt.portal_ticket_list
 msgid "<em class=\"font-weight-normal text-muted\">Tickets in category:</em>"
 msgstr ""
@@ -49,6 +56,13 @@ msgstr ""
 #. module: helpdesk_mgmt
 #: model_terms:ir.ui.view,arch_db:helpdesk_mgmt.portal_helpdesk_ticket_page
 msgid "<strong>Assignee</strong>"
+msgstr ""
+
+#. module: helpdesk_mgmt
+#: model_terms:ir.ui.view,arch_db:helpdesk_mgmt.portal_helpdesk_ticket_page
+msgid ""
+"<strong>Attachments:</strong>\n"
+"                            <br/>"
 msgstr ""
 
 #. module: helpdesk_mgmt
@@ -419,6 +433,16 @@ msgid "Color Index"
 msgstr ""
 
 #. module: helpdesk_mgmt
+#: model_terms:ir.ui.view,arch_db:helpdesk_mgmt.helpdesk_ticket_view_search
+msgid "Commercial Entity"
+msgstr ""
+
+#. module: helpdesk_mgmt
+#: model:ir.model.fields,field_description:helpdesk_mgmt.field_helpdesk_ticket__commercial_partner_id
+msgid "Commercial Partner"
+msgstr ""
+
+#. module: helpdesk_mgmt
 #: model:ir.model,name:helpdesk_mgmt.model_res_company
 msgid "Companies"
 msgstr ""
@@ -585,6 +609,7 @@ msgid "Edit"
 msgstr ""
 
 #. module: helpdesk_mgmt
+#: model:helpdesk.ticket.channel,name:helpdesk_mgmt.helpdesk_ticket_channel_email
 #: model:ir.model.fields,field_description:helpdesk_mgmt.field_helpdesk_ticket__partner_email
 #: model:ir.model.fields,field_description:helpdesk_mgmt.field_helpdesk_ticket_team__alias_id
 msgid "Email"
@@ -603,6 +628,13 @@ msgstr ""
 #. module: helpdesk_mgmt
 #: model:ir.model.fields,field_description:helpdesk_mgmt.field_helpdesk_ticket__email_cc
 msgid "Email cc"
+msgstr ""
+
+#. module: helpdesk_mgmt
+#. odoo-javascript
+#: code:addons/helpdesk_mgmt/static/src/js/new_ticket.js:0
+#, python-format
+msgid "File upload"
 msgstr ""
 
 #. module: helpdesk_mgmt
@@ -647,6 +679,11 @@ msgstr ""
 #. module: helpdesk_mgmt
 #: model_terms:ir.ui.view,arch_db:helpdesk_mgmt.helpdesk_ticket_view_search
 msgid "Group By"
+msgstr ""
+
+#. module: helpdesk_mgmt
+#: model:ir.model,name:helpdesk_mgmt.model_ir_http
+msgid "HTTP Routing"
 msgstr ""
 
 #. module: helpdesk_mgmt
@@ -1066,6 +1103,11 @@ msgid ""
 msgstr ""
 
 #. module: helpdesk_mgmt
+#: model:helpdesk.ticket.channel,name:helpdesk_mgmt.helpdesk_ticket_channel_other
+msgid "Other"
+msgstr ""
+
+#. module: helpdesk_mgmt
 #: model_terms:ir.ui.view,arch_db:helpdesk_mgmt.ticket_view_form
 msgid "Other Information"
 msgstr ""
@@ -1101,6 +1143,11 @@ msgstr ""
 #. module: helpdesk_mgmt
 #: model:ir.model.fields,field_description:helpdesk_mgmt.field_helpdesk_ticket__partner_name
 msgid "Partner Name"
+msgstr ""
+
+#. module: helpdesk_mgmt
+#: model:helpdesk.ticket.channel,name:helpdesk_mgmt.helpdesk_ticket_channel_phone
+msgid "Phone"
 msgstr ""
 
 #. module: helpdesk_mgmt
@@ -1542,6 +1589,11 @@ msgstr ""
 #. module: helpdesk_mgmt
 #: model:ir.model.fields.selection,name:helpdesk_mgmt.selection__helpdesk_ticket__priority__3
 msgid "Very High"
+msgstr ""
+
+#. module: helpdesk_mgmt
+#: model:helpdesk.ticket.channel,name:helpdesk_mgmt.helpdesk_ticket_channel_web
+msgid "Web"
 msgstr ""
 
 #. module: helpdesk_mgmt

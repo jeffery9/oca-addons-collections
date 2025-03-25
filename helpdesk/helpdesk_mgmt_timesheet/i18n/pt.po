@@ -17,6 +17,26 @@ msgstr ""
 "X-Generator: Weblate 4.17\n"
 
 #. module: helpdesk_mgmt_timesheet
+#: model_terms:ir.ui.view,arch_db:helpdesk_mgmt_timesheet.helpdesk_ticket_kanban_view
+msgid ""
+"<span class=\"o_label\">\n"
+"                            <i class=\"fa fa-lg fa-play-circle text-"
+"success\"/>\n"
+"                            Start work\n"
+"                        </span>"
+msgstr ""
+
+#. module: helpdesk_mgmt_timesheet
+#: model_terms:ir.ui.view,arch_db:helpdesk_mgmt_timesheet.helpdesk_ticket_kanban_view
+msgid ""
+"<span class=\"o_label\">\n"
+"                            <i class=\"fa fa-lg fa-stop-circle text-"
+"warning\"/>\n"
+"                            Stop work\n"
+"                        </span>"
+msgstr ""
+
+#. module: helpdesk_mgmt_timesheet
 #: model:ir.model.fields,field_description:helpdesk_mgmt_timesheet.field_helpdesk_ticket__allow_timesheet
 #: model:ir.model.fields,field_description:helpdesk_mgmt_timesheet.field_helpdesk_ticket_team__allow_timesheet
 msgid "Allow Timesheet"
@@ -28,19 +48,9 @@ msgid "Analytic Line"
 msgstr "Linha Analítica"
 
 #. module: helpdesk_mgmt_timesheet
-#: model_terms:ir.ui.view,arch_db:helpdesk_mgmt_timesheet.timesheet_helpdesk_team_view_form
-msgid "Change the Default Project will not have retroactive effects."
-msgstr "Alterar o Projeto Padrão não terá efeitos retroativos."
-
-#. module: helpdesk_mgmt_timesheet
 #: model_terms:ir.ui.view,arch_db:helpdesk_mgmt_timesheet.timesheet_helpdesk_ticket_view_form
 msgid "Date"
 msgstr "Data"
-
-#. module: helpdesk_mgmt_timesheet
-#: model:ir.model.fields,field_description:helpdesk_mgmt_timesheet.field_helpdesk_ticket_team__default_project_id
-msgid "Default Project"
-msgstr "Projeto Predefinido"
 
 #. module: helpdesk_mgmt_timesheet
 #: model_terms:ir.ui.view,arch_db:helpdesk_mgmt_timesheet.timesheet_helpdesk_ticket_view_form
@@ -68,6 +78,11 @@ msgstr "Equipa de Ticket de Helpdesk"
 #: model:project.project,name:helpdesk_mgmt_timesheet.project_1
 msgid "Helpdesk general project"
 msgstr "Projeto geral do Helpdesk"
+
+#. module: helpdesk_mgmt_timesheet
+#: model:ir.model,name:helpdesk_mgmt_timesheet.model_hr_timesheet_switch
+msgid "Helper to quickly switch between timesheet lines"
+msgstr ""
 
 #. module: helpdesk_mgmt_timesheet
 #: model:ir.model.fields,help:helpdesk_mgmt_timesheet.field_helpdesk_ticket__show_time_control
@@ -178,3 +193,6 @@ msgstr "Com atividade hoje"
 #: model_terms:ir.ui.view,arch_db:helpdesk_mgmt_timesheet.hr_timesheet_line_search
 msgid "With ticket"
 msgstr "Com ticket"
+
+#~ msgid "Change the Default Project will not have retroactive effects."
+#~ msgstr "Alterar o Projeto Padrão não terá efeitos retroativos."

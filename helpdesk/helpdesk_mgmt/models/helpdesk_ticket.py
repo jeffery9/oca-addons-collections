@@ -16,6 +16,12 @@ class HelpdeskTicket(models.Model):
         for ticket in self:
             ticket.stage_id = ticket.team_id._get_applicable_stages()[:1]
 
+    @api.depends("team_id")
+    def _compute_user_id(self):
+        for ticket in self:
+            if not ticket.user_id and ticket.team_id:
+                ticket.user_id = ticket.team_id.alias_user_id
+
     @api.model
     def _read_group_stage_ids(self, stages, domain, order):
         """Show always the stages without team, or stages of the default team."""
@@ -40,6 +46,9 @@ class HelpdeskTicket(models.Model):
         string="Assigned user",
         tracking=True,
         index=True,
+        compute="_compute_user_id",
+        store=True,
+        readonly=False,
         domain="team_id and [('share', '=', False),('id', 'in', user_ids)] or [('share', '=', False)]",  # noqa: B950
     )
     user_ids = fields.Many2many(
@@ -59,6 +68,11 @@ class HelpdeskTicket(models.Model):
         domain="['|',('team_ids', '=', team_id),('team_ids','=',False)]",
     )
     partner_id = fields.Many2one(comodel_name="res.partner", string="Contact")
+    commercial_partner_id = fields.Many2one(
+        string="Commercial Partner",
+        store=True,
+        related="partner_id.commercial_partner_id",
+    )
     partner_name = fields.Char()
     partner_email = fields.Char(string="Email")
     last_stage_update = fields.Datetime(default=fields.Datetime.now)
@@ -148,11 +162,20 @@ class HelpdeskTicket(models.Model):
             if vals.get("user_id") and not vals.get("assigned_date"):
                 vals["assigned_date"] = fields.Datetime.now()
             if vals.get("team_id"):
-                vals["company_id"] = (
-                    self.env["helpdesk.ticket.team"]
-                    .browse([vals["team_id"]])
-                    .company_id.id
+                team = self.env["helpdesk.ticket.team"].browse([vals["team_id"]])
+                if team.company_id:
+                    vals["company_id"] = team.company_id.id
+            # Automatically set default e-mail channel when created from the
+            # fetchmail cron task
+            if self.env.context.get("fetchmail_cron_running") and not vals.get(
+                "channel_id"
+            ):
+                channel_email_id = self.env.ref(
+                    "helpdesk_mgmt.helpdesk_ticket_channel_email",
+                    raise_if_not_found=False,
                 )
+                if channel_email_id:
+                    vals["channel_id"] = channel_email_id.id
         return super().create(vals_list)
 
     def copy(self, default=None):
