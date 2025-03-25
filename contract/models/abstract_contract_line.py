@@ -17,8 +17,10 @@ class ContractAbstractContractLine(models.AbstractModel):
     _description = "Abstract Recurring Contract Line"
 
     product_id = fields.Many2one("product.product", string="Product")
-
     name = fields.Text(string="Description", required=True)
+    partner_id = fields.Many2one(
+        comodel_name="res.partner", related="contract_id.partner_id"
+    )
     quantity = fields.Float(default=1.0, required=True)
     product_uom_category_id = fields.Many2one(  # Used for domain of field uom_id
         comodel_name="uom.category",
@@ -193,7 +195,11 @@ class ContractAbstractContractLine(models.AbstractModel):
         from the pricelist otherwise.
         """
         for line in self:
-            if line.automatic_price and line.product_id:
+            if (
+                line.automatic_price
+                and line.product_id
+                and (line.contract_id.pricelist_id or line.contract_id.partner_id)
+            ):
                 pricelist = (
                     line.contract_id.pricelist_id
                     or line.contract_id.partner_id.with_company(

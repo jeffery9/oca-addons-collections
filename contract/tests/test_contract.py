@@ -8,20 +8,32 @@ from collections import namedtuple
 from datetime import timedelta
 
 from dateutil.relativedelta import relativedelta
+from freezegun import freeze_time
 
 from odoo import fields
 from odoo.exceptions import UserError, ValidationError
-from odoo.tests import Form, common
+from odoo.tests import Form, common, tagged
 
 
 def to_date(date):
     return fields.Date.to_date(date)
 
 
+@tagged("post_install", "-at_install")
 class TestContractBase(common.TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        if not cls.env.company.chart_template_id:
+            # Load a CoA if there's none in current company
+            coa = cls.env.ref("l10n_generic_coa.configurable_chart_template", False)
+            if not coa:
+                # Load the first available CoA
+                coa = cls.env["account.chart.template"].search(
+                    [("visible", "=", True)], limit=1
+                )
+            coa.try_loading(company=cls.env.company, install_demo=False)
+
         cls.today = fields.Date.today()
         cls.pricelist = cls.env["product.pricelist"].create(
             {"name": "pricelist for contract test"}
@@ -141,7 +153,7 @@ class TestContractBase(common.TransactionCase):
                         0,
                         {
                             "product_id": False,
-                            "name": "Header for Services",
+                            "name": "Header for #INVOICEMONTHNAME# Services",
                             "display_type": "line_section",
                         },
                     ),
@@ -2328,6 +2340,7 @@ class TestContract(TestContractBase):
                 to_date("2018-02-13"),
             )
 
+    @freeze_time("2020-01-01")
     def test_recurrency_propagation(self):
         # Existing contract
         vals = {
@@ -2395,3 +2408,11 @@ class TestContract(TestContractBase):
         action = self.contract.action_preview()
         self.assertIn("/my/contracts/", action["url"])
         self.assertIn("access_token=", action["url"])
+
+    @freeze_time("2023-05-01")
+    def test_check_month_name_marker(self):
+        """Set fixed date to check test correctly."""
+        self.contract3.contract_line_ids.date_start = fields.Date.today()
+        self.contract3.contract_line_ids.recurring_next_date = fields.Date.today()
+        invoice_id = self.contract3.recurring_create_invoice()
+        self.assertEqual(invoice_id.invoice_line_ids[0].name, "Header for May Services")
