@@ -105,7 +105,7 @@ def identity_exact_hasher(job_):
 
 
 @total_ordering
-class Job(object):
+class Job:
     """A Job is a task to execute. It is the in-memory representation of a job.
 
     Jobs are stored in the ``queue.job`` Odoo Model, but they are handled
@@ -237,6 +237,61 @@ class Job(object):
         """
         recordset = cls.db_records_from_uuids(env, job_uuids)
         return {cls._load_from_db_record(record) for record in recordset}
+
+    def add_lock_record(self):
+        """
+        Create row in db to be locked while the job is being performed.
+        """
+        self.env.cr.execute(
+            """
+            INSERT INTO
+                queue_job_lock (id, queue_job_id)
+            SELECT
+                id, id
+            FROM
+                queue_job
+            WHERE
+                uuid = %s
+            ON CONFLICT(id)
+            DO NOTHING;
+        """,
+            [self.uuid],
+        )
+
+    def lock(self):
+        """
+        Lock row of job that is being performed
+
+        If a job cannot be locked,
+        it means that the job wasn't started,
+        a RetryableJobError is thrown.
+        """
+        self.env.cr.execute(
+            """
+            SELECT
+                *
+            FROM
+                queue_job_lock
+            WHERE
+                queue_job_id in (
+                    SELECT
+                        id
+                    FROM
+                        queue_job
+                    WHERE
+                        uuid = %s
+                        AND state='started'
+                )
+            FOR UPDATE;
+        """,
+            [self.uuid],
+        )
+
+        # 1 job should be locked
+        if 1 != len(self.env.cr.fetchall()):
+            raise RetryableJobError(
+                f"Trying to lock job that wasn't started, uuid: {self.uuid}"
+            )
 
     @classmethod
     def _load_from_db_record(cls, job_db_record):
@@ -539,8 +594,8 @@ class Job(object):
 
         return self.result
 
-    def enqueue_waiting(self):
-        sql = """
+    def _get_common_dependent_jobs_query(self):
+        return """
             UPDATE queue_job
             SET state = %s
             FROM (
@@ -568,8 +623,16 @@ class Job(object):
             AND %s = ALL(jobs.parent_states)
             AND state = %s;
         """
+
+    def enqueue_waiting(self):
+        sql = self._get_common_dependent_jobs_query()
         self.env.cr.execute(sql, (PENDING, self.uuid, DONE, WAIT_DEPENDENCIES))
         self.env["queue.job"].invalidate_model(["state"])
+
+    def cancel_dependent_jobs(self):
+        sql = self._get_common_dependent_jobs_query()
+        self.env.cr.execute(sql, (CANCELLED, self.uuid, CANCELLED, WAIT_DEPENDENCIES))
+        self.env["queue.job"].invalidate_cache(["state"])
 
     def store(self):
         """Store the Job"""
@@ -819,6 +882,7 @@ class Job(object):
         self.state = STARTED
         self.date_started = datetime.now()
         self.worker_pid = os.getpid()
+        self.add_lock_record()
 
     def set_done(self, result=None):
         self.state = DONE
