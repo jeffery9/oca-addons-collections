@@ -24,6 +24,7 @@
   * João Marques
   * Alexandre D. Díaz
   * Víctor Martínez
+  * Carolina Fernandez
 
 * `Sygel <https://www.sygel.es>`__:
 
@@ -36,3 +37,7 @@
 
 Much of the work in this module was done at a sprint in Sorrento, Italy in
 April 2016.
+
+* Ooops404 <https://www.ooops404.com>
+
+  * Eduard Brahas <eduardbrhas@outlook.it>
