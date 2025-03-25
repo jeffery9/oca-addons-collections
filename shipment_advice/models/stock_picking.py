@@ -68,15 +68,22 @@ class StockPicking(models.Model):
         "shipment.advice",
         compute="_compute_loaded_in_shipment",
     )
+    loaded_waiting_quantity = fields.Float(
+        "Waiting Quantity", compute="_compute_shipment_loaded_progress"
+    )
 
     @api.depends("move_line_ids.shipment_advice_id")
     def _compute_loaded_in_shipment(self):
         for picking in self:
             # NOTE: Make overloading containers possible,
             # otherwise overloaded container would be marked as partially loaded
-            picking.is_fully_loaded_in_shipment = all(
-                line.shipment_advice_id and line.qty_done >= line.reserved_uom_qty
-                for line in picking.move_line_ids
+            picking.is_fully_loaded_in_shipment = (
+                all(
+                    line.shipment_advice_id and line.qty_done >= line.reserved_uom_qty
+                    for line in picking.move_line_ids
+                )
+                if picking.move_line_ids
+                else False
             )
             picking.is_partially_loaded_in_shipment = (
                 not picking.is_fully_loaded_in_shipment
@@ -153,6 +160,12 @@ class StockPicking(models.Model):
                 picking.loaded_weight_progress = (
                     f"{picking.loaded_weight} / {total_weight}"
                 )
+            waiting_moves = picking.move_ids.filtered(
+                lambda ml: ml.state not in ["done", "cancel"]
+            )
+            picking.loaded_waiting_quantity = sum(
+                waiting_moves.mapped("product_qty")
+            ) - sum(waiting_moves.mapped("reserved_availability"))
             # Overall progress based on the operation type
             if picking.picking_type_id.show_entire_packs:
                 picking.loaded_progress_f = picking.loaded_packages_progress_f

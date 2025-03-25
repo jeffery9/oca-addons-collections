@@ -12,7 +12,10 @@ setuptools.setup(
         'odoo-addon-shipment_advice_planner>=16.0dev,<16.1dev',
         'odoo-addon-shipment_advice_planner_toursolver>=16.0dev,<16.1dev',
         'odoo-addon-shipment_advice_planner_toursolver_queue_job>=16.0dev,<16.1dev',
+        'odoo-addon-stock_depot>=16.0dev,<16.1dev',
         'odoo-addon-stock_dock>=16.0dev,<16.1dev',
+        'odoo-addon-stock_location_address>=16.0dev,<16.1dev',
+        'odoo-addon-stock_location_address_purchase>=16.0dev,<16.1dev',
     ],
     classifiers=[
         'Programming Language :: Python',

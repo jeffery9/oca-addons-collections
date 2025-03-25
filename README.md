@@ -21,11 +21,14 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[shipment_advice](shipment_advice/) | 16.0.1.4.1 |  | Manage your (un)loading process through shipment advices.
-[shipment_advice_planner](shipment_advice_planner/) | 16.0.1.1.0 | [![jbaudoux](https://github.com/jbaudoux.png?size=30px)](https://github.com/jbaudoux) | This module is used to plan ready transfers in shipment advices.
-[shipment_advice_planner_toursolver](shipment_advice_planner_toursolver/) | 16.0.1.0.0 |  | Shipment advices planning by geo-optimization (TourSolver)
+[shipment_advice](shipment_advice/) | 16.0.1.7.1 |  | Manage your (un)loading process through shipment advices.
+[shipment_advice_planner](shipment_advice_planner/) | 16.0.1.1.1 | [![jbaudoux](https://github.com/jbaudoux.png?size=30px)](https://github.com/jbaudoux) | This module is used to plan ready transfers in shipment advices.
+[shipment_advice_planner_toursolver](shipment_advice_planner_toursolver/) | 16.0.3.1.0 |  | Shipment advices planning by geo-optimization (TourSolver)
 [shipment_advice_planner_toursolver_queue_job](shipment_advice_planner_toursolver_queue_job/) | 16.0.1.0.0 |  | Run TourSolver queries in queue jobs
+[stock_depot](stock_depot/) | 16.0.1.0.0 |  | This module allows users to manage partners stock depots.
 [stock_dock](stock_dock/) | 16.0.1.0.1 |  | Manage the loading docks of your warehouse.
+[stock_location_address](stock_location_address/) | 16.0.1.0.0 |  | Adds an address on locations
+[stock_location_address_purchase](stock_location_address_purchase/) | 16.0.1.0.0 |  | Uses the location address on purchases
 
 [//]: # (end addons)
 
