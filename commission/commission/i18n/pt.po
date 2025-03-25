@@ -52,6 +52,11 @@ msgstr "<strong>De:</strong>"
 
 #. module: commission
 #: model_terms:ir.ui.view,arch_db:commission.report_settlement_document
+msgid "<strong>Global commission amount:</strong>"
+msgstr ""
+
+#. module: commission
+#: model_terms:ir.ui.view,arch_db:commission.report_settlement_document
 msgid "<strong>To:</strong>"
 msgstr "<strong>Para:</strong>"
 
@@ -564,6 +569,11 @@ msgstr "Número de mensagens com erro de entrega"
 #: model:ir.model.fields,field_description:commission.field_commission_line_mixin__object_id
 msgid "Parent"
 msgstr "Ascendente"
+
+#. module: commission
+#: model:ir.model.fields.selection,name:commission.selection__res_partner__settlement__pending
+msgid "Pending commissions"
+msgstr ""
 
 #. module: commission
 #: model:ir.model.fields,field_description:commission.field_commission_section__percent

@@ -57,6 +57,11 @@ msgstr "<strong>開始:</strong>"
 
 #. module: commission
 #: model_terms:ir.ui.view,arch_db:commission.report_settlement_document
+msgid "<strong>Global commission amount:</strong>"
+msgstr ""
+
+#. module: commission
+#: model_terms:ir.ui.view,arch_db:commission.report_settlement_document
 msgid "<strong>To:</strong>"
 msgstr "<strong>終了:</strong>"
 
@@ -571,6 +576,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:commission.field_commission_line_mixin__object_id
 msgid "Parent"
 msgstr "親"
+
+#. module: commission
+#: model:ir.model.fields.selection,name:commission.selection__res_partner__settlement__pending
+msgid "Pending commissions"
+msgstr ""
 
 #. module: commission
 #: model:ir.model.fields,field_description:commission.field_commission_section__percent
