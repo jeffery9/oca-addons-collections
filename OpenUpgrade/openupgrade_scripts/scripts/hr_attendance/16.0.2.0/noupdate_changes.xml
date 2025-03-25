@@ -8,4 +8,7 @@
     <field name="perm_create" eval="0"/>
     <field name="perm_write" eval="0"/>
   </record>
+  <record id="hr_attendance_rule_attendance_manual" model="ir.rule">
+    <field name="perm_write" eval="0"/>
+  </record>
 </odoo>
