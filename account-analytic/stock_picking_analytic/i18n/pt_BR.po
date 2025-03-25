@@ -6,20 +6,31 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-12-26 14:37+0000\n"
-"Last-Translator: Adriano Prado <adrianojprado@gmail.com>\n"
+"PO-Revision-Date: 2024-11-13 16:06+0000\n"
+"Last-Translator: Rodrigo Sottomaior Macedo "
+"<sottomaiormacedotec@sottomaiormacedo.tech>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. module: stock_picking_analytic
 #: model:ir.model.fields,field_description:stock_picking_analytic.field_stock_picking__analytic_distribution
 msgid "Analytic"
 msgstr "Analítico"
+
+#. module: stock_picking_analytic
+#: model:ir.model.fields,field_description:stock_picking_analytic.field_stock_picking__analytic_account_names
+msgid "Analytic Account Names"
+msgstr ""
+
+#. module: stock_picking_analytic
+#: model:ir.model.fields,field_description:stock_picking_analytic.field_stock_picking__analytic_account_ids
+msgid "Analytic Accounts"
+msgstr ""
 
 #. module: stock_picking_analytic
 #: model:ir.model.fields,field_description:stock_picking_analytic.field_stock_picking__analytic_distribution_search
@@ -30,6 +41,39 @@ msgstr "Pesquisa de Distribuição Analítica"
 #: model:ir.model.fields,field_description:stock_picking_analytic.field_stock_picking__analytic_precision
 msgid "Analytic Precision"
 msgstr "Precisão Analítica"
+
+#. module: stock_picking_analytic
+#: model:ir.model.fields,help:stock_picking_analytic.field_stock_picking__analytic_account_ids
+msgid "Analytic accounts computed from analytic distribution."
+msgstr ""
+
+#. module: stock_picking_analytic
+#: model:ir.model.fields,field_description:stock_picking_analytic.field_stock_picking__analytic_distribution_import
+msgid "Analytic distribution (importable)"
+msgstr "Distribuição analítica (importável)"
+
+#. module: stock_picking_analytic
+#: model:ir.model.fields,help:stock_picking_analytic.field_stock_picking__analytic_account_names
+msgid ""
+"Comma-separated analytic account names, in case it is useful to be included "
+"in the exported data."
+msgstr ""
+
+#. module: stock_picking_analytic
+#: model:ir.model.fields,help:stock_picking_analytic.field_stock_picking__analytic_distribution_import
+msgid ""
+"Defining this field, it will set the analytical distribution in JSON format, "
+"but using the analytic accounts names as keys of the dictionary, so it eases "
+"the human input."
+msgstr ""
+"Ao definir esse campo, ele definirá a distribuição analítica no formato "
+"JSON, mas usando os nomes das contas analíticas como chaves do dicionário, "
+"facilitando a entrada humana."
+
+#. module: stock_picking_analytic
+#: model:ir.model.fields,field_description:stock_picking_analytic.field_stock_picking__manual_distribution_id
+msgid "Manual Distribution"
+msgstr "Distribuição Manual"
 
 #. module: stock_picking_analytic
 #: model:ir.model.fields,field_description:stock_picking_analytic.field_stock_picking__original_analytic_distribution

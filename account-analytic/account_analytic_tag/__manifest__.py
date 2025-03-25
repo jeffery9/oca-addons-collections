@@ -3,7 +3,7 @@
 
 {
     "name": "Account Analytic Tag",
-    "version": "16.0.1.0.0",
+    "version": "16.0.1.1.2",
     "author": "Tecnativa, Odoo Community Association (OCA)",
     "category": "Account",
     "website": "https://github.com/OCA/account-analytic",
@@ -13,10 +13,12 @@
         "security/ir.model.access.csv",
         "views/account_analytic_line_views.xml",
         "views/account_analytic_tag_views.xml",
+        "views/account_move_line_views.xml",
         "views/account_move_views.xml",
         "views/res_config_settings_views.xml",
     ],
     "license": "AGPL-3",
     "installable": True,
     "application": False,
+    "pre_init_hook": "pre_init_hook",
 }

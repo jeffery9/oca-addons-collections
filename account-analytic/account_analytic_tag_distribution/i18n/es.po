@@ -23,6 +23,16 @@ msgid "Analytic"
 msgstr "Analítico"
 
 #. module: account_analytic_tag_distribution
+#: model:ir.model.fields,field_description:account_analytic_tag_distribution.field_account_analytic_tag__analytic_account_names
+msgid "Analytic Account Names"
+msgstr ""
+
+#. module: account_analytic_tag_distribution
+#: model:ir.model.fields,field_description:account_analytic_tag_distribution.field_account_analytic_tag__analytic_account_ids
+msgid "Analytic Accounts"
+msgstr ""
+
+#. module: account_analytic_tag_distribution
 #: model:ir.model.fields,field_description:account_analytic_tag_distribution.field_account_analytic_tag__active_analytic_distribution
 msgid "Analytic Distribution"
 msgstr "Distribución Analítica"
@@ -43,9 +53,39 @@ msgid "Analytic Tags"
 msgstr "Etiquetas Analíticas"
 
 #. module: account_analytic_tag_distribution
+#: model:ir.model.fields,help:account_analytic_tag_distribution.field_account_analytic_tag__analytic_account_ids
+msgid "Analytic accounts computed from analytic distribution."
+msgstr ""
+
+#. module: account_analytic_tag_distribution
+#: model:ir.model.fields,field_description:account_analytic_tag_distribution.field_account_analytic_tag__analytic_distribution_import
+msgid "Analytic distribution (importable)"
+msgstr ""
+
+#. module: account_analytic_tag_distribution
+#: model:ir.model.fields,help:account_analytic_tag_distribution.field_account_analytic_tag__analytic_account_names
+msgid ""
+"Comma-separated analytic account names, in case it is useful to be included "
+"in the exported data."
+msgstr ""
+
+#. module: account_analytic_tag_distribution
+#: model:ir.model.fields,help:account_analytic_tag_distribution.field_account_analytic_tag__analytic_distribution_import
+msgid ""
+"Defining this field, it will set the analytical distribution in JSON format, "
+"but using the analytic accounts names as keys of the dictionary, so it eases "
+"the human input."
+msgstr ""
+
+#. module: account_analytic_tag_distribution
 #: model:ir.model,name:account_analytic_tag_distribution.model_account_move_line
 msgid "Journal Item"
 msgstr "Artículo diario"
+
+#. module: account_analytic_tag_distribution
+#: model:ir.model.fields,field_description:account_analytic_tag_distribution.field_account_analytic_tag__manual_distribution_id
+msgid "Manual Distribution"
+msgstr ""
 
 #~ msgid "Journal Entry"
 #~ msgstr "Asiento contable"
