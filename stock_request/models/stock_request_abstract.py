@@ -32,7 +32,9 @@ class StockRequest(models.AbstractModel):
     def _compute_product_qty(self):
         for rec in self:
             rec.product_qty = rec.product_uom_id._compute_quantity(
-                rec.product_uom_qty, rec.product_id.product_tmpl_id.uom_id
+                rec.product_uom_qty,
+                rec.product_id.product_tmpl_id.uom_id,
+                rounding_method="HALF-UP",
             )
 
     name = fields.Char(copy=False, required=True, readonly=True, default="/")
@@ -203,14 +205,6 @@ class StockRequest(models.AbstractModel):
                     "of measure of the product"
                 )
             )
-
-    @api.constrains("product_qty")
-    def _check_qty(self):
-        for rec in self:
-            if rec.product_qty <= 0:
-                raise ValidationError(
-                    _("Stock Request product quantity has to be strictly positive.")
-                )
 
     @api.onchange("warehouse_id")
     def onchange_warehouse_id(self):

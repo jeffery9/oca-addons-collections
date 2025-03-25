@@ -24,8 +24,8 @@ msgstr ""
 #: code:addons/stock_request/models/stock_move_line.py:0
 #, python-format
 msgid ""
-"<li><b>%(product_name)s</b>: Transferred quantity %(product_qty)s"
-"%(product_uom)s</li>"
+"<li><b>%(product_name)s</b>: Transferred quantity "
+"%(product_qty)s%(product_uom)s</li>"
 msgstr ""
 
 #. module: stock_request
@@ -771,6 +771,7 @@ msgstr "Verantwortlicher"
 #. module: stock_request
 #: model:ir.model.fields,field_description:stock_request.field_stock_request__route_id
 #: model:ir.model.fields,field_description:stock_request.field_stock_request_abstract__route_id
+#: model:ir.model.fields,field_description:stock_request.field_stock_request_order__route_id
 #: model_terms:ir.ui.view,arch_db:stock_request.stock_request_search
 msgid "Route"
 msgstr "Route"
@@ -778,6 +779,7 @@ msgstr "Route"
 #. module: stock_request
 #: model:ir.model.fields,field_description:stock_request.field_stock_request__route_ids
 #: model:ir.model.fields,field_description:stock_request.field_stock_request_abstract__route_ids
+#: model:ir.model.fields,field_description:stock_request.field_stock_request_order__route_ids
 msgid "Routes"
 msgstr "Routen"
 
@@ -902,7 +904,14 @@ msgstr "Bezeichner der Anforderung muss eindeutig sein"
 
 #. module: stock_request
 #. odoo-python
-#: code:addons/stock_request/models/stock_request_abstract.py:0
+#: code:addons/stock_request/models/stock_request.py:0
+#, python-format
+msgid "Stock Request product quantity cannot be negative."
+msgstr ""
+
+#. module: stock_request
+#. odoo-python
+#: code:addons/stock_request/models/stock_request.py:0
 #, python-format
 msgid "Stock Request product quantity has to be strictly positive."
 msgstr "Bestandsanforderungs-Produktmenge muss streng positiv sein."
@@ -997,6 +1006,11 @@ msgstr ""
 #: code:addons/stock_request/models/stock_request.py:0
 #, python-format
 msgid "The picking policy must be equal to the order"
+msgstr ""
+
+#. module: stock_request
+#: model:ir.model.fields,help:stock_request.field_stock_request_order__route_id
+msgid "The route related to a stock request order"
 msgstr ""
 
 #. module: stock_request

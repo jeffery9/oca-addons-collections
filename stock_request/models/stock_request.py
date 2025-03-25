@@ -125,10 +125,33 @@ class StockRequest(models.Model):
         ("name_uniq", "unique(name, company_id)", "Stock Request name must be unique")
     ]
 
+    @api.constrains("state", "product_qty")
+    def _check_qty(self):
+        for rec in self:
+            if rec.state == "draft" and rec.product_qty <= 0:
+                raise ValidationError(
+                    _("Stock Request product quantity has to be strictly positive.")
+                )
+            elif rec.state != "draft" and rec.product_qty < 0:
+                raise ValidationError(
+                    _("Stock Request product quantity cannot be negative.")
+                )
+
+    def _get_all_origin_moves(self, move):
+        all_moves = move
+        if move.move_orig_ids:
+            for orig_move in move.move_orig_ids:
+                all_moves |= self._get_all_origin_moves(orig_move)
+        return all_moves
+
     @api.depends("allocation_ids", "allocation_ids.stock_move_id")
     def _compute_move_ids(self):
         for request in self:
-            request.move_ids = request.allocation_ids.mapped("stock_move_id")
+            move_ids = request.allocation_ids.mapped("stock_move_id")
+            all_moves = self.env["stock.move"]
+            for move in move_ids:
+                all_moves |= self._get_all_origin_moves(move)
+            request.move_ids = all_moves
 
     @api.depends(
         "allocation_ids",
@@ -162,9 +185,15 @@ class StockRequest(models.Model):
             done_qty = abs(other_qty - incoming_qty)
             open_qty = sum(request.allocation_ids.mapped("open_product_qty"))
             uom = request.product_id.uom_id
-            request.qty_done = uom._compute_quantity(done_qty, request.product_uom_id)
+            request.qty_done = uom._compute_quantity(
+                done_qty,
+                request.product_uom_id,
+                rounding_method="HALF-UP",
+            )
             request.qty_in_progress = uom._compute_quantity(
-                open_qty, request.product_uom_id
+                open_qty,
+                request.product_uom_id,
+                rounding_method="HALF-UP",
             )
             request.qty_cancelled = (
                 max(
@@ -172,6 +201,7 @@ class StockRequest(models.Model):
                     uom._compute_quantity(
                         request.product_qty - done_qty - open_qty,
                         request.product_uom_id,
+                        rounding_method="HALF-UP",
                     ),
                 )
                 if request.allocation_ids
