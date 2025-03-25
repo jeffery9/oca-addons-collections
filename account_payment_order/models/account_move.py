@@ -51,10 +51,8 @@ class AccountMove(models.Model):
         """Retrieve the communication string for this direct item."""
         communication = self.payment_reference or self.ref or self.name
         if self.is_invoice():
-            if (self.reference_type or "none") != "none":
-                communication = self.ref
-            elif self.is_purchase_document():
-                communication = self.ref or self.payment_reference
+            if self.is_purchase_document():
+                communication = self.payment_reference or self.ref
             else:
                 communication = self.payment_reference or self.name
         return communication or ""
@@ -233,3 +231,12 @@ class AccountMove(models.Model):
             }
         )
         return action
+
+    @api.model
+    def _get_invoice_in_payment_state(self):
+        """Called from _compute_payment_state method.
+        Consider in_payment all the moves that are included in a payment order.
+        """
+        if self.line_ids.payment_line_ids:
+            return "in_payment"
+        return super()._get_invoice_in_payment_state()

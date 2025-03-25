@@ -1,43 +1,57 @@
 # Copyright 2021 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl
 
-from unittest.mock import patch
-
 from odoo import fields
+from odoo.tests import tagged
 from odoo.tests.common import Form, TransactionCase
 
-from odoo.addons.account.models.account_payment_method import AccountPaymentMethod
+from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
 
 
+@tagged("-at_install", "post_install")
 class TestAccountPaymentOrder(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.env = cls.env(
-            context=dict(
-                cls.env.context,
-                mail_create_nolog=True,
-                mail_create_nosubscribe=True,
-                mail_notrack=True,
-                no_reset_password=True,
-                tracking_disable=True,
-            )
-        )
+        cls.env = cls.env(context=dict(cls.env.context, **DISABLED_MAIL_CONTEXT))
+        if not cls.env.company.chart_template_id:
+            # Load a CoA if there's none in current company
+            coa = cls.env.ref("l10n_generic_coa.configurable_chart_template", False)
+            if not coa:
+                # Load the first available CoA
+                coa = cls.env["account.chart.template"].search(
+                    [("visible", "=", True)], limit=1
+                )
+            coa.try_loading(company=cls.env.company, install_demo=False)
         cls.partner = cls.env["res.partner"].create({"name": "Test Partner"})
         cls.product = cls.env["product.product"].create({"name": "Test product"})
         cls.partner_bank_core = cls._create_res_partner_bank("N-CORE")
         cls.mandate_core = cls._create_mandate(cls.partner_bank_core, "CORE")
         cls.partner_bank_b2b = cls._create_res_partner_bank("N-B2B")
         cls.mandate_b2b = cls._create_mandate(cls.partner_bank_b2b, "B2B")
-        payment_method_vals = {
-            "name": "SEPA",
-            "code": "sepa_direct_debit",
-            "payment_type": "inbound",
-            "bank_account_required": True,
-        }
-        cls.method_sepa = cls._create_multi_bank_payment_method(payment_method_vals)
+        # Use the method created by account_banking_sepa_sepa_direct_debit or create a new one
+        cls.method_sepa = cls.env["account.payment.method"].search(
+            [("code", "=", "sepa_direct_debit")], limit=1
+        )
+        if not cls.method_sepa:
+            payment_method_vals = {
+                "name": "SEPA",
+                "code": "sepa_direct_debit",
+                "payment_type": "inbound",
+                "bank_account_required": True,
+            }
+            cls.method_sepa = cls.env["account.payment.method"].create(
+                payment_method_vals
+            )
+        # Always set mandate_required=False to avoid incorrect behavior if
+        # account_banking_sepa_sepa_direct_debit is already installed
+        cls.method_sepa.mandate_required = False
         cls.journal_bank = cls.env["account.journal"].create(
-            {"name": "BANK", "type": "bank", "code": "bank"}
+            {
+                "name": "BANK",
+                "type": "bank",
+                "code": "bank",
+            }
         )
         payment_form = Form(cls.env["account.payment.mode"])
         payment_form.name = "SEPA (CORE)"
@@ -59,27 +73,6 @@ class TestAccountPaymentOrder(TransactionCase):
         )
         payment_order_form.payment_mode_id = cls.payment_core
         cls.payment_order = payment_order_form.save()
-
-    @classmethod
-    def _create_multi_bank_payment_method(cls, payment_method_vals):
-        method_get_payment_method_information = (
-            AccountPaymentMethod._get_payment_method_information
-        )
-
-        def _get_payment_method_information(cls):
-            res = method_get_payment_method_information(cls)
-            res[payment_method_vals["code"]] = {
-                "mode": "multi",
-                "domain": [("type", "=", "bank")],
-            }
-            return res
-
-        with patch.object(
-            AccountPaymentMethod,
-            "_get_payment_method_information",
-            _get_payment_method_information,
-        ):
-            return cls.env["account.payment.method"].create(payment_method_vals)
 
     @classmethod
     def _create_res_partner_bank(cls, acc_number):
