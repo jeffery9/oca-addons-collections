@@ -1,0 +1,6 @@
+{
+  "pull_requests": {
+    "OCA/server-tools#2744": "too many conflicts, will run pre-commit afterwards",
+    "OCA/server-tools#2668": "Ported manually bc of too many conflicts"
+  }
+}

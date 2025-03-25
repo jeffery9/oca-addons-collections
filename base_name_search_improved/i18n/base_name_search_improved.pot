@@ -233,6 +233,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:base_name_search_improved.field_base_module_uninstall__smart_search
 #: model:ir.model.fields,field_description:base_name_search_improved.field_base_module_update__smart_search
 #: model:ir.model.fields,field_description:base_name_search_improved.field_base_module_upgrade__smart_search
+#: model:ir.model.fields,field_description:base_name_search_improved.field_base_multi_image_image__smart_search
+#: model:ir.model.fields,field_description:base_name_search_improved.field_base_multi_image_owner__smart_search
 #: model:ir.model.fields,field_description:base_name_search_improved.field_base_partner_merge_automatic_wizard__smart_search
 #: model:ir.model.fields,field_description:base_name_search_improved.field_base_partner_merge_line__smart_search
 #: model:ir.model.fields,field_description:base_name_search_improved.field_bus_bus__smart_search
@@ -248,6 +250,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:base_name_search_improved.field_change_password_own__smart_search
 #: model:ir.model.fields,field_description:base_name_search_improved.field_change_password_user__smart_search
 #: model:ir.model.fields,field_description:base_name_search_improved.field_change_password_wizard__smart_search
+#: model:ir.model.fields,field_description:base_name_search_improved.field_conditional_image__smart_search
+#: model:ir.model.fields,field_description:base_name_search_improved.field_conditional_image_consumer_mixin__smart_search
 #: model:ir.model.fields,field_description:base_name_search_improved.field_crm_activity_report__smart_search
 #: model:ir.model.fields,field_description:base_name_search_improved.field_crm_iap_lead_helpers__smart_search
 #: model:ir.model.fields,field_description:base_name_search_improved.field_crm_iap_lead_industry__smart_search
@@ -426,6 +430,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:base_name_search_improved.field_queue_job__smart_search
 #: model:ir.model.fields,field_description:base_name_search_improved.field_queue_job_channel__smart_search
 #: model:ir.model.fields,field_description:base_name_search_improved.field_queue_job_function__smart_search
+#: model:ir.model.fields,field_description:base_name_search_improved.field_queue_job_lock__smart_search
 #: model:ir.model.fields,field_description:base_name_search_improved.field_queue_jobs_to_cancelled__smart_search
 #: model:ir.model.fields,field_description:base_name_search_improved.field_queue_jobs_to_done__smart_search
 #: model:ir.model.fields,field_description:base_name_search_improved.field_queue_requeue_job__smart_search
