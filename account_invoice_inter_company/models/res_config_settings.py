@@ -1,3 +1,5 @@
+# Copyright 2013-2014 Odoo SA
+# Copyright 2015-2017 Chafique Delli <chafique.delli@akretion.com>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import api, fields, models
@@ -29,6 +31,16 @@ class ResConfigSettings(models.TransientModel):
         " * Unchecked : Each company can see only its product "
         "(product where company is defined). Product not related to a "
         "company are visible for all companies.",
+    )
+
+    intercompany_invoicing = fields.Boolean(
+        string="Generate Inter company Invoices",
+        related="company_id.intercompany_invoicing",
+        help="Enable intercompany invoicing: "
+        "\n * Generate a Customer Invoice when a bill with this company is created."
+        "\n * Generate a Vendor Bill when an invoice with this company as a customer"
+        " is created.",
+        readonly=False,
     )
 
     @api.model
