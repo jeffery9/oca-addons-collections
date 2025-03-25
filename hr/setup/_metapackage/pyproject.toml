@@ -1,6 +1,6 @@
 [project]
 name = "odoo-addons-oca-hr"
-version = "17.0.20250303.0"
+version = "17.0.20250318.0"
 dependencies = [
     "odoo-addon-hr_announcement>=17.0dev,<17.1dev",
     "odoo-addon-hr_course>=17.0dev,<17.1dev",
@@ -14,7 +14,6 @@ dependencies = [
     "odoo-addon-hr_employee_relative>=17.0dev,<17.1dev",
     "odoo-addon-hr_employee_second_lastname>=17.0dev,<17.1dev",
     "odoo-addon-hr_employee_ssn>=17.0dev,<17.1dev",
-    "odoo-addon-hr_holidays_settings>=17.0dev,<17.1dev",
     "odoo-addon-hr_job_category>=17.0dev,<17.1dev",
     "odoo-addon-hr_personal_equipment_request>=17.0dev,<17.1dev",
     "odoo-addon-hr_professional_category>=17.0dev,<17.1dev",
