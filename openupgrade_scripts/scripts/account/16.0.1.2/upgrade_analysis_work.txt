@@ -107,8 +107,9 @@ account      / account.bank.statement   / difference (float)            : DEL
 # NOTHING TO DO
 
 account      / account.bank.statement   / first_line_index (char)       : NEW isfunction: function, stored
+# DONE pre-migration: Pre-compute for performance
 account      / account.bank.statement   / is_complete (boolean)         : NEW isfunction: function, stored
-# NOTHING TO DO: Handled by ORM
+# DONE pre-migration: Pre-compute for performance
 
 account      / account.bank.statement   / is_valid_balance_start (boolean): DEL
 account      / account.bank.statement   / journal_id (many2one)         : now a function
@@ -164,9 +165,11 @@ account      / account.chart.template   / use_storno_accounting (boolean): NEW h
 
 account      / account.journal          / default_account_type (many2one): relation is now 'False' ('account.account.type') [nothing to do]
 account      / account.journal          / default_account_type (many2one): type is now 'char' ('many2one')
-account      / account.journal          / payment_sequence (boolean)    : NEW hasdefault: compute
 account      / account.journal          / type_control_ids (many2many)  : DEL relation: account.account.type
 # NOTHING TO DO
+
+account      / account.journal          / payment_sequence (boolean)    : NEW hasdefault: compute
+# DONE: pre-migration: initialize to False to preserve v15 behavior and avoid errors when giving numbers
 
 account      / account.move             / attachment_ids (one2many)     : NEW relation: ir.attachment
 # NOTHING TO DO
@@ -177,8 +180,9 @@ account      / account.move             / auto_post (boolean)           : type i
 # DONE pre-migration: Change column data type, recalculate the value if False set to 'no' else set 'at_date'
 
 account      / account.move             / auto_post_origin_id (many2one): NEW relation: account.move
-account      / account.move             / auto_post_until (date)        : NEW hasdefault: compute
 # NOTHING TO DO
+account      / account.move             / auto_post_until (date)        : NEW hasdefault: compute
+# DONE pre-migration: Pre-create column to avoid computing this new feature wich is meant to be set manually
 
 account      / account.move             / currency_id (many2one)        : now a function
 # NOTHING TO DO
@@ -188,7 +192,7 @@ account      / account.move             / invoice_payments_widget (text): type i
 # NOTHING TO DO: compute no store field
 
 account      / account.move             / is_storno (boolean)           : NEW hasdefault: compute
-# NOTHING TO DO
+# DONE pre-migration: Pre-create column to avoid computing this new feature which has to be set at company level
 
 account      / account.move             / partner_shipping_id (many2one): previously in module sale
 # NOTHING TO DO
@@ -394,7 +398,6 @@ account      / res.company              / message_ids (one2many)        : NEW re
 account      / res.company              / message_main_attachment_id (many2one): NEW relation: ir.attachment
 account      / res.company              / quick_edit_mode (selection)   : NEW selection_keys: ['in_invoices', 'out_and_in_invoices', 'out_invoices']
 account      / res.company              / website_message_ids (one2many): NEW relation: mail.message
-account      / res.partner              / credit_limit (float)          : previously in module base
 account      / res.partner.bank         / activity_ids (one2many)       : NEW relation: mail.activity
 account      / res.partner.bank         / message_follower_ids (one2many): NEW relation: mail.followers
 account      / res.partner.bank         / message_ids (one2many)        : NEW relation: mail.message
@@ -402,6 +405,10 @@ account      / res.partner.bank         / message_main_attachment_id (many2one):
 account      / res.partner.bank         / website_message_ids (one2many): NEW relation: mail.message
 account      / res.users                / credit_limit (float)          : previously in module base
 # NOTHING TO DO
+
+account      / res.partner              / credit_limit (float)          : previously in module base
+# DONE: pre-migration: Rename column for avoiding confusions when looking DB schema
+# DONE: post-migration: Convert the value to property dependent
 
 ---XML records in module 'account'---
 DEL account.account.type: account.data_account_off_sheet (noupdate)
