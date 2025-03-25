@@ -9,6 +9,10 @@ class StockMoveLine(models.Model):
     product_packaging_id = fields.Many2one(
         related="move_id.product_packaging_id", readonly=True
     )
+    product_packaging_qty_reserved = fields.Float(
+        string="Reserved Pkg. Qty.",
+        help="Product packaging quantity reserved.",
+    )
     product_packaging_qty_done = fields.Float(
         string="Done Pkg. Qty.",
         help="Product packaging quantity done.",
