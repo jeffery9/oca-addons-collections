@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-01-05 10:34+0000\n"
+"PO-Revision-Date: 2025-02-15 11:06+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. module: auth_saml
 #: model_terms:ir.ui.view,arch_db:auth_saml.providers
@@ -176,8 +176,8 @@ msgstr "ID entità"
 #. module: auth_saml
 #: model_terms:ir.ui.view,arch_db:auth_saml.view_saml_provider_form
 msgid ""
-"Entity Identifier sent to the IDP. Often this would be the metadata URL, but"
-" it can be any string."
+"Entity Identifier sent to the IDP. Often this would be the metadata URL, but "
+"it can be any string."
 msgstr ""
 "Identificatore entità inviato al IDP. Spesso è l'URL dei metadati, ma può "
 "essere qualsiasi stringa."
@@ -211,6 +211,11 @@ msgid "Identity Provider Metadata"
 msgstr "Metadati provider identità"
 
 #. module: auth_saml
+#: model:ir.model.fields,field_description:auth_saml.field_auth_saml_provider__idp_metadata_url
+msgid "Identity Provider Metadata URL"
+msgstr "URL metadata identity provider"
+
+#. module: auth_saml
 #: model_terms:ir.ui.view,arch_db:auth_saml.view_saml_provider_form
 msgid "Identity Provider Settings"
 msgstr "Impostazioni provider identità"
@@ -221,10 +226,15 @@ msgid "Identity Provider matching attribute"
 msgstr "Attributo corrsipondenza provider identità"
 
 #. module: auth_saml
+#: model_terms:ir.ui.view,arch_db:auth_saml.view_saml_provider_form
+msgid "If you provider gives you a URL, use this field preferably"
+msgstr "Se il provider fornisce un URL, preferibilmente usare questo campo"
+
+#. module: auth_saml
 #: model:ir.model.fields,help:auth_saml.field_auth_saml_provider__authn_requests_signed
 msgid ""
-"Indicates if the Authentication Requests sent by this SP should be signed by"
-" default."
+"Indicates if the Authentication Requests sent by this SP should be signed by "
+"default."
 msgstr ""
 "ndica se la richiesta di atenticazione inviata da questo SP deve essere "
 "firmata in modo predefinito."
@@ -382,6 +392,11 @@ msgid "Providers"
 msgstr "Provider"
 
 #. module: auth_saml
+#: model_terms:ir.ui.view,arch_db:auth_saml.view_saml_provider_form
+msgid "Refresh"
+msgstr "Aggiorna"
+
+#. module: auth_saml
 #: model_terms:ir.ui.view,arch_db:auth_saml.view_users_form
 msgid "SAML"
 msgstr "SAML"
@@ -465,6 +480,18 @@ msgid "Signature Algorithm"
 msgstr "Algoritmo firma"
 
 #. module: auth_saml
+#: model:ir.model.fields,help:auth_saml.field_auth_saml_provider__idp_metadata_url
+msgid ""
+"Some SAML providers, notably Office365 can have a metadata document which "
+"changes over time, and they provide a URL to the document instead. When this "
+"field is set, the metadata can be fetched from the provided URL."
+msgstr ""
+"Alcuni provider SAML, in particolare Office365, possono avere un documento "
+"di metadati che cambia nel tempo e forniscono invece un URL al documento. "
+"Quando questo campo è impostato, i metadati possono essere recuperati "
+"dall'URL fornito."
+
+#. module: auth_saml
 #: model:ir.model,name:auth_saml.model_ir_config_parameter
 msgid "System Parameter"
 msgstr "Parametro di sistema"
@@ -491,8 +518,8 @@ msgstr "Token SAML attualmente in uso"
 #: code:addons/auth_saml/models/res_users.py:0
 #, python-format
 msgid ""
-"This database disallows users to have both passwords and SAML IDs. Error for"
-" logins %s"
+"This database disallows users to have both passwords and SAML IDs. Error for "
+"logins %s"
 msgstr ""
 "Questo database nn consente agli utenti di avere sia password che ID SAML. "
 "Errore per accessi %s"
