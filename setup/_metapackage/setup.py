@@ -16,8 +16,11 @@ setuptools.setup(
         'odoo-addon-account_statement_import_ofx>=16.0dev,<16.1dev',
         'odoo-addon-account_statement_import_online>=16.0dev,<16.1dev',
         'odoo-addon-account_statement_import_online_gocardless>=16.0dev,<16.1dev',
+        'odoo-addon-account_statement_import_online_ofx>=16.0dev,<16.1dev',
         'odoo-addon-account_statement_import_online_paypal>=16.0dev,<16.1dev',
         'odoo-addon-account_statement_import_online_ponto>=16.0dev,<16.1dev',
+        'odoo-addon-account_statement_import_online_qonto>=16.0dev,<16.1dev',
+        'odoo-addon-account_statement_import_qif>=16.0dev,<16.1dev',
         'odoo-addon-account_statement_import_sheet_file>=16.0dev,<16.1dev',
     ],
     classifiers=[
