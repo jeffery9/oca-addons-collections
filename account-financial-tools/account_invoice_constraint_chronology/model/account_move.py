@@ -96,6 +96,7 @@ class AccountMove(models.Model):
             [
                 (
                     ("name", ">", self.name),
+                    ("name", "!=", "/"),
                     ("invoice_date", "<", self.invoice_date),
                 )
             ]
@@ -106,6 +107,7 @@ class AccountMove(models.Model):
             [
                 (
                     ("name", "<", self.name),
+                    ("name", "!=", "/"),
                     ("invoice_date", ">", self.invoice_date),
                 )
             ]
@@ -128,10 +130,22 @@ class AccountMove(models.Model):
     def _raise_sequence_order_conflicting_previously_validated(self):
         self.ensure_one()
         before_inv = self.search(
-            self._conflicting_inv_after_sequence_before_inv_date_domain(), limit=1
+            expression.AND(
+                [
+                    self._get_conflicting_invoices_domain(),
+                    self._conflicting_inv_after_sequence_before_inv_date_domain(),
+                ]
+            ),
+            limit=1,
         )
         after_inv = self.search(
-            self._conflicting_inv_before_sequence_after_inv_date_domain(), limit=1
+            expression.AND(
+                [
+                    self._get_conflicting_invoices_domain(),
+                    self._conflicting_inv_before_sequence_after_inv_date_domain(),
+                ]
+            ),
+            limit=1,
         )
         if after_inv:
             time = "before"

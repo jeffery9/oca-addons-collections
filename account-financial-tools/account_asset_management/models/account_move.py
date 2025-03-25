@@ -42,8 +42,12 @@ class AccountMove(models.Model):
 
     def unlink(self):
         # for move in self:
-        deprs = self.env["account.asset.line"].search(
-            [("move_id", "in", self.ids), ("type", "in", ["depreciate", "remove"])]
+        deprs = (
+            self.env["account.asset.line"]
+            .sudo()
+            .search(
+                [("move_id", "in", self.ids), ("type", "in", ["depreciate", "remove"])]
+            )
         )
         if deprs and not self.env.context.get("unlink_from_asset"):
             raise UserError(
@@ -84,8 +88,8 @@ class AccountMove(models.Model):
             "date_start": self.date,
         }
 
-    def action_post(self):
-        ret_val = super().action_post()
+    def _post(self, soft=True):
+        ret_val = super()._post(soft=soft)
         for move in self:
             for aml in move.line_ids.filtered(
                 lambda line: line.asset_profile_id and not line.tax_line_id
@@ -180,6 +184,7 @@ class AccountMoveLine(models.Model):
         string="Asset",
         ondelete="restrict",
         check_company=True,
+        copy=False,
     )
 
     @api.depends("account_id", "asset_id")
@@ -250,12 +255,17 @@ class AccountMoveLine(models.Model):
 
     def _expand_asset_line(self):
         self.ensure_one()
-        if self.asset_profile_id and self.quantity > 1.0:
-            profile = self.asset_profile_id
-            if profile.asset_product_item:
-                aml = self.with_context(check_move_validity=False)
-                qty = self.quantity
-                name = self.name
-                aml.write({"quantity": 1, "name": "{} {}".format(name, 1)})
-                for i in range(1, int(qty)):
-                    aml.copy({"name": "{} {}".format(name, i + 1)})
+        if self.quantity > 1.0 and self.asset_profile_id.asset_product_item:
+            aml = self.with_context(check_move_validity=False)
+            qty = self.quantity
+            name = self.name
+            aml.write(
+                {
+                    "quantity": 1,
+                    "name": "{} {}".format(name, 1),
+                    # Make sure the price is not changed, like with account_invoice_pricelist
+                    "price_unit": self.price_unit,
+                }
+            )
+            for i in range(1, int(qty)):
+                aml.copy({"name": "{} {}".format(name, i + 1)})

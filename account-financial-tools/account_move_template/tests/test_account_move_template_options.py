@@ -2,30 +2,52 @@
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 from odoo import Command
 from odoo.exceptions import UserError, ValidationError
-from odoo.tests.common import Form, TransactionCase
+from odoo.tests.common import Form, TransactionCase, tagged
 
 
+@tagged("-at_install", "post_install")
 class TestAccountMoveTemplateEnhanced(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        if not cls.env.company.chart_template_id:
+            # Load a CoA if there's none in current company
+            coa = cls.env.ref("l10n_generic_coa.configurable_chart_template", False)
+            if not coa:
+                # Load the first available CoA
+                coa = cls.env["account.chart.template"].search(
+                    [("visible", "=", True)], limit=1
+                )
+            coa.try_loading(company=cls.env.company, install_demo=False)
         cls.Move = cls.env["account.move"]
         cls.Journal = cls.env["account.journal"]
         cls.Account = cls.env["account.account"]
         cls.Template = cls.env["account.move.template"]
         cls.Partner = cls.env["res.partner"]
+        cls.company = cls.env.company
 
-        cls.journal = cls.Journal.search([("type", "=", "general")], limit=1)
+        cls.journal = cls.Journal.search(
+            [("type", "=", "general"), ("company_id", "=", cls.company.id)], limit=1
+        )
         cls.ar_account_id = cls.Account.search(
-            [("account_type", "=", "asset_receivable")], limit=1
+            [
+                ("account_type", "=", "asset_receivable"),
+                ("company_id", "=", cls.company.id),
+            ],
+            limit=1,
         )
         cls.ap_account_id = cls.Account.search(
-            [("account_type", "=", "liability_payable")], limit=1
+            [
+                ("account_type", "=", "liability_payable"),
+                ("company_id", "=", cls.company.id),
+            ],
+            limit=1,
         )
         cls.income_account_id = cls.Account.search(
             [
                 ("account_type", "=", "income_other"),
                 ("internal_group", "=", "income"),
+                ("company_id", "=", cls.company.id),
             ],
             limit=1,
         )
@@ -33,6 +55,7 @@ class TestAccountMoveTemplateEnhanced(TransactionCase):
             [
                 ("account_type", "=", "expense"),
                 ("internal_group", "=", "expense"),
+                ("company_id", "=", cls.company.id),
             ],
             limit=1,
         )

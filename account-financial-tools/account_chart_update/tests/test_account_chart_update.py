@@ -4,203 +4,16 @@
 import logging
 
 from odoo import fields
-from odoo.tests import common, tagged
+from odoo.tests import tagged
 from odoo.tools import mute_logger
+
+from odoo.addons.account_chart_update.tests.common import TestAccountChartUpdateCommon
 
 _logger = logging.getLogger(__name__)
 
 
 @tagged("-at_install", "post_install")
-class TestAccountChartUpdate(common.TransactionCase):
-    @classmethod
-    def _create_xml_id(cls, record):
-        return cls.env["ir.model.data"].create(
-            {
-                "module": "account_chart_update",
-                "name": "{}-{}".format(record._table, record.id),
-                "model": record._name,
-                "res_id": record.id,
-            }
-        )
-
-    @classmethod
-    def _create_account_tmpl(cls, name, code, account_type, chart_template):
-        record = cls.env["account.account.template"].create(
-            {
-                "name": name,
-                "code": code,
-                "account_type": account_type,
-                "chart_template_id": chart_template and chart_template.id,
-            }
-        )
-        cls._create_xml_id(record)
-        return record
-
-    @classmethod
-    def _create_tax_tmpl(cls, name, chart_template):
-        record = cls.env["account.tax.template"].create(
-            {
-                "name": name,
-                "amount": 0,
-                "chart_template_id": chart_template.id,
-                "tax_group_id": cls.env.ref("account.tax_group_taxes").id,
-                "refund_repartition_line_ids": [
-                    (0, 0, {"repartition_type": "base", "factor_percent": 100.0}),
-                    (0, 0, {"repartition_type": "tax", "factor_percent": 100.0}),
-                    (0, 0, {"repartition_type": "tax", "factor_percent": 100.0}),
-                ],
-                "invoice_repartition_line_ids": [
-                    (0, 0, {"repartition_type": "base", "factor_percent": 100.0}),
-                    (0, 0, {"repartition_type": "tax", "factor_percent": 100.0}),
-                    (0, 0, {"repartition_type": "tax", "factor_percent": 100.0}),
-                ],
-            }
-        )
-        cls._create_xml_id(record)
-        return record
-
-    def _create_tax_template_with_account(self, name, chart_template, account):
-        record = self.env["account.tax.template"].create(
-            {
-                "name": name,
-                "amount": 0,
-                "chart_template_id": chart_template.id,
-                "tax_group_id": self.env.ref("account.tax_group_taxes").id,
-                "refund_repartition_line_ids": [
-                    (0, 0, {"repartition_type": "base", "factor_percent": 100.0}),
-                    (
-                        0,
-                        0,
-                        {
-                            "repartition_type": "tax",
-                            "factor_percent": 100.0,
-                            "account_id": account.id,
-                        },
-                    ),
-                ],
-                "invoice_repartition_line_ids": [
-                    (0, 0, {"repartition_type": "base", "factor_percent": 100.0}),
-                    (
-                        0,
-                        0,
-                        {
-                            "repartition_type": "tax",
-                            "factor_percent": 100.0,
-                            "account_id": account.id,
-                        },
-                    ),
-                ],
-            }
-        )
-        self._create_xml_id(record)
-        return record
-
-    @classmethod
-    def _create_fp_tmpl(cls, name, chart_template):
-        record = cls.env["account.fiscal.position.template"].create(
-            {"name": name, "chart_template_id": chart_template.id}
-        )
-        cls._create_xml_id(record)
-        return record
-
-    def _get_model_data(self, record):
-        return self.env["ir.model.data"].search(
-            [("model", "=", record._name), ("res_id", "=", record.id)]
-        )
-
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.env = cls.env(
-            context=dict(
-                cls.env.context,
-                mail_create_nolog=True,
-                mail_create_nosubscribe=True,
-                mail_notrack=True,
-                no_reset_password=True,
-                tracking_disable=True,
-            )
-        )
-        cls.account_template = cls._create_account_tmpl(
-            "Test", "100000", "income", False
-        )
-        cls.chart_template = cls.env["account.chart.template"].create(
-            {
-                "name": "Test account_chart_update chart",
-                "currency_id": cls.env.ref("base.EUR").id,
-                "code_digits": 6,
-                "cash_account_code_prefix": "570",
-                "bank_account_code_prefix": "572",
-                "transfer_account_code_prefix": "100000",
-                "property_account_receivable_id": cls.account_template.id,
-                "property_account_payable_id": cls.account_template.id,
-                "property_account_expense_categ_id": cls.account_template.id,
-                "property_account_income_categ_id": cls.account_template.id,
-            }
-        )
-        cls.account_template.chart_template_id = cls.chart_template.id
-        cls.account_template_pl = cls._create_account_tmpl(
-            "Undistributed Profits/Losses",
-            "999999",
-            "equity",
-            cls.chart_template,
-        )
-        cls.tax_template = cls._create_tax_tmpl("Test tax", cls.chart_template)
-        cls.fp_template = cls._create_fp_tmpl("Test fp", cls.chart_template)
-        cls.fp_template_tax = cls.env["account.fiscal.position.tax.template"].create(
-            {"tax_src_id": cls.tax_template.id, "position_id": cls.fp_template.id}
-        )
-        cls._create_xml_id(cls.fp_template_tax)
-        cls.fp_template_account = cls.env[
-            "account.fiscal.position.account.template"
-        ].create(
-            {
-                "account_src_id": cls.account_template.id,
-                "account_dest_id": cls.account_template.id,
-                "position_id": cls.fp_template.id,
-            }
-        )
-        cls._create_xml_id(cls.fp_template_account)
-        cls.tax_group = cls.env["account.tax.group"].create({"name": "Test tax group"})
-        cls.account_tag_1 = cls.env["account.account.tag"].create(
-            {"name": "Test account tag 1"}
-        )
-        cls.account_tag_2 = cls.env["account.account.tag"].create(
-            {"name": "Test account tag 2"}
-        )
-        cls.company = cls.env["res.company"].create(
-            {
-                "name": "Test account_chart_update company",
-                "currency_id": cls.chart_template.currency_id.id,
-                "country_id": cls.env.ref("base.es").id,
-            }
-        )
-        chart_by_company_user = cls.chart_template.with_company(cls.company)
-        chart_by_company_user.try_loading()
-        cls.tax = cls.env["account.tax"].search(
-            [
-                ("name", "=", cls.tax_template.name),
-                ("company_id", "=", cls.company.id),
-            ]
-        )
-        cls.account = cls.env["account.account"].search(
-            [
-                ("code", "=", cls.account_template.code),
-                ("company_id", "=", cls.company.id),
-            ]
-        )
-        cls.fp = cls.env["account.fiscal.position"].search(
-            [("name", "=", cls.fp_template.name), ("company_id", "=", cls.company.id)]
-        )
-        # Prepare wizard values
-        cls.wizard_obj = cls.env["wizard.update.charts.accounts"]
-        cls.wizard_vals = {
-            "company_id": cls.company.id,
-            "chart_template_id": cls.chart_template.id,
-            "code_digits": 6,
-            "lang": "en_US",
-        }
-
+class TestAccountChartUpdate(TestAccountChartUpdateCommon):
     @mute_logger("odoo.sql_db")
     def test_chart_update(self):
         wizard = self.wizard_obj.create(self.wizard_vals)
@@ -543,6 +356,14 @@ class TestAccountChartUpdate(common.TransactionCase):
         self.assertEqual(self.tax.description, self.tax_template.description)
         self.assertEqual(self.account.code, self.account_template.code)
         self.assertEqual(self.fp.name, self.fp_template.name)
+        fp_id = wizard.find_fp_by_templates(self.fp_template)
+        fp_rec = self.env["account.fiscal.position"].browse(fp_id)
+        expected_xmlid = "{}.{}_{}".format(
+            "account_chart_update",
+            wizard.company_id.id,
+            "account_fiscal_position_template-{}".format(self.fp_template.id),
+        )
+        self.assertEqual(fp_rec.get_external_id().get(fp_id), expected_xmlid)
         wizard.unlink()
 
         # Test match by another field, there is no match by XML-ID
@@ -613,6 +434,7 @@ class TestAccountChartUpdate(common.TransactionCase):
         self.assertTrue(list(self.tax.get_external_id().values())[0])
         self.assertTrue(list(self.account.get_external_id().values())[0])
         self.assertTrue(list(self.fp.get_external_id().values())[0])
+        self.assertEqual(fp_rec.get_external_id().get(fp_id), expected_xmlid)
         wizard.unlink()
 
         # Test 2 recreate XML-ID
@@ -642,4 +464,35 @@ class TestAccountChartUpdate(common.TransactionCase):
         self.assertTrue(list(self.tax.get_external_id().values())[0])
         self.assertTrue(list(self.account.get_external_id().values())[0])
         self.assertTrue(list(self.fp.get_external_id().values())[0])
+        self.assertEqual(fp_rec.get_external_id().get(fp_id), expected_xmlid)
         wizard.unlink()
+
+    def test_01_archived_fiscal_position(self):
+        # Test wizard won't duplicate existing fiscal positions when archived
+        self.fp_template.tax_ids.tax_dest_id = self.tax_template.id
+        self.fp_template.tax_ids.tax_src_id = self.tax_template.id
+        fiscal_position = self.env["account.fiscal.position"].search(
+            [("name", "=", self.fp_template.name), ("company_id", "=", self.company.id)]
+        )
+        wizard = self.wizard_obj.create(self.wizard_vals)
+        wizard.action_find_records()
+        wizard.action_update_records()
+        wizard.unlink()
+        fiscal_position.active = False
+        self.assertEqual(
+            fiscal_position.tax_ids.tax_src_id.name, self.tax_template.name
+        )
+        self.assertEqual(
+            fiscal_position.tax_ids.tax_dest_id.name, self.tax_template.name
+        )
+        wizard = self.wizard_obj.create(self.wizard_vals)
+        wizard.action_find_records()
+        wizard.action_update_records()
+        wizard.unlink()
+        self.assertTrue(fiscal_position.exists())
+        self.assertEqual(
+            fiscal_position.tax_ids.tax_src_id.name, self.tax_template.name
+        )
+        self.assertEqual(
+            fiscal_position.tax_ids.tax_dest_id.name, self.tax_template.name
+        )
