@@ -21,15 +21,18 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[barcodes_generator_abstract](barcodes_generator_abstract/) | 16.0.3.0.3 | [![legalsylvain](https://github.com/legalsylvain.png?size=30px)](https://github.com/legalsylvain) | Generate Barcodes for Any Models
+[barcodes_generator_abstract](barcodes_generator_abstract/) | 16.0.3.0.6 | [![legalsylvain](https://github.com/legalsylvain.png?size=30px)](https://github.com/legalsylvain) | Generate Barcodes for Any Models
 [barcodes_generator_location](barcodes_generator_location/) | 16.0.1.0.0 |  | Generate Barcodes for Stock Locations
-[barcodes_generator_package](barcodes_generator_package/) | 16.0.1.0.1 | [![legalsylvain](https://github.com/legalsylvain.png?size=30px)](https://github.com/legalsylvain) | Generate Barcodes for Product Packaging
-[barcodes_generator_product](barcodes_generator_product/) | 16.0.2.0.2 | [![legalsylvain](https://github.com/legalsylvain.png?size=30px)](https://github.com/legalsylvain) | Generate Barcodes for Products (Templates and Variants)
+[barcodes_generator_package](barcodes_generator_package/) | 16.0.1.1.0 | [![legalsylvain](https://github.com/legalsylvain.png?size=30px)](https://github.com/legalsylvain) | Generate Barcodes for Product Packaging
+[barcodes_generator_product](barcodes_generator_product/) | 16.0.2.1.0 | [![legalsylvain](https://github.com/legalsylvain.png?size=30px)](https://github.com/legalsylvain) | Generate Barcodes for Products (Templates and Variants)
 [product_barcode_constraint_per_company](product_barcode_constraint_per_company/) | 16.0.1.0.2 | [![legalsylvain](https://github.com/legalsylvain.png?size=30px)](https://github.com/legalsylvain) | Change the product barcode constraint, allowing the same barcode for differents companies
 [product_multi_barcode](product_multi_barcode/) | 16.0.1.0.1 |  | Multiple barcodes on products
 [product_multi_barcode_constraint_per_company](product_multi_barcode_constraint_per_company/) | 16.0.1.0.1 |  | Glue module for product_multi_barcode andproduct_barcode_constraint_per_company
 [product_multi_barcode_stock_menu](product_multi_barcode_stock_menu/) | 16.0.1.0.0 |  | Multiple barcodes menu
-[product_packaging_multi_barcode](product_packaging_multi_barcode/) | 16.0.1.1.0 |  | Multiple barcodes on product packagings
+[product_packaging_multi_barcode](product_packaging_multi_barcode/) | 16.0.1.3.0 |  | Multiple barcodes on product packagings
+[stock_barcodes](stock_barcodes/) | 16.0.1.1.0 |  | It provides read barcode on stock operations.
+[stock_barcodes_picking_batch](stock_barcodes_picking_batch/) | 16.0.1.0.0 |  | It provides read barcodes on stock operations from batch pickings.
+[stock_picking_product_barcode_report](stock_picking_product_barcode_report/) | 16.0.1.0.0 | [![CarlosRoca13](https://github.com/CarlosRoca13.png?size=30px)](https://github.com/CarlosRoca13) | It provides a wizard to select how many barcodes print.
 
 [//]: # (end addons)
 
