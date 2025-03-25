@@ -1,4 +1,9 @@
 # generated from manifests external_dependencies
+cairosvg
 cryptography<37
 extract_msg
+lottie
+odoo_test_helper
 premailer
+python-telegram-bot
+requests_toolbelt

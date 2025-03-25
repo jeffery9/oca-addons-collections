@@ -1,6 +1,8 @@
 # Copyright 2018-22 ForgeFlow S.L.
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
+from datetime import date
+
 from odoo.exceptions import ValidationError
 from odoo.tests.common import Form, TransactionCase
 
@@ -318,3 +320,40 @@ class TestMailActivityTeam(TransactionCase):
         action.activity_team_id = self.team2
         action.with_context(active_model=partner._name, active_ids=partner.ids).run()
         self.assertEqual(partner.activity_ids[-1].team_id, self.team2)
+
+    def test_server_action_onchanges_activity_team_id_activity_user_id(self):
+        self.team1.user_id = self.team1.member_ids[0]
+        server_action = self.env["ir.actions.server"].create(
+            {
+                "name": "Test Server Action 2",
+                "model_id": self.partner_ir_model.id,
+                "state": "next_activity",
+                "activity_type_id": self.activity2.id,
+                "activity_user_type": "specific",
+                "activity_user_id": self.employee.id,
+            }
+        )
+        with Form(server_action) as form:
+            form.activity_team_id = self.team1
+            self.assertEqual(form.activity_user_id, self.team1.user_id)
+
+    def test_my_activity_date_deadline(self):
+        """This test case checks
+        - if the team activities are properly filtered
+        """
+        today = date.today()
+        self.act2.write(
+            {
+                "user_id": False,
+                "team_id": self.team1.id,
+                "date_deadline": today,
+            }
+        )
+        partner = (
+            self.env["res.partner"]
+            .with_context(team_activities=True)
+            .with_user(self.employee.id)
+            .search([("my_activity_date_deadline", "=", today)])
+        )
+        self.assertEqual(partner, self.partner_client)
+        self.assertEqual(partner.my_activity_date_deadline, today)

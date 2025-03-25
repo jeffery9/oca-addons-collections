@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-03-21 13:08+0000\n"
+"PO-Revision-Date: 2024-10-03 10:06+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. module: mail_activity_plan
 #: model:ir.model.fields,field_description:mail_activity_plan.field_mail_activity_plan__active
@@ -161,7 +161,6 @@ msgstr "Ultimo aggiornamento il"
 #. module: mail_activity_plan
 #. odoo-javascript
 #: code:addons/mail_activity_plan/static/src/js/mail_activity_plan.esm.js:0
-#: code:addons/mail_activity_plan/static/src/js/mail_activity_plan.esm.js:0
 #, python-format
 msgid "Launch Activity Plan"
 msgstr "Lancia piano attività"
@@ -172,11 +171,15 @@ msgid "Mail Activity Plan"
 msgstr "Piano attività e-mail"
 
 #. module: mail_activity_plan
-#: model:ir.model.fields,field_description:mail_activity_plan.field_mail_activity_plan__model
 #: model:ir.model.fields,field_description:mail_activity_plan.field_mail_activity_plan__model_id
 #: model:ir.model.fields,field_description:mail_activity_plan.field_mail_activity_plan_activity_type__model
 msgid "Model"
 msgstr "Modello"
+
+#. module: mail_activity_plan
+#: model:ir.model.fields,field_description:mail_activity_plan.field_mail_activity_plan__model
+msgid "Model name"
+msgstr "Nome modello"
 
 #. module: mail_activity_plan
 #: model:ir.model.fields,field_description:mail_activity_plan.field_mail_activity_plan__name
