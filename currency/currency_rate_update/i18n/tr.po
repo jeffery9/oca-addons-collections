@@ -9,21 +9,22 @@ msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-21 21:33+0000\n"
-"PO-Revision-Date: 2018-03-21 21:33+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2018\n"
+"PO-Revision-Date: 2025-01-29 22:06+0000\n"
+"Last-Translator: Ahmet Yiğit Budak <yigit@altinkaya.com>\n"
 "Language-Team: Turkish (https://www.transifex.com/oca/teams/23907/tr/)\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. module: currency_rate_update
 #. odoo-python
 #: code:addons/currency_rate_update/models/res_currency_rate_provider.py:0
 #, python-format
 msgid "%(number)s %(type)s"
-msgstr ""
+msgstr "%(number)s %(type)s"
 
 #. module: currency_rate_update
 #: model_terms:ir.ui.view,arch_db:currency_rate_update.res_config_settings_view_form
@@ -32,6 +33,9 @@ msgid ""
 "specific.\" role=\"img\" aria-label=\"Values set here are company-specific."
 "\" groups=\"base.group_multi_company\"/>"
 msgstr ""
+"<span class=\"fa fa-lg fa-building-o\" title=\"Buraya girilen değerler "
+"şirket bazlıdır.\" role=\"img\" aria-label=\"Buraya girilen değerler şirket "
+"bazlıdır.\" groups=\"base.group_multi_company\"/>"
 
 #. module: currency_rate_update
 #: model_terms:ir.ui.view,arch_db:currency_rate_update.res_currency_rate_provider_form_view
@@ -49,45 +53,55 @@ msgid ""
 "                                rates are recalculated and might differ from "
 "real rates."
 msgstr ""
+"<strong>!</strong>\n"
+"                                Avrupa Merkez Bankası sağlayıcısını kaynak "
+"para birimi\n"
+"                                EUR olmayacak şekilde kullanıyorsunuz.\n"
+"                                <br/>\n"
+"                                Avrupa Merkez Bankası kur oranlarını EUR "
+"para birimine\n"
+"                                göre hesapladığı için, kur oranları gerçek "
+"oranlardan farklı\n"
+"                                olabilir."
 
 #. module: currency_rate_update
 #: model:ir.model.fields,field_description:currency_rate_update.field_res_currency_rate__message_needaction
 #: model:ir.model.fields,field_description:currency_rate_update.field_res_currency_rate_provider__message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "Eylem Gerekli"
 
 #. module: currency_rate_update
 #: model:ir.model.fields,field_description:currency_rate_update.field_res_currency_rate_provider__active
 msgid "Active"
-msgstr ""
+msgstr "Aktif"
 
 #. module: currency_rate_update
 #: model_terms:ir.ui.view,arch_db:currency_rate_update.res_currency_rate_provider_filter
 #: model_terms:ir.ui.view,arch_db:currency_rate_update.res_currency_rate_provider_form_view
 msgid "Archived"
-msgstr ""
+msgstr "Arşivlendi"
 
 #. module: currency_rate_update
 #: model:ir.model.fields,field_description:currency_rate_update.field_res_currency_rate__message_attachment_count
 #: model:ir.model.fields,field_description:currency_rate_update.field_res_currency_rate_provider__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "Ek Sayısı"
 
 #. module: currency_rate_update
 #: model:ir.model.fields,field_description:currency_rate_update.field_res_company__currency_rates_autoupdate
 #: model:ir.model.fields,field_description:currency_rate_update.field_res_config_settings__currency_rates_autoupdate
 msgid "Automatic Currency Rates (OCA)"
-msgstr ""
+msgstr "Otomatik Döviz Kurları"
 
 #. module: currency_rate_update
 #: model:ir.model.fields,field_description:currency_rate_update.field_res_currency_rate_provider__available_currency_ids
 msgid "Available Currencies"
-msgstr ""
+msgstr "Mevcut Para Birimleri"
 
 #. module: currency_rate_update
 #: model_terms:ir.ui.view,arch_db:currency_rate_update.res_currency_rate_update_wizard_form
 msgid "Cancel"
-msgstr ""
+msgstr "İptal"
 
 #. module: currency_rate_update
 #: model:ir.model,name:currency_rate_update.model_res_company
@@ -102,7 +116,7 @@ msgstr "Firma"
 #. module: currency_rate_update
 #: model:ir.model,name:currency_rate_update.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Ayarlar"
 
 #. module: currency_rate_update
 #: model:ir.model.fields,field_description:currency_rate_update.field_res_currency_rate_provider__create_uid
@@ -131,7 +145,7 @@ msgstr "Bu servisle para birimleri güncellenir"
 #. module: currency_rate_update
 #: model:ir.model.fields,help:currency_rate_update.field_res_currency_rate_provider__currency_name
 msgid "Currency Code (ISO 4217)"
-msgstr ""
+msgstr "Para Birimi Kodu (ISO 4217)"
 
 #. module: currency_rate_update
 #: model:ir.model.fields,field_description:currency_rate_update.field_res_currency_rate_provider__currency_name
@@ -154,6 +168,9 @@ msgid ""
 "%(date_from)s until %(date_to)s:\n"
 "%(error)s"
 msgstr ""
+"Kur Oranı Sağlayıcısı \"%(name)s\", %(date_from)s ile %(date_to)s tarihleri "
+"arasındaki kurları çekerken başarısız oldu:\n"
+"%(error)s"
 
 #. module: currency_rate_update
 #. odoo-python
@@ -193,7 +210,7 @@ msgstr "Döviz Kuru Güncellemesi"
 #. module: currency_rate_update
 #: model:ir.model.fields,field_description:currency_rate_update.field_res_currency_rate_provider__daily
 msgid "Daily"
-msgstr ""
+msgstr "Günlük"
 
 #. module: currency_rate_update
 #: model:ir.model.fields.selection,name:currency_rate_update.selection__res_currency_rate_provider__interval_type__days
@@ -210,35 +227,35 @@ msgstr "Ad Görünümü"
 #: model:ir.model.fields,help:currency_rate_update.field_res_company__currency_rates_autoupdate
 #: model:ir.model.fields,help:currency_rate_update.field_res_config_settings__currency_rates_autoupdate
 msgid "Enable automatic currency rates updates in this company."
-msgstr ""
+msgstr "Bu şirkette otomatik döviz kuru güncellemelerini etkinleştirin."
 
 #. module: currency_rate_update
 #: model:ir.model.fields,field_description:currency_rate_update.field_res_currency_rate_update_wizard__date_to
 msgid "End Date"
-msgstr ""
+msgstr "Bitiş Tarihi"
 
 #. module: currency_rate_update
 #: model:ir.model.fields.selection,name:currency_rate_update.selection__res_currency_rate_provider__service__ecb
 msgid "European Central Bank"
-msgstr ""
+msgstr "Avrupa Merkez Bankası"
 
 #. module: currency_rate_update
 #: model:ir.model.fields,field_description:currency_rate_update.field_res_currency_rate__message_follower_ids
 #: model:ir.model.fields,field_description:currency_rate_update.field_res_currency_rate_provider__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "Takipçiler"
 
 #. module: currency_rate_update
 #: model:ir.model.fields,field_description:currency_rate_update.field_res_currency_rate__message_partner_ids
 #: model:ir.model.fields,field_description:currency_rate_update.field_res_currency_rate_provider__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "Takipçiler (İş Ortakları)"
 
 #. module: currency_rate_update
 #: model:ir.model.fields,field_description:currency_rate_update.field_res_currency_rate__has_message
 #: model:ir.model.fields,field_description:currency_rate_update.field_res_currency_rate_provider__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "Mesaj Var"
 
 #. module: currency_rate_update
 #: model:ir.model.fields,field_description:currency_rate_update.field_res_currency_rate_provider__id
@@ -250,20 +267,20 @@ msgstr "ID"
 #: model:ir.model.fields,help:currency_rate_update.field_res_currency_rate__message_needaction
 #: model:ir.model.fields,help:currency_rate_update.field_res_currency_rate_provider__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "Eğer işaretliyse, yeni mesajlar sizin onayınızı bekler."
 
 #. module: currency_rate_update
 #: model:ir.model.fields,help:currency_rate_update.field_res_currency_rate__message_has_error
 #: model:ir.model.fields,help:currency_rate_update.field_res_currency_rate_provider__message_has_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "Eğer işaretliyse, bazı mesajlarda aktarım hatası vardır."
 
 #. module: currency_rate_update
 #. odoo-python
 #: code:addons/currency_rate_update/models/res_currency_rate_provider.py:0
 #, python-format
 msgid "Inactive"
-msgstr ""
+msgstr "Aktif Değil"
 
 #. module: currency_rate_update
 #. odoo-python
@@ -271,29 +288,31 @@ msgstr ""
 #, python-format
 msgid "Invalid rate from %(provider)s for %(currency)s: %(rate)s"
 msgstr ""
+"%(provider)s sağlayıcısından %(currency)s para birimi için yanlış oran: "
+"%(rate)s"
 
 #. module: currency_rate_update
 #: model:ir.model.fields,field_description:currency_rate_update.field_res_currency_rate__message_is_follower
 #: model:ir.model.fields,field_description:currency_rate_update.field_res_currency_rate_provider__message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "Takipçi Mi"
 
 #. module: currency_rate_update
 #: model:ir.model.fields,field_description:currency_rate_update.field_res_currency_rate_provider____last_update
 #: model:ir.model.fields,field_description:currency_rate_update.field_res_currency_rate_update_wizard____last_update
 msgid "Last Modified on"
-msgstr "Son güncellenme"
+msgstr "Son Değiştirilme Tarihi"
 
 #. module: currency_rate_update
 #: model:ir.model.fields,field_description:currency_rate_update.field_res_currency_rate_provider__last_successful_run
 msgid "Last Successful Update"
-msgstr ""
+msgstr "Son başarılı güncelleme"
 
 #. module: currency_rate_update
 #: model:ir.model.fields,field_description:currency_rate_update.field_res_currency_rate_provider__write_uid
 #: model:ir.model.fields,field_description:currency_rate_update.field_res_currency_rate_update_wizard__write_uid
 msgid "Last Updated by"
-msgstr "Son güncelleyen"
+msgstr "Son Güncelleyen"
 
 #. module: currency_rate_update
 #: model:ir.model.fields,field_description:currency_rate_update.field_res_currency_rate_provider__write_date
@@ -339,7 +358,7 @@ msgstr ""
 #. module: currency_rate_update
 #: model:ir.model.fields,field_description:currency_rate_update.field_res_currency_rate_provider__next_run
 msgid "Next Scheduled Update"
-msgstr ""
+msgstr "Sonraki Planlanmış Güncelleme"
 
 #. module: currency_rate_update
 #: model:ir.model.fields.selection,name:currency_rate_update.selection__res_currency_rate_provider__service__none
@@ -374,37 +393,37 @@ msgstr ""
 #: model:ir.model.fields,field_description:currency_rate_update.field_res_currency_rate__provider_id
 #: model:ir.model.fields,field_description:currency_rate_update.field_res_currency_rate_provider__service
 msgid "Provider"
-msgstr ""
+msgstr "Sağlayıcı"
 
 #. module: currency_rate_update
 #: model:ir.model.fields,field_description:currency_rate_update.field_res_currency_rate_update_wizard__provider_ids
 msgid "Providers"
-msgstr ""
+msgstr "Sağlayıcılar"
 
 #. module: currency_rate_update
 #: model:ir.model.fields,field_description:currency_rate_update.field_res_currency_rate_provider__interval_number
 msgid "Scheduled Update Interval"
-msgstr ""
+msgstr "Planlanmış Güncelleme Aralığı"
 
 #. module: currency_rate_update
 #: model:ir.model.fields,field_description:currency_rate_update.field_res_currency_rate_provider__interval_type
 msgid "Scheduled Update Interval Unit"
-msgstr ""
+msgstr "Zamanlanmış Güncelleme Aralığı Birimi"
 
 #. module: currency_rate_update
 #: model:ir.model.constraint,message:currency_rate_update.constraint_res_currency_rate_provider_valid_interval_number
 msgid "Scheduled update interval must be strictly positive."
-msgstr ""
+msgstr "Planlanan güncelleme aralığı kesinlikle pozitif olmalıdır."
 
 #. module: currency_rate_update
 #: model:ir.model.fields,field_description:currency_rate_update.field_res_currency_rate_update_wizard__date_from
 msgid "Start Date"
-msgstr ""
+msgstr "Başlama Tarihi"
 
 #. module: currency_rate_update
 #: model:ir.model.fields,field_description:currency_rate_update.field_res_currency_rate__rate
 msgid "Technical Rate"
-msgstr ""
+msgstr "Teknik Oran"
 
 #. module: currency_rate_update
 #: model:ir.model.fields,help:currency_rate_update.field_res_currency_rate__rate
@@ -432,12 +451,12 @@ msgstr "Şimdi güncelle"
 #. module: currency_rate_update
 #: model:ir.actions.server,name:currency_rate_update.action_res_currency_rate_provider_update_wizard
 msgid "Update Rates Wizard"
-msgstr ""
+msgstr "Fiyat Güncelleme Sihirbazı"
 
 #. module: currency_rate_update
 #: model:ir.model.fields,field_description:currency_rate_update.field_res_currency_rate_provider__update_schedule
 msgid "Update Schedule"
-msgstr ""
+msgstr "Programı Güncelle"
 
 #. module: currency_rate_update
 #: model_terms:ir.ui.view,arch_db:currency_rate_update.res_config_settings_view_form
