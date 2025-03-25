@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-11-02 05:17+0000\n"
+"PO-Revision-Date: 2024-09-17 02:06+0000\n"
 "Last-Translator: Ignacio Buioli <ibuioli@gmail.com>\n"
 "Language-Team: none\n"
 "Language: es_AR\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. module: account_invoice_inter_company
 #. odoo-python
@@ -31,11 +31,24 @@ msgid "%(company_name)s - Invoice: %(invoice_name)s"
 msgstr "%(company_name)s - Factura: %(invoice_name)s"
 
 #. module: account_invoice_inter_company
+#: model_terms:ir.ui.view,arch_db:account_invoice_inter_company.res_config_settings_view_form
+msgid ""
+"<strong>Save</strong> this page and come back here to set up the feature."
+msgstr ""
+
+#. module: account_invoice_inter_company
 #: model:ir.model.fields,field_description:account_invoice_inter_company.field_account_bank_statement_line__auto_generated
 #: model:ir.model.fields,field_description:account_invoice_inter_company.field_account_move__auto_generated
 #: model:ir.model.fields,field_description:account_invoice_inter_company.field_account_payment__auto_generated
 msgid "Auto Generated Document"
 msgstr "Documento Generado Automáticamente"
+
+#. module: account_invoice_inter_company
+#: model_terms:ir.ui.view,arch_db:account_invoice_inter_company.res_config_settings_view_form
+msgid ""
+"Automatically generate counterpart documents for orders/invoices between "
+"companies"
+msgstr ""
 
 #. module: account_invoice_inter_company
 #: model_terms:ir.ui.view,arch_db:account_invoice_inter_company.res_config_settings_view_form
@@ -53,6 +66,45 @@ msgid "Config Settings"
 msgstr "Configurar Ajustes"
 
 #. module: account_invoice_inter_company
+#: model:ir.model.fields,help:account_invoice_inter_company.field_res_config_settings__intercompany_invoicing
+msgid ""
+"Enable intercompany invoicing: \n"
+" * Generate a Customer Invoice when a bill with this company is created.\n"
+" * Generate a Vendor Bill when an invoice with this company as a customer is "
+"created."
+msgstr ""
+"Habilitar facturación entre compañías:\n"
+"* Generar una factura de cliente cuando se crea una factura con esta "
+"compañía.\n"
+"* Generar una factura de proveedor cuando se crea una factura con esta "
+"compañía como cliente."
+
+#. module: account_invoice_inter_company
+#: model:ir.model.fields,help:account_invoice_inter_company.field_res_company__intercompany_invoicing
+msgid ""
+"Enable intercompany invoicing: \n"
+"* Generate a Customer Invoice when a bill with this company is created.\n"
+"* Generate a Vendor Bill when an invoice with this company as a customer is "
+"created."
+msgstr ""
+"Habilitar la facturación entre empresas:\n"
+"* Generar una factura de cliente cuando se crea una factura con esta "
+"compañía.\n"
+"* Generar una factura de proveedor cuando se crea una factura con esta "
+"compañía como cliente."
+
+#. module: account_invoice_inter_company
+#: model:ir.model.fields,field_description:account_invoice_inter_company.field_res_company__intercompany_invoicing
+#: model:ir.model.fields,field_description:account_invoice_inter_company.field_res_config_settings__intercompany_invoicing
+msgid "Generate Inter company Invoices"
+msgstr "Generar Facturas entre Compañías"
+
+#. module: account_invoice_inter_company
+#: model_terms:ir.ui.view,arch_db:account_invoice_inter_company.res_config_settings_view_form
+msgid "Generate Intercompany Invoices"
+msgstr "Generar Facturas Entre-compañías"
+
+#. module: account_invoice_inter_company
 #: model:ir.model.fields,field_description:account_invoice_inter_company.field_res_company__intercompany_invoice_user_id
 #: model:ir.model.fields,field_description:account_invoice_inter_company.field_res_config_settings__intercompany_invoice_user_id
 msgid "Inter Company Invoice User"
@@ -62,15 +114,10 @@ msgstr "Usuario de Factura entre Compañías"
 #: model_terms:ir.ui.view,arch_db:account_invoice_inter_company.res_config_settings_view_form
 msgid ""
 "Inter Company OCA features\n"
-"                    <span class=\"fa fa-lg fa-building-o\" title=\"Values "
-"set here are company-specific.\" aria-label=\"Values set here are company-"
-"specific.\" groups=\"base.group_multi_company\" role=\"img\"/>"
+"                            <span class=\"fa fa-lg fa-building-o\" "
+"title=\"Values set here are company-specific.\" aria-label=\"Values set here "
+"are company-specific.\" role=\"img\"/>"
 msgstr ""
-"Características OCA entre Compañía\n"
-"                    <span class=\"fa fa-lg fa-building-o\" title=\"Los "
-"valores establecidos aquí son específicos de la compañía.\" aria-label=\"Los "
-"valores establecidos aquí son específicos de la compañía.\" groups=\"base."
-"group_multi_company\" role=\"img\"/>"
 
 #. module: account_invoice_inter_company
 #: model_terms:ir.ui.view,arch_db:account_invoice_inter_company.res_config_settings_view_form
@@ -87,11 +134,6 @@ msgstr "Validación Automática de Factura"
 #: model:ir.model.fields,field_description:account_invoice_inter_company.field_res_config_settings__invoice_auto_validation
 msgid "Invoices Auto Validation"
 msgstr "Validación Automática de Facturas"
-
-#. module: account_invoice_inter_company
-#: model_terms:ir.ui.view,arch_db:account_invoice_inter_company.res_config_settings_view_form
-msgid "Invoicing"
-msgstr "Facturación"
 
 #. module: account_invoice_inter_company
 #: model:ir.model,name:account_invoice_inter_company.model_account_move
@@ -118,8 +160,8 @@ msgid ""
 "Please define %(dest_journal_type)s journal for this company: "
 "\"%(dest_company_name)s\" (id:%(dest_company_id)d)."
 msgstr ""
-"Por favor defina el diario %(dest_journal_type)s para esta compañía: \""
-"%(dest_company_name)s\" (id:%(dest_company_id)d)."
+"Por favor defina el diario %(dest_journal_type)s para esta compañía: "
+"\"%(dest_company_name)s\" (id:%(dest_company_id)d)."
 
 #. module: account_invoice_inter_company
 #: model:ir.model.fields,help:account_invoice_inter_company.field_res_company__intercompany_invoice_user_id
@@ -257,6 +299,21 @@ msgid ""
 msgstr ""
 "No puede crear una factura en la compañía %(dest_company_name)s con el "
 "producto %(product_name)s porque el mismo no es multi-compañía"
+
+#~ msgid ""
+#~ "Inter Company OCA features\n"
+#~ "                    <span class=\"fa fa-lg fa-building-o\" title=\"Values "
+#~ "set here are company-specific.\" aria-label=\"Values set here are company-"
+#~ "specific.\" groups=\"base.group_multi_company\" role=\"img\"/>"
+#~ msgstr ""
+#~ "Características OCA entre Compañía\n"
+#~ "                    <span class=\"fa fa-lg fa-building-o\" title=\"Los "
+#~ "valores establecidos aquí son específicos de la compañía.\" aria-"
+#~ "label=\"Los valores establecidos aquí son específicos de la compañía.\" "
+#~ "groups=\"base.group_multi_company\" role=\"img\"/>"
+
+#~ msgid "Invoicing"
+#~ msgstr "Facturación"
 
 #, python-format
 #~ msgid "%s - Canceled Invoice: %s"

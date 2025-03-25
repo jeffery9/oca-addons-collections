@@ -41,7 +41,8 @@ class StockPicking(models.Model):
             "picking_type_id": ptype.id,
             "state": "draft",
             "location_id": self.env.ref("stock.stock_location_suppliers").id,
-            "location_dest_id": warehouse.lot_stock_id.id,
+            "location_dest_id": ptype.default_location_dest_id.id
+            or warehouse.lot_stock_id.id,
             "counterpart_of_picking_id": self.id,
             "move_ids": move_ids,
             "move_line_ids": move_line_ids,
@@ -61,7 +62,7 @@ class StockPicking(models.Model):
                     dict(common_vals, counterpart_of_move_id=sm.id)
                 )[0],
             )
-            for sm in self.move_ids
+            for sm in self.move_ids.sudo()
         ]
         move_line_ids = [
             (
@@ -71,7 +72,7 @@ class StockPicking(models.Model):
                     dict(common_vals, move_id=False, counterpart_of_line_id=ln.id)
                 )[0],
             )
-            for ln in self.move_line_ids
+            for ln in self.move_line_ids.sudo()
         ]
         return move_ids, move_line_ids
 

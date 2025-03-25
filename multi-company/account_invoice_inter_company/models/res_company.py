@@ -1,3 +1,5 @@
+# Copyright 2013-2014 Odoo SA
+# Copyright 2015-2017 Chafique Delli <chafique.delli@akretion.com>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import fields, models
@@ -28,6 +30,14 @@ class ResCompany(models.Model):
         string="Inter Company Invoice User",
         help="Responsible user for creation of invoices triggered by "
         "intercompany rules.",
+    )
+    intercompany_invoicing = fields.Boolean(
+        string="Generate Inter company Invoices",
+        help="Enable intercompany invoicing: "
+        "\n* Generate a Customer Invoice when a bill with this company is created."
+        "\n* Generate a Vendor Bill when an invoice with this company as a customer"
+        " is created.",
+        default=True,
     )
 
     def _compute_share_product(self):

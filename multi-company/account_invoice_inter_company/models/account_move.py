@@ -1,13 +1,13 @@
+# Copyright 2013-2014 Odoo SA
+# Copyright 2015-2017 Chafique Delli <chafique.delli@akretion.com>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-import logging
+import base64
 
 from odoo import _, api, fields, models
 from odoo.exceptions import AccessError, UserError
 from odoo.tools import float_compare
 from odoo.tools.misc import clean_context
-
-_logger = logging.getLogger(__name__)
 
 
 class AccountMove(models.Model):
@@ -40,26 +40,64 @@ class AccountMove(models.Model):
         )
         return company or False
 
-    def action_post(self):
+    def _set_intercompany_supplier_invoice_ref(self):
+        self.ensure_one()
+        supplier_invoice = self.auto_invoice_id
+        if not supplier_invoice.ref:
+            supplier_invoice.write({"ref": self.name})
+
+    def _post(self, soft=True):
         """Validated invoice generate cross invoice base on company rules"""
-        res = super().action_post()
+        res = super()._post(soft=soft)
         # Intercompany account entries or receipts aren't supported
         supported_types = {"out_invoice", "in_invoice", "out_refund", "in_refund"}
         for src_invoice in self.filtered(lambda x: x.move_type in supported_types):
             # do not consider invoices that have already been auto-generated,
             # nor the invoices that were already validated in the past
             dest_company = src_invoice._find_company_from_invoice_partner()
-            if not dest_company or src_invoice.auto_generated:
+            if not dest_company:
+                continue
+            # If one of the involved companies have the intercompany setting disabled, skip
+            if (
+                not dest_company.intercompany_invoicing
+                or not src_invoice.company_id.intercompany_invoicing
+            ):
                 continue
             intercompany_user = dest_company.intercompany_invoice_user_id
             if intercompany_user:
                 src_invoice = src_invoice.with_user(intercompany_user).sudo()
             else:
                 src_invoice = src_invoice.sudo()
-            src_invoice.with_company(dest_company.id).with_context(
-                skip_check_amount_difference=True
-            )._inter_company_create_invoice(dest_company)
+            if not src_invoice.auto_generated:
+                src_invoice.with_company(dest_company.id).with_context(
+                    skip_check_amount_difference=True
+                )._inter_company_create_invoice(dest_company)
+            if src_invoice.is_sale_document():
+                src_invoice._attach_original_pdf_report()
+        # set invoice ref on supplier invoice when the customer invoice is validated
+        # (case where the source invoice was the supplier one)
+        for invoice in self.filtered(
+            lambda i: i.is_sale_document() and i.auto_generated
+        ):
+            invoice.sudo()._set_intercompany_supplier_invoice_ref()
         return res
+
+    def _attach_original_pdf_report(self):
+        supplier_invoice = self.auto_invoice_id
+        if not supplier_invoice:
+            supplier_invoice = self.search([("auto_invoice_id", "=", self.id)], limit=1)
+        report = self.env.ref("account.account_invoices").with_company(self.company_id)
+        pdf = report._render_qweb_pdf(report.report_name, [self.id])[0]
+        self.env["ir.attachment"].create(
+            {
+                "name": self.name + ".pdf",
+                "type": "binary",
+                "datas": base64.b64encode(pdf),
+                "res_model": "account.move",
+                "res_id": supplier_invoice.id,
+                "mimetype": "application/pdf",
+            }
+        )
 
     def _check_intercompany_product(self, dest_company):
         self.ensure_one()
@@ -68,25 +106,7 @@ class AccountMove(models.Model):
         domain = dest_company._get_user_domain()
         dest_user = self.env["res.users"].search(domain, limit=1)
         for line in self.invoice_line_ids:
-            try:
-                line.product_id.product_tmpl_id.sudo(False).with_user(
-                    dest_user
-                ).with_context(
-                    **{"allowed_company_ids": [dest_company.id]}
-                ).check_access_rule(
-                    "read"
-                )
-            except AccessError as e:
-                raise UserError(
-                    _(
-                        "You cannot create invoice in company '%(dest_company_name)s' with "
-                        "product '%(product_name)s' because it is not multicompany"
-                    )
-                    % {
-                        "dest_company_name": dest_company.name,
-                        "product_name": line.product_id.name,
-                    }
-                ) from e
+            line._check_intercompany_product(dest_user, dest_company)
 
     def _check_dest_journal(self, dest_company):
         self.ensure_one()
@@ -215,21 +235,13 @@ class AccountMove(models.Model):
             "move_type": self._get_destination_invoice_type(),
             "partner_id": self.company_id.partner_id.id,
             "ref": self.name,
+            "payment_reference": self.payment_reference,
             "invoice_date": self.invoice_date,
             "invoice_origin": _("%(company_name)s - Invoice: %(invoice_name)s")
             % {"company_name": self.company_id.name, "invoice_name": self.name},
             "auto_invoice_id": self.id,
             "auto_generated": True,
         }
-        # CHECK ME: This field is created by module sale, maybe we need add dependency?
-        if (
-            hasattr(self, "partner_shipping_id")
-            and self.partner_shipping_id
-            and not self.partner_shipping_id.company_id
-        ):
-            # if shipping partner is shared you may want to propagate its value
-            # to supplier invoice allowing to analyse invoices
-            vals["partner_shipping_id"] = self.partner_shipping_id.id
         return vals
 
     def button_draft(self):
@@ -332,3 +344,25 @@ class AccountMoveLine(models.Model):
             vals["start_date"] = self.start_date
             vals["end_date"] = self.end_date
         return vals
+
+    @api.model
+    def _check_intercompany_product(self, dest_user, dest_company):
+        try:
+            self.product_id.product_tmpl_id.sudo(False).with_user(
+                dest_user
+            ).with_context(
+                **{"allowed_company_ids": [dest_company.id]}
+            ).check_access_rule(
+                "read"
+            )
+        except AccessError as e:
+            raise UserError(
+                _(
+                    "You cannot create invoice in company '%(dest_company_name)s' with "
+                    "product '%(product_name)s' because it is not multicompany"
+                )
+                % {
+                    "dest_company_name": dest_company.name,
+                    "product_name": self.product_id.name,
+                }
+            ) from e

@@ -4,6 +4,7 @@
 
 from odoo_test_helper import FakeModelLoader
 
+from odoo.fields import Command
 from odoo.tests import common
 
 
@@ -110,6 +111,13 @@ class TestMultiCompanyAbstract(common.TransactionCase):
             [("company_id", "in", [False, self.company_2.id])], ["name"]
         )
         self.assertEqual([{"id": self.record_1.id, "name": self.record_1.name}], result)
+
+    def test_search_in_false_company(self):
+        """Records with no company are shared across companies but we need to convert
+        those queries with an or operator"""
+        self.record_1.company_ids = False
+        result = self.test_model.search([("company_id", "in", [1, False])])
+        self.assertEqual(result, self.record_1)
 
     def test_patch_company_domain(self):
         new_domain = self.test_model._patch_company_domain(
@@ -280,3 +288,29 @@ class TestMultiCompanyAbstract(common.TransactionCase):
         tester.company_id = False
 
         self.assertFalse(tester.sudo().company_ids)
+
+    def test_rule_in_false(self):
+        # Create an ir.rule imitating base.res_partner_rule
+        self.env["ir.rule"].create(
+            {
+                "name": "Test rule",
+                "model_id": self.tester_model.id,
+                "domain_force": repr(
+                    [("company_id", "in", [False, self.company_1.id])]
+                ),
+                "groups": [Command.link(self.ref("base.group_user"))],
+            }
+        )
+        user = common.new_test_user(
+            self.env,
+            login="test_user",
+            groups="base.group_user",
+            company_id=self.company_1.id,
+        )
+        # Record has no company, so user can read it
+        self.assertFalse(self.record_1.company_ids)
+        self.assertFalse(self.record_1.company_id)
+        self.assertEqual(
+            self.record_1.with_user(user).read(["name"]),
+            [{"id": self.record_1.id, "name": "test"}],
+        )
