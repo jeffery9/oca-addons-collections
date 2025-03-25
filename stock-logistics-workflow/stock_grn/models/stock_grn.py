@@ -1,4 +1,5 @@
 # Copyright 2015 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 from odoo import api, fields, models
 
@@ -30,7 +31,7 @@ class StockGrn(models.Model):
         "res.company",
         string="Company",
         change_default=True,
-        default=lambda self: self.env["res.company"]._company_default_get("stock.grn"),
+        default=lambda self: self.env.company,
         required=True,
         readonly=True,
     )

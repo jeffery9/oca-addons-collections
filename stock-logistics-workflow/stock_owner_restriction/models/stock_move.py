@@ -16,7 +16,8 @@ class StockMove(models.Model):
         those moves.
         """
         return self.filtered(
-            lambda m: m.picking_type_id.owner_restriction == "standard_behavior"
+            lambda m: not m.picking_type_id
+            or m.picking_type_id.owner_restriction == "standard_behavior"
         )
 
     def _get_owner_for_assign(self):
@@ -46,6 +47,20 @@ class StockMove(models.Model):
                 StockMove,
                 moves_to_assign.with_context(force_restricted_owner_id=owner_id),
             )._action_assign(force_qty=force_qty)
+            if (
+                owner_id
+                and moves_to_assign.picking_type_id.owner_restriction
+                == "partner_or_unassigned"
+                and sum(
+                    move.reserved_availability - move.product_uom_qty
+                    for move in moves_to_assign
+                )
+                < 0
+            ):
+                super(
+                    StockMove,
+                    moves_to_assign.with_context(force_restricted_owner_id=False),
+                )._action_assign(force_qty=force_qty)
         return res
 
     def _update_reserved_quantity(

@@ -9,10 +9,11 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-01 02:08+0000\n"
-"PO-Revision-Date: 2023-12-27 14:35+0000\n"
-"Last-Translator: Adriano Prado <adrianojprado@gmail.com>\n"
-"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/teams/"
-"23907/pt_BR/)\n"
+"PO-Revision-Date: 2024-05-22 02:05+0000\n"
+"Last-Translator: Rodrigo Macedo <sottomaiormacedotec@users.noreply."
+"translation.odoo-community.org>\n"
+"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/"
+"teams/23907/pt_BR/)\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -27,17 +28,17 @@ msgstr "Cancelar"
 
 #. module: stock_split_picking
 #. odoo-python
-#: code:addons/stock_split_picking/models/stock_picking.py:0
+#: code:addons/stock_split_picking/exceptions.py:0
 #, python-format
-msgid "Cannot split off all moves from picking %s"
-msgstr "Não é possível separar todos os movimentos da separação de %s"
+msgid "Cannot split off all moves from picking %(name)s"
+msgstr ""
 
 #. module: stock_split_picking
 #. odoo-python
-#: code:addons/stock_split_picking/models/stock_picking.py:0
+#: code:addons/stock_split_picking/exceptions.py:0
 #, python-format
-msgid "Cannot split picking {name} in state {state}"
-msgstr "Não é possível dividir a separação {name} no estado {state}"
+msgid "Cannot split picking %(name)s in state %(state)s"
+msgstr ""
 
 #. module: stock_split_picking
 #: model:ir.model.fields,field_description:stock_split_picking.field_stock_split_picking__create_uid
@@ -104,7 +105,7 @@ msgstr "Mover"
 #. module: stock_split_picking
 #: model:ir.model.fields.selection,name:stock_split_picking.selection__stock_split_picking__mode__move
 msgid "One picking per move"
-msgstr ""
+msgstr "Uma escolha por movimento"
 
 #. module: stock_split_picking
 #: model:ir.model.fields,field_description:stock_split_picking.field_stock_split_picking__picking_ids
@@ -163,3 +164,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:stock_split_picking.view_stock_split_picking
 msgid "or"
 msgstr "ou"
+
+#, python-format
+#~ msgid "Cannot split off all moves from picking %s"
+#~ msgstr "Não é possível separar todos os movimentos da separação de %s"
+
+#, python-format
+#~ msgid "Cannot split picking {name} in state {state}"
+#~ msgstr "Não é possível dividir a separação {name} no estado {state}"
