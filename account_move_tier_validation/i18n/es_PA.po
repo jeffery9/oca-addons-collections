@@ -66,6 +66,11 @@ msgid "Invoices where validation has not started"
 msgstr ""
 
 #. module: account_move_tier_validation
+#: model:ir.model.fields,field_description:account_move_tier_validation.field_account_move__is_reevaluation_required
+msgid "Is Reevaluation Required"
+msgstr ""
+
+#. module: account_move_tier_validation
 #: model:ir.model,name:account_move_tier_validation.model_account_move
 msgid "Journal Entry"
 msgstr ""
@@ -156,4 +161,11 @@ msgstr ""
 #. module: account_move_tier_validation
 #: model:ir.model.fields,field_description:account_move_tier_validation.field_account_move__review_ids
 msgid "Validations"
+msgstr ""
+
+#. module: account_move_tier_validation
+#. odoo-python
+#: code:addons/account_move_tier_validation/tests/test_tier_validation.py:0
+#, python-format
+msgid "You are not allowed to write those fields"
 msgstr ""

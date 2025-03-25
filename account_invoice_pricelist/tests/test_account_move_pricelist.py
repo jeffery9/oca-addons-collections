@@ -1,23 +1,25 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.exceptions import UserError
-from odoo.tests import common
+from odoo.tests import tagged
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestAccountMovePricelist(common.TransactionCase):
+@tagged("-at_install", "post_install")
+class TestAccountMovePricelist(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.env = cls.env(
-            context=dict(
-                cls.env.context,
-                mail_create_nolog=True,
-                mail_create_nosubscribe=True,
-                mail_notrack=True,
-                no_reset_password=True,
-                tracking_disable=True,
-            )
-        )
+        if not cls.env.company.chart_template_id:
+            # Load a CoA if there's none in current company
+            coa = cls.env.ref("l10n_generic_coa.configurable_chart_template", False)
+            if not coa:
+                # Load the first available CoA
+                coa = cls.env["account.chart.template"].search(
+                    [("visible", "=", True)], limit=1
+                )
+            coa.try_loading(company=cls.env.company, install_demo=False)
         cls.AccountMove = cls.env["account.move"]
         cls.ProductPricelist = cls.env["product.pricelist"]
         cls.FiscalPosition = cls.env["account.fiscal.position"]
@@ -27,12 +29,14 @@ class TestAccountMovePricelist(common.TransactionCase):
         cls.journal_sale = cls.env["account.journal"].create(
             {"name": "Test sale journal", "type": "sale", "code": "TEST_SJ"}
         )
+        cls.currency_usd = cls.env.ref("base.USD")
+        cls.currency_usd.active = True
         # Make sure the currency of the company is USD, as this not always happens
         # To be removed in V17: https://github.com/odoo/odoo/pull/107113
         cls.company = cls.env.company
         cls.env.cr.execute(
             "UPDATE res_company SET currency_id = %s WHERE id = %s",
-            (cls.env.ref("base.USD").id, cls.company.id),
+            (cls.currency_usd.id, cls.company.id),
         )
         cls.a_receivable = cls.env["account.account"].create(
             {
