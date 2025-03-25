@@ -158,18 +158,11 @@ class StockBuffer(models.Model):
         """Return Quantities that are not yet in virtual stock but should
         be deduced from buffers (example: purchases created from buffers)"""
         res = {}.fromkeys(self.ids, 0.0)
-        polines = self.env["purchase.order.line"].search(
-            [
-                ("state", "in", ("draft", "sent", "to approve")),
-                ("buffer_ids", "in", self.ids),
-            ]
-        )
-        for poline in polines:
-            for buffer in poline.buffer_ids:
-                if buffer.id not in self.ids:
-                    continue
-                res[buffer.id] += poline.product_uom._compute_quantity(
-                    poline.product_qty, buffer.product_uom, round=False
+        for buffer in self:
+            polines = buffer._get_rfq_dlt(dlt_interval=None)
+            for line in polines:
+                res[buffer.id] += line.product_uom._compute_quantity(
+                    line.product_qty, buffer.product_uom, round=False
                 )
         return res
 
@@ -188,8 +181,10 @@ class StockBuffer(models.Model):
         action = self.env["ir.actions.actions"]._for_xml_id(
             "ddmrp.stock_move_year_consumption_action"
         )
-        locations = self.env["stock.location"].search(
-            [("id", "child_of", [self.location_id.id])]
+        locations = (
+            self.env["stock.location"]
+            .with_context(active_test=False)
+            .search([("id", "child_of", self.location_id.ids)])
         )
         date_to = fields.Date.today()
         # We take last five years, even though they will be initially
@@ -960,6 +955,7 @@ class StockBuffer(models.Model):
     def _get_manufactured_bom(self, limit=1):
         return self.env["mrp.bom"].search(
             [
+                ("type", "=", "normal"),
                 "|",
                 ("product_id", "=", self.product_id.id),
                 ("product_tmpl_id", "=", self.product_id.product_tmpl_id.id),
@@ -1195,6 +1191,17 @@ class StockBuffer(models.Model):
         help="Request for Quotation total quantity that is planned outside of "
         "the DLT horizon.",
     )
+    rfq_inside_dlt_qty = fields.Float(
+        string="RFQ Qty (Inside DLT)",
+        readonly=True,
+        help="Request for Quotation total quantity that is planned inside of "
+        "the DLT horizon.",
+    )
+    rfq_total_qty = fields.Float(
+        string="RFQ Total Qty",
+        readonly=True,
+        help="Request for Quotation total quantity that is planned",
+    )
     net_flow_position = fields.Float(
         digits="Product Unit of Measure",
         readonly=True,
@@ -1382,17 +1389,6 @@ class StockBuffer(models.Model):
             "domain": str([("id", "in", lines.ids)]),
         }
 
-    def open_moves(self):
-        self.ensure_one()
-        # Utility method used to add an "Open Moves" button in the buffer
-        # planning view
-        domain = self._search_open_stock_moves_domain()
-        moves = self.env["stock.move"].search(domain)
-        moves = moves.filtered(
-            lambda move: move.location_dest_id.is_sublocation_of(self.location_id)
-        )
-        return self._stock_move_tree_view(moves)
-
     def _get_horizon_adu_past_demand(self):
         return self.adu_calculation_method.horizon_past or 0
 
@@ -1437,8 +1433,10 @@ class StockBuffer(models.Model):
         # today is excluded to be sure that is a past day and all moves
         # for that day are done (or at least the expected date is in the past).
         date_from, date_to = self._get_dates_adu_past_demand(horizon)
-        locations = self.env["stock.location"].search(
-            [("id", "child_of", [self.location_id.id])]
+        locations = (
+            self.env["stock.location"]
+            .with_context(active_test=False)
+            .search([("id", "child_of", self.location_id.ids)])
         )
         qty = 0.0
         if self.adu_calculation_method.source_past == "estimates_mrp":
@@ -1689,17 +1687,15 @@ class StockBuffer(models.Model):
             outside_dlt_moves = self._search_stock_moves_incoming(outside_dlt=True)
             rec.incoming_outside_dlt_qty = sum(outside_dlt_moves.mapped("product_qty"))
             if rec.item_type == "purchased":
-                cut_date = rec._get_incoming_supply_date_limit()
-                # FIXME: filter using order_id.state while
-                #  https://github.com/odoo/odoo/pull/58966 is not merged.
-                #  Can be changed in v14.
-                pols = rec.purchase_line_ids.filtered(
-                    lambda l: l.date_planned > fields.Datetime.to_datetime(cut_date)
-                    and l.order_id.state in ("draft", "sent")
-                )
-                rec.rfq_outside_dlt_qty = sum(pols.mapped("product_qty"))
+                pols_outside_dlt = rec._get_rfq_dlt(dlt_interval="outside")
+                rec.rfq_outside_dlt_qty = sum(pols_outside_dlt.mapped("product_qty"))
+                pols_inside_dlt = rec._get_rfq_dlt(dlt_interval="inside")
+                rec.rfq_inside_dlt_qty = sum(pols_inside_dlt.mapped("product_qty"))
+                rec.rfq_total_qty = rec.rfq_inside_dlt_qty + rec.rfq_outside_dlt_qty
             else:
                 rec.rfq_outside_dlt_qty = 0.0
+                rec.rfq_inside_dlt_qty = 0.0
+                rec.rfq_total_qty = 0.0
             rec.incoming_total_qty = rec.incoming_dlt_qty + rec.incoming_outside_dlt_qty
         return True
 
@@ -1780,6 +1776,7 @@ class StockBuffer(models.Model):
     def _procure_qty_to_order(self):
         qty_to_order = self.procure_recommended_qty
         rounding = self.procure_uom_id.rounding or self.product_uom.rounding
+        qty_in_progress = self._quantity_in_progress()[self._origin.id]
         if (
             self.item_type == "distributed"
             and self.buffer_profile_id.replenish_distributed_limit_to_free_qty
@@ -1800,6 +1797,16 @@ class StockBuffer(models.Model):
             else:
                 # move only what we have in stock
                 return min(qty_to_order, self.distributed_source_location_qty)
+        elif (
+            float_compare(qty_in_progress, 0, precision_rounding=rounding) > 0
+            and float_compare(
+                qty_to_order, self.green_zone_qty, precision_rounding=rounding
+            )
+            < 0
+        ):
+            # When there is qty in progress (e.g. RfQ sent), do not keep
+            # auto-procuring small quantities, wait for the qty to be at least GZ.
+            return 0
         return qty_to_order
 
     def do_auto_procure(self):
@@ -1827,72 +1834,76 @@ class StockBuffer(models.Model):
             wizard.make_procurement()
         return True
 
-    def _search_purchase_order_lines_incoming(self, outside_dlt=False):
+    def action_view_supply_moves(self):
+        result = self.env["ir.actions.actions"]._for_xml_id("stock.stock_move_action")
+        result["context"] = {}
+        moves = self._search_stock_moves_incoming() + self._search_stock_moves_incoming(
+            outside_dlt=True
+        )
+        result["domain"] = [("id", "in", moves.ids)]
+        return result
+
+    def _get_rfq_dlt(self, dlt_interval=None):
+        self.ensure_one()
         cut_date = self._get_incoming_supply_date_limit()
-        if not outside_dlt:
+        if dlt_interval == "inside":
             pols = self.purchase_line_ids.filtered(
                 lambda l: l.date_planned <= fields.Datetime.to_datetime(cut_date)
-                and l.order_id.state in ("draft", "sent")
+                and l.state in ("draft", "sent", "to approve")
+            )
+        elif dlt_interval == "outside":
+            pols = self.purchase_line_ids.filtered(
+                lambda l: l.date_planned > fields.Datetime.to_datetime(cut_date)
+                and l.state in ("draft", "sent", "to approve")
             )
         else:
             pols = self.purchase_line_ids.filtered(
-                lambda l: l.date_planned > fields.Datetime.to_datetime(cut_date)
-                and l.order_id.state in ("draft", "sent")
+                lambda l: l.state in ("draft", "sent", "to approve")
             )
         return pols
 
-    def action_view_supply(self, outside_dlt=False):
-        if self.item_type == "purchased":
-            pols = self._search_purchase_order_lines_incoming(outside_dlt)
-            moves = self._search_stock_moves_incoming(outside_dlt)
-            while moves.mapped("move_orig_ids"):
-                moves = moves.mapped("move_orig_ids")
-            pos = pols.mapped("order_id") + moves.mapped("purchase_line_id.order_id")
-            result = self.env["ir.actions.actions"]._for_xml_id("purchase.purchase_rfq")
-            # Remove the context since the action display RFQ and not PO.
-            result["context"] = {}
-            result["domain"] = [("id", "in", pos.ids)]
-        elif self.item_type == "manufactured":
-            moves = self._search_stock_moves_incoming(outside_dlt)
-            mos = moves.mapped("production_id")
-            result = self.env["ir.actions.actions"]._for_xml_id(
-                "mrp.mrp_production_action"
-            )
-            result["context"] = {}
-            result["domain"] = [("id", "in", mos.ids)]
-        else:
-            moves = self._search_stock_moves_incoming(outside_dlt)
-            picks = moves.mapped("picking_id")
-            result = self.env["ir.actions.actions"]._for_xml_id(
-                "stock.action_picking_tree_all"
-            )
-            result["context"] = {}
-            result["domain"] = [("id", "in", picks.ids)]
+    def action_view_supply_moves_inside_dlt_window(self):
+        result = self.env["ir.actions.actions"]._for_xml_id("stock.stock_move_action")
+        moves = self._search_stock_moves_incoming()
+        result["context"] = {}
+        result["domain"] = [("id", "in", moves.ids)]
         return result
 
-    def action_view_supply_inside_dlt_window(self):
-        return self.action_view_supply()
-
-    def action_view_supply_outside_dlt_window(self):
-        return self.action_view_supply(outside_dlt=True)
-
-    def action_view_qualified_demand_pickings(self):
-        moves = self.qualified_demand_stock_move_ids
-        picks = moves.mapped("picking_id")
-        result = self.env["ir.actions.actions"]._for_xml_id(
-            "stock.action_picking_tree_all"
-        )
+    def action_view_supply_moves_outside_dlt_window(self):
+        result = self.env["ir.actions.actions"]._for_xml_id("stock.stock_move_action")
+        moves = self._search_stock_moves_incoming(outside_dlt=True)
         result["context"] = {}
-        result["domain"] = [("id", "in", picks.ids)]
+        result["domain"] = [("id", "in", moves.ids)]
+        return result
+
+    def action_view_supply_rfq_inside_dlt_window(self):
+        result = self.env["ir.actions.actions"]._for_xml_id("purchase.purchase_rfq")
+        pols = self._get_rfq_dlt(dlt_interval="inside")
+        pos = pols.mapped("order_id")
+        result["context"] = {}
+        result["domain"] = [("id", "in", pos.ids)]
+        return result
+
+    def action_view_supply_rfq_outside_dlt_window(self):
+        result = self.env["ir.actions.actions"]._for_xml_id("purchase.purchase_rfq")
+        pols = self._get_rfq_dlt(dlt_interval="outside")
+        pos = pols.mapped("order_id")
+        result["context"] = {}
+        result["domain"] = [("id", "in", pos.ids)]
+        return result
+
+    def action_view_qualified_demand_moves(self):
+        result = self.env["ir.actions.actions"]._for_xml_id("stock.stock_move_action")
+        result["context"] = {}
+        result["domain"] = [("id", "in", self.qualified_demand_stock_move_ids.ids)]
         return result
 
     def action_view_qualified_demand_mrp(self):
-        mrp_moves = self.qualified_demand_mrp_move_ids
         result = self.env["ir.actions.actions"]._for_xml_id(
             "mrp_multi_level.mrp_move_action"
         )
         result["context"] = {}
-        result["domain"] = [("id", "in", mrp_moves.ids)]
+        result["domain"] = [("id", "in", self.qualified_demand_mrp_move_ids.ids)]
         return result
 
     def action_view_past_adu_direct_demand(self):
@@ -2071,14 +2082,9 @@ class StockBuffer(models.Model):
     def _values_source_location_from_route(self):
         return {"warehouse_id": self.warehouse_id}
 
-    def _source_location_from_route(self, route=None):
-        """Return the replenishment source location for distributed buffers
-        If no route is passed, it follows the source location of the rules of
-        all the routes it finds until it can no longer find a path.
-        If a route is passed, it stops at the final source location of the
-        rules of this route only.
-        """
-        current_location = self.location_id
+    def _source_location_from_route(self, procure_location=None):
+        """Return the replenishment source location for distributed buffers"""
+        current_location = procure_location or self.location_id
         rule_values = self._values_source_location_from_route()
         while current_location:
             rule = self.env["procurement.group"]._get_rule(

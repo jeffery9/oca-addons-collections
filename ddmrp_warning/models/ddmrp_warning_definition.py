@@ -1,7 +1,7 @@
 # Copyright 2021 ForgeFlow S.L. (https://www.forgeflow.com)
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
-from odoo import _, fields, models
+from odoo import _, fields, models, tools
 from odoo.exceptions import UserError
 from odoo.osv import expression
 from odoo.tools.safe_eval import safe_eval
@@ -23,7 +23,7 @@ class DdmrpWarningDefinition(models.Model):
     )
     severity = fields.Selection(
         selection=[("1_low", "Low"), ("2_mid", "Medium"), ("3_high", "High")],
-        default="mid",
+        default="2_mid",
     )
     active = fields.Boolean(default=True)
     warning_domain = fields.Char(
@@ -31,6 +31,11 @@ class DdmrpWarningDefinition(models.Model):
         default="[]",
         help="Domain based on Stock Buffer, to define if the "
         "warning is applicable or not.",
+    )
+    ddmrp_warning_item_ids = fields.One2many(
+        comodel_name="ddmrp.warning.item",
+        inverse_name="warning_definition_id",
+        readonly=True,
     )
 
     def _eval_warning_domain(self, buffer, domain):
@@ -50,10 +55,25 @@ class DdmrpWarningDefinition(models.Model):
     def evaluate_definition(self, buffer):
         self.ensure_one()
         try:
-            res = safe_eval(self.python_code, globals_dict={"buffer": buffer})
+            res = safe_eval(
+                self.python_code,
+                globals_dict={
+                    "buffer": buffer,
+                    "time": tools.safe_eval.time,
+                    "datetime": tools.safe_eval.datetime,
+                    "dateutil": tools.safe_eval.dateutil,
+                },
+            )
         except Exception as error:
             raise UserError(
                 _("Error evaluating %(name)s.\n %(error)s")
                 % ({"name": self._name, "error": error})
             ) from error
+        return res
+
+    def write(self, vals):
+        # Unlink warning items when definition is archived
+        res = super().write(vals)
+        if "active" in vals and not vals.get("active"):
+            self.ddmrp_warning_item_ids.unlink()
         return res
