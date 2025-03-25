@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-01-17 09:35+0000\n"
+"PO-Revision-Date: 2024-09-17 10:06+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. module: pingen
 #: model:ir.model.fields,field_description:pingen.field_pingen_document__access_token
@@ -249,7 +249,7 @@ msgstr "Contenuto file (base64)"
 #. module: pingen
 #: model:ir.model.fields,field_description:pingen.field_pingen_document__raw
 msgid "File Content (raw)"
-msgstr "Contenuto file (grezzo)"
+msgstr "Contenuto file (raw)"
 
 #. module: pingen
 #: model:ir.model.fields,field_description:pingen.field_pingen_document__file_size
@@ -335,7 +335,7 @@ msgstr "Opzioni"
 #. module: pingen
 #: model:ir.model.fields,field_description:pingen.field_pingen_document__original_id
 msgid "Original (unoptimized, unresized) attachment"
-msgstr "Allegato originae (non ottimizzato, non ridimensionato)"
+msgstr "Allegato originale (non ottimizzato, non ridimensionato)"
 
 #. module: pingen
 #: model:ir.model.fields,field_description:pingen.field_pingen_document__pages
@@ -402,7 +402,7 @@ msgstr "Errore Pingen"
 #: model:ir.model.fields,field_description:pingen.field_res_company__pingen_staging
 #: model:ir.model.fields,field_description:pingen.field_res_config_settings__pingen_staging
 msgid "Pingen Staging"
-msgstr "Fase pingen"
+msgstr "Fase Pingen"
 
 #. module: pingen
 #: model:ir.model.fields,field_description:pingen.field_pingen_document__pingen_status
