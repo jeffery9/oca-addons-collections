@@ -1,0 +1,11 @@
+{
+  "pull_requests": {
+    "OCA/wms#545": "(auto) Nothing to port from PR #545",
+    "OCA/wms#641": "(auto) Nothing to port from PR #641",
+    "OCA/wms#606": "(auto) Nothing to port from PR #606",
+    "OCA/wms#623": "already ported",
+    "OCA/wms#637": "already ported",
+    "OCA/wms#656": "already ported",
+    "OCA/wms#945": "ported into 'stock_move_line_change_lot' in OCA/stock-logistics-workflow#1825"
+  }
+}

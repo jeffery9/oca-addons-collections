@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-04-04 14:41+0000\n"
+"PO-Revision-Date: 2025-01-15 15:06+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,31 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
-
-#. module: stock_available_to_promise_release
-#. odoo-python
-#: code:addons/stock_available_to_promise_release/models/stock_move.py:0
-#, python-format
-msgid ""
-"\n"
-"- Origin picking(s):\n"
-"\t -%(picking_names)s."
-msgstr ""
-"\n"
-"- Prelievo origine(s):\n"
-"\t -%(picking_names)s."
-
-#. module: stock_available_to_promise_release
-#. odoo-python
-#: code:addons/stock_available_to_promise_release/models/stock_move.py:0
-#, python-format
-msgid ""
-"\n"
-"- Picking: %(picking_name)s."
-msgstr ""
-"\n"
-"- Prelievo: %(picking_name)s."
+"X-Generator: Weblate 5.6.2\n"
 
 #. module: stock_available_to_promise_release
 #: model:ir.model.fields,field_description:stock_available_to_promise_release.field_stock_picking__release_ready_count
@@ -49,6 +25,13 @@ msgstr "N° di movimenti pronti"
 #: model:ir.model.fields,field_description:stock_available_to_promise_release.field_stock_picking__need_release_count
 msgid "# of need release moves"
 msgstr "N° di movimenti che richiedono il rilascio"
+
+#. module: stock_available_to_promise_release
+#. odoo-python
+#: code:addons/stock_available_to_promise_release/models/stock_move.py:0
+#, python-format
+msgid "- blocking transfer(s): %(picking_names)s"
+msgstr "- blocco trasferimento(i): %(picking_names)s"
 
 #. module: stock_available_to_promise_release
 #: model_terms:ir.ui.view,arch_db:stock_available_to_promise_release.view_picking_release_form
@@ -189,7 +172,7 @@ msgid ""
 msgstr ""
 "Se selezionata, una volta che un prelievo di consegna è stato rilasciato, "
 "non vi verranno più aggiunti movimenti. Per esempio, se si aggiungono righe "
-"nell'ordine di vendita orginale, i nuovi movimenti verranno aggiunti a una "
+"nell'ordine di vendita originale, i nuovi movimenti verranno aggiunti a una "
 "nuova consegna."
 
 #. module: stock_available_to_promise_release
@@ -202,11 +185,11 @@ msgid ""
 "internal pulled moves are canceled."
 msgstr ""
 "Se selezionata, quando viene creato un ordine residuo (cioè alla validazione "
-"della consegna) i movimenti nell'ordine residuo nn vengono rilasciati finchè "
-"non derivano da una rotta configurata per il rilascio manuale dei movimenti. "
-"Questo significa che i movimenti che non sono stati consegnati vengono "
-"reimpostati per la richiesta di rilascio e vengono creati movimenti di "
-"prelievo non elaborati."
+"della consegna) i movimenti nell'ordine residuo non vengono rilasciati "
+"finché non derivano da una rotta configurata per il rilascio manuale dei "
+"movimenti. Questo significa che i movimenti che non sono stati consegnati "
+"vengono reimpostati per la richiesta di rilascio e vengono creati movimenti "
+"di prelievo non elaborati."
 
 #. module: stock_available_to_promise_release
 #: model:ir.model,name:stock_available_to_promise_release.model_stock_location
@@ -290,7 +273,7 @@ msgstr "Ordinato disponibile alle promesse (q.tà reale)"
 #. module: stock_available_to_promise_release
 #: model:ir.model,name:stock_available_to_promise_release.model_stock_picking_type
 msgid "Picking Type"
-msgstr "Tipologia prelievo"
+msgstr "Tipo prelievo"
 
 #. module: stock_available_to_promise_release
 #: model:ir.model.fields,field_description:stock_available_to_promise_release.field_stock_picking_type__prevent_new_move_after_release
@@ -363,11 +346,6 @@ msgid "Release based on Available to Promise"
 msgstr "Rilascio in base alla disponibilità alle promesse"
 
 #. module: stock_available_to_promise_release
-#: model_terms:ir.ui.view,arch_db:stock_available_to_promise_release.view_move_release_form
-msgid "Shipment date"
-msgstr "Data spedizione"
-
-#. module: stock_available_to_promise_release
 #: model:ir.model,name:stock_available_to_promise_release.model_stock_release
 #: model_terms:ir.ui.view,arch_db:stock_available_to_promise_release.view_stock_release_form
 msgid "Stock Allocations Release"
@@ -405,8 +383,8 @@ msgstr "Regola di giacenza"
 #: code:addons/stock_available_to_promise_release/models/stock_picking.py:0
 #, python-format
 msgid ""
-"The backorder <a href=# data-oe-model=stock.picking data-oe-id=%(id)s>"
-"%(name)s</a> has been created."
+"The backorder <a href=# data-oe-model=stock.picking data-oe-"
+"id=%(id)s>%(name)s</a> has been created."
 msgstr ""
 "È stato creato l'ordine residuo <a href=# data-oe-model=stock.picking data-"
 "oe-id=%(id)s>%(name)s</a>."
@@ -562,9 +540,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/stock_available_to_promise_release/models/stock_move.py:0
 #, python-format
-msgid "You are not allowed to unrelease this move %(move_name)s."
-msgstr ""
-"Non si ha l'abilitazione al rilascio di questo movimento %(move_name)s."
+msgid "You are not allowed to unrelease those deliveries:\n"
+msgstr "Non si è autorizzati a derilasciare quelle consegne:\n"
 
 #. module: stock_available_to_promise_release
 #: model_terms:ir.ui.view,arch_db:stock_available_to_promise_release.res_config_settings_view_form_stock
@@ -575,3 +552,29 @@ msgstr "giorni"
 #: model_terms:ir.ui.view,arch_db:stock_available_to_promise_release.res_config_settings_view_form_stock
 msgid "minutes"
 msgstr "minuti"
+
+#~ msgid "Shipment date"
+#~ msgstr "Data spedizione"
+
+#, python-format
+#~ msgid ""
+#~ "\n"
+#~ "- Origin picking(s):\n"
+#~ "\t -%(picking_names)s."
+#~ msgstr ""
+#~ "\n"
+#~ "- Prelievo origine(s):\n"
+#~ "\t -%(picking_names)s."
+
+#, python-format
+#~ msgid ""
+#~ "\n"
+#~ "- Picking: %(picking_name)s."
+#~ msgstr ""
+#~ "\n"
+#~ "- Prelievo: %(picking_name)s."
+
+#, python-format
+#~ msgid "You are not allowed to unrelease this move %(move_name)s."
+#~ msgstr ""
+#~ "Non si ha l'abilitazione al rilascio di questo movimento %(move_name)s."

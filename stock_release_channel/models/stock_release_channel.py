@@ -6,11 +6,13 @@
 import logging
 from collections import defaultdict
 from copy import deepcopy
+from operator import itemgetter
 
 from pytz import timezone
 
 from odoo import _, api, exceptions, fields, models
 from odoo.osv.expression import NEGATIVE_TERM_OPERATORS
+from odoo.tools import groupby
 from odoo.tools.safe_eval import (
     datetime as safe_datetime,
     dateutil as safe_dateutil,
@@ -41,11 +43,19 @@ class StockReleaseChannel(models.Model):
     release_forbidden = fields.Boolean(string="Forbid to release this channel")
     sequence = fields.Integer(default=lambda self: self._default_sequence())
     color = fields.Integer()
+    company_id = fields.Many2one(
+        string="Company",
+        comodel_name="res.company",
+        required=True,
+        default=lambda s: s.env.company.id,
+        index=True,
+    )
     warehouse_id = fields.Many2one(
         "stock.warehouse",
         string="Warehouse",
         index=True,
         help="Warehouse for which this channel is relevant",
+        check_company=True,
     )
     picking_type_ids = fields.Many2many(
         "stock.picking.type",
@@ -54,8 +64,9 @@ class StockReleaseChannel(models.Model):
         "picking_type_id",
         string="Operation Types",
         domain="warehouse_id"
-        " and [('warehouse_id', '=', warehouse_id), ('code', '=', 'outgoing')]"
-        " or [('code', '=', 'outgoing')]",
+        " and [('warehouse_id', '=', warehouse_id), ('code', '=', 'outgoing'), "
+        "('company_id', 'in', (company_id, False))]"
+        " or [('code', '=', 'outgoing'), ('company_id', 'in', (company_id, False))]",
     )
     rule_domain = fields.Char(
         string="Domain",
@@ -91,6 +102,14 @@ class StockReleaseChannel(models.Model):
         string="Transfers",
         comodel_name="stock.picking",
         inverse_name="release_channel_id",
+        check_company=True,
+    )
+    open_picking_ids = fields.One2many(
+        string="Open Transfers",
+        comodel_name="stock.picking",
+        inverse_name="release_channel_id",
+        readonly=True,
+        domain=[("state", "not in", ("done", "cancel"))],
     )
 
     # beware not to store any value which can be changed by concurrent
@@ -177,7 +196,7 @@ class StockReleaseChannel(models.Model):
         selection=[("open", "Open"), ("locked", "Locked"), ("asleep", "Asleep")],
         help="The state allows you to control the availability of the release channel.\n"
         "* Open: Manual and automatic picking assignment to the release is effective "
-        "and release operations are allowed.\n "
+        "and release operations are allowed.\n"
         "* Locked: Release operations are forbidden. (Assignement processes are "
         "still working)\n"
         "* Asleep: Assigned pickings not processed are unassigned from the release "
@@ -219,6 +238,7 @@ class StockReleaseChannel(models.Model):
         column2="partner_id",
         string="Partners",
         context={"active_test": False},
+        check_company=True,
     )
     show_last_picking_done = fields.Boolean(
         compute="_compute_show_last_picking_done",
@@ -430,7 +450,7 @@ class StockReleaseChannel(models.Model):
                     + values[f"{prefix}_picking_released"]
                     + values[f"{prefix}_picking_done"]
                 )
-            record.write(values)
+            record.update(values)
 
     def _query_get_chain(self, pickings):
         """Get all stock.picking before an outgoing one
@@ -442,15 +462,18 @@ class StockReleaseChannel(models.Model):
         WITH RECURSIVE
         pickings AS (
             SELECT move.picking_id,
+                   stock_picking.release_channel_id,
                    true as outgoing,
                    ''::varchar as state,  -- no need it, we exclude outgoing
                    move.id as move_orig_id
             FROM stock_move move
+            INNER JOIN stock_picking ON move.picking_id = stock_picking.id
             WHERE move.picking_id in %s
 
             UNION
 
             SELECT move.picking_id,
+                   pickings.release_channel_id,
                    false as outgoing,
                    picking.state,
                    rel.move_orig_id
@@ -462,7 +485,7 @@ class StockReleaseChannel(models.Model):
             INNER JOIN stock_picking picking
             ON picking.id = move.picking_id
         )
-        SELECT DISTINCT picking_id, state FROM pickings
+        SELECT DISTINCT release_channel_id, picking_id, state FROM pickings
         WHERE outgoing is false;
         """
         return (query, (tuple(pickings.ids),))
@@ -472,20 +495,24 @@ class StockReleaseChannel(models.Model):
             ["move_dest_ids", "move_orig_ids", "picking_id"]
         )
         self.env["stock.picking"].flush_model(["state"])
-        for channel in self:
-            domain = self._field_picking_domains()["released"]
-            domain += [("release_channel_id", "=", channel.id)]
-            released = self.env["stock.picking"].search(domain)
 
-            if not released:
+        domain = self._field_picking_domains()["released"]
+        domain += [("release_channel_id", "in", self.ids)]
+        released = self.env["stock.picking"].search(domain)
+
+        if not released:
+            for channel in self:
                 channel.picking_chain_ids = False
                 channel.count_picking_chain = 0
                 channel.count_picking_chain_in_progress = 0
                 channel.count_picking_chain_done = 0
-                continue
+            return
 
-            self.env.cr.execute(*self._query_get_chain(released))
-            rows = self.env.cr.dictfetchall()
+        self.env.cr.execute(*self._query_get_chain(released))
+        rows = self.env.cr.dictfetchall()
+        rows_by_channel = dict(groupby(rows, key=itemgetter("release_channel_id")))
+        for channel in self:
+            rows = rows_by_channel.get(channel.id, [])
             channel.picking_chain_ids = [row["picking_id"] for row in rows]
             channel.count_picking_chain_in_progress = sum(
                 [1 for row in rows if row["state"] not in ("cancel", "done")]
@@ -550,8 +577,6 @@ class StockReleaseChannel(models.Model):
             current = picking
             domain = channel._prepare_domain()
             code = channel.sudo().code
-            if not domain and not code:
-                current.release_channel_id = channel
             if domain:
                 current = picking.filtered_domain(domain)
             if not current:
@@ -620,9 +645,7 @@ class StockReleaseChannel(models.Model):
         return eval_context.get("pickings", self.env["stock.picking"].browse())
 
     def action_picking_all(self):
-        return self._action_picking_for_field(
-            "all", context={"search_default_release_ready": 1}
-        )
+        return self._action_picking_for_field("all")
 
     def action_picking_release_ready(self):
         return self._action_picking_for_field("release_ready")
@@ -737,7 +760,12 @@ class StockReleaseChannel(models.Model):
 
     @staticmethod
     def _pickings_sort_key(picking):
-        return (-int(picking.priority or 1), picking.date_priority, picking.id)
+        return (
+            -int(picking.priority or 1),
+            picking.scheduled_date,
+            picking.date_priority or picking.create_date,
+            picking.id,
+        )
 
     def _get_next_pickings(self):
         return getattr(self, "_get_next_pickings_{}".format(self.batch_mode))()
@@ -852,6 +880,7 @@ class StockReleaseChannel(models.Model):
         pickings_to_unassign.write({"release_channel_id": False})
         pickings_to_unassign.unrelease()
         self.write({"state": "asleep"})
+        pickings_to_unassign._delay_assign_release_channel()
 
     def action_wake_up(self):
         self._check_is_action_wake_up_allowed()

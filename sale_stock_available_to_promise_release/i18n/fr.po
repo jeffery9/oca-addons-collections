@@ -7,14 +7,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 13.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-07-12 17:07+0000\n"
-"PO-Revision-Date: 2021-07-02 07:18+0000\n"
-"Last-Translator: \n"
+"PO-Revision-Date: 2025-01-01 14:06+0000\n"
+"Last-Translator: samibc2c <sami.bouzidi@camptocamp.com>\n"
 "Language-Team: \n"
-"Language: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. module: sale_stock_available_to_promise_release
 #: model_terms:ir.ui.view,arch_db:sale_stock_available_to_promise_release.report_saleorder_document
@@ -40,7 +41,22 @@ msgstr "Quantité Disponible"
 #: model:ir.model.fields,field_description:sale_stock_available_to_promise_release.field_stock_move__carrier_id
 #: model_terms:ir.ui.view,arch_db:sale_stock_available_to_promise_release.view_picking_release_search
 msgid "Carrier"
-msgstr ""
+msgstr "Transporteur"
+
+#. module: sale_stock_available_to_promise_release
+#: model:ir.model,name:sale_stock_available_to_promise_release.model_res_company
+msgid "Companies"
+msgstr "Sociétés"
+
+#. module: sale_stock_available_to_promise_release
+#: model:ir.model,name:sale_stock_available_to_promise_release.model_res_config_settings
+msgid "Config Settings"
+msgstr "Paramètres de configuration"
+
+#. module: sale_stock_available_to_promise_release
+#: model:ir.model.fields,field_description:sale_stock_available_to_promise_release.field_sale_order_line__delayed_qty
+msgid "Delayed Qty"
+msgstr "Qté différée"
 
 #. module: sale_stock_available_to_promise_release
 #: model:ir.model.fields,field_description:sale_stock_available_to_promise_release.field_procurement_group__date_expected
@@ -48,22 +64,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_stock_available_to_promise_release.field_stock_picking__sale_date_expected
 #: model_terms:ir.ui.view,arch_db:sale_stock_available_to_promise_release.view_move_release_search
 msgid "Delivery Date"
-msgstr ""
+msgstr "Date de livraison"
 
 #. module: sale_stock_available_to_promise_release
 #: model_terms:ir.ui.view,arch_db:sale_stock_available_to_promise_release.view_move_release_tree
 msgid "Delivery Method"
-msgstr ""
-
-#. module: sale_stock_available_to_promise_release
-#: model:ir.model.fields,field_description:sale_stock_available_to_promise_release.field_procurement_group__display_name
-#: model:ir.model.fields,field_description:sale_stock_available_to_promise_release.field_product_product__display_name
-#: model:ir.model.fields,field_description:sale_stock_available_to_promise_release.field_sale_order__display_name
-#: model:ir.model.fields,field_description:sale_stock_available_to_promise_release.field_sale_order_line__display_name
-#: model:ir.model.fields,field_description:sale_stock_available_to_promise_release.field_stock_move__display_name
-#: model:ir.model.fields,field_description:sale_stock_available_to_promise_release.field_stock_picking__display_name
-msgid "Display Name"
-msgstr ""
+msgstr "Méthode de livraison"
 
 #. module: sale_stock_available_to_promise_release
 #: model:ir.model.fields,field_description:sale_stock_available_to_promise_release.field_sale_order_line__expected_availability_date
@@ -78,26 +84,6 @@ msgstr "Disponible en Totalité"
 #. module: sale_stock_available_to_promise_release
 #: model_terms:ir.ui.view,arch_db:sale_stock_available_to_promise_release.view_move_release_search
 msgid "Further Shipment"
-msgstr ""
-
-#. module: sale_stock_available_to_promise_release
-#: model:ir.model.fields,field_description:sale_stock_available_to_promise_release.field_procurement_group__id
-#: model:ir.model.fields,field_description:sale_stock_available_to_promise_release.field_product_product__id
-#: model:ir.model.fields,field_description:sale_stock_available_to_promise_release.field_sale_order__id
-#: model:ir.model.fields,field_description:sale_stock_available_to_promise_release.field_sale_order_line__id
-#: model:ir.model.fields,field_description:sale_stock_available_to_promise_release.field_stock_move__id
-#: model:ir.model.fields,field_description:sale_stock_available_to_promise_release.field_stock_picking__id
-msgid "ID"
-msgstr ""
-
-#. module: sale_stock_available_to_promise_release
-#: model:ir.model.fields,field_description:sale_stock_available_to_promise_release.field_procurement_group____last_update
-#: model:ir.model.fields,field_description:sale_stock_available_to_promise_release.field_product_product____last_update
-#: model:ir.model.fields,field_description:sale_stock_available_to_promise_release.field_sale_order____last_update
-#: model:ir.model.fields,field_description:sale_stock_available_to_promise_release.field_sale_order_line____last_update
-#: model:ir.model.fields,field_description:sale_stock_available_to_promise_release.field_stock_move____last_update
-#: model:ir.model.fields,field_description:sale_stock_available_to_promise_release.field_stock_picking____last_update
-msgid "Last Modified on"
 msgstr ""
 
 #. module: sale_stock_available_to_promise_release
@@ -139,8 +125,8 @@ msgstr "Groupe d'approvisionnement"
 
 #. module: sale_stock_available_to_promise_release
 #: model:ir.model,name:sale_stock_available_to_promise_release.model_product_product
-msgid "Product"
-msgstr "Article"
+msgid "Product Variant"
+msgstr ""
 
 #. module: sale_stock_available_to_promise_release
 #: model:ir.model.fields.selection,name:sale_stock_available_to_promise_release.selection__sale_order_line__availability_status__restock
@@ -158,9 +144,22 @@ msgid "Sales Order Line"
 msgstr "Ligne de bons de commande"
 
 #. module: sale_stock_available_to_promise_release
+#: model:ir.model.fields,help:sale_stock_available_to_promise_release.field_res_company__stock_sale_report_display_is_available
+#: model:ir.model.fields,help:sale_stock_available_to_promise_release.field_res_config_settings__stock_sale_report_display_is_available
+#: model_terms:ir.ui.view,arch_db:sale_stock_available_to_promise_release.res_config_settings_view
+msgid "Show Available column in SO and quotation reports"
+msgstr ""
+
+#. module: sale_stock_available_to_promise_release
 #: model:ir.model,name:sale_stock_available_to_promise_release.model_stock_move
 msgid "Stock Move"
 msgstr "Mouvement de stock"
+
+#. module: sale_stock_available_to_promise_release
+#: model:ir.model.fields,field_description:sale_stock_available_to_promise_release.field_res_company__stock_sale_report_display_is_available
+#: model:ir.model.fields,field_description:sale_stock_available_to_promise_release.field_res_config_settings__stock_sale_report_display_is_available
+msgid "Stock Sale Report Display Is Available"
+msgstr ""
 
 #. module: sale_stock_available_to_promise_release
 #: model_terms:ir.ui.view,arch_db:sale_stock_available_to_promise_release.view_move_release_search
@@ -181,3 +180,6 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sale_stock_available_to_promise_release.report_saleorder_document
 msgid "Yes"
 msgstr "Oui"
+
+#~ msgid "Product"
+#~ msgstr "Article"

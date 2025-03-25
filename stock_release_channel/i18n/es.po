@@ -19,20 +19,20 @@ msgstr ""
 #. module: stock_release_channel
 #: model_terms:ir.ui.view,arch_db:stock_release_channel.stock_release_channel_kanban_view
 msgid ""
-"<i class=\"fa fa-dropbox fa-4x\" role=\"img\" aria-label=\"Release\" title="
-"\"Automatic Release\"/>"
+"<i class=\"fa fa-dropbox fa-4x\" role=\"img\" aria-label=\"Release\" "
+"title=\"Automatic Release\"/>"
 msgstr ""
-"<i class=\"fa fa-dropbox fa-4x\" role=\"img\" aria-label=\"Release\" title="
-"\"Automatic Release\"/>"
+"<i class=\"fa fa-dropbox fa-4x\" role=\"img\" aria-label=\"Release\" "
+"title=\"Automatic Release\"/>"
 
 #. module: stock_release_channel
 #: model_terms:ir.ui.view,arch_db:stock_release_channel.stock_release_channel_kanban_view
 msgid ""
-"<i class=\"fa fa-ellipsis-v\" role=\"img\" aria-label=\"Details\" title="
-"\"Details\"/>"
+"<i class=\"fa fa-ellipsis-v\" role=\"img\" aria-label=\"Details\" "
+"title=\"Details\"/>"
 msgstr ""
-"<i class=\"fa fa-ellipsis-v\" role=\"img\" aria-label=\"Details\" title="
-"\"Details\"/>"
+"<i class=\"fa fa-ellipsis-v\" role=\"img\" aria-label=\"Details\" "
+"title=\"Details\"/>"
 
 #. module: stock_release_channel
 #: model_terms:ir.ui.view,arch_db:stock_release_channel.stock_release_channel_kanban_view
@@ -209,6 +209,11 @@ msgid "Companies"
 msgstr ""
 
 #. module: stock_release_channel
+#: model:ir.model.fields,field_description:stock_release_channel.field_stock_release_channel__company_id
+msgid "Company"
+msgstr ""
+
+#. module: stock_release_channel
 #: model:ir.model,name:stock_release_channel.model_res_config_settings
 msgid "Config Settings"
 msgstr ""
@@ -227,6 +232,11 @@ msgstr "Creado por"
 #: model:ir.model.fields,field_description:stock_release_channel.field_stock_release_channel__create_date
 msgid "Created on"
 msgstr "Creado el"
+
+#. module: stock_release_channel
+#: model_terms:ir.ui.view,arch_db:stock_release_channel.stock_release_channel_form_view
+msgid "Deliveries"
+msgstr ""
 
 #. module: stock_release_channel
 #: model:ir.model.fields,field_description:stock_release_channel.field_stock_release_channel__display_name
@@ -297,6 +307,11 @@ msgstr "En curso Transferencias relacionadas"
 msgid ""
 "In release channels dashboard, add link to last done picking and show "
 "transfer date"
+msgstr ""
+
+#. module: stock_release_channel
+#: model_terms:ir.ui.view,arch_db:stock_release_channel.stock_release_channel_form_view
+msgid "Internal transfers"
 msgstr ""
 
 #. module: stock_release_channel
@@ -463,6 +478,11 @@ msgid "Open"
 msgstr "Abrir"
 
 #. module: stock_release_channel
+#: model:ir.model.fields,field_description:stock_release_channel.field_stock_release_channel__open_picking_ids
+msgid "Open Transfers"
+msgstr ""
+
+#. module: stock_release_channel
 #: model:ir.model.fields,field_description:stock_release_channel.field_stock_release_channel__picking_type_ids
 msgid "Operation Types"
 msgstr "Tipos de operación"
@@ -512,6 +532,17 @@ msgstr "Código Python"
 #: model:ir.cron,cron_name:stock_release_channel.ir_cron_stock_picking_assign_release_channel
 msgid "Re-assign release channel"
 msgstr "Reasignar canal de liberación"
+
+#. module: stock_release_channel
+#: model:ir.model.fields,field_description:stock_release_channel.field_res_company__recompute_channel_on_pickings_at_release
+#: model:ir.model.fields,field_description:stock_release_channel.field_res_config_settings__recompute_channel_on_pickings_at_release
+msgid "Recompute Channel On Pickings At Release"
+msgstr ""
+
+#. module: stock_release_channel
+#: model_terms:ir.ui.view,arch_db:stock_release_channel.res_config_settings_view
+msgid "Recompute channel when releasing a transfer"
+msgstr ""
 
 #. module: stock_release_channel
 #: model_terms:ir.ui.view,arch_db:stock_release_channel.stock_release_channel_tree_view
@@ -675,16 +706,13 @@ msgid ""
 "and release operations are allowed.\n"
 " * Locked: Release operations are forbidden. (Assignement processes are "
 "still working)\n"
+"* Delivering: A background task is running to automatically deliver ready "
+"shipments\n"
+"* Delivering Error: An error occurred in the delivery background task\n"
+"* Delivered: Ready transfers are delivered\n"
 "* Asleep: Assigned pickings not processed are unassigned from the release "
 "channel.\n"
 msgstr ""
-"El estado permite controlar la disponibilidad del canal de liberación.\n"
-"* Abierto: La asignación de picking manual y automático a la liberación es "
-"efectiva y se permiten las operaciones de liberación.\n"
-" * Bloqueado: Las operaciones de liberación están prohibidas. (Los procesos "
-"de asignación siguen funcionando)\n"
-"* Dormido: Las recogidas asignadas no procesadas se desasignan del canal de "
-"liberación.\n"
 
 #. module: stock_release_channel
 #: model:ir.model.fields,help:stock_release_channel.field_stock_release_channel__state_at_wakeup
@@ -782,6 +810,12 @@ msgstr ""
 "que están en curso y no se han enviado (X - En espera). Este campo define X."
 
 #. module: stock_release_channel
+#: model:ir.model.fields,help:stock_release_channel.field_res_company__recompute_channel_on_pickings_at_release
+#: model:ir.model.fields,help:stock_release_channel.field_res_config_settings__recompute_channel_on_pickings_at_release
+msgid "When releasing a transfer, recompute channel"
+msgstr ""
+
+#. module: stock_release_channel
 #: model:ir.model.fields,help:stock_release_channel.field_stock_release_channel__code
 msgid "Write Python code to filter out pickings."
 msgstr "Escribe código Python para filtrar las selecciones."
@@ -801,6 +835,23 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:stock_release_channel.stock_release_channel_kanban_view
 msgid "name"
 msgstr "nombre"
+
+#~ msgid ""
+#~ "The state allows you to control the availability of the release channel.\n"
+#~ "* Open: Manual and automatic picking assignment to the release is "
+#~ "effective and release operations are allowed.\n"
+#~ " * Locked: Release operations are forbidden. (Assignement processes are "
+#~ "still working)\n"
+#~ "* Asleep: Assigned pickings not processed are unassigned from the release "
+#~ "channel.\n"
+#~ msgstr ""
+#~ "El estado permite controlar la disponibilidad del canal de liberación.\n"
+#~ "* Abierto: La asignación de picking manual y automático a la liberación "
+#~ "es efectiva y se permiten las operaciones de liberación.\n"
+#~ " * Bloqueado: Las operaciones de liberación están prohibidas. (Los "
+#~ "procesos de asignación siguen funcionando)\n"
+#~ "* Dormido: Las recogidas asignadas no procesadas se desasignan del canal "
+#~ "de liberación.\n"
 
 #~ msgid "<span class=\"middle_title\">To Do Situation</span>"
 #~ msgstr "<span class=\"middle_title\">Situación por hacer</span>"
