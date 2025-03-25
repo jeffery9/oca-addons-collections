@@ -21,13 +21,17 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[account_commission](account_commission/) | 16.0.2.3.0 | [![pedrobaeza](https://github.com/pedrobaeza.png?size=30px)](https://github.com/pedrobaeza) | Account commissions
-[commission](commission/) | 16.0.2.2.0 | [![pedrobaeza](https://github.com/pedrobaeza.png?size=30px)](https://github.com/pedrobaeza) | Commissions
+[account_commission](account_commission/) | 16.0.2.4.1 | [![pedrobaeza](https://github.com/pedrobaeza.png?size=30px)](https://github.com/pedrobaeza) | Account commissions
+[commission](commission/) | 16.0.2.4.0 | [![pedrobaeza](https://github.com/pedrobaeza.png?size=30px)](https://github.com/pedrobaeza) | Commissions
+[commission_delegated_partner](commission_delegated_partner/) | 16.0.1.0.1 |  | Allow to delegate the invoices of agent to a delegate partner
 [commission_formula](commission_formula/) | 16.0.1.0.0 |  | Commissions computed by formulas
 [hr_commission](hr_commission/) | 16.0.1.0.0 |  | HR commissions
-[sale_commission](sale_commission/) | 16.0.1.0.2 | [![pedrobaeza](https://github.com/pedrobaeza.png?size=30px)](https://github.com/pedrobaeza) | Sales commissions
-[sale_commission_product_criteria](sale_commission_product_criteria/) | 16.0.1.0.0 | [![ilyasProgrammer](https://github.com/ilyasProgrammer.png?size=30px)](https://github.com/ilyasProgrammer) | Advanced commissions rules
-[sale_commission_salesman](sale_commission_salesman/) | 16.0.1.0.0 |  | Sales commissions from salesman
+[sale_commission](sale_commission/) | 16.0.1.0.3 | [![pedrobaeza](https://github.com/pedrobaeza.png?size=30px)](https://github.com/pedrobaeza) | Sales commissions
+[sale_commission_agent_restrict](sale_commission_agent_restrict/) | 16.0.1.0.0 | [![aleuffre](https://github.com/aleuffre.png?size=30px)](https://github.com/aleuffre) | Sales Commissions Agent Restrict
+[sale_commission_product_criteria](sale_commission_product_criteria/) | 16.0.1.0.1 | [![ilyasProgrammer](https://github.com/ilyasProgrammer.png?size=30px)](https://github.com/ilyasProgrammer) | Advanced commissions rules
+[sale_commission_product_criteria_discount](sale_commission_product_criteria_discount/) | 16.0.1.0.1 | [![aleuffre](https://github.com/aleuffre.png?size=30px)](https://github.com/aleuffre) [![ilyasProgrammer](https://github.com/ilyasProgrammer.png?size=30px)](https://github.com/ilyasProgrammer) [![renda-dev](https://github.com/renda-dev.png?size=30px)](https://github.com/renda-dev) [![PicchiSeba](https://github.com/PicchiSeba.png?size=30px)](https://github.com/PicchiSeba) | Advanced commissions rules with discount
+[sale_commission_product_criteria_domain](sale_commission_product_criteria_domain/) | 16.0.1.0.2 | [![ilyasProgrammer](https://github.com/ilyasProgrammer.png?size=30px)](https://github.com/ilyasProgrammer) | Sale Commission Product Criteria Domain
+[sale_commission_salesman](sale_commission_salesman/) | 16.0.1.0.1 |  | Sales commissions from salesman
 
 [//]: # (end addons)
 

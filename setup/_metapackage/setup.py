@@ -10,10 +10,14 @@ setuptools.setup(
     install_requires=[
         'odoo-addon-account_commission>=16.0dev,<16.1dev',
         'odoo-addon-commission>=16.0dev,<16.1dev',
+        'odoo-addon-commission_delegated_partner>=16.0dev,<16.1dev',
         'odoo-addon-commission_formula>=16.0dev,<16.1dev',
         'odoo-addon-hr_commission>=16.0dev,<16.1dev',
         'odoo-addon-sale_commission>=16.0dev,<16.1dev',
+        'odoo-addon-sale_commission_agent_restrict>=16.0dev,<16.1dev',
         'odoo-addon-sale_commission_product_criteria>=16.0dev,<16.1dev',
+        'odoo-addon-sale_commission_product_criteria_discount>=16.0dev,<16.1dev',
+        'odoo-addon-sale_commission_product_criteria_domain>=16.0dev,<16.1dev',
         'odoo-addon-sale_commission_salesman>=16.0dev,<16.1dev',
     ],
     classifiers=[
