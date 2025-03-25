@@ -9,7 +9,7 @@
 
 # knowledge
 
-Knowlesge management addons. Also has some usefull tools to handle attachments
+Knowledge management addons. Also has some useful tools to handle attachments.
 
 <!-- /!\ do not modify below this line -->
 
@@ -21,16 +21,17 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[attachment_zipped_download](attachment_zipped_download/) | 16.0.2.0.2 |  | Attachment Zipped Download
+[attachment_zipped_download](attachment_zipped_download/) | 16.0.2.0.3 |  | Attachment Zipped Download
 [document_knowledge](document_knowledge/) | 16.0.1.1.0 |  | Documents Knowledge
-[document_page](document_page/) | 16.0.1.4.0 |  | Document Page
-[document_page_access_group](document_page_access_group/) | 16.0.1.0.0 |  | Choose groups to access document pages
-[document_page_approval](document_page_approval/) | 16.0.1.1.0 |  | Document Page Approval
+[document_page](document_page/) | 16.0.1.6.1 |  | Document Page
+[document_page_access_group](document_page_access_group/) | 16.0.1.1.0 |  | Choose groups to access document pages
+[document_page_access_group_user_role](document_page_access_group_user_role/) | 16.0.1.1.0 | [![victoralmau](https://github.com/victoralmau.png?size=30px)](https://github.com/victoralmau) | Document Page Access Group User Role
+[document_page_approval](document_page_approval/) | 16.0.1.2.0 |  | Document Page Approval
 [document_page_group](document_page_group/) | 16.0.1.0.1 |  | Define access groups on documents
 [document_page_partner](document_page_partner/) | 16.0.1.0.0 |  | Allows to link doucment pages to a partner
 [document_page_project](document_page_project/) | 16.0.1.0.0 |  | This module links document pages to projects
 [document_page_reference](document_page_reference/) | 16.0.1.0.1 | [![etobella](https://github.com/etobella.png?size=30px)](https://github.com/etobella) | Include references on document pages
-[document_page_tag](document_page_tag/) | 16.0.1.0.0 |  | Allows you to assign tags or keywords to pages and search for them afterwards
+[document_page_tag](document_page_tag/) | 16.0.1.0.1 |  | Allows you to assign tags or keywords to pages and search for them afterwards
 [document_url](document_url/) | 16.0.1.0.4 |  | URL attachment
 [document_url_google_drive](document_url_google_drive/) | 16.0.1.0.1 |  | Attach Google Drive link to Odoo document using Google Drive Picker
 
