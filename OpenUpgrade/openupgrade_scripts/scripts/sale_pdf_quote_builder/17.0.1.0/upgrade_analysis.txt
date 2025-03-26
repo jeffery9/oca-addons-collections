@@ -9,7 +9,21 @@ sale_pdf_quote_builder / sale.order.template      / sale_footer (binary)        
 sale_pdf_quote_builder / sale.order.template      / sale_footer_name (char)       : NEW hasdefault: default
 sale_pdf_quote_builder / sale.order.template      / sale_header (binary)          : NEW attachment: True, hasdefault: default
 sale_pdf_quote_builder / sale.order.template      / sale_header_name (char)       : NEW hasdefault: default
+sale_quotation_builder / product.template         / quotation_only_description (html): DEL
+sale_quotation_builder / sale.order               / website_description (html)    : DEL
+sale_quotation_builder / sale.order.line          / website_description (html)    : DEL
+sale_quotation_builder / sale.order.option        / website_description (html)    : DEL
+sale_quotation_builder / sale.order.template      / website_description (html)    : DEL
+sale_quotation_builder / sale.order.template.line / website_description (html)    : DEL
+sale_quotation_builder / sale.order.template.option / website_description (html)    : DEL
 ---XML records in module 'sale_pdf_quote_builder'---
 NEW ir.actions.report: sale_pdf_quote_builder.action_report_saleorder_raw
 NEW ir.ui.view: sale_pdf_quote_builder.res_config_settings_view_form
 NEW ir.ui.view: sale_pdf_quote_builder.sale_order_template_form
+DEL ir.ui.view: sale_quotation_builder.brand_promotion
+DEL ir.ui.view: sale_quotation_builder.res_config_settings_view_form_inherit
+DEL ir.ui.view: sale_quotation_builder.sale_order_form_quote_design
+DEL ir.ui.view: sale_quotation_builder.sale_order_portal_content_inherit_sale_quotation_builder
+DEL ir.ui.view: sale_quotation_builder.sale_order_template_view_form_inherit_sale_quotation_builder
+DEL ir.ui.view: sale_quotation_builder.so_template
+DEL sale.order.template: sale_quotation_builder.sale_order_template_default (noupdate)

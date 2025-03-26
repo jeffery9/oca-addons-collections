@@ -3736,6 +3736,7 @@ DEL account.tax.group: l10n_es.tax_group_retenciones_24 (noupdate)
 DEL account.tax.group: l10n_es.tax_group_retenciones_35 (noupdate)
 DEL account.tax.group: l10n_es.tax_group_retenciones_7 (noupdate)
 DEL account.tax.group: l10n_es.tax_group_retenciones_9 (noupdate)
+DEL account.tax.group: l10n_es.tax_group_seguridad_social (noupdate)
 DEL account.tax.template: l10n_es.account_tax_template_oss_s_iva_ns
 DEL account.tax.template: l10n_es.account_tax_template_oss_s_iva_ns_b
 DEL account.tax.template: l10n_es.account_tax_template_p_irpf1
@@ -3842,6 +3843,7 @@ DEL account.tax.template: l10n_es.account_tax_template_p_req1
 DEL account.tax.template: l10n_es.account_tax_template_p_req52
 DEL account.tax.template: l10n_es.account_tax_template_p_rp19
 DEL account.tax.template: l10n_es.account_tax_template_p_rrD19
+DEL account.tax.template: l10n_es.account_tax_template_s_gd0
 DEL account.tax.template: l10n_es.account_tax_template_s_irpf1
 DEL account.tax.template: l10n_es.account_tax_template_s_irpf15
 DEL account.tax.template: l10n_es.account_tax_template_s_irpf18

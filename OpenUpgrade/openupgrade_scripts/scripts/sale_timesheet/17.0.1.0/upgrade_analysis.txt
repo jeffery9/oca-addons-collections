@@ -10,5 +10,4 @@ NEW ir.ui.view: sale_timesheet.view_hr_timesheet_line_graph_invoice_employee
 NEW ir.ui.view: sale_timesheet.view_hr_timesheet_line_pivot_inherited
 NEW ir.ui.view: sale_timesheet.view_task_project_user_pivot_inherited
 DEL ir.ui.view: sale_timesheet.project_project_view_form_simplified_inherit
-DEL ir.ui.view: sale_timesheet.project_sharing_inherit_project_task_view_tree_sale_timesheet
 DEL ir.ui.view: sale_timesheet.view_sale_service_inherit_form2

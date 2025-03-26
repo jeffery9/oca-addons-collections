@@ -273,7 +273,6 @@ account      / res.company              / property_stock_account_input_categ_id 
 account      / res.company              / property_stock_account_output_categ_id (many2one): DEL relation: account.account
 account      / res.company              / property_stock_valuation_account_id (many2one): DEL relation: account.account
 account      / res.company              / rating_ids (one2many)         : NEW relation: rating.rating
-account      / res.partner              / supplier_invoice_count (integer): module is now 'purchase' ('account')
 account      / res.partner.bank         / activity_user_id (many2one)   : not related anymore
 account      / res.partner.bank         / activity_user_id (many2one)   : now a function
 account      / res.partner.bank         / has_iban_warning (boolean)    : NEW isfunction: function, stored
@@ -281,7 +280,6 @@ account      / res.partner.bank         / has_money_transfer_warning (boolean): 
 account      / res.partner.bank         / message_main_attachment_id (many2one): DEL relation: ir.attachment
 account      / res.partner.bank         / rating_ids (one2many)         : NEW relation: rating.rating
 account      / res.partner.bank         / related_moves (one2many)      : NEW relation: account.move
-account      / res.users                / supplier_invoice_count (integer): module is now 'purchase' ('account')
 ---XML records in module 'account'---
 DEL account.account.template: l10n_generic_coa.capital
 DEL account.account.template: l10n_generic_coa.cash_diff_expense
@@ -333,7 +331,6 @@ NEW ir.actions.act_window: account.action_open_sale_payment_items
 DEL ir.actions.act_window: account.action_account_tax_template_form
 DEL ir.actions.act_window: account.action_open_account_onboarding_create_invoice
 DEL ir.actions.act_window: account.action_open_account_onboarding_sale_tax
-DEL ir.actions.act_window: account.res_partner_action_supplier_bills
 NEW ir.actions.server: account.action_automatic_entry_change_account
 NEW ir.actions.server: account.action_automatic_entry_change_period
 NEW ir.actions.server: account.action_move_switch_move_type
