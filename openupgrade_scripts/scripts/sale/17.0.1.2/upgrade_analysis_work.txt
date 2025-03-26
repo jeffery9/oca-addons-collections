@@ -7,7 +7,7 @@ new model sale.order.discount [transient]
 sale         / account.analytic.applicability / business_domain (False)       : selection_keys is now '['bill', 'expense', 'general', 'invoice', 'manufacturing_order', 'purchase_order', 'sale_order']' ('['bill', 'expense', 'general', 'invoice', 'purchase_order', 'sale_order']')
 sale         / crm.team                 / use_quotations (boolean)      : DEL
 sale         / product.document         / attached_on (selection)       : NEW selection_keys: ['quotation', 'sale_order']
-# NOTHING TO DO
+# NOTHING TO DO (filled in website_sale due to website_sale_digital product_downloadable)
 
 sale         / res.company              / prepayment_percent (float)    : NEW hasdefault: default
 sale         / res.company              / sale_discount_product_id (many2one): NEW relation: product.product

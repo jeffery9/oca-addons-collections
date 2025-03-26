@@ -25,7 +25,7 @@ obsolete model base_import.tests.models.o2m [module base_import]
 obsolete model base_import.tests.models.o2m.child [module base_import]
 obsolete model base_import.tests.models.preview [module base_import]
 obsolete model hr.attendance.report [module hr_attendance]
-obsolete model hr.leave.stress.day [module hr_holidays]
+obsolete model hr.leave.stress.day (renamed to hr.leave.mandatory.day) [module hr_holidays]
 obsolete model hr.plan [module hr]
 obsolete model hr.plan.activity.type [module hr]
 obsolete model hr.plan.wizard [module hr]
@@ -77,7 +77,7 @@ new model homework.location.wizard [module hr_homeworking]
 new model hr.employee.cv.wizard [module hr_skills]
 new model hr.employee.delete.wizard [module hr_timesheet]
 new model hr.employee.location [module hr_homeworking]
-new model hr.leave.mandatory.day [module hr_holidays]
+new model hr.leave.mandatory.day (renamed from hr.leave.stress.day) [module hr_holidays]
 new model html.field.history.mixin [module web_editor]
 new model iap.account.info [module iap]
 new model ir.model.inherit [module base]
@@ -141,13 +141,13 @@ new model stock.forecasted_product_template [module stock]
 new model stock.quant.relocate [module stock]
 new model website.controller.page [module website]
 ---Fields in module 'general'---
-# 12228 fields matched,
-# Direct match: 12130
-# Found in other module: 98
+# 12237 fields matched,
+# Direct match: 12141
+# Found in other module: 96
 # Found with different type: 0
-# In obsolete models: 398
-# New columns: 1915
-# Not matched: 1453
+# In obsolete models: 388
+# New columns: 1919
+# Not matched: 1444
 ---XML records in module 'general'---
 ERROR: module not in list of installed modules:
 ---Models in module 'l10n_it_edi_pa'---
@@ -619,29 +619,3 @@ ERROR: module not in list of installed modules:
 ---Fields in module 'l10n_pl_sale_stock'---
 ---XML records in module 'l10n_pl_sale_stock'---
 ---nothing has changed in this module--
-ERROR: module not in list of installed modules:
----Models in module 'sale_quotation_builder'---
----Fields in module 'sale_quotation_builder'---
-sale_quotation_builder / product.template         / quotation_only_description (html): DEL
-sale_quotation_builder / sale.order               / website_description (html)    : DEL
-sale_quotation_builder / sale.order.line          / website_description (html)    : DEL
-sale_quotation_builder / sale.order.option        / website_description (html)    : DEL
-sale_quotation_builder / sale.order.template      / website_description (html)    : DEL
-sale_quotation_builder / sale.order.template.line / website_description (html)    : DEL
-sale_quotation_builder / sale.order.template.option / website_description (html)    : DEL
----XML records in module 'sale_quotation_builder'---
-DEL ir.ui.view: sale_quotation_builder.brand_promotion
-DEL ir.ui.view: sale_quotation_builder.res_config_settings_view_form_inherit
-DEL ir.ui.view: sale_quotation_builder.sale_order_form_quote_design
-DEL ir.ui.view: sale_quotation_builder.sale_order_portal_content_inherit_sale_quotation_builder
-DEL ir.ui.view: sale_quotation_builder.sale_order_template_view_form_inherit_sale_quotation_builder
-DEL ir.ui.view: sale_quotation_builder.so_template
-DEL sale.order.template: sale_quotation_builder.sale_order_template_default (noupdate)
-ERROR: module not in list of installed modules:
----Models in module 'website_sale_digital'---
----Fields in module 'website_sale_digital'---
-website_sale_digital / ir.attachment            / product_downloadable (boolean): DEL
----XML records in module 'website_sale_digital'---
-DEL ir.ui.view: website_sale_digital.product_product_view_form_inherit_digital
-DEL ir.ui.view: website_sale_digital.product_template_view_form_inherit_digital
-DEL ir.ui.view: website_sale_digital.sale_order_portal_content_inherit_website_sale_digital

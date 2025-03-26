@@ -1,6 +1,6 @@
 ---Models in module 'hr_holidays'---
-obsolete model hr.leave.stress.day
-new model hr.leave.mandatory.day
+obsolete model hr.leave.stress.day (renamed to hr.leave.mandatory.day)
+new model hr.leave.mandatory.day (renamed from hr.leave.stress.day)
 ---Fields in module 'hr_holidays'---
 hr_holidays  / hr.leave                 / activity_user_id (many2one)   : not related anymore
 hr_holidays  / hr.leave                 / activity_user_id (many2one)   : now a function
@@ -44,20 +44,8 @@ hr_holidays  / hr.leave.allocation      / type_request_unit (selection) : not re
 hr_holidays  / hr.leave.allocation      / type_request_unit (selection) : now a function
 hr_holidays  / hr.leave.allocation      / type_request_unit (selection) : selection_keys is now '['day', 'half_day', 'hour']' ('function')
 hr_holidays  / hr.leave.allocation      / website_message_ids (one2many): previously in module portal
-hr_holidays  / hr.leave.mandatory.day   / color (integer)               : NEW hasdefault: default
-hr_holidays  / hr.leave.mandatory.day   / company_id (many2one)         : NEW relation: res.company, required, hasdefault: default
-hr_holidays  / hr.leave.mandatory.day   / department_ids (many2many)    : NEW relation: hr.department
-hr_holidays  / hr.leave.mandatory.day   / end_date (date)               : NEW required
-hr_holidays  / hr.leave.mandatory.day   / name (char)                   : NEW required
-hr_holidays  / hr.leave.mandatory.day   / resource_calendar_id (many2one): NEW relation: resource.calendar
-hr_holidays  / hr.leave.mandatory.day   / start_date (date)             : NEW required
-hr_holidays  / hr.leave.stress.day      / color (integer)               : DEL
-hr_holidays  / hr.leave.stress.day      / company_id (many2one)         : DEL relation: res.company, required
-hr_holidays  / hr.leave.stress.day      / department_ids (many2many)    : DEL relation: hr.department
-hr_holidays  / hr.leave.stress.day      / end_date (date)               : DEL required
-hr_holidays  / hr.leave.stress.day      / name (char)                   : DEL required
-hr_holidays  / hr.leave.stress.day      / resource_calendar_id (many2one): DEL relation: resource.calendar
-hr_holidays  / hr.leave.stress.day      / start_date (date)             : DEL required
+hr_holidays  / hr.leave.stress.day      / department_ids (many2many)    : column1 is now 'hr_leave_mandatory_day_id' ('hr_leave_stress_day_id') [hr_department_hr_leave_stress_day_rel]
+hr_holidays  / hr.leave.stress.day      / department_ids (many2many)    : table is now 'hr_department_hr_leave_mandatory_day_rel' ('hr_department_hr_leave_stress_day_rel')
 hr_holidays  / hr.leave.type            / allows_negative (boolean)     : NEW
 hr_holidays  / hr.leave.type            / color_name (selection)        : DEL required, selection_keys: ['black', 'blue', 'brown', 'ivory', 'lavender', 'lightblue', 'lightcoral', 'lightcyan', 'lightgreen', 'lightpink', 'lightsalmon', 'lightyellow', 'magenta', 'red', 'violet', 'wheat']
 hr_holidays  / hr.leave.type            / max_allowed_negative (integer): NEW

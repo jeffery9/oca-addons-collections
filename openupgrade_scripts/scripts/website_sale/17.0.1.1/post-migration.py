@@ -14,3 +14,15 @@ def migrate(env, version):
         WHERE visible_on_ecommerce IS DISTINCT FROM FALSE
         """,
     )
+    if openupgrade.column_exists(env.cr, "ir_attachment", "product_downloadable"):
+        # due to website_sale_digital
+        openupgrade.logged_query(
+            env.cr,
+            """
+            UPDATE product_document
+            SET attached_on = 'sale_order'
+            FROM ir_attachment ir
+            WHERE product_document.ir_attachment_id = ir.id
+              AND ir.product_downloadable
+            """,
+        )

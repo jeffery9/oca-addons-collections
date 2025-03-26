@@ -21,6 +21,9 @@ website_sale_delivery / sale.order               / amount_delivery (float)      
 website_sale / product.tag              / visible_on_ecommerce (boolean): NEW hasdefault: default
 # DONE post-migration: Set to False so as not to change the behaviour of the website with new things.
 
+website_sale_digital / ir.attachment            / product_downloadable (boolean): DEL
+# DONE: post-migration: filled attached_on of product_document (new field in sale module)
+
 ---XML records in module 'website_sale'---
 DEL ir.actions.act_window: website_sale.action_invoices_ecommerce
 DEL ir.actions.act_window: website_sale.product_public_tags_action
@@ -146,4 +149,7 @@ DEL ir.ui.view: website_sale_delivery.res_config_settings_view_form
 DEL ir.ui.view: website_sale_delivery.view_delivery_carrier_form_website_delivery
 DEL ir.ui.view: website_sale_delivery.view_delivery_carrier_search_inherit_website_sale_delivery
 DEL ir.ui.view: website_sale_delivery.view_delivery_carrier_tree_inherit_website_sale_delivery
+DEL ir.ui.view: website_sale_digital.product_product_view_form_inherit_digital
+DEL ir.ui.view: website_sale_digital.product_template_view_form_inherit_digital
+DEL ir.ui.view: website_sale_digital.sale_order_portal_content_inherit_website_sale_digital
 # NOTHING TO DO

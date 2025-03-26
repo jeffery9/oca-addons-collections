@@ -108,21 +108,9 @@ hr_holidays  / hr.leave.allocation      / type_request_unit (selection) : select
 hr_holidays  / hr.leave.allocation      / website_message_ids (one2many): previously in module portal
 # NOTHING TO DO: Handled by Odoo registry
 
-hr_holidays  / hr.leave.mandatory.day   / color (integer)               : NEW hasdefault: default
-hr_holidays  / hr.leave.mandatory.day   / company_id (many2one)         : NEW relation: res.company, required, hasdefault: default
-hr_holidays  / hr.leave.mandatory.day   / department_ids (many2many)    : NEW relation: hr.department
-hr_holidays  / hr.leave.mandatory.day   / end_date (date)               : NEW required
-hr_holidays  / hr.leave.mandatory.day   / name (char)                   : NEW required
-hr_holidays  / hr.leave.mandatory.day   / resource_calendar_id (many2one): NEW relation: resource.calendar
-hr_holidays  / hr.leave.mandatory.day   / start_date (date)             : NEW required
-hr_holidays  / hr.leave.stress.day      / color (integer)               : DEL
-hr_holidays  / hr.leave.stress.day      / company_id (many2one)         : DEL relation: res.company, required
-hr_holidays  / hr.leave.stress.day      / department_ids (many2many)    : DEL relation: hr.department
-hr_holidays  / hr.leave.stress.day      / end_date (date)               : DEL required
-hr_holidays  / hr.leave.stress.day      / name (char)                   : DEL required
-hr_holidays  / hr.leave.stress.day      / resource_calendar_id (many2one): DEL relation: resource.calendar
-hr_holidays  / hr.leave.stress.day      / start_date (date)             : DEL required
-# DONE: pre-migration rename model (no field changes)
+hr_holidays  / hr.leave.stress.day      / department_ids (many2many)    : column1 is now 'hr_leave_mandatory_day_id' ('hr_leave_stress_day_id') [hr_department_hr_leave_stress_day_rel]
+hr_holidays  / hr.leave.stress.day      / department_ids (many2many)    : table is now 'hr_department_hr_leave_mandatory_day_rel' ('hr_department_hr_leave_stress_day_rel')
+# DONE: pre-migration rename model, m2m table and column
 
 hr_holidays  / hr.leave.type            / allows_negative (boolean)     : NEW
 hr_holidays  / hr.leave.type            / max_allowed_negative (integer): NEW

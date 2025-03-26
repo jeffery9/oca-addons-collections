@@ -8,7 +8,17 @@ _model_renames = [
 
 _table_renames = [
     ("hr_leave_stress_day", "hr_leave_mandatory_day"),
+    (
+        "hr_department_hr_leave_stress_day_rel",
+        "hr_department_hr_leave_mandatory_day_rel",
+    ),
 ]
+
+_column_renames = {
+    "hr_department_hr_leave_mandatory_day_rel": [
+        ("hr_leave_stress_day_id", "hr_leave_mandatory_day_id")
+    ],
+}
 
 
 def _pre_create_accrual_plan_active(cr):
@@ -145,6 +155,7 @@ def _delete_sql_constraints(env):
 def migrate(env, version):
     openupgrade.rename_models(env.cr, _model_renames)
     openupgrade.rename_tables(env.cr, _table_renames)
+    openupgrade.rename_columns(env.cr, _column_renames)
     _pre_create_accrual_plan_active(env.cr)
     _hr_leave_company_id(env.cr)
     _map_leave_accrual_level_action(env.cr)
