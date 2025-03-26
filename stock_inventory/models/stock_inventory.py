@@ -127,19 +127,54 @@ class InventoryAdjustmentsGroup(models.Model):
     responsible_id = fields.Many2one(
         comodel_name="res.users",
         string="Assigned to",
-        states={"draft": [("readonly", False)]},
         readonly=True,
         help="Specific responsible of Inventory Adjustment.",
     )
 
+    products_under_review_ids = fields.Many2many(
+        comodel_name="product.product",
+        compute="_compute_products_under_review_ids",
+        search="_search_products_under_review_ids",
+        string="Products Under Review",
+        relation="stock_inventory_product_review_rel",
+    )
+
+    def _search_products_under_review_ids(self, operator, value):
+        quants = self.env["stock.quant"].search(
+            [("to_do", "=", True), ("product_id", operator, value)]
+        )
+        inventories = quants.mapped("stock_inventory_ids")
+        return [("id", "in", inventories.ids), ("state", "=", "in_progress")]
+
+    @api.depends("stock_quant_ids", "stock_quant_ids.to_do", "state")
+    def _compute_products_under_review_ids(self):
+        for record in self:
+            if record.state == "in_progress":
+                products = record.stock_quant_ids.filtered(
+                    lambda quant: quant.to_do
+                ).mapped("product_id")
+                record.products_under_review_ids = (
+                    [(6, 0, products.ids)] if products else [(5, 0, 0)]
+                )
+            else:
+                record.products_under_review_ids = [(5, 0, 0)]
+
     @api.depends("stock_quant_ids")
     def _compute_count_stock_quants(self):
         for rec in self:
+            current_inventory_id = rec.id
             quants = rec.stock_quant_ids
             quants_to_do = quants.filtered(lambda q: q.to_do)
-            count_todo = len(quants_to_do)
+            quants_pending_to_review = [
+                q
+                for q in quants_to_do
+                if q.current_inventory_id.id == current_inventory_id
+            ]
+            count_pending_to_review = len(quants_pending_to_review)
             rec.count_stock_quants = len(quants)
-            rec.count_stock_quants_string = f"{count_todo} / {rec.count_stock_quants}"
+            rec.count_stock_quants_string = "{} / {}".format(
+                count_pending_to_review, rec.count_stock_quants
+            )
 
     @api.depends("stock_move_ids")
     def _compute_count_stock_moves(self):
@@ -256,19 +291,28 @@ class InventoryAdjustmentsGroup(models.Model):
             search_filter.append(("product_id", "in", self.product_ids.ids))
             error_field = "product_id"
             error_message = _(
-                "There are active adjustments for the requested products: %s"
+                "There are active adjustments for the requested products: %(names)s. "
+                "Blocking adjustments: %(blocking_names)s"
             )
         else:
             error_field = "location_id"
             error_message = _(
-                "There's already an Adjustment in Process using one "
-                "requested Location: %s"
+                "There's already an Adjustment in Process "
+                "using one requested Location: %(names)s. "
+                "Blocking adjustments: %(blocking_names)s"
             )
 
         quants = self.env["stock.quant"].search(search_filter)
         if quants:
-            names = self._get_quant_joined_names(quants, error_field)
-            raise ValidationError(error_message % names)
+            inventory_ids = self.env["stock.inventory"].search(
+                [("stock_quant_ids", "in", quants.ids), ("state", "=", "in_progress")]
+            )
+            if inventory_ids:
+                blocking_names = ", ".join(inventory_ids.mapped("name"))
+                names = self._get_quant_joined_names(quants, error_field)
+                raise ValidationError(
+                    error_message % {"names": names, "blocking_names": blocking_names}
+                )
 
         quants = self._get_quants(self.location_ids)
         self.write(
@@ -282,6 +326,7 @@ class InventoryAdjustmentsGroup(models.Model):
                 "to_do": True,
                 "user_id": self.responsible_id,
                 "inventory_date": self.date,
+                "current_inventory_id": self.id,
             }
         )
         return
@@ -289,11 +334,14 @@ class InventoryAdjustmentsGroup(models.Model):
     def action_state_to_done(self):
         self.ensure_one()
         self.state = "done"
-        self.stock_quant_ids.update(
+        self.stock_quant_ids.filtered(
+            lambda q: q.current_inventory_id.id == self.id
+        ).update(
             {
                 "to_do": False,
                 "user_id": False,
                 "inventory_date": False,
+                "current_inventory_id": False,
             }
         )
         return
@@ -307,11 +355,14 @@ class InventoryAdjustmentsGroup(models.Model):
     def action_state_to_draft(self):
         self.ensure_one()
         self.state = "draft"
-        self.stock_quant_ids.update(
+        self.stock_quant_ids.filtered(
+            lambda q: q.current_inventory_id.id == self.id
+        ).update(
             {
                 "to_do": False,
                 "user_id": False,
                 "inventory_date": False,
+                "current_inventory_id": False,
             }
         )
         self.stock_quant_ids = None
@@ -349,7 +400,10 @@ class InventoryAdjustmentsGroup(models.Model):
         )
         result.update(
             {
-                "domain": [("id", "in", self.stock_quant_ids.ids)],
+                "domain": [
+                    ("id", "in", self.stock_quant_ids.ids),
+                    ("current_inventory_id", "=", self.id),
+                ],
                 "search_view_id": self.env.ref("stock.quant_search_view").id,
                 "context": context,
             }

@@ -1,17 +1,36 @@
 [project]
 name = "odoo-addons-oca-stock-logistics-warehouse"
-version = "17.0.20240709.0"
+version = "17.0.20250303.0"
 dependencies = [
+    "odoo-addon-account_move_line_product>=17.0dev,<17.1dev",
+    "odoo-addon-account_move_line_stock_info>=17.0dev,<17.1dev",
+    "odoo-addon-base_product_merge>=17.0dev,<17.1dev",
+    "odoo-addon-product_route_profile>=17.0dev,<17.1dev",
     "odoo-addon-scrap_reason_code>=17.0dev,<17.1dev",
+    "odoo-addon-stock_archive_constraint>=17.0dev,<17.1dev",
+    "odoo-addon-stock_change_qty_reason>=17.0dev,<17.1dev",
     "odoo-addon-stock_demand_estimate>=17.0dev,<17.1dev",
+    "odoo-addon-stock_demand_estimate_matrix>=17.0dev,<17.1dev",
     "odoo-addon-stock_helper>=17.0dev,<17.1dev",
     "odoo-addon-stock_inventory>=17.0dev,<17.1dev",
     "odoo-addon-stock_inventory_discrepancy>=17.0dev,<17.1dev",
+    "odoo-addon-stock_inventory_preparation_filter>=17.0dev,<17.1dev",
+    "odoo-addon-stock_location_lockdown>=17.0dev,<17.1dev",
+    "odoo-addon-stock_location_position>=17.0dev,<17.1dev",
+    "odoo-addon-stock_location_zone>=17.0dev,<17.1dev",
     "odoo-addon-stock_mts_mto_rule>=17.0dev,<17.1dev",
     "odoo-addon-stock_packaging_calculator>=17.0dev,<17.1dev",
     "odoo-addon-stock_picking_volume>=17.0dev,<17.1dev",
+    "odoo-addon-stock_picking_volume_packaging>=17.0dev,<17.1dev",
+    "odoo-addon-stock_putaway_product_template>=17.0dev,<17.1dev",
+    "odoo-addon-stock_quant_manual_assign>=17.0dev,<17.1dev",
+    "odoo-addon-stock_quant_reservation_info>=17.0dev,<17.1dev",
+    "odoo-addon-stock_quant_reservation_info_mrp>=17.0dev,<17.1dev",
     "odoo-addon-stock_removal_location_by_priority>=17.0dev,<17.1dev",
     "odoo-addon-stock_reserve>=17.0dev,<17.1dev",
+    "odoo-addon-stock_route_mto>=17.0dev,<17.1dev",
+    "odoo-addon-stock_search_supplierinfo_code>=17.0dev,<17.1dev",
+    "odoo-addon-stock_secondary_unit>=17.0dev,<17.1dev",
     "odoo-addon-stock_warehouse_calendar>=17.0dev,<17.1dev",
 ]
 classifiers=[
