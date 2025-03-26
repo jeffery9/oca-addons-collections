@@ -103,6 +103,11 @@ msgid "Created on"
 msgstr ""
 
 #. module: stock_inventory
+#: model:ir.model.fields,field_description:stock_inventory.field_stock_quant__current_inventory_id
+msgid "Current Inventory"
+msgstr ""
+
+#. module: stock_inventory
 #: model:ir.model.fields,field_description:stock_inventory.field_stock_inventory__date
 msgid "Date"
 msgstr ""
@@ -154,7 +159,6 @@ msgstr ""
 
 #. module: stock_inventory
 #: model:ir.model.fields,help:stock_inventory.field_stock_inventory__message_has_error
-#: model:ir.model.fields,help:stock_inventory.field_stock_inventory__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr ""
 
@@ -290,6 +294,11 @@ msgid "Owner"
 msgstr ""
 
 #. module: stock_inventory
+#: model_terms:ir.ui.view,arch_db:stock_inventory.stock_inventory_search_view
+msgid "Product"
+msgstr ""
+
+#. module: stock_inventory
 #: model:ir.model.fields,field_description:stock_inventory.field_stock_inventory__category_id
 #: model:ir.model.fields.selection,name:stock_inventory.selection__stock_inventory__product_selection__category
 msgid "Product Category"
@@ -311,13 +320,14 @@ msgid "Products"
 msgstr ""
 
 #. module: stock_inventory
-#: model:ir.model,name:stock_inventory.model_stock_quant
-msgid "Quants"
+#: model:ir.model.fields,field_description:stock_inventory.field_stock_inventory__products_under_review_ids
+#: model_terms:ir.ui.view,arch_db:stock_inventory.stock_inventory_search_view
+msgid "Products Under Review"
 msgstr ""
 
 #. module: stock_inventory
-#: model:ir.model.fields,field_description:stock_inventory.field_stock_inventory__message_has_sms_error
-msgid "SMS Delivery error"
+#: model:ir.model,name:stock_inventory.model_stock_quant
+msgid "Quants"
 msgstr ""
 
 #. module: stock_inventory
@@ -333,6 +343,11 @@ msgstr ""
 #. module: stock_inventory
 #: model:ir.model.fields,field_description:stock_inventory.field_stock_inventory__state
 msgid "State"
+msgstr ""
+
+#. module: stock_inventory
+#: model:ir.model.fields,field_description:stock_inventory.field_stock_quant__stock_inventory_ids
+msgid "Stock Inventories"
 msgstr ""
 
 #. module: stock_inventory
@@ -360,7 +375,9 @@ msgstr ""
 #. odoo-python
 #: code:addons/stock_inventory/models/stock_inventory.py:0
 #, python-format
-msgid "There are active adjustments for the requested products: %s"
+msgid ""
+"There are active adjustments for the requested products: %(names)s. Blocking"
+" adjustments: %(blocking_names)s"
 msgstr ""
 
 #. module: stock_inventory
@@ -368,7 +385,8 @@ msgstr ""
 #: code:addons/stock_inventory/models/stock_inventory.py:0
 #, python-format
 msgid ""
-"There's already an Adjustment in Process using one requested Location: %s"
+"There's already an Adjustment in Process using one requested Location: "
+"%(names)s. Blocking adjustments: %(blocking_names)s"
 msgstr ""
 
 #. module: stock_inventory

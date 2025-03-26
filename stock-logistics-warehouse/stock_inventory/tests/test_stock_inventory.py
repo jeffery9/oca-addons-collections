@@ -521,3 +521,71 @@ class TestStockInventory(TransactionCase):
         self.assertTrue(inventory.stock_quant_ids)
         inventory.action_state_to_done()
         self.assertTrue(all(not quant.to_do for quant in quants))
+
+    def test_11_products_under_review(self):
+        inventory1 = self.inventory_model.create(
+            {
+                "name": "Inventory_Test_Under_Review_1",
+                "product_selection": "all",
+                "location_ids": [self.location1.id],
+            }
+        )
+        inventory1.action_state_to_in_progress()
+        self.assertEqual(inventory1.state, "in_progress")
+        self.assertIn(self.product, inventory1.products_under_review_ids)
+        inventory1.action_state_to_done()
+        self.assertEqual(inventory1.state, "done")
+        self.assertEqual(inventory1.products_under_review_ids.ids, [])
+
+    def test_12_search_products_under_review(self):
+        inventory = self.inventory_model.create(
+            {
+                "name": "Inventory for Search Test",
+                "product_selection": "all",
+                "location_ids": [self.location1.id],
+            }
+        )
+        inventory.action_state_to_in_progress()
+        search_result = self.inventory_model._search_products_under_review_ids(
+            "=", self.product.id
+        )
+        expected_result = [("id", "in", [inventory.id]), ("state", "=", "in_progress")]
+        self.assertEqual(
+            search_result,
+            expected_result,
+            "The search function did not return the expected results",
+        )
+
+    def test_13_multiple_inventories_different_products_same_location(self):
+        inventory1 = self.inventory_model.create(
+            {
+                "name": "Inventory1 for Product1",
+                "product_ids": [(6, 0, [self.product.id])],
+                "location_ids": [(6, 0, [self.location3.id])],
+                "product_selection": "manual",
+            }
+        )
+        inventory2 = self.inventory_model.create(
+            {
+                "name": "Inventory2 for Product2",
+                "product_ids": [(6, 0, [self.product2.id])],
+                "location_ids": [(6, 0, [self.location3.id])],
+                "product_selection": "manual",
+            }
+        )
+        inventory1.action_state_to_in_progress()
+        inventory2.action_state_to_in_progress()
+        self.assertEqual(inventory1.state, "in_progress")
+        self.assertEqual(inventory2.state, "in_progress")
+        self.assertEqual(
+            inventory1.stock_quant_ids.filtered(
+                lambda q: q.product_id == self.product
+            ).current_inventory_id,
+            inventory1,
+        )
+        self.assertEqual(
+            inventory2.stock_quant_ids.filtered(
+                lambda q: q.product_id == self.product2
+            ).current_inventory_id,
+            inventory2,
+        )
