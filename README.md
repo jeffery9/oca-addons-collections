@@ -24,7 +24,7 @@ addon | version | maintainers | summary
 [account_partner_company_group](account_partner_company_group/) | 17.0.1.0.0 |  | Adds the possibility to add a company group to a company
 [base_country_state_translatable](base_country_state_translatable/) | 17.0.1.0.0 |  | Translate Country States
 [base_location](base_location/) | 17.0.1.0.0 | [![pedrobaeza](https://github.com/pedrobaeza.png?size=30px)](https://github.com/pedrobaeza) | Enhanced zip/npa management system
-[base_location_geonames_import](base_location_geonames_import/) | 17.0.1.0.0 |  | Import zip entries from Geonames
+[base_location_geonames_import](base_location_geonames_import/) | 17.0.1.0.1 |  | Import zip entries from Geonames
 [base_location_nuts](base_location_nuts/) | 17.0.1.0.0 | [![rafaelbn](https://github.com/rafaelbn.png?size=30px)](https://github.com/rafaelbn) [![edlopen](https://github.com/edlopen.png?size=30px)](https://github.com/edlopen) | NUTS Regions
 [base_partner_company_group](base_partner_company_group/) | 17.0.1.0.0 |  | Adds the possibility to add a company group to a company
 [base_partner_sequence](base_partner_sequence/) | 17.0.1.0.0 |  | Sets customer's code from a sequence
@@ -46,6 +46,7 @@ addon | version | maintainers | summary
 [partner_contact_nationality](partner_contact_nationality/) | 17.0.1.0.0 |  | Add nationality field to contacts
 [partner_contact_personal_information_page](partner_contact_personal_information_page/) | 17.0.1.0.0 | [![Daemo00](https://github.com/Daemo00.png?size=30px)](https://github.com/Daemo00) | Add a page to contacts form to put personal information
 [partner_contact_role](partner_contact_role/) | 17.0.1.0.0 |  | Add roles to partners.
+[partner_country_lang](partner_country_lang/) | 17.0.1.0.0 | [![victoralmau](https://github.com/victoralmau.png?size=30px)](https://github.com/victoralmau) | Partner language according country
 [partner_deduplicate_acl](partner_deduplicate_acl/) | 17.0.1.0.0 |  | Contact deduplication with fine-grained permission control
 [partner_deduplicate_by_website](partner_deduplicate_by_website/) | 17.0.1.0.0 |  | Deduplicate Contacts by Website
 [partner_deduplicate_filter](partner_deduplicate_filter/) | 17.0.1.0.0 |  | Exclude records from the deduplication
