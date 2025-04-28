@@ -389,7 +389,6 @@ def _account_tax_group_migration(env):
         SELECT tax_group_id, array_agg(DISTINCT(company_id))
             FROM account_tax
         GROUP BY tax_group_id
-        HAVING COUNT(DISTINCT company_id) > 1
         """
     )
 
@@ -403,8 +402,13 @@ def _account_tax_group_migration(env):
             limit=1,
         )
         tax_group_name = imd.name
-        imd.write({"name": f"{first_company_id}_{imd.name}"})
-
+        imd.write(
+            {
+                "name": f"{first_company_id}_{imd.name}",
+                "noupdate": True,
+                "module": "account",
+            }
+        )
         for company_id in company_ids:
             if company_id == first_company_id:
                 continue

@@ -34,4 +34,8 @@ def _fill_event_registration_company_name(env):
 
 @openupgrade.migrate()
 def migrate(env, version):
+    # Pre-create the column for not getting the ORM default value executed
+    openupgrade.add_columns(
+        env, [(False, "barcode", "char", None, "event_registration")]
+    )
     _fill_event_registration_company_name(env)

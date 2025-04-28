@@ -19,6 +19,8 @@ DEL account.edi.format: account_edi_ubl_cii.ubl_a_nz
 DEL account.edi.format: account_edi_ubl_cii.ubl_bis3
 DEL account.edi.format: account_edi_ubl_cii.ubl_de
 DEL account.edi.format: account_edi_ubl_cii.ubl_sg
+# DONE: post-migration: Try to delete them cleanly (and if not, marked as noupdate=1 for not being removed)
+
 NEW ir.ui.view: account_edi_ubl_cii.account_move_send_form
 NEW ir.ui.view: account_edi_ubl_cii.res_config_settings_view_form
 NEW ir.ui.view: account_edi_ubl_cii.res_partner_view_search

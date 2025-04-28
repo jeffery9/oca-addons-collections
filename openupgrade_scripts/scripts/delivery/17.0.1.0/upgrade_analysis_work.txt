@@ -8,7 +8,7 @@ delivery     / delivery.carrier         / invoice_policy (selection)    : select
 # NOTHING TO DO
 
 delivery     / sale.order               / shipping_weight (float)       : NEW hasdefault: compute
-# NOTHING TO DO: new features
+# DONE: pre-migration: Add new column & set value for it
 
 delivery     / stock.move.line          / carrier_id (many2one)         : is now stored
 # DONE: pre-migration: Add new column & set value for it
@@ -67,8 +67,6 @@ ir.model.constraint: delivery.constraint_delivery_carrier_margin_not_under_100_p
 
 DEL ir.ui.menu: delivery.menu_action_delivery_carrier_form [renamed to stock_delivery module]
 DEL ir.ui.menu: delivery.menu_delivery_zip_prefix [renamed to stock_delivery module]
-# DONE: pre-migration: moved to stock_delivery
-
 DEL ir.ui.view: delivery.choose_delivery_package_view_form
 DEL ir.ui.view: delivery.delivery_stock_report_delivery_no_package_section_line
 DEL ir.ui.view: delivery.delivery_tracking_url_warning_form
@@ -92,4 +90,4 @@ DEL ir.ui.view: delivery.view_picking_withweight_internal_move_form
 DEL ir.ui.view: delivery.view_quant_package_weight_form
 DEL ir.ui.view: delivery.view_stock_rule_form_delivery
 DEL ir.ui.view: delivery.vpicktree_view_tree
-# NOTHING TO DO
+# DONE: pre-migration: renamed xmlid to stock_delivery

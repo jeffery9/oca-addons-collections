@@ -57,6 +57,7 @@ merged_modules = {
     "purchase_discount": "purchase",
     # OCA/social
     "mail_activity_plan": "mail",
+    "mass_mailing_custom_unsubscribe_event": "mass_mailing",
     # OCA/stock-logistics-warehouse
     "stock_lot_filter_available": "stock",
     # OCA/web

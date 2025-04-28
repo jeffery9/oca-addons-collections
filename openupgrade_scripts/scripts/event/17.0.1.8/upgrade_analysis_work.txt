@@ -34,7 +34,8 @@ event        / event.registration       / activity_user_id (many2one)   : now a 
 # NOTHING TO DO
 
 event        / event.registration       / barcode (char)                : NEW
-# NOTHING TO DO: There is no correct way to do it in postgres, we let the ORM set the value of the old records
+# DONE: pre-migration: Pre-create the column for not getting any value pre-filled
+# DONE: post-migration: Call the default method one by one for not getting the same barcode for all the records
 
 event        / event.registration       / company_name (char)           : NEW hasdefault: compute
 # DONE: pre-migration: Pre-create and fill the column for avoiding the ORM computation
