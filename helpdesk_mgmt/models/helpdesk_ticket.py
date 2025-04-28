@@ -9,7 +9,13 @@ class HelpdeskTicket(models.Model):
     _rec_names_search = ["number", "name"]
     _order = "priority desc, sequence, number desc, id desc"
     _mail_post_access = "read"
-    _inherit = ["mail.thread.cc", "mail.activity.mixin", "portal.mixin"]
+    _inherit = [
+        "mail.thread.cc",
+        "mail.activity.mixin",
+        "portal.mixin",
+        "mail.tracking.duration.mixin",
+    ]
+    _track_duration_field = "stage_id"
 
     @api.depends("team_id")
     def _compute_stage_id(self):
@@ -20,7 +26,7 @@ class HelpdeskTicket(models.Model):
     def _compute_user_id(self):
         for ticket in self:
             if not ticket.user_id and ticket.team_id:
-                ticket.user_id = ticket.team_id.alias_user_id
+                ticket.user_id = ticket.team_id.create_uid
 
     @api.model
     def _read_group_stage_ids(self, stages, domain, order):
