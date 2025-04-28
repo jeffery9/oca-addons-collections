@@ -565,11 +565,16 @@ class AccountBankStatementLine(models.Model):
                 continue
             new_data.append(line_data)
             liquidity_amount += line_data["amount"]
-
+        partner = (
+            reconcile_model._get_partner_from_mapping(self) or self._retrieve_partner()
+        )
         for line in reconcile_model._get_write_off_move_lines_dict(
-            -liquidity_amount, self._retrieve_partner().id
+            -liquidity_amount, partner.id
         ):
             new_line = line.copy()
+            new_line["partner_id"] = (
+                (partner.id, partner.display_name) if partner else False
+            )
             amount = line.get("balance")
             if self.foreign_currency_id:
                 amount = self.foreign_currency_id._convert(
@@ -1276,3 +1281,11 @@ class AccountBankStatementLine(models.Model):
         for line in lines:
             self._add_account_move_line(line, keep_current=True)
         return res
+
+    def _retrieve_partner(self):
+        if self.env.context.get("skip_retrieve_partner"):
+            # This hook can be used, for example, when importing files.
+            # With large databases, we already have the information, moreover,
+            # the data might be preloaded, so it has no sense to import it again
+            return self.partner_id
+        return super()._retrieve_partner()
