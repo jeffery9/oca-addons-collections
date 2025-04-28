@@ -21,6 +21,7 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
+[website_breadcrumb](website_breadcrumb/) | 17.0.1.0.0 |  | Let you have breadcrumbs in website pages
 [website_conditional_visibility_user_group](website_conditional_visibility_user_group/) | 17.0.1.0.0 |  | Only internal users will see the blocks you add this condition to
 [website_cookiebot](website_cookiebot/) | 17.0.1.0.1 |  | Ask for cookies consent connecting with Cookiebot
 [website_cookiefirst](website_cookiefirst/) | 17.0.1.0.0 |  | Cookiefirst integration
@@ -28,6 +29,7 @@ addon | version | maintainers | summary
 [website_form_require_legal](website_form_require_legal/) | 17.0.1.0.0 |  | Add possibility to require confirm legal terms.
 [website_forum_subscription](website_forum_subscription/) | 17.0.1.0.0 |  | Adds a button to allow subscription from the website
 [website_google_tag_manager](website_google_tag_manager/) | 17.0.1.0.1 |  | Add support for Google Tag Manager
+[website_local_font](website_local_font/) | 17.0.1.0.0 |  | Allows to add local fonts on Odoo website
 [website_odoo_debranding](website_odoo_debranding/) | 17.0.1.0.0 |  | Remove Odoo Branding from Website
 [website_require_login](website_require_login/) | 17.0.1.0.0 |  | Website Login Required
 [website_snippet_big_button](website_snippet_big_button/) | 17.0.1.0.0 |  | A snippet that adds two big buttons

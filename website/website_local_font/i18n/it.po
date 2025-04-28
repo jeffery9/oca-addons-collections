@@ -1,0 +1,179 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* website_local_font
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2025-04-22 12:24+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.10.4\n"
+
+#. module: website_local_font
+#. odoo-javascript
+#: code:addons/website_local_font/static/src/js/snippets.options.esm.js:0
+#: code:addons/website_local_font/static/src/xml/website.editor.xml:0
+#, python-format
+msgid "Add a Local Font"
+msgstr "Aggiungi font locale"
+
+#. module: website_local_font
+#. odoo-javascript
+#: code:addons/website_local_font/static/src/xml/website.editor.xml:0
+#, python-format
+msgid ""
+"Adding a font requires a reload of the page. This will save all your "
+"changes."
+msgstr ""
+"L'aggiunta di un font richiede di ricaricare la pagina. Questo salverà tutte "
+"le modifiche."
+
+#. module: website_local_font
+#: model:ir.model,name:website_local_font.model_web_editor_assets
+msgid "Assets Utils"
+msgstr "Utilità risorse"
+
+#. module: website_local_font
+#: model:ir.model,name:website_local_font.model_ir_attachment
+msgid "Attachment"
+msgstr "Allegato"
+
+#. module: website_local_font
+#. odoo-javascript
+#: code:addons/website_local_font/static/src/xml/website.editor.xml:0
+#, python-format
+msgid "Delete this font"
+msgstr "Cancella questo font"
+
+#. module: website_local_font
+#. odoo-javascript
+#: code:addons/website_local_font/static/src/js/snippets.options.esm.js:0
+#, python-format
+msgid ""
+"Deleting a font requires a reload of the page. This will save all your "
+"changes and reload the page, are you sure you want to proceed?"
+msgstr ""
+"La cancellazione di un font richiede di ricaricare la pagina. Questo salverà "
+"tutte le modifiche e ricaricherà la pagina, si è sicuri di procedere?"
+
+#. module: website_local_font
+#. odoo-javascript
+#: code:addons/website_local_font/static/src/xml/website.editor.xml:0
+#, python-format
+msgid "Discard"
+msgstr "Abbandona"
+
+#. module: website_local_font
+#. odoo-javascript
+#: code:addons/website_local_font/static/src/js/snippets.options.esm.js:0
+#, python-format
+msgid "Error adding font: "
+msgstr "Errore nell'aggiunta del font: "
+
+#. module: website_local_font
+#. odoo-javascript
+#: code:addons/website_local_font/static/src/js/snippets.options.esm.js:0
+#, python-format
+msgid "Error removing font: "
+msgstr "Errore nella rimozione del font: "
+
+#. module: website_local_font
+#. odoo-javascript
+#: code:addons/website_local_font/static/src/js/snippets.options.esm.js:0
+#, python-format
+msgid "Error uploading font: "
+msgstr "Errore nel caricamento del font: "
+
+#. module: website_local_font
+#. odoo-javascript
+#: code:addons/website_local_font/static/src/js/snippets.options.esm.js:0
+#, python-format
+msgid "Failed to read file"
+msgstr "Lettura file fallita"
+
+#. module: website_local_font
+#. odoo-javascript
+#: code:addons/website_local_font/static/src/xml/website.editor.xml:0
+#, python-format
+msgid "Font File"
+msgstr "File del font"
+
+#. module: website_local_font
+#. odoo-javascript
+#: code:addons/website_local_font/static/src/xml/website.editor.xml:0
+#, python-format
+msgid "Font Name"
+msgstr "Nome del font"
+
+#. module: website_local_font
+#. odoo-javascript
+#: code:addons/website_local_font/static/src/js/snippets.options.esm.js:0
+#, python-format
+msgid "Invalid file format. Allowed formats: .otf, .ttf, .woff, .woff2"
+msgstr "Forma file non valido. Formati consentiti: .otf, .ttf, .woff, .woff2"
+
+#. module: website_local_font
+#. odoo-javascript
+#: code:addons/website_local_font/static/src/js/snippets.options.esm.js:0
+#, python-format
+msgid "Please enter a font name"
+msgstr "Inserire un nome font"
+
+#. module: website_local_font
+#. odoo-javascript
+#: code:addons/website_local_font/static/src/js/snippets.options.esm.js:0
+#: code:addons/website_local_font/static/src/js/snippets.options.esm.js:0
+#, python-format
+msgid "Please select a file"
+msgstr "Selezionare un file"
+
+#. module: website_local_font
+#. odoo-javascript
+#: code:addons/website_local_font/static/src/xml/website.editor.xml:0
+#, python-format
+msgid "Save & Reload"
+msgstr "Salva e ricarica"
+
+#. module: website_local_font
+#. odoo-javascript
+#: code:addons/website_local_font/static/src/xml/website.editor.xml:0
+#, python-format
+msgid "Supported file formats are otf,ttf,woff,woff2"
+msgstr "I formati file supportati sono otf, ttf, woff, woff2"
+
+#. module: website_local_font
+#. odoo-javascript
+#: code:addons/website_local_font/static/src/js/snippets.options.esm.js:0
+#, python-format
+msgid "System Fonts"
+msgstr "Font di sistema"
+
+#. module: website_local_font
+#. odoo-javascript
+#: code:addons/website_local_font/static/src/js/snippets.options.esm.js:0
+#, python-format
+msgid "This font is hosted and served to your visitors by Google servers"
+msgstr "Questo font è ospitato e fornito ai visitatori dai server Google"
+
+#. module: website_local_font
+#. odoo-javascript
+#: code:addons/website_local_font/static/src/js/snippets.options.esm.js:0
+#: code:addons/website_local_font/static/src/js/snippets.options.esm.js:0
+#: code:addons/website_local_font/static/src/js/snippets.options.esm.js:0
+#, python-format
+msgid "Unknown error"
+msgstr "Errore sconosciuto"
+
+#. module: website_local_font
+#. odoo-javascript
+#: code:addons/website_local_font/static/src/xml/website.editor.xml:0
+#, python-format
+msgid "Your font name"
+msgstr "Nome del tuo font"
