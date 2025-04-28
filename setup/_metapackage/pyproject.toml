@@ -1,12 +1,13 @@
 [project]
 name = "odoo-addons-oca-project"
-version = "17.0.20250319.0"
+version = "17.0.20250423.0"
 dependencies = [
     "odoo-addon-project_administrator_restricted_visibility>=17.0dev,<17.1dev",
     "odoo-addon-project_department>=17.0dev,<17.1dev",
     "odoo-addon-project_group>=17.0dev,<17.1dev",
     "odoo-addon-project_group_hr_timesheet>=17.0dev,<17.1dev",
     "odoo-addon-project_key>=17.0dev,<17.1dev",
+    "odoo-addon-project_merge>=17.0dev,<17.1dev",
     "odoo-addon-project_parent>=17.0dev,<17.1dev",
     "odoo-addon-project_parent_task_filter>=17.0dev,<17.1dev",
     "odoo-addon-project_purchase_link>=17.0dev,<17.1dev",
@@ -15,8 +16,10 @@ dependencies = [
     "odoo-addon-project_task_add_very_high>=17.0dev,<17.1dev",
     "odoo-addon-project_task_default_stage>=17.0dev,<17.1dev",
     "odoo-addon-project_task_description_template>=17.0dev,<17.1dev",
+    "odoo-addon-project_task_material>=17.0dev,<17.1dev",
     "odoo-addon-project_task_note>=17.0dev,<17.1dev",
     "odoo-addon-project_task_pull_request>=17.0dev,<17.1dev",
+    "odoo-addon-project_task_related>=17.0dev,<17.1dev",
     "odoo-addon-project_task_stage_mgmt>=17.0dev,<17.1dev",
     "odoo-addon-project_task_stage_state>=17.0dev,<17.1dev",
     "odoo-addon-project_task_tag>=17.0dev,<17.1dev",
@@ -25,6 +28,7 @@ dependencies = [
     "odoo-addon-project_timeline_hr_timesheet>=17.0dev,<17.1dev",
     "odoo-addon-project_timesheet_time_control>=17.0dev,<17.1dev",
     "odoo-addon-project_type>=17.0dev,<17.1dev",
+    "odoo-addon-project_version>=17.0dev,<17.1dev",
     "odoo-addon-sale_project_reimbursement_cost>=17.0dev,<17.1dev",
     "odoo-addon-sale_project_task_recurrency>=17.0dev,<17.1dev",
 ]
