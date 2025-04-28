@@ -93,15 +93,20 @@ def _fill_mail_message_outgoing(env):
     openupgrade.logged_query(
         env.cr,
         f"""
+        WITH partners AS (
+            SELECT rp.id FROM res_partner rp
+            JOIN res_users ru ON ru.partner_id = rp.id
+            JOIN res_groups_users_rel rel ON rel.uid = ru.id AND rel.gid = {group.id}
+        )
         UPDATE mail_message mm
         SET message_type = 'email_outgoing'
-        FROM mail_mail mail, res_partner rp
-        JOIN res_users ru ON ru.partner_id = rp.id
-        JOIN res_groups_users_rel rel ON rel.uid = ru.id
-            AND rel.gid = {group.id}
         WHERE mm.message_type = 'email'
         AND mm.message_id like '%-openerp-' || mm.res_id || '-' || mm.model || '@%'
-        AND (mm.author_id = rp.id OR mail.mail_message_id = mm.id)
+        AND (
+            EXISTS (SELECT * FROM partners rp WHERE rp.id = mm.author_id)
+            OR
+            EXISTS (SELECT * FROM mail_mail mail WHERE mail.mail_message_id = mm.id)
+        )
         """,
     )
 

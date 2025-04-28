@@ -8,6 +8,13 @@ _deleted_xml_records = [
 ]
 
 
+@openupgrade.logging()
+def _event_registration_barcode(env):
+    """Assign a new barcode per record, as if not, Odoo assigns the same to old."""
+    for record in env["event.registration"].search([]):
+        record.barcode = record._get_random_barcode()
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.load_data(env, "event", "17.0.1.8/noupdate_changes.xml")
@@ -24,5 +31,6 @@ def migrate(env, version):
         env,
         _deleted_xml_records,
     )
+    _event_registration_barcode(env)
     openupgrade.logged_query(env.cr, "UPDATE event_event_ticket SET sequence = id")
     openupgrade.logged_query(env.cr, "UPDATE event_type_ticket SET sequence = id")

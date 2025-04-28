@@ -72,7 +72,7 @@ DEL account.account.tag: l10n_es.mod_303_42
 DEL account.account.tag: l10n_es.mod_303_59
 DEL account.account.tag: l10n_es.mod_303_60
 DEL account.account.tag: l10n_es.mod_303_61
-# NOTHING TO DO: Enterprise taxes engine
+# DONE: post-migration: Try to delete them cleanly (and if not, marked as noupdate=1 for not being removed)
 
 DEL account.account.template: l10n_es.account_assoc_100
 DEL account.account.template: l10n_es.account_assoc_1030

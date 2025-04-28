@@ -11,8 +11,10 @@ crm          / crm.lead                 / date_automation_last (datetime): NEW
 crm          / crm.lead                 / email_domain_criterion (char) : NEW isfunction: function, stored
 crm          / crm.lead                 / message_main_attachment_id (many2one): DEL relation: ir.attachment
 crm          / crm.lead                 / rating_ids (one2many)         : NEW relation: rating.rating
-crm          / crm.lead                 / recurring_revenue_prorated (float): NEW isfunction: function, stored
 # NOTHING TO DO:
+
+crm          / crm.lead                 / recurring_revenue_prorated (float): NEW isfunction: function, stored
+# DONE: pre-migration: Pre-created and filled through SQL for better times
 
 ---XML records in module 'crm'---
 NEW ir.actions.act_window: crm.mail_activity_plan_action_lead

@@ -114,6 +114,7 @@ def _am_uniquify_name(env):
         UPDATE account_move SET name=name || ' [' || id || ']'
         FROM (
             SELECT array_agg(id) ids FROM account_move
+            WHERE state = 'posted' AND name != '/'
             GROUP BY journal_id, name HAVING COUNT(id)>1
         ) duplicate_names
         WHERE account_move.id=ANY(duplicate_names.ids);

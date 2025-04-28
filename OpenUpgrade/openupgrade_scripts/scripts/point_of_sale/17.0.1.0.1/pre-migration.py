@@ -1,11 +1,11 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from openupgradelib import openupgrade
 
-_models_renames = [
+_model_renames = [
     ("restaurant.printer", "pos.printer"),
 ]
 
-_tables_renames = [
+_table_renames = [
     ("restaurant_printer", "pos_printer"),
 ]
 
@@ -68,8 +68,9 @@ def fill_pos_payment_method_sequence(env):
 
 @openupgrade.migrate()
 def migrate(env, version):
-    openupgrade.rename_models(env.cr, _models_renames)
-    openupgrade.rename_tables(env.cr, _tables_renames)
+    if openupgrade.table_exists(env.cr, "restaurant_printer"):
+        openupgrade.rename_models(env.cr, _model_renames)
+        openupgrade.rename_tables(env.cr, _table_renames)
     openupgrade.rename_fields(env, _field_renames)
     precreate_pos_config_auto_validate_terminal_payment(env)
     fill_pos_order_config_id(env)
