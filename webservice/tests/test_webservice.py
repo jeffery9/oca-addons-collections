@@ -6,6 +6,7 @@
 import responses
 from requests import auth
 from requests import exceptions as http_exceptions
+from requests.models import Response
 
 from odoo import exceptions
 
@@ -214,3 +215,15 @@ class TestWebService(CommonWebService):
             responses.calls[0].request.headers["Content-Type"], "application/xml"
         )
         self.assertEqual(responses.calls[0].request.headers["demo_header"], "HEADER")
+
+    @responses.activate
+    def test_web_service_content_only(self):
+        # Pass content_only=False to get the full response
+        # from the webservice instead of the response content
+        responses.add(responses.GET, self.url, body="{}")
+        result = self.webservice.call("get", content_only=False)
+        self.assertEqual(type(result), Response)
+        self.assertEqual(len(responses.calls), 1)
+        self.assertEqual(
+            responses.calls[0].request.headers["Content-Type"], "application/xml"
+        )
