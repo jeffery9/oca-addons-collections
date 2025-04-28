@@ -1,11 +1,12 @@
 [project]
 name = "odoo-addons-oca-hr-expense"
-version = "17.0.20250226.0"
+version = "17.0.20250422.0"
 dependencies = [
     "odoo-addon-hr_expense_advance_clearing>=17.0dev,<17.1dev",
     "odoo-addon-hr_expense_cancel>=17.0dev,<17.1dev",
     "odoo-addon-hr_expense_employee_analytic_default>=17.0dev,<17.1dev",
     "odoo-addon-hr_expense_invoice>=17.0dev,<17.1dev",
+    "odoo-addon-hr_expense_journal>=17.0dev,<17.1dev",
     "odoo-addon-hr_expense_payment>=17.0dev,<17.1dev",
     "odoo-addon-hr_expense_sequence>=17.0dev,<17.1dev",
     "odoo-addon-hr_expense_tier_validation>=17.0dev,<17.1dev",
