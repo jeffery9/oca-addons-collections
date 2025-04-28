@@ -25,6 +25,7 @@ addon | version | maintainers | summary
 [hr_expense_cancel](hr_expense_cancel/) | 17.0.1.0.3 |  | Hr expense cancel
 [hr_expense_employee_analytic_default](hr_expense_employee_analytic_default/) | 17.0.1.0.0 | [![victoralmau](https://github.com/victoralmau.png?size=30px)](https://github.com/victoralmau) | Expense Employee Analytic Default
 [hr_expense_invoice](hr_expense_invoice/) | 17.0.1.0.2 |  | Supplier invoices on HR expenses
+[hr_expense_journal](hr_expense_journal/) | 17.0.1.0.0 | [![dreispt](https://github.com/dreispt.png?size=30px)](https://github.com/dreispt) | Set the Journal for the payment type used to pay the expense
 [hr_expense_payment](hr_expense_payment/) | 17.0.1.0.1 |  | HR Expense Payment
 [hr_expense_sequence](hr_expense_sequence/) | 17.0.1.0.0 |  | HR expense sequence
 [hr_expense_tier_validation](hr_expense_tier_validation/) | 17.0.1.0.0 | [![ps-tubtim](https://github.com/ps-tubtim.png?size=30px)](https://github.com/ps-tubtim) | Expense Tier Validation
