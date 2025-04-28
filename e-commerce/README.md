@@ -26,6 +26,8 @@ addon | version | maintainers | summary
 [website_sale_hide_empty_category](website_sale_hide_empty_category/) | 17.0.1.0.0 |  | Hide any Product Categories that are empty
 [website_sale_hide_price](website_sale_hide_price/) | 17.0.1.1.2 |  | Hide product prices on the shop
 [website_sale_order_type](website_sale_order_type/) | 17.0.1.0.0 | [![pilarvargas-tecnativa](https://github.com/pilarvargas-tecnativa.png?size=30px)](https://github.com/pilarvargas-tecnativa) | This module allows sale_order_type to work with website_sale.
+[website_sale_product_attribute_filter_category](website_sale_product_attribute_filter_category/) | 17.0.1.0.0 |  | Allow group attributes in shop by categories
+[website_sale_product_attribute_value_filter_existing](website_sale_product_attribute_value_filter_existing/) | 17.0.1.0.0 |  | Allow hide attributes values not used in variants
 [website_sale_product_brand](website_sale_product_brand/) | 17.0.1.0.0 |  | Product Brand Filtering in Website
 [website_sale_product_description](website_sale_product_description/) | 17.0.1.0.0 |  | Shows custom e-Commerce description for products
 [website_sale_product_detail_attribute_image](website_sale_product_detail_attribute_image/) | 17.0.1.0.0 |  | Display attributes images in shop product detail
@@ -36,6 +38,7 @@ addon | version | maintainers | summary
 [website_sale_stock_available](website_sale_stock_available/) | 17.0.1.0.0 |  | Display 'Available to promise' in shop online instead of 'Free To Use Quantity'
 [website_sale_suggest_create_account](website_sale_suggest_create_account/) | 17.0.1.0.0 |  | Suggest users to create an account when buying in the website
 [website_sale_vat_required](website_sale_vat_required/) | 17.0.1.0.0 |  | VAT number required in checkout form
+[website_sale_wishlist_keep](website_sale_wishlist_keep/) | 17.0.1.0.0 |  | Allows to add products to my cart but keep it in my wishlist"
 [website_snippet_product_category](website_snippet_product_category/) | 17.0.1.0.0 | [![Tardo](https://github.com/Tardo.png?size=30px)](https://github.com/Tardo) | Adds a new snippet to show e-commerce categories
 
 [//]: # (end addons)
