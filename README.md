@@ -21,7 +21,7 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[account_invoice_inter_company](account_invoice_inter_company/) | 17.0.1.1.0 |  | Intercompany invoice rules
+[account_invoice_inter_company](account_invoice_inter_company/) | 17.0.1.1.1 |  | Intercompany invoice rules
 [base_multi_company](base_multi_company/) | 17.0.1.0.1 | [![pedrobaeza](https://github.com/pedrobaeza.png?size=30px)](https://github.com/pedrobaeza) | Provides a base for adding multi-company support to models.
 [mail_multicompany](mail_multicompany/) | 17.0.1.0.0 | [![luisg123v](https://github.com/luisg123v.png?size=30px)](https://github.com/luisg123v) | Email Gateway Multi company
 [partner_multi_company](partner_multi_company/) | 17.0.1.0.1 |  | Select individually the partner visibility on each company
