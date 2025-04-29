@@ -129,7 +129,8 @@ if __name__ == "__main__":
 
     if dependencies_data:
         if APP:
-            if catalog.get(APP, False):
+            if dependencies_data.get(APP, False):
+                print(f">>> App {APP}")
                 all_modules = set()
                 # 查找所有模块
                 modules = find_all_modules(dependencies_data, APP)
