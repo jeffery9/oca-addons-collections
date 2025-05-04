@@ -4,7 +4,7 @@
 
 {
     "name": "Helpdesk Ticket Type",
-    "version": "17.0.1.0.0",
+    "version": "17.0.1.1.0",
     "license": "AGPL-3",
     "summary": "Add a type to your tickets",
     "author": "Konos, " "Open Source Integrators, " "Odoo Community Association (OCA)",
@@ -15,6 +15,8 @@
         "views/helpdesk_ticket_type.xml",
         "views/helpdesk_ticket_team.xml",
         "views/helpdesk_ticket.xml",
+        "views/res_config_settings_views.xml",
+        "views/helpdesk_ticket_templates.xml",
     ],
     "demo": ["demo/helpdesk_type_demo.xml"],
     "application": False,

@@ -21,7 +21,7 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[helpdesk_mgmt](helpdesk_mgmt/) | 17.0.1.2.0 |  | Helpdesk
+[helpdesk_mgmt](helpdesk_mgmt/) | 17.0.1.3.0 |  | Helpdesk
 [helpdesk_mgmt_crm](helpdesk_mgmt_crm/) | 17.0.1.0.1 | [![victoralmau](https://github.com/victoralmau.png?size=30px)](https://github.com/victoralmau) | Links helpdesk tickets with leads
 [helpdesk_mgmt_portal_follower](helpdesk_mgmt_portal_follower/) | 17.0.1.0.0 | [![BernatObrador](https://github.com/BernatObrador.png?size=30px)](https://github.com/BernatObrador) [![ppyczko](https://github.com/ppyczko.png?size=30px)](https://github.com/ppyczko) [![mpascuall](https://github.com/mpascuall.png?size=30px)](https://github.com/mpascuall) | Add ticket followers from website portal
 [helpdesk_mgmt_project](helpdesk_mgmt_project/) | 17.0.1.0.1 |  | Add the option to select project in the tickets.
@@ -33,7 +33,7 @@ addon | version | maintainers | summary
 [helpdesk_ticket_partner_response](helpdesk_ticket_partner_response/) | 17.0.1.0.0 | [![peluko00](https://github.com/peluko00.png?size=30px)](https://github.com/peluko00) | Change ticket stage when partner response
 [helpdesk_ticket_related](helpdesk_ticket_related/) | 17.0.1.0.0 | [![peluko00](https://github.com/peluko00.png?size=30px)](https://github.com/peluko00) | Link tickets to each other
 [helpdesk_timesheet_time_type](helpdesk_timesheet_time_type/) | 17.0.1.0.0 | [![lbarry-apsl](https://github.com/lbarry-apsl.png?size=30px)](https://github.com/lbarry-apsl) | Helpdesk Timesheet Time Type
-[helpdesk_type](helpdesk_type/) | 17.0.1.0.0 | [![nelsonramirezs](https://github.com/nelsonramirezs.png?size=30px)](https://github.com/nelsonramirezs) [![max3903](https://github.com/max3903.png?size=30px)](https://github.com/max3903) | Add a type to your tickets
+[helpdesk_type](helpdesk_type/) | 17.0.1.1.0 | [![nelsonramirezs](https://github.com/nelsonramirezs.png?size=30px)](https://github.com/nelsonramirezs) [![max3903](https://github.com/max3903.png?size=30px)](https://github.com/max3903) | Add a type to your tickets
 
 [//]: # (end addons)
 
