@@ -16,3 +16,9 @@ class HelpdeskType(models.Model):
         string="Teams",
         help="Helpdesk teams allowed to use this type.",
     )
+    active = fields.Boolean(default=True)
+    show_in_portal = fields.Boolean(
+        string="Show type in portal form",
+        default=True,
+        help="Allow to select type when creating a new ticket in the portal.",
+    )

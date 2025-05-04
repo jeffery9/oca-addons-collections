@@ -1,20 +1,51 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* helpdesk_type
+# 	* helpdesk_type
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0\n"
+"Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2020-12-12 15:36+0000\n"
-"Last-Translator: Fernando <fernandolachica@gmail.com>\n"
-"Language-Team: none\n"
-"Language: es\n"
+"POT-Creation-Date: 2025-04-25 09:35+0000\n"
+"PO-Revision-Date: 2025-04-25 09:35+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.10\n"
+"Plural-Forms: \n"
+
+#. module: helpdesk_type
+#: model_terms:ir.ui.view,arch_db:helpdesk_type.portal_helpdesk_ticket_page
+msgid "<strong>Type:</strong>"
+msgstr "<strong>Tipo:</strong>"
+
+#. module: helpdesk_type
+#: model:ir.model.fields,field_description:helpdesk_type.field_helpdesk_ticket_type__active
+msgid "Active"
+msgstr "Activo"
+
+#. module: helpdesk_type
+#: model:ir.model.fields,help:helpdesk_type.field_helpdesk_ticket_type__show_in_portal
+msgid "Allow to select type when creating a new ticket in the portal."
+msgstr "Permitir seleccionar el tipo al crear un nuevo ticket en el portal."
+
+#. module: helpdesk_type
+#: model:ir.model,name:helpdesk_type.model_res_company
+msgid "Companies"
+msgstr "Compañías"
+
+#. module: helpdesk_type
+#: model:ir.model,name:helpdesk_type.model_res_config_settings
+msgid "Config Settings"
+msgstr "Ajustes de configuración"
+
+#. module: helpdesk_type
+#: model_terms:ir.ui.view,arch_db:helpdesk_type.res_config_settings_view_form_inherit_select_type
+msgid ""
+"Controls if the types are visible on the portal and if they are required."
+msgstr "Controla si los tipos son visibles en el portal y si son obligatorios."
 
 #. module: helpdesk_type
 #: model:ir.model.fields,field_description:helpdesk_type.field_helpdesk_ticket_type__create_uid
@@ -25,6 +56,11 @@ msgstr "Creado por"
 #: model:ir.model.fields,field_description:helpdesk_type.field_helpdesk_ticket_type__create_date
 msgid "Created on"
 msgstr "Creado el"
+
+#. module: helpdesk_type
+#: model_terms:ir.ui.view,arch_db:helpdesk_type.res_config_settings_view_form_inherit_select_type
+msgid "Display"
+msgstr "Mostrar"
 
 #. module: helpdesk_type
 #: model:ir.model.fields,field_description:helpdesk_type.field_helpdesk_ticket_type__display_name
@@ -55,12 +91,7 @@ msgstr "Los equipos de soporte t??cnico pueden usar este tipo."
 #. module: helpdesk_type
 #: model:ir.model.fields,field_description:helpdesk_type.field_helpdesk_ticket_type__id
 msgid "ID"
-msgstr "ID"
-
-#. module: helpdesk_type
-#: model:ir.model.fields,field_description:helpdesk_type.field_helpdesk_ticket_type____last_update
-msgid "Last Modified on"
-msgstr "??ltima modificaci??n el"
+msgstr ""
 
 #. module: helpdesk_type
 #: model:ir.model.fields,field_description:helpdesk_type.field_helpdesk_ticket_type__write_uid
@@ -76,6 +107,30 @@ msgstr "??ltima actualizaci??n el"
 #: model:ir.model.fields,field_description:helpdesk_type.field_helpdesk_ticket_type__name
 msgid "Name"
 msgstr "Nombre"
+
+#. module: helpdesk_type
+#: model_terms:ir.ui.view,arch_db:helpdesk_type.res_config_settings_view_form_inherit_select_type
+msgid "Required"
+msgstr "Requerido"
+
+#. module: helpdesk_type
+#: model:ir.model.fields,field_description:helpdesk_type.field_res_company__helpdesk_mgmt_portal_type_id_required
+#: model:ir.model.fields,field_description:helpdesk_type.field_res_config_settings__helpdesk_mgmt_portal_type_id_required
+msgid "Required Type field in Helpdesk portal"
+msgstr "Campo de tipo requerido en el portal de Helpdesk"
+
+#. module: helpdesk_type
+#: model:ir.model.fields,help:helpdesk_type.field_res_company__helpdesk_mgmt_portal_type
+#: model:ir.model.fields,help:helpdesk_type.field_res_config_settings__helpdesk_mgmt_portal_type
+msgid "Select type in Helpdesk portal"
+msgstr "Seleccionar tipo en el portal de Helpdesk"
+
+#. module: helpdesk_type
+#: model:ir.model.fields,field_description:helpdesk_type.field_helpdesk_ticket_type__show_in_portal
+#: model:ir.model.fields,field_description:helpdesk_type.field_res_company__helpdesk_mgmt_portal_type
+#: model:ir.model.fields,field_description:helpdesk_type.field_res_config_settings__helpdesk_mgmt_portal_type
+msgid "Show type in portal form"
+msgstr "Mostrar tipo en el formulario del portal"
 
 #. module: helpdesk_type
 #: model:ir.model.fields,field_description:helpdesk_type.field_helpdesk_ticket_type__team_ids
@@ -94,18 +149,23 @@ msgstr "Tipos de Ticket"
 
 #. module: helpdesk_type
 #: model:ir.model.fields,help:helpdesk_type.field_helpdesk_ticket_team__type_ids
-msgid "Ticket Types the team will use. This team's tickets will only be able to use those types."
+msgid ""
+"Ticket Types the team will use. This team's tickets will only be able to use "
+"those types."
 msgstr ""
-"Tipos de Tickets que usar?? el equipo. Los tickets de este equipo solo podr??n "
-"usar esos tipos."
+"Tipos de ticket que el equipo utilizará. Los tickets de este equipo solo "
+"podrán usar esos tipos."
 
 #. module: helpdesk_type
 #: model:ir.model.fields,field_description:helpdesk_type.field_helpdesk_ticket__type_id
 #: model_terms:ir.ui.view,arch_db:helpdesk_type.helpdesk_ticket_type_form
+#: model_terms:ir.ui.view,arch_db:helpdesk_type.helpdesk_ticket_view_search
+#: model_terms:ir.ui.view,arch_db:helpdesk_type.portal_create_ticket
+#: model_terms:ir.ui.view,arch_db:helpdesk_type.portal_ticket_list
 msgid "Type"
 msgstr "Tipo"
 
 #. module: helpdesk_type
-#: model_terms:ir.ui.view,arch_db:helpdesk_type.helpdesk_ticket_type_tree
+#: model_terms:ir.ui.view,arch_db:helpdesk_type.res_config_settings_view_form_inherit_select_type
 msgid "Types"
 msgstr "Tipos"
