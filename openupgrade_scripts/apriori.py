@@ -8,6 +8,8 @@ renamed_modules = {
     "note": "project_todo",
     "website_sale_delivery_mondialrelay": "website_sale_mondialrelay",
     # odoo/enterprise
+    # OCA/delivery-carrier
+    "delivery_carrier_customer_info": "partner_delivery_info",
     # OCA/social
     "mail_activity_unlink_log": "mail_activity_cancel_tracking",
 }
@@ -44,6 +46,9 @@ merged_modules = {
     "account_invoice_fiscal_position_update": "account",
     # OCA/hr-attendance
     "hr_attendance_geolocation": "hr_attendance",
+    # OCA/l10n-germany
+    "l10n_de_skr03_mis_reports": "l10n_de_mis_reports",
+    "l10n_de_skr04_mis_reports": "l10n_de_mis_reports",
     # OCA/l10n-spain
     "l10n_es_dua": "l10n_es",
     "l10n_es_irnr": "l10n_es",
