@@ -365,13 +365,6 @@ msgid "City"
 msgstr ""
 
 #. module: tms
-#: model:ir.model.fields,help:tms.field_tms_driver__peppol_eas
-msgid ""
-"Code used to identify the Endpoint for BIS Billing 3.0 and its derivatives.\n"
-"             List available at https://docs.peppol.eu/poacc/billing/3.0/codelist/eas/"
-msgstr ""
-
-#. module: tms
 #: model:ir.model.fields,field_description:tms.field_tms_stage__custom_color
 msgid "Color Code"
 msgstr ""
@@ -963,11 +956,6 @@ msgid "Font awesome icon e.g. fa-tasks"
 msgstr ""
 
 #. module: tms
-#: model:ir.model.fields,field_description:tms.field_tms_driver__ubl_cii_format
-msgid "Format"
-msgstr ""
-
-#. module: tms
 #: model:ir.model.fields,help:tms.field_tms_driver__email_formatted
 msgid "Format email address \"Name <email@domain>\""
 msgstr ""
@@ -1142,6 +1130,11 @@ msgstr ""
 #. module: tms
 #: model:ir.model.fields,field_description:tms.field_tms_driver__is_active
 msgid "Is Active"
+msgstr ""
+
+#. module: tms
+#: model:ir.model.fields,field_description:tms.field_tms_driver__is_coa_installed
+msgid "Is Coa Installed"
 msgstr ""
 
 #. module: tms
@@ -1668,16 +1661,6 @@ msgid "Payment Tokens"
 msgstr ""
 
 #. module: tms
-#: model:ir.model.fields,field_description:tms.field_tms_driver__peppol_endpoint
-msgid "Peppol Endpoint"
-msgstr ""
-
-#. module: tms
-#: model:ir.model.fields,field_description:tms.field_tms_driver__peppol_eas
-msgid "Peppol e-address (EAS)"
-msgstr ""
-
-#. module: tms
 #: model_terms:ir.ui.view,arch_db:tms.tms_crew_view_form
 #: model_terms:ir.ui.view,arch_db:tms.tms_team_view_form
 msgid "Personnel"
@@ -1893,6 +1876,11 @@ msgstr ""
 #. module: tms
 #: model:ir.ui.menu,name:tms.menu_fleet_services
 msgid "Services"
+msgstr ""
+
+#. module: tms
+#: model:ir.model.fields,help:tms.field_tms_driver__use_partner_credit_limit
+msgid "Set a value greater than 0.0 to activate a credit limit check"
 msgstr ""
 
 #. module: tms
@@ -2419,13 +2407,6 @@ msgstr ""
 #. module: tms
 #: model:ir.ui.menu,name:tms.menu_config_fleet_services_types
 msgid "Types"
-msgstr ""
-
-#. module: tms
-#: model:ir.model.fields,help:tms.field_tms_driver__peppol_endpoint
-msgid ""
-"Unique identifier used by the BIS Billing 3.0 and its derivatives, also "
-"known as 'Endpoint ID'."
 msgstr ""
 
 #. module: tms
