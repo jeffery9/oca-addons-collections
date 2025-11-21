@@ -76,7 +76,7 @@ class HelpdeskCustomerResponse(PortalChatter):
             # verification in mail message
             record = request.env[res_model].browse(res_id)
             message_values = {"res_id": res_id, "model": res_model}
-            attachments = record._message_post_process_attachments(
+            attachments = record._process_attachments_for_post(
                 [], attachment_ids, message_values
             )
 

@@ -19,14 +19,29 @@ class HelpdeskTicket(models.Model):
 
     @api.depends("team_id")
     def _compute_stage_id(self):
+        # This compute is executed on user change, even if not changing team, so let's
+        # apply a preventive check for not changing stage if the current one is still
+        # applicable to the current team
         for ticket in self:
-            ticket.stage_id = ticket.team_id._get_applicable_stages()[:1]
+            applicable_stages = ticket.team_id._get_applicable_stages()
+            if ticket.stage_id not in applicable_stages:
+                ticket.stage_id = applicable_stages[:1]
 
     @api.depends("team_id")
     def _compute_user_id(self):
         for ticket in self:
-            if not ticket.user_id and ticket.team_id:
-                ticket.user_id = ticket.team_id.create_uid
+            if not ticket.user_id:
+                ticket.user_id = self.env.user
+            if ticket.team_id and ticket.user_id not in ticket.team_id.user_ids:
+                # If the user is not part of the team, we remove the user
+                ticket.user_id = False
+
+    @api.depends("user_id")
+    def _compute_team_id(self):
+        for ticket in self:
+            if not ticket.team_id and ticket.user_id.helpdesk_team_ids:
+                # If no team is set, we default to the user's first team
+                ticket.team_id = ticket.user_id.helpdesk_team_ids[0]
 
     @api.model
     def _read_group_stage_ids(self, stages, domain, order):
@@ -52,6 +67,9 @@ class HelpdeskTicket(models.Model):
         string="Assigned user",
         tracking=True,
         index=True,
+        compute="_compute_user_id",
+        store=True,
+        readonly=False,
         domain="team_id and [('share', '=', False),('id', 'in', user_ids)] or [('share', '=', False)]",  # noqa: B950,E501
     )
     user_ids = fields.Many2many(
@@ -104,6 +122,9 @@ class HelpdeskTicket(models.Model):
         comodel_name="helpdesk.ticket.team",
         string="Team",
         index=True,
+        compute="_compute_team_id",
+        store=True,
+        readonly=False,
     )
     priority = fields.Selection(
         selection=[
@@ -167,6 +188,12 @@ class HelpdeskTicket(models.Model):
                 team = self.env["helpdesk.ticket.team"].browse([vals["team_id"]])
                 if team.company_id:
                     vals["company_id"] = team.company_id.id
+                if "stage_id" not in vals:
+                    # Ensure that stage_id is set before creating the ticket
+                    # so that the field is tracked correctly
+                    # and notifications can be sent by email
+                    # if a mail template is configured
+                    vals["stage_id"] = team._get_applicable_stages()[:1].id
             # Automatically set default e-mail channel when created from the
             # fetchmail cron task
             if self.env.context.get("fetchmail_cron_running") and not vals.get(

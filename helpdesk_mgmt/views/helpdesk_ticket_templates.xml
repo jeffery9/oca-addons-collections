@@ -98,7 +98,7 @@
                                 >Tickets in category:</em>
                                 <span
                                     class="text-truncate"
-                                    t-field="tickets[0].sudo().category_id.name"
+                                    t-field="tickets[0].sudo().category_id.complete_name"
                                 />
                             </th>
                             <th t-if="groupby == 'stage'">
@@ -121,7 +121,7 @@
                         <t t-foreach="tickets" t-as="ticket">
                             <tr>
                                 <td class="text-left">
-                                    <span t-esc="ticket.partner_id.name" />
+                                    <span t-field="ticket.partner_id" />
                                 </td>
                                 <td class="text-left">
                                     <span t-esc="ticket.number" />
@@ -134,12 +134,19 @@
                                     </a>
                                 </td>
                                 <td t-if="groupby != 'category'">
-                                    <span t-esc="ticket.category_id.name" />
+                                    <span t-esc="ticket.category_id.complete_name" />
                                 </td>
                                 <td t-if="groupby != 'stage'">
                                     <span
-                                        class="badge badge-pill badge-info"
                                         title="Current stage of the ticket"
+                                        t-attf-class="badge badge-pill rounded-pill
+                                        {{
+                                            'text-bg-success' if (not ticket.unattended) and (not ticket.closed)
+                                            else 'text-bg-info' if ticket.unattended
+                                            else 'text-bg-muted' if ticket.closed
+                                            else ''
+                                        }}"
+                                        t-attf-style="color: {{'#000000' if ticket.closed else ''}};"
                                         t-esc="ticket.stage_id.name"
                                     />
                                 </td>
@@ -461,7 +468,7 @@
                             <option value="" />
                             <t t-foreach="categories" t-as="cat">
                                 <option t-attf-value="#{cat.id}">
-                                    <t t-esc="cat.name" />
+                                    <t t-esc="cat.complete_name" />
                                 </option>
                             </t>
                         </select>

@@ -24,7 +24,7 @@
                     name="with_activity_today"
                     string="With activity today"
                     groups="hr_timesheet.group_hr_timesheet_user"
-                    domain="[('last_timesheet_activity', '=', datetime.datetime.today())]"
+                    domain="[('last_timesheet_activity', '&gt;', context_today() - datetime.timedelta(days=1)), ('last_timesheet_activity', '&lt;=', context_today())]"
                 />
                 <separator />
             </filter>
@@ -56,7 +56,7 @@
             <tree position="inside">
                 <field
                     name="show_time_control"
-                    invisible="1"
+                    column_invisible="1"
                     groups="hr_timesheet.group_hr_timesheet_user"
                 />
                 <button
@@ -153,7 +153,7 @@
                                 string="Duration (Hour(s))"
                                 widget="float_time"
                             />
-                            <field name="show_time_control" invisible="1" />
+                            <field name="show_time_control" column_invisible="1" />
                             <button
                                 name="button_resume_work"
                                 string="Resume work"

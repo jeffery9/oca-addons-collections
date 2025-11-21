@@ -24,8 +24,10 @@
                 />
                 <field name="partner_id" />
                 <field name="commercial_partner_id" />
+                <field name="partner_email" />
                 <field name="user_id" />
                 <field name="name" />
+                <field name="category_id" />
                 <field name="tag_ids" />
                 <field name="stage_id" />
                 <filter
@@ -122,6 +124,12 @@
                         context="{'group_by':'stage_id'}"
                     />
                     <filter
+                        string="Category"
+                        name="group_category"
+                        domain="[]"
+                        context="{'group_by':'category_id'}"
+                    />
+                    <filter
                         string="Tag"
                         name="group_tag"
                         domain="[]"
@@ -171,7 +179,11 @@
                             <field name="active" invisible="1" />
                             <field name="team_id" options='{"always_reload": True}' />
                             <field name="user_ids" invisible="1" readonly="1" />
-                            <field name="user_id" options='{"always_reload": True}' />
+                            <field
+                                name="user_id"
+                                options='{"always_reload": True}'
+                                widget="many2one_avatar_user"
+                            />
                             <field name="priority" widget="priority" />
                             <field
                                 name="company_id"
@@ -231,6 +243,7 @@
                 <field name="partner_id" optional="hide" widget="many2one_avatar" />
                 <field name="partner_name" optional="show" />
                 <field name="user_id" optional="show" widget="many2one_avatar_user" />
+                <field name="category_id" optional="hide" />
                 <field name="unattended" column_invisible="1" />
                 <field name="closed" column_invisible="1" />
                 <field
@@ -272,6 +285,9 @@
                 <field name="name" />
                 <field name="partner_name" />
                 <field name="user_id" />
+                <field name="user_ids" />
+                <field name="team_id" />
+                <field name="category_id" />
                 <field name="sequence" />
                 <field name="color" />
                 <field name="stage_id" />
@@ -315,6 +331,13 @@
                             <div class="o_kanban_record_top">
                                 <div class="o_kanban_record_headings">
                                     <field name="name" />
+                                    <span
+                                        t-if="record.category_id.value"
+                                        class="o_text_overflow text-muted"
+                                        style="display: block; margin-top: 4px;"
+                                    >
+                                        <field name="category_id" />
+                                    </span>
                                     <field
                                         name="tag_ids"
                                         widget="many2many_tags"
@@ -342,13 +365,9 @@
                                         widget="state_selection"
                                     />
                                     <field name="activity_state" invisible="1" />
-                                    <img
-                                        t-att-src="kanban_image('res.users', 'image_128', record.user_id.raw_value)"
-                                        t-att-title="record.user_id.value"
-                                        width="24"
-                                        height="24"
-                                        class="oe_kanban_avatar o_image_24_cover float-right"
-                                        t-att-alt="record.user_id.value"
+                                    <field
+                                        name="user_id"
+                                        widget="many2one_avatar_user"
                                     />
                                 </div>
                             </div>

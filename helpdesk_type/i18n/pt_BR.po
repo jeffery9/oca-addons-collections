@@ -68,6 +68,11 @@ msgid "Display Name"
 msgstr "Nome Exibido"
 
 #. module: helpdesk_type
+#: model:helpdesk.ticket.type,name:helpdesk_type.helpdesk_type_1
+msgid "Document issue"
+msgstr ""
+
+#. module: helpdesk_type
 #: model:ir.model,name:helpdesk_type.model_helpdesk_ticket
 msgid "Helpdesk Ticket"
 msgstr "Chamado"
