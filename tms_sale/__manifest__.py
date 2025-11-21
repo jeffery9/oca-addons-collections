@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
     "name": "TMS - Sales",
-    "version": "17.0.1.0.0",
+    "version": "17.0.1.0.1",
     "summary": "Sell transportation management system.",
     "category": "TMS",
     "author": "Open Source Integrators, Odoo Community Association (OCA)",
@@ -19,9 +19,9 @@
     ],
     "assets": {
         "web.assets_backend": [
-            "tms_sale/static/src/js/line_trip_wizard_controller.js",
-            "tms_sale/static/src/js/line_ticket_wizard_controller.js",
-            "tms_sale/static/src/js/sale_order_line_product_field.js",
+            "tms_sale/static/src/js/line_trip_wizard_controller.esm.js",
+            "tms_sale/static/src/js/line_ticket_wizard_controller.esm.js",
+            "tms_sale/static/src/js/sale_order_line_product_field.esm.js",
         ],
     },
     "license": "AGPL-3",
