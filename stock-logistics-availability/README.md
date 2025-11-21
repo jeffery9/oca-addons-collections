@@ -23,9 +23,11 @@ addon | version | maintainers | summary
 --- | --- | --- | ---
 [sale_stock_available_info_popup](sale_stock_available_info_popup/) | 17.0.1.0.0 |  | Adds an 'Available to promise' quantity to the popover shown in sale order line that display stock info of the product
 [stock_available](stock_available/) | 17.0.1.0.0 |  | Stock available to promise
+[stock_available_base_exclude_location](stock_available_base_exclude_location/) | 17.0.1.0.0 | <a href='https://github.com/rousseldenis'><img src='https://github.com/rousseldenis.png' width='32' height='32' style='border-radius:50%;' alt='rousseldenis'/></a> | Base module to exclude locations for product available quantities
 [stock_available_immediately](stock_available_immediately/) | 17.0.1.0.0 |  | Ignore planned receptions in quantity available to promise
-[stock_available_mrp](stock_available_mrp/) | 17.0.1.0.1 |  | Consider the production potential is available to promise
+[stock_available_mrp](stock_available_mrp/) | 17.0.1.1.0 |  | Consider the production potential is available to promise
 [stock_free_quantity](stock_free_quantity/) | 17.0.1.1.0 |  | Stock Free Quantity
+[stock_quant_available_quantity](stock_quant_available_quantity/) | 17.0.1.0.0 | <a href='https://github.com/tisho99'><img src='https://github.com/tisho99.png' width='32' height='32' style='border-radius:50%;' alt='tisho99'/></a> | Shows Available Quantity in the stock quant views
 
 [//]: # (end addons)
 

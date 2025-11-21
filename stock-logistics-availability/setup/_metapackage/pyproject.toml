@@ -1,12 +1,14 @@
 [project]
 name = "odoo-addons-oca-stock-logistics-availability"
-version = "17.0.20250409.0"
+version = "17.0.20251013.1"
 dependencies = [
     "odoo-addon-sale_stock_available_info_popup>=17.0dev,<17.1dev",
     "odoo-addon-stock_available>=17.0dev,<17.1dev",
+    "odoo-addon-stock_available_base_exclude_location>=17.0dev,<17.1dev",
     "odoo-addon-stock_available_immediately>=17.0dev,<17.1dev",
     "odoo-addon-stock_available_mrp>=17.0dev,<17.1dev",
     "odoo-addon-stock_free_quantity>=17.0dev,<17.1dev",
+    "odoo-addon-stock_quant_available_quantity>=17.0dev,<17.1dev",
 ]
 classifiers=[
     "Programming Language :: Python",
