@@ -11,6 +11,7 @@ import os
 import re
 import time
 from contextlib import closing, contextmanager
+from pathlib import Path
 
 import fsspec  # pylint: disable=missing-manifest-dependency
 import psycopg2
@@ -171,7 +172,8 @@ class IrAttachment(models.Model):
             part = [("mimetype", "=like", f"{mimetype_key}%")]
             if limit:
                 part = AND([part, [("file_size", "<=", limit)]])
-            domain = OR([domain, part])
+            # OR simplifies to [(1, '=', 1)] if a domain being OR'ed is empty
+            domain = OR([domain, part]) if domain else part
         return domain
 
     def _store_in_db_instead_of_object_storage(self, data, mimetype):
@@ -380,11 +382,6 @@ class IrAttachment(models.Model):
         return b""
 
     def _storage_write_option(self, fs):
-        _fs = fs
-        while _fs:
-            if hasattr(_fs, "s3"):
-                return {"ContentType": self._context["mimetype"]}
-            _fs = getattr(_fs, "fs", None)
         return {}
 
     @api.model
@@ -483,6 +480,7 @@ class IrAttachment(models.Model):
             # we need to update the store_fname with the new filename by
             # calling the write method of the field since the write method
             # of ir_attachment prevent normal write on store_fname
+            # flake8: noqa: E231
             attachment._force_write_store_fname(f"{storage}://{new_filename_with_path}")
             self._fs_mark_for_gc(attachment.store_fname)
 
@@ -674,6 +672,25 @@ class IrAttachment(models.Model):
         """Get the list of filesystem storage active in the system"""
         return self.env["fs.storage"].sudo().get_storage_codes()
 
+    def _get_x_sendfile_path(self):
+        """Get the path to use for X-Accel-Redirect"""
+        self.ensure_one()
+        url_path = self.fs_url_path
+        storage_code = self.fs_storage_code
+        if not url_path:
+            raise RuntimeError(
+                "The attachment %s is not stored in a filesystem storage." % self.id
+            )
+        path = Path("/") / storage_code / url_path.lstrip("/")
+        return str(path)
+
+    def _fs_use_x_sendfile(self):
+        """Return whether to use X-Sendfile to serve the internal URL"""
+        self.ensure_one()
+        return (
+            self.fs_url_path and self.fs_storage_id.use_x_sendfile_to_serve_internal_url
+        )
+
     ################################
     # useful methods for migration #
     ################################
@@ -715,7 +732,9 @@ class IrAttachment(models.Model):
         self._force_storage_to_object_storage()
 
     @api.model
-    def force_storage_to_db_for_special_fields(self, new_cr=False):
+    def force_storage_to_db_for_special_fields(
+        self, new_cr=False, storage: str | None = None
+    ):
         """Migrate special attachments from Object Storage back to database
 
         The access to a file stored on the objects storage is slower
@@ -729,10 +748,20 @@ class IrAttachment(models.Model):
 
         It is not called anywhere, but can be called by RPC or scripts.
         """
-        storage = self._storage()
+        if not storage:
+            storage = self._storage()
         if self._is_storage_disabled(storage):
+            _logger.warning(
+                "Storage '%s' is disabled, skipping migration of attachments to DB",
+                storage,
+            )
             return
         if storage not in self._get_storage_codes():
+            _logger.warning(
+                "Storage '%s' is not configured, "
+                "skipping migration of attachments to DB",
+                storage,
+            )
             return
 
         domain = AND(
@@ -759,7 +788,7 @@ class IrAttachment(models.Model):
             total = len(attachment_ids)
             start_time = time.time()
             _logger.info(
-                "Moving %d attachments from %s to" " DB for fast access", total, storage
+                "Moving %d attachments from %s to DB for fast access", total, storage
             )
             current = 0
             for attachment_id in attachment_ids:
