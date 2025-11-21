@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-01-20 15:52+0000\n"
+"PO-Revision-Date: 2025-10-07 09:43+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.6.2\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: edi_oca
 #: model:ir.model.fields,help:edi_oca.field_edi_exchange_type__advanced_settings_edit
@@ -166,6 +166,13 @@ msgid "<strong>Type:</strong>"
 msgstr "<strong>Tipo:</strong>"
 
 #. module: edi_oca
+#: model:ir.model.constraint,message:edi_oca.constraint_edi_exchange_related_record_related_record_unique
+msgid "A record can only be related once to a specific exchange record."
+msgstr ""
+"Un record può essere correlato solo una volta a uno specifico record di "
+"scambio."
+
+#. module: edi_oca
 #: model_terms:ir.ui.view,arch_db:edi_oca.edi_exchange_record_view_form
 msgid "ACK"
 msgstr "ACK"
@@ -209,7 +216,7 @@ msgstr "Ricevuto ACK su"
 #. module: edi_oca
 #: model:ir.model,name:edi_oca.model_edi_exchange_consumer_mixin
 msgid "Abstract record where exchange records can be assigned"
-msgstr "Record astratto dove i recod di scambio possono essere assegnati"
+msgstr "Record astratto dove i record di scambio possono essere assegnati"
 
 #. module: edi_oca
 #: model:ir.model.fields,field_description:edi_oca.field_edi_exchange_record__ack_expected
@@ -311,7 +318,7 @@ msgid ""
 "Auto generate output for records missing their payload. If active, a cron "
 "will take care of generating the output when not set yet. "
 msgstr ""
-"Genera automaticamento l'output per i record che hanno perso il loro "
+"Genera automaticamente l'output per i record che hanno perso il loro "
 "contenuto. Se attiva, un cron gestirà la generazione dell'output quando non "
 "ancora impostato. "
 
@@ -409,6 +416,7 @@ msgstr "Data creazione"
 #: model:ir.model.fields,field_description:edi_oca.field_edi_backend_type__create_uid
 #: model:ir.model.fields,field_description:edi_oca.field_edi_exchange_record__create_uid
 #: model:ir.model.fields,field_description:edi_oca.field_edi_exchange_record_create_wiz__create_uid
+#: model:ir.model.fields,field_description:edi_oca.field_edi_exchange_related_record__create_uid
 #: model:ir.model.fields,field_description:edi_oca.field_edi_exchange_type__create_uid
 #: model:ir.model.fields,field_description:edi_oca.field_edi_exchange_type_rule__create_uid
 msgid "Created by"
@@ -424,6 +432,7 @@ msgstr "Creati negli ultimi 7 giorni"
 #: model:ir.model.fields,field_description:edi_oca.field_edi_backend_type__create_date
 #: model:ir.model.fields,field_description:edi_oca.field_edi_exchange_record__create_date
 #: model:ir.model.fields,field_description:edi_oca.field_edi_exchange_record_create_wiz__create_date
+#: model:ir.model.fields,field_description:edi_oca.field_edi_exchange_related_record__create_date
 #: model:ir.model.fields,field_description:edi_oca.field_edi_exchange_type__create_date
 #: model:ir.model.fields,field_description:edi_oca.field_edi_exchange_type_rule__create_date
 msgid "Created on"
@@ -460,6 +469,7 @@ msgstr "Disabilita automatico"
 #: model:ir.model.fields,field_description:edi_oca.field_edi_backend_type__display_name
 #: model:ir.model.fields,field_description:edi_oca.field_edi_exchange_record__display_name
 #: model:ir.model.fields,field_description:edi_oca.field_edi_exchange_record_create_wiz__display_name
+#: model:ir.model.fields,field_description:edi_oca.field_edi_exchange_related_record__display_name
 #: model:ir.model.fields,field_description:edi_oca.field_edi_exchange_type__display_name
 #: model:ir.model.fields,field_description:edi_oca.field_edi_exchange_type_rule__display_name
 msgid "Display Name"
@@ -538,6 +548,11 @@ msgstr "Mixin ID EDI"
 #: model:ir.model,name:edi_oca.model_edi_exchange_record
 msgid "EDI exchange Record"
 msgstr "Record di scambio EDI"
+
+#. module: edi_oca
+#: model:ir.model,name:edi_oca.model_edi_exchange_related_record
+msgid "EDI exchange Related Record"
+msgstr "Record correlato allo scambio EDI"
 
 #. module: edi_oca
 #: model:ir.actions.server,name:edi_oca.cron_edi_backend_check_input_exchange_ir_actions_server
@@ -674,6 +689,7 @@ msgstr "Sequenza nome file scambio"
 
 #. module: edi_oca
 #: model:ir.model.fields,field_description:edi_oca.field_edi_exchange_consumer_mixin__exchange_record_ids
+#: model:ir.model.fields,field_description:edi_oca.field_edi_exchange_related_record__exchange_record_id
 msgid "Exchange Record"
 msgstr "Record di scambio"
 
@@ -681,6 +697,11 @@ msgstr "Record di scambio"
 #: model:ir.model.fields,field_description:edi_oca.field_edi_exchange_consumer_mixin__exchange_record_count
 msgid "Exchange Record Count"
 msgstr "Conteggio record di scambio"
+
+#. module: edi_oca
+#: model:ir.model.fields,field_description:edi_oca.field_edi_exchange_consumer_mixin__exchange_related_record_ids
+msgid "Exchange Related Record"
+msgstr "Record relativo allo scambio"
 
 #. module: edi_oca
 #: model:ir.model.fields,field_description:edi_oca.field_edi_exchange_record_create_wiz__exchange_type_id
@@ -956,6 +977,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:edi_oca.field_edi_backend_type__id
 #: model:ir.model.fields,field_description:edi_oca.field_edi_exchange_record__id
 #: model:ir.model.fields,field_description:edi_oca.field_edi_exchange_record_create_wiz__id
+#: model:ir.model.fields,field_description:edi_oca.field_edi_exchange_related_record__id
 #: model:ir.model.fields,field_description:edi_oca.field_edi_exchange_type__id
 #: model:ir.model.fields,field_description:edi_oca.field_edi_exchange_type_rule__id
 msgid "ID"
@@ -1015,7 +1037,7 @@ msgstr "Input"
 #. module: edi_oca
 #: model:ir.model.fields,help:edi_oca.field_edi_id_mixin__edi_id
 msgid "Internal or external identifier for records."
-msgstr "Identificatore interno o esterno per il record."
+msgstr "Identificatore interno o esterno per i record."
 
 #. module: edi_oca
 #: model:ir.model.fields,field_description:edi_oca.field_edi_exchange_record__message_is_follower
@@ -1043,6 +1065,7 @@ msgstr "Genere"
 #: model:ir.model.fields,field_description:edi_oca.field_edi_backend_type__write_uid
 #: model:ir.model.fields,field_description:edi_oca.field_edi_exchange_record__write_uid
 #: model:ir.model.fields,field_description:edi_oca.field_edi_exchange_record_create_wiz__write_uid
+#: model:ir.model.fields,field_description:edi_oca.field_edi_exchange_related_record__write_uid
 #: model:ir.model.fields,field_description:edi_oca.field_edi_exchange_type__write_uid
 #: model:ir.model.fields,field_description:edi_oca.field_edi_exchange_type_rule__write_uid
 msgid "Last Updated by"
@@ -1053,6 +1076,7 @@ msgstr "Ultimo aggiornamento di"
 #: model:ir.model.fields,field_description:edi_oca.field_edi_backend_type__write_date
 #: model:ir.model.fields,field_description:edi_oca.field_edi_exchange_record__write_date
 #: model:ir.model.fields,field_description:edi_oca.field_edi_exchange_record_create_wiz__write_date
+#: model:ir.model.fields,field_description:edi_oca.field_edi_exchange_related_record__write_date
 #: model:ir.model.fields,field_description:edi_oca.field_edi_exchange_type__write_date
 #: model:ir.model.fields,field_description:edi_oca.field_edi_exchange_type_rule__write_date
 msgid "Last Updated on"
@@ -1071,6 +1095,7 @@ msgstr "Messaggi"
 #. module: edi_oca
 #: model:ir.model.fields,field_description:edi_oca.field_edi_exchange_record__model
 #: model:ir.model.fields,field_description:edi_oca.field_edi_exchange_record_create_wiz__model
+#: model:ir.model.fields,field_description:edi_oca.field_edi_exchange_related_record__model
 #: model:ir.model.fields,field_description:edi_oca.field_edi_exchange_type_rule__model_id
 #: model_terms:ir.ui.view,arch_db:edi_oca.edi_exchange_record_view_search
 #: model_terms:ir.ui.view,arch_db:edi_oca.edi_exchange_type_rule_view_search
@@ -1119,6 +1144,11 @@ msgstr "Numero di messaggi che richiedono un'azione"
 #: model:ir.model.fields,help:edi_oca.field_edi_exchange_record__message_has_error_counter
 msgid "Number of messages with delivery error"
 msgstr "Numero di messaggi con errore di consegna"
+
+#. module: edi_oca
+#: model_terms:ir.ui.view,arch_db:edi_oca.edi_exchange_record_view_form
+msgid "Open Record"
+msgstr "Apri record"
 
 #. module: edi_oca
 #: model:ir.model.fields,help:edi_oca.field_edi_exchange_record__parent_id
@@ -1196,6 +1226,7 @@ msgstr "Scambi recenti"
 
 #. module: edi_oca
 #: model:ir.model.fields,field_description:edi_oca.field_edi_exchange_record__res_id
+#: model:ir.model.fields,field_description:edi_oca.field_edi_exchange_related_record__res_id
 msgid "Record"
 msgstr "Record"
 
@@ -1249,6 +1280,12 @@ msgstr "Esistono record collegati"
 
 #. module: edi_oca
 #: model_terms:ir.ui.view,arch_db:edi_oca.edi_exchange_record_view_form
+msgid "Related Records"
+msgstr "Record collegati"
+
+#. module: edi_oca
+#: model:ir.model.fields,field_description:edi_oca.field_edi_exchange_record__related_exchange_ids
+#: model_terms:ir.ui.view,arch_db:edi_oca.edi_exchange_record_view_form
 msgid "Related exchanges"
 msgstr "Scambi collegati"
 
@@ -1258,7 +1295,7 @@ msgid "Related record"
 msgstr "Record collegato"
 
 #. module: edi_oca
-#: model:ir.model.fields,field_description:edi_oca.field_edi_exchange_record__related_exchange_ids
+#: model:ir.model.fields,field_description:edi_oca.field_edi_exchange_record__related_record_ids
 msgid "Related records"
 msgstr "Record collegati"
 
