@@ -1,11 +1,10 @@
-# Copyright 2024 ForgeFlow S.L. (https://www.forgeflow.com)
+# Copyright 2025 ForgeFlow S.L. (https://www.forgeflow.com)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 {
-    "name": "Repair Service",
+    "name": "Repair Quotation Manual Sync",
     "summary": """
-        Adds services to repair orders, so that they can be added
-        as sale order lines.
+        Manually Synchronize Repair Orders with their Quotations
     """,
     "version": "17.0.1.0.1",
     "category": "Repair",
@@ -13,5 +12,8 @@
     "author": "ForgeFlow, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "depends": ["repair"],
-    "data": ["security/ir.model.access.csv", "views/repair_views.xml"],
+    "data": [
+        "views/repair_order_views.xml",
+        "views/sale_order_views.xml",
+    ],
 }
