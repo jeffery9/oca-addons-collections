@@ -1,12 +1,14 @@
 [project]
 name = "odoo-addons-oca-repair"
-version = "17.0.20250221.0"
+version = "17.0.20251001.0"
 dependencies = [
     "odoo-addon-base_repair_config>=17.0dev,<17.1dev",
+    "odoo-addon-repair_order_line_sequence>=17.0dev,<17.1dev",
     "odoo-addon-repair_order_template>=17.0dev,<17.1dev",
     "odoo-addon-repair_picking>=17.0dev,<17.1dev",
     "odoo-addon-repair_picking_after_done>=17.0dev,<17.1dev",
     "odoo-addon-repair_quality_control>=17.0dev,<17.1dev",
+    "odoo-addon-repair_quotation_manual_sync>=17.0dev,<17.1dev",
     "odoo-addon-repair_refurbish>=17.0dev,<17.1dev",
     "odoo-addon-repair_restrict_lot>=17.0dev,<17.1dev",
     "odoo-addon-repair_service>=17.0dev,<17.1dev",
