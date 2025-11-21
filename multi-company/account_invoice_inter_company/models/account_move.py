@@ -40,6 +40,12 @@ class AccountMove(models.Model):
         )
         return company or False
 
+    def _set_intercompany_supplier_invoice_ref(self):
+        self.ensure_one()
+        supplier_invoice = self.auto_invoice_id
+        if not supplier_invoice.ref:
+            supplier_invoice.write({"ref": self.name})
+
     def action_post(self):
         """Validated invoice generate cross invoice base on company rules"""
         res = super().action_post()
@@ -69,6 +75,12 @@ class AccountMove(models.Model):
                 )._inter_company_create_invoice(dest_company)
             if src_invoice.is_sale_document():
                 src_invoice._attach_original_pdf_report()
+        # set invoice ref on supplier invoice when the customer invoice is validated
+        # (case where the source invoice was the supplier one)
+        for invoice in self.filtered(
+            lambda i: i.is_sale_document() and i.auto_generated
+        ):
+            invoice.sudo()._set_intercompany_supplier_invoice_ref()
         return res
 
     def _attach_original_pdf_report(self):
@@ -140,7 +152,11 @@ class AccountMove(models.Model):
         :rtype dest_company : res.company record
         """
         self.ensure_one()
-        self = self.with_context(check_move_validity=False)
+        # Remove default_ context keys
+        ctx = clean_context(self.env.context)
+        ctx["check_move_validity"] = False
+        # pylint: disable=W8121
+        self = self.with_context(ctx)
         # check intercompany product
         self._check_intercompany_product(dest_company)
         # if an invoice has already been generated
@@ -232,7 +248,6 @@ class AccountMove(models.Model):
         :rtype dest_company : res.company record
         """
         self.ensure_one()
-        self = self.with_context(**clean_context(self.env.context))
         # check if the journal is define in dest company
         self._check_dest_journal(dest_company)
         vals = {
