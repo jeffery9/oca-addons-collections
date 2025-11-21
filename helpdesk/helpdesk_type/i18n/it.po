@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-05-03 17:24+0000\n"
+"PO-Revision-Date: 2025-07-07 09:25+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -67,6 +67,11 @@ msgstr "Schermo"
 #: model:ir.model.fields,field_description:helpdesk_type.field_helpdesk_ticket_type__display_name
 msgid "Display Name"
 msgstr "Nome visualizzato"
+
+#. module: helpdesk_type
+#: model:helpdesk.ticket.type,name:helpdesk_type.helpdesk_type_1
+msgid "Document issue"
+msgstr "Emissione documento"
 
 #. module: helpdesk_type
 #: model:ir.model,name:helpdesk_type.model_helpdesk_ticket

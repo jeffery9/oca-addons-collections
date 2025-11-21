@@ -496,6 +496,11 @@ msgid "All"
 msgstr "Tout"
 
 #. module: helpdesk_mgmt
+#: model:ir.ui.menu,name:helpdesk_mgmt.helpdesk_all_ticket_menu
+msgid "All Tickets"
+msgstr ""
+
+#. module: helpdesk_mgmt
 #: model:ir.model.fields,help:helpdesk_mgmt.field_helpdesk_ticket_team__show_in_portal
 msgid "Allow to select this team when creating a new ticket in the portal."
 msgstr ""
@@ -576,6 +581,7 @@ msgstr "Catégories"
 #: code:addons/helpdesk_mgmt/controllers/myaccount.py:0
 #: model:ir.model.fields,field_description:helpdesk_mgmt.field_helpdesk_ticket__category_id
 #: model:ir.model.fields,field_description:helpdesk_mgmt.field_helpdesk_ticket_team__category_ids
+#: model_terms:ir.ui.view,arch_db:helpdesk_mgmt.helpdesk_ticket_view_search
 #: model_terms:ir.ui.view,arch_db:helpdesk_mgmt.portal_create_ticket
 #: model_terms:ir.ui.view,arch_db:helpdesk_mgmt.portal_ticket_list
 #, python-format
@@ -601,6 +607,11 @@ msgstr ""
 #: model:ir.ui.menu,name:helpdesk_mgmt.helpdesk_ticket_channel_menu
 msgid "Channels"
 msgstr "Canaux"
+
+#. module: helpdesk_mgmt
+#: model:ir.model.fields,field_description:helpdesk_mgmt.field_helpdesk_ticket_category__child_id
+msgid "Child Categories"
+msgstr ""
 
 #. module: helpdesk_mgmt
 #: model_terms:ir.ui.view,arch_db:helpdesk_mgmt.portal_ticket_list
@@ -660,6 +671,7 @@ msgid "Company"
 msgstr "Société"
 
 #. module: helpdesk_mgmt
+#: model:ir.model.fields,field_description:helpdesk_mgmt.field_helpdesk_ticket_category__complete_name
 #: model:ir.model.fields,field_description:helpdesk_mgmt.field_helpdesk_ticket_team__complete_name
 msgid "Complete Name"
 msgstr ""
@@ -810,6 +822,11 @@ msgstr ""
 "de fermer le ticket avec cette étape en tant qu'étape cible."
 
 #. module: helpdesk_mgmt
+#: model_terms:ir.ui.view,arch_db:helpdesk_mgmt.view_helpdesk_ticket_category_search
+msgid "Displayed in portal"
+msgstr ""
+
+#. module: helpdesk_mgmt
 #: model:helpdesk.ticket.stage,name:helpdesk_mgmt.helpdesk_ticket_stage_done
 msgid "Done"
 msgstr "Terminé"
@@ -884,6 +901,11 @@ msgid "Font awesome icon e.g. fa-tasks"
 msgstr "Icône Font Awesome par ex fa-tasks"
 
 #. module: helpdesk_mgmt
+#: model:helpdesk.ticket.tag,name:helpdesk_mgmt.helpdesk_tag_3
+msgid "Functional"
+msgstr ""
+
+#. module: helpdesk_mgmt
 #: model_terms:ir.ui.view,arch_db:helpdesk_mgmt.helpdesk_ticket_view_search
 msgid "Future Activities"
 msgstr "Activités futures"
@@ -901,6 +923,16 @@ msgstr "Regrouper par"
 #. module: helpdesk_mgmt
 #: model:ir.model,name:helpdesk_mgmt.model_ir_http
 msgid "HTTP Routing"
+msgstr ""
+
+#. module: helpdesk_mgmt
+#: model:helpdesk.ticket.tag,name:helpdesk_mgmt.helpdesk_tag_1
+msgid "Hard"
+msgstr ""
+
+#. module: helpdesk_mgmt
+#: model:helpdesk.ticket.category,name:helpdesk_mgmt.helpdesk_category_4
+msgid "Hardware"
 msgstr ""
 
 #. module: helpdesk_mgmt
@@ -1092,6 +1124,11 @@ msgid "Kanban State"
 msgstr "État kanban"
 
 #. module: helpdesk_mgmt
+#: model:helpdesk.ticket.category,name:helpdesk_mgmt.helpdesk_category_5
+msgid "Laptops"
+msgstr ""
+
+#. module: helpdesk_mgmt
 #. odoo-python
 #: code:addons/helpdesk_mgmt/controllers/myaccount.py:0
 #: model:ir.model.fields,field_description:helpdesk_mgmt.field_helpdesk_ticket__last_stage_update
@@ -1183,6 +1220,8 @@ msgid "My Followed Tickets"
 msgstr "Mes tickets suivis"
 
 #. module: helpdesk_mgmt
+#: model:ir.actions.act_window,name:helpdesk_mgmt.helpdesk_my_tickets_action
+#: model:ir.ui.menu,name:helpdesk_mgmt.helpdesk_own_ticket_menu
 #: model_terms:ir.ui.view,arch_db:helpdesk_mgmt.helpdesk_ticket_view_search
 msgid "My Tickets"
 msgstr "Mes tickets"
@@ -1244,6 +1283,18 @@ msgstr "Pas de sujet"
 #: model_terms:ir.ui.view,arch_db:helpdesk_mgmt.portal_my_tickets
 msgid "No tickets found."
 msgstr "Aucun ticket trouvé."
+
+#. module: helpdesk_mgmt
+#: model:ir.model.fields,field_description:helpdesk_mgmt.field_helpdesk_ticket__non_conformity_ids
+#: model:ir.model.fields,field_description:helpdesk_mgmt.field_helpdesk_ticket_team__non_conformity_ids
+msgid "Non Conformity"
+msgstr ""
+
+#. module: helpdesk_mgmt
+#: model:ir.model.fields,field_description:helpdesk_mgmt.field_helpdesk_ticket__non_conformity_count
+#: model:ir.model.fields,field_description:helpdesk_mgmt.field_helpdesk_ticket_team__non_conformity_count
+msgid "Non Conformity Count"
+msgstr ""
 
 #. module: helpdesk_mgmt
 #. odoo-python
@@ -1333,11 +1384,18 @@ msgid "Other Information"
 msgstr "Autres informations"
 
 #. module: helpdesk_mgmt
+#: model:ir.model.fields,field_description:helpdesk_mgmt.field_helpdesk_ticket_category__parent_id
+#: model_terms:ir.ui.view,arch_db:helpdesk_mgmt.view_helpdesk_ticket_category_search
+msgid "Parent Category"
+msgstr ""
+
+#. module: helpdesk_mgmt
 #: model:ir.model.fields,field_description:helpdesk_mgmt.field_helpdesk_ticket_team__alias_parent_model_id
 msgid "Parent Model"
 msgstr "Modèle parent"
 
 #. module: helpdesk_mgmt
+#: model:ir.model.fields,field_description:helpdesk_mgmt.field_helpdesk_ticket_category__parent_path
 #: model:ir.model.fields,field_description:helpdesk_mgmt.field_helpdesk_ticket_team__parent_path
 msgid "Parent Path"
 msgstr ""
@@ -1516,6 +1574,7 @@ msgstr "Envoyer un nouveau ticket"
 #: model:ir.model.fields,field_description:helpdesk_mgmt.field_helpdesk_ticket_category__sequence
 #: model:ir.model.fields,field_description:helpdesk_mgmt.field_helpdesk_ticket_channel__sequence
 #: model:ir.model.fields,field_description:helpdesk_mgmt.field_helpdesk_ticket_stage__sequence
+#: model:ir.model.fields,field_description:helpdesk_mgmt.field_helpdesk_ticket_tag__sequence
 #: model:ir.model.fields,field_description:helpdesk_mgmt.field_helpdesk_ticket_team__sequence
 msgid "Sequence"
 msgstr "Séquence"
@@ -1530,6 +1589,11 @@ msgstr "Paramètres"
 #: model:ir.actions.server,name:helpdesk_mgmt.model_helpdesk_ticket_action_share
 msgid "Share"
 msgstr "Partager"
+
+#. module: helpdesk_mgmt
+#: model:ir.model.fields,field_description:helpdesk_mgmt.field_helpdesk_ticket_category__show_in_portal
+msgid "Show In Portal"
+msgstr ""
 
 #. module: helpdesk_mgmt
 #: model_terms:ir.ui.view,arch_db:helpdesk_mgmt.helpdesk_ticket_view_search
@@ -1641,6 +1705,11 @@ msgstr "Membres de l'équipe"
 #: model_terms:ir.ui.view,arch_db:helpdesk_mgmt.res_config_settings_view_form
 msgid "Teams"
 msgstr "Les équipes"
+
+#. module: helpdesk_mgmt
+#: model:helpdesk.ticket.tag,name:helpdesk_mgmt.helpdesk_tag_2
+msgid "Technical"
+msgstr ""
 
 #. module: helpdesk_mgmt
 #: model:ir.model.fields,help:helpdesk_mgmt.field_helpdesk_ticket_team__alias_id
