@@ -810,9 +810,11 @@ msgid "Intrastat Product Computation Lines"
 msgstr "Líneas de cálculo de Intrastat"
 
 #. module: intrastat_product
+#: model:ir.actions.act_window,name:intrastat_product.intrastat_product_intrastat_product_declaration_action
 #: model:ir.model,name:intrastat_product.model_intrastat_product_declaration
 #: model:ir.model.fields,field_description:intrastat_product.field_intrastat_product_computation_line__parent_id
 #: model:ir.model.fields,field_description:intrastat_product.field_intrastat_product_declaration_line__parent_id
+#: model:ir.ui.menu,name:intrastat_product.intrastat_product_intrastat_product_declaration_menu
 msgid "Intrastat Product Declaration"
 msgstr "Declaración de producto Intrastat"
 
@@ -1519,13 +1521,6 @@ msgstr ""
 #. odoo-python
 #: code:addons/intrastat_product/models/intrastat_product_declaration.py:0
 #, python-format
-msgid "The VAT number '%s' is invalid."
-msgstr "El NIF '%s' no es válido."
-
-#. module: intrastat_product
-#. odoo-python
-#: code:addons/intrastat_product/models/intrastat_product_declaration.py:0
-#, python-format
 msgid "The VAT number is not set for the partner '%s'."
 msgstr "El NIF no está establecido para '%s'."
 
@@ -1876,6 +1871,17 @@ msgstr ""
 #: model:ir.actions.report,print_report_name:intrastat_product.intrastat_product_xlsx_report
 msgid "object._get_xlsx_report_filename()"
 msgstr "object._get_xlsx_report_filename()"
+
+#. module: intrastat_product
+#. odoo-python
+#: code:addons/intrastat_product/models/intrastat_product_declaration.py:0
+#, python-format
+msgid "partner [%s]"
+msgstr ""
+
+#, python-format
+#~ msgid "The VAT number '%s' is invalid."
+#~ msgstr "El NIF '%s' no es válido."
 
 #~ msgid "<span>Intrastat Product Declaration </span>"
 #~ msgstr "<span>Declaración de producto IntrastaT </span>"
