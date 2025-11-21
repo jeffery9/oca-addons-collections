@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-07 08:58+0000\n"
+"PO-Revision-Date: 2025-10-02 18:43+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.6.2\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: stock_inventory
 #: model:ir.model.fields,field_description:stock_inventory.field_stock_inventory__count_stock_quants
@@ -54,7 +54,7 @@ msgstr "Conteggio allegati"
 #. module: stock_inventory
 #: model_terms:ir.ui.view,arch_db:stock_inventory.view_inventory_group_form
 msgid "Back to Draft"
-msgstr "Ritorna a bozza"
+msgstr "Reimposta a bozza"
 
 #. module: stock_inventory
 #: model_terms:ir.ui.view,arch_db:stock_inventory.view_inventory_group_form
@@ -196,7 +196,7 @@ msgstr "In corso"
 #: model:ir.model.fields,field_description:stock_inventory.field_stock_inventory__stock_quant_ids
 #: model:ir.model.fields,field_description:stock_inventory.field_stock_move_line__inventory_adjustment_id
 msgid "Inventory Adjustment"
-msgstr "Rettifica d'inventario"
+msgstr "Rettifica di inventario"
 
 #. module: stock_inventory
 #: model:ir.actions.act_window,name:stock_inventory.action_view_inventory_group_form
@@ -444,6 +444,14 @@ msgid ""
 msgstr ""
 "Quando è selezionata 'Selezione prodotto: n prodotto' è possibile aggiungere "
 "un solo prodotto."
+
+#. module: stock_inventory
+#. odoo-python
+#: code:addons/stock_inventory/models/stock_inventory.py:0
+#, python-format
+msgid "You can only delete inventory adjustments groups in draft state."
+msgstr ""
+"Si possono cancellare solo i gruppi di rettifica inventariale in stato bozza."
 
 #. module: stock_inventory
 #. odoo-python
