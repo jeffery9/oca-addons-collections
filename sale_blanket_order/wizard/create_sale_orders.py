@@ -64,18 +64,11 @@ class BlanketOrderWizard(models.TransientModel):
         self._check_valid_blanket_order_line(bo_lines)
 
         lines = [
-            (
-                0,
-                0,
+            fields.Command.create(
                 {
                     "blanket_line_id": bol.id,
-                    "product_id": bol.product_id.id,
                     "date_schedule": bol.date_schedule,
-                    "remaining_uom_qty": bol.remaining_uom_qty,
-                    "price_unit": bol.price_unit,
-                    "product_uom": bol.product_uom,
                     "qty": bol.remaining_uom_qty,
-                    "partner_id": bol.partner_id,
                 },
             )
             for bol in bo_lines.filtered(
@@ -102,6 +95,7 @@ class BlanketOrderWizard(models.TransientModel):
 
     def _prepare_so_line_vals(self, line):
         return {
+            "analytic_distribution": line.analytic_distribution,
             "product_id": line.product_id.id,
             "name": line.product_id.name,
             "product_uom": line.product_uom.id,
@@ -109,7 +103,7 @@ class BlanketOrderWizard(models.TransientModel):
             "price_unit": line.blanket_line_id.price_unit,
             "blanket_order_line": line.blanket_line_id.id,
             "product_uom_qty": line.qty,
-            "tax_id": [(6, 0, line.taxes_id.ids)],
+            "tax_id": [fields.Command.set(line.taxes_id.ids)],
         }
 
     def _prepare_so_vals(
@@ -119,6 +113,8 @@ class BlanketOrderWizard(models.TransientModel):
         currency_id,
         pricelist_id,
         payment_term_id,
+        client_order_ref,
+        tag_ids,
         order_lines_by_customer,
     ):
         return {
@@ -130,7 +126,15 @@ class BlanketOrderWizard(models.TransientModel):
             "payment_term_id": payment_term_id,
             "order_line": order_lines_by_customer[customer],
             "analytic_account_id": self.blanket_order_id.analytic_account_id.id,
+            "client_order_ref": client_order_ref,
+            "tag_ids": [(6, 0, tag_ids.ids)] if tag_ids else False,
         }
+
+    @api.model
+    def _check_consistency(self, current_value, new_value):
+        if current_value == 0:
+            return new_value
+        return current_value if current_value == new_value else False
 
     def create_sale_order(self):
         order_lines_by_customer = defaultdict(list)
@@ -138,31 +142,30 @@ class BlanketOrderWizard(models.TransientModel):
         pricelist_id = 0
         user_id = 0
         payment_term_id = 0
+        client_order_ref = 0
+        tag_ids = 0
         for line in self.line_ids.filtered(lambda line: line.qty != 0.0):
             if line.qty > line.remaining_uom_qty:
                 raise UserError(_("You can't order more than the remaining quantities"))
             vals = self._prepare_so_line_vals(line)
             order_lines_by_customer[line.partner_id.id].append((0, 0, vals))
 
-            if currency_id == 0:
-                currency_id = line.blanket_line_id.order_id.currency_id.id
-            elif currency_id != line.blanket_line_id.order_id.currency_id.id:
-                currency_id = False
-
-            if pricelist_id == 0:
-                pricelist_id = line.blanket_line_id.pricelist_id.id
-            elif pricelist_id != line.blanket_line_id.pricelist_id.id:
-                pricelist_id = False
-
-            if user_id == 0:
-                user_id = line.blanket_line_id.user_id.id
-            elif user_id != line.blanket_line_id.user_id.id:
-                user_id = False
-
-            if payment_term_id == 0:
-                payment_term_id = line.blanket_line_id.payment_term_id.id
-            elif payment_term_id != line.blanket_line_id.payment_term_id.id:
-                payment_term_id = False
+            currency_id = self._check_consistency(
+                currency_id, line.blanket_line_id.order_id.currency_id.id
+            )
+            pricelist_id = self._check_consistency(
+                pricelist_id, line.blanket_line_id.pricelist_id.id
+            )
+            user_id = self._check_consistency(user_id, line.blanket_line_id.user_id.id)
+            payment_term_id = self._check_consistency(
+                payment_term_id, line.blanket_line_id.payment_term_id.id
+            )
+            client_order_ref = self._check_consistency(
+                client_order_ref, line.blanket_line_id.order_id.client_order_ref
+            )
+            tag_ids = self._check_consistency(
+                tag_ids, line.blanket_line_id.order_id.tag_ids
+            )
 
         if not order_lines_by_customer:
             raise UserError(_("An order can't be empty"))
@@ -183,6 +186,8 @@ class BlanketOrderWizard(models.TransientModel):
                 currency_id,
                 pricelist_id,
                 payment_term_id,
+                client_order_ref,
+                tag_ids,
                 order_lines_by_customer,
             )
             sale_order = self.env["sale.order"].create(order_vals)
@@ -199,11 +204,13 @@ class BlanketOrderWizard(models.TransientModel):
 
 
 class BlanketOrderWizardLine(models.TransientModel):
+    _inherit = "analytic.mixin"
     _name = "sale.blanket.order.wizard.line"
     _description = "Blanket order wizard line"
 
     wizard_id = fields.Many2one("sale.blanket.order.wizard")
     blanket_line_id = fields.Many2one("sale.blanket.order.line")
+    analytic_distribution = fields.Json(related="blanket_line_id.analytic_distribution")
     product_id = fields.Many2one(
         "product.product", related="blanket_line_id.product_id", string="Product"
     )

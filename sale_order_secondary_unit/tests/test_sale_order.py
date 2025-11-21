@@ -1,23 +1,17 @@
 # Copyright 2018-2020 Tecnativa - Carlos Dauden
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from odoo.tests import Form, TransactionCase, tagged
+from odoo.tests import Form, tagged
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
 @tagged("post_install", "-at_install")
-class TestSaleOrder(TransactionCase):
+class TestSaleOrder(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
         # Remove this variable in v16 and put instead:
         # from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
-        DISABLED_MAIL_CONTEXT = {
-            "tracking_disable": True,
-            "mail_create_nolog": True,
-            "mail_create_nosubscribe": True,
-            "mail_notrack": True,
-            "no_reset_password": True,
-        }
-        cls.env = cls.env(context=dict(cls.env.context, **DISABLED_MAIL_CONTEXT))
         cls.product_uom_kg = cls.env.ref("uom.product_uom_kgm")
         cls.product_uom_gram = cls.env.ref("uom.product_uom_gram")
         cls.product_uom_unit = cls.env.ref("uom.product_uom_unit")
@@ -86,8 +80,8 @@ class TestSaleOrder(TransactionCase):
 
     def test_independent_type(self):
         # dependent type is already tested as dependency_type by default
+        self.secondary_unit.write({"dependency_type": "independent"})
         self.order.order_line.secondary_uom_id = self.secondary_unit.id
-        self.order.order_line.secondary_uom_id.write({"dependency_type": "independent"})
 
         # Remember previous UoM quantity for avoiding interactions with other modules
         previous_uom_qty = self.order.order_line.product_uom_qty
