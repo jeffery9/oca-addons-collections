@@ -89,7 +89,7 @@
                             </thead>
                             <tbody>
                                 <tr
-                                    t-foreach="o.line_ids.filtered(lambda line: line.appears_on_payslip)"
+                                    t-foreach="o.line_ids.filtered(lambda l: l.appears_on_payslip and l.amount != 0)"
                                     t-as="line"
                                 >
                                     <td>

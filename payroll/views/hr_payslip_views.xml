@@ -281,6 +281,7 @@
                                         decoration-success="total > 0 and parent_rule_id == False"
                                         readonly="1"
                                     />
+                                    <field name="currency_id" invisible="1" />
                                 </tree>
                             </field>
                         </page>
