@@ -1,10 +1,11 @@
 [project]
 name = "odoo-addons-oca-rma"
-version = "17.0.20250221.0"
+version = "17.0.20250602.0"
 dependencies = [
     "odoo-addon-product_warranty>=17.0dev,<17.1dev",
     "odoo-addon-rma>=17.0dev,<17.1dev",
     "odoo-addon-rma_lot>=17.0dev,<17.1dev",
+    "odoo-addon-rma_repair>=17.0dev,<17.1dev",
     "odoo-addon-rma_sale>=17.0dev,<17.1dev",
 ]
 classifiers=[

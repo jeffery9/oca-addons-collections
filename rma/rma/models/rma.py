@@ -4,6 +4,7 @@
 # Copyright 2025 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 import logging
+import warnings
 from collections import defaultdict
 from itertools import groupby
 
@@ -262,6 +263,85 @@ class Rma(models.Model):
         copy=False,
     )
 
+    show_create_receipt = fields.Boolean(
+        string="Show Create Receipt Button", compute="_compute_show_create_receipt"
+    )
+    show_create_return = fields.Boolean(
+        string="Show Create Return Button", compute="_compute_show_create_return"
+    )
+    show_create_replace = fields.Boolean(
+        string="Show Create replace Button", compute="_compute_show_create_replace"
+    )
+    show_create_refund = fields.Boolean(
+        string="Show Create refund Button", compute="_compute_show_refund_replace"
+    )
+    return_product_id = fields.Many2one(
+        "product.product",
+        help="Product to be returned if it's different from the originally delivered "
+        "item.",
+    )
+    different_return_product = fields.Boolean(
+        related="operation_id.different_return_product"
+    )
+    manual_finish_allowed = fields.Boolean(
+        compute="_compute_manual_finish_allowed",
+        help="Indicates whether this RMA can be manually finished, "
+        "without requiring further processing such as a receipt, "
+        "delivery, or refund.",
+    )
+
+    @api.depends("operation_id", "reception_move_id.state")
+    def _compute_manual_finish_allowed(self):
+        """
+        compute whether the RMA requires any follow-up action based on the
+        operation configuration
+        """
+        for rma in self:
+            rma.manual_finish_allowed = (
+                (
+                    rma.operation_id.action_create_receipt
+                    and rma.reception_move_id.state != "done"
+                )
+                or rma.operation_id.action_create_delivery
+                or rma.operation_id.action_create_refund
+            )
+
+    @api.depends("operation_id.action_create_receipt", "state", "reception_move_id")
+    def _compute_show_create_receipt(self):
+        for rec in self:
+            rec.show_create_receipt = (
+                not rec.reception_move_id
+                and rec.operation_id.action_create_receipt == "manual_on_confirm"
+                and rec.state == "confirmed"
+            )
+
+    @api.depends("operation_id.action_create_delivery", "can_be_returned")
+    def _compute_show_create_return(self):
+        for rec in self:
+            rec.show_create_return = (
+                rec.operation_id.action_create_delivery
+                in ("manual_on_confirm", "manual_after_receipt")
+                and rec.can_be_returned
+            )
+
+    @api.depends("operation_id.action_create_delivery", "can_be_replaced")
+    def _compute_show_create_replace(self):
+        for rec in self:
+            rec.show_create_replace = (
+                rec.operation_id.action_create_delivery
+                in ("manual_on_confirm", "manual_after_receipt")
+                and rec.can_be_replaced
+            )
+
+    @api.depends("operation_id.action_create_refund", "can_be_refunded")
+    def _compute_show_refund_replace(self):
+        for rec in self:
+            rec.show_create_refund = (
+                rec.operation_id.action_create_refund
+                in ("manual_on_confirm", "manual_after_receipt")
+                and rec.can_be_refunded
+            )
+
     def _compute_delivery_picking_count(self):
         for rma in self:
             rma.delivery_picking_count = len(rma.delivery_move_ids.picking_id)
@@ -323,9 +403,17 @@ class Rma(models.Model):
         an rma can be refunded. It is used in rma.action_refund method.
         """
         for record in self:
-            record.can_be_refunded = record.state == "received"
+            record.can_be_refunded = (
+                record.operation_id.action_create_refund
+                in ("manual_after_receipt", "automatic_after_receipt")
+                and record.state == "received"
+            ) or (
+                record.operation_id.action_create_refund
+                in ("manual_on_confirm", "automatic_on_confirm")
+                and record.state == "confirmed"
+            )
 
-    @api.depends("remaining_qty", "state")
+    @api.depends("remaining_qty", "state", "operation_id.action_create_delivery")
     def _compute_can_be_returned(self):
         """Compute 'can_be_returned'. This field controls the visibility
         of the 'Return to customer' button in the rma form
@@ -335,8 +423,17 @@ class Rma(models.Model):
         rma._ensure_can_be_returned.
         """
         for r in self:
-            r.can_be_returned = (
-                r.state in ["received", "waiting_return"] and r.remaining_qty > 0
+            r.can_be_returned = r.remaining_qty > 0 and (
+                (
+                    r.operation_id.action_create_delivery
+                    in ("manual_after_receipt", "automatic_after_receipt")
+                    and r.state in ["received", "waiting_return"]
+                )
+                or (
+                    r.operation_id.action_create_delivery
+                    in ("manual_on_confirm", "automatic_on_confirm")
+                    and r.state == "confirmed"
+                )
             )
 
     @api.depends("state")
@@ -349,19 +446,32 @@ class Rma(models.Model):
         rma._ensure_can_be_replaced.
         """
         for r in self:
-            r.can_be_replaced = r.state in [
-                "received",
-                "waiting_replacement",
-                "replaced",
-            ]
+            r.can_be_replaced = (
+                r.operation_id.action_create_delivery
+                in ("manual_after_receipt", "automatic_after_receipt")
+                and r.state
+                in [
+                    "received",
+                    "waiting_replacement",
+                    "replaced",
+                ]
+            ) or (
+                r.operation_id.action_create_delivery
+                in ("manual_on_confirm", "automatic_on_confirm")
+                and r.state == "confirmed"
+            )
 
-    @api.depends("state", "remaining_qty")
+    @api.depends("state", "remaining_qty", "manual_finish_allowed")
     def _compute_can_be_finished(self):
+        # The RMA can be finished if:
+        # - It's in a transitional state AND there is still quantity to process
+        # OR
+        # - It's not already finished AND no further action is required
         for rma in self:
             rma.can_be_finished = (
                 rma.state in {"received", "waiting_replacement", "waiting_return"}
                 and rma.remaining_qty > 0
-            )
+            ) or (rma.state != "finished" and not rma.manual_finish_allowed)
 
     @api.depends("product_uom_qty", "state", "remaining_qty")
     def _compute_can_be_split(self):
@@ -635,8 +745,11 @@ class Rma(models.Model):
         vals = self._prepare_common_procurement_vals(group=group)
         vals["route_ids"] = self.warehouse_id.rma_in_route_id
         vals["rma_receiver_ids"] = [(6, 0, self.ids)]
+        vals["to_refund"] = self.operation_id.action_create_refund == "update_quantity"
         if self.move_id:
             vals["origin_returned_move_id"] = self.move_id.id
+            if not self.operation_id.different_return_product:
+                vals["move_orig_ids"] = [(6, 0, self.move_id.ids)]
         return vals
 
     def _prepare_reception_procurements(self):
@@ -648,13 +761,24 @@ class Rma(models.Model):
             group = rma.procurement_group_id
             if not group:
                 group = group_model.create(rma._prepare_procurement_group_vals())
+            product = self.product_id
+            if self.different_return_product:
+                if not self.return_product_id:
+                    raise ValidationError(
+                        _(
+                            "The selected operation requires a return product different"
+                            " from the originally delivered item. Please select the "
+                            "product to return."
+                        )
+                    )
+                product = self.return_product_id
             procurements.append(
                 group_model.Procurement(
-                    rma.product_id,
+                    product,
                     rma.product_uom_qty,
                     rma.product_uom,
                     rma.location_id,
-                    rma.product_id.display_name,
+                    product.display_name,
                     group.name,
                     rma.company_id,
                     rma._prepare_reception_procurement_vals(group),
@@ -662,20 +786,55 @@ class Rma(models.Model):
             )
         return procurements
 
+    def _create_receipt(self):
+        procurements = self._prepare_reception_procurements()
+        if procurements:
+            self.env["procurement.group"].run(procurements)
+        self.reception_move_id.picking_id.action_assign()
+        if self.operation_id.auto_confirm_reception:
+            self.reception_move_id.picked = True
+            self.reception_move_id._action_done()
+
+    def action_create_receipt(self):
+        self.ensure_one()
+        self._create_receipt()
+        self.ensure_one()
+        return {
+            "name": _("Receipt"),
+            "type": "ir.actions.act_window",
+            "view_type": "form",
+            "view_mode": "form",
+            "res_model": "stock.picking",
+            "views": [[False, "form"]],
+            "res_id": self.reception_move_id.picking_id.id,
+        }
+
     def action_confirm(self):
         """Invoked when 'Confirm' button in rma form view is clicked."""
         self._ensure_required_fields()
         self = self.filtered(lambda rma: rma.state == "draft")
         if not self:
             return
-        procurements = self._prepare_reception_procurements()
-        if procurements:
-            self.env["procurement.group"].run(procurements)
-        self.reception_move_id.picking_id.action_assign()
+        self._assign_reception_procurement_group()
         self.write({"state": "confirmed"})
         for rma in self:
             rma._add_message_subscribe_partner()
         self._send_confirmation_email()
+        for rec in self:
+            if rec.operation_id.action_create_receipt == "automatic_on_confirm":
+                rec._create_receipt()
+            if rec.operation_id.action_create_delivery == "automatic_on_confirm":
+                rec.with_context(
+                    rma_return_grouping=rec.env.company.rma_return_grouping
+                ).create_replace(
+                    fields.Datetime.now(),
+                    rec.warehouse_id,
+                    rec.product_id,
+                    rec.product_uom_qty,
+                    rec.product_uom,
+                )
+            if rec.operation_id.action_create_refund == "automatic_on_confirm":
+                rec.action_refund()
 
     def action_refund(self):
         """Invoked when 'Refund' button in rma form view is clicked
@@ -761,6 +920,16 @@ class Rma(models.Model):
     def action_finish(self):
         """Invoked when a user wants to manually finalize the RMA"""
         self.ensure_one()
+        if not self.manual_finish_allowed:
+            self.state = "finished"
+            return {}
+        if (
+            self.operation_id.action_create_receipt
+            and self.reception_move_id.state != "done"
+        ):
+            raise ValidationError(
+                _("The reception must be done before finishing this rma")
+            )
         self._ensure_can_be_returned()
         # Force active_id to avoid issues when coming from smart buttons
         # in other models
@@ -1029,32 +1198,50 @@ class Rma(models.Model):
 
     def _delivery_should_be_grouped(self):
         """Checks if the rmas should be grouped for the delivery process"""
-        group_returns = self.env.company.rma_return_grouping
+        if any(self.operation_id.mapped("prevent_delivery_grouping")):
+            return False
         if "rma_return_grouping" in self.env.context:
-            group_returns = self.env.context.get("rma_return_grouping")
-        return group_returns
+            return bool(self.env.context.get("rma_return_grouping"))
+        return self.env.company.rma_return_grouping
 
-    def _delivery_group_key(self):
+    def _get_delivery_group_key(self):
         """Returns a key by which the rmas should be grouped for the delivery process"""
         self.ensure_one()
         return (self.partner_shipping_id.id, self.company_id.id, self.warehouse_id.id)
 
-    def _group_delivery_if_needed(self):
-        """Groups the given rmas by the returned key from _delivery_group_key
+    def _get_reception_group_key(self):
+        self.ensure_one()
+        return (self.partner_id.id, self.company_id.id, self.warehouse_id.id)
+
+    def _assign_reception_procurement_group(self):
+        """Groups the given rmas by the returned key from _get_reception_group_key
+        by setting the procurement_group_id on the each rma if there is not yet on
+         set"""
+        grouped_rmas = groupby(
+            sorted(self, key=lambda rma: rma._get_reception_group_key()),
+            key=lambda rma: [rma._get_reception_group_key()],
+        )
+        for _group, rmas in grouped_rmas:
+            rmas = self.browse().concat(*list(rmas))
+            if not rmas:
+                continue
+            proc_group = self.env["procurement.group"].create(
+                rmas._prepare_procurement_group_vals()
+            )
+            rmas.write({"procurement_group_id": proc_group.id})
+
+    def _assign_delivery_procurement_group(self):
+        """Groups the given rmas by the returned key from _get_delivery_group_key
         by setting the procurement_group_id on the each rma if there is not yet on
         set"""
         if not self._delivery_should_be_grouped():
             return
         grouped_rmas = groupby(
-            sorted(self, key=lambda rma: rma._delivery_group_key()),
-            key=lambda rma: [rma._delivery_group_key()],
+            sorted(self, key=lambda rma: rma._get_delivery_group_key()),
+            key=lambda rma: [rma._get_delivery_group_key()],
         )
         for _group, rmas in grouped_rmas:
-            rmas = (
-                self.browse()
-                .concat(*list(rmas))
-                .filtered(lambda rma: not rma.procurement_group_id)
-            )
+            rmas = self.browse().concat(*list(rmas))
             if not rmas:
                 continue
             proc_group = self.env["procurement.group"].create(
@@ -1072,7 +1259,7 @@ class Rma(models.Model):
         return vals
 
     def _prepare_delivery_procurements(self, scheduled_date=None, qty=None, uom=None):
-        self._group_delivery_if_needed()
+        self._assign_delivery_procurement_group()
         procurements = []
         group_model = self.env["procurement.group"]
         for rma in self:
@@ -1134,10 +1321,11 @@ class Rma(models.Model):
         rmas_to_return.write({"state": "waiting_return"})
 
     def _prepare_replace_procurement_vals(self, warehouse=None, scheduled_date=None):
-        """This method is used only for Replace (not Delivery). We do not use any
-        specific route here."""
+        """This method is used only for Replace (not Delivery)."""
         vals = self._prepare_common_procurement_vals(warehouse, scheduled_date)
         vals["rma_id"] = self.id
+        if self.warehouse_id.rma_out_replace_route_id:
+            vals["route_ids"] = self.warehouse_id.rma_out_replace_route_id
         return vals
 
     def _prepare_replace_procurements(
@@ -1319,6 +1507,20 @@ class Rma(models.Model):
         """
         self.write({"state": "received"})
         self._send_receipt_confirmation_email()
+        for rec in self:
+            if rec.operation_id.action_create_delivery == "automatic_after_receipt":
+                rec.with_context(
+                    rma_return_grouping=rec.env.company.rma_return_grouping
+                ).create_replace(
+                    fields.Datetime.now(),
+                    rec.warehouse_id,
+                    rec.product_id,
+                    rec.product_uom_qty,
+                    rec.product_uom,
+                )
+
+            if rec.operation_id.action_create_refund == "automatic_after_receipt":
+                rec.action_refund()
 
     def update_received_state(self):
         """Invoked by:
@@ -1348,3 +1550,21 @@ class Rma(models.Model):
         )
         if rma:
             rma.write({"state": "returned"})
+
+    def _delivery_group_key(self):
+        warnings.warn(
+            "_delivery_group_key is deprecated and will be removed in the future. "
+            "Use _get_delivery_group_key instead",
+            category=DeprecationWarning,
+            stacklevel=2,
+        )
+        return self._get_delivery_group_key()
+
+    def _group_delivery_if_needed(self):
+        warnings.warn(
+            "_group_delivery_if_needed is deprecated and will be removed in the"
+            " future. Use _assign_delivery_procurement_group instead",
+            category=DeprecationWarning,
+            stacklevel=2,
+        )
+        return self._assign_delivery_procurement_group()
