@@ -12,6 +12,7 @@ from odoo_test_helper import FakeModelLoader
 
 from odoo import _, fields
 from odoo.tests import common
+from odoo.tools import mute_logger
 
 _logger = logging.getLogger(__name__)
 
@@ -385,6 +386,16 @@ class TestAccountBankAccountStatementImportOnline(common.TransactionCase):
         self.assertEqual(statements[1].balance_end, 200)
         self.assertEqual(len(statements[1].line_ids), 1)
 
+    def test_dont_create_statement(self):
+        self.provider.statement_creation_mode = "monthly"
+        self.provider.create_statement = False
+        date_since = datetime(2024, 12, 1)
+        date_until = datetime(2024, 12, 31, 23, 59, 59)
+        self.provider.with_context(step={"days": 1})._pull(date_since, date_until)
+        self._getExpectedStatements(0)
+        self._getExpectedLines(31)
+
+    @mute_logger("odoo.models.unlink")
     def test_unlink_provider(self):
         """Unlink provider should clear fields on journal."""
         self.provider.unlink()

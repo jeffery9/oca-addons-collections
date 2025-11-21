@@ -26,6 +26,10 @@ class OnlineBankStatementProvider(models.Model):
 
     company_id = fields.Many2one(related="journal_id.company_id", store=True)
     active = fields.Boolean(default=True)
+    create_statement = fields.Boolean(
+        default=True,
+        help="Create statements for the downloaded transactions automatically or not.",
+    )
     name = fields.Char(compute="_compute_name", store=True)
     journal_id = fields.Many2one(
         comodel_name="account.journal",
@@ -76,11 +80,12 @@ class OnlineBankStatementProvider(models.Model):
     )
     statement_creation_mode = fields.Selection(
         selection=[
-            ("daily", "Daily statements"),
-            ("weekly", "Weekly statements"),
-            ("monthly", "Monthly statements"),
+            ("daily", "Day"),
+            ("weekly", "Week"),
+            ("monthly", "Month"),
         ],
         default="daily",
+        string="Transactions interval to obtain",
         required=True,
     )
     api_base = fields.Char()
@@ -117,7 +122,8 @@ class OnlineBankStatementProvider(models.Model):
     def write(self, vals):
         """Set provider_id on journal after creation."""
         result = super().write(vals)
-        self._update_journals()
+        if "journal_id" in vals or "service" in vals:
+            self._update_journals()
         return result
 
     def _update_journals(self):
@@ -303,6 +309,8 @@ class OnlineBankStatementProvider(models.Model):
         """Final creation of statement if new, else write."""
         AccountBankStatement = self.env["account.bank.statement"]
         is_scheduled = self.env.context.get("scheduled")
+        if not self.create_statement:
+            return self._online_create_statement_lines(statement_values)
         if is_scheduled:
             AccountBankStatement = AccountBankStatement.with_context(
                 tracking_disable=True,
@@ -323,6 +331,17 @@ class OnlineBankStatementProvider(models.Model):
         else:
             statement.write(statement_values)
         return statement
+
+    def _online_create_statement_lines(self, statement_values):
+        AccountBankStatementLine = self.env["account.bank.statement.line"]
+        is_scheduled = self.env.context.get("scheduled")
+        if is_scheduled:
+            AccountBankStatementLine = AccountBankStatementLine.with_context(
+                tracking_disable=True,
+            )
+        lines = [line[2] for line in statement_values.get("line_ids", [])]
+        AccountBankStatementLine.create(lines)
+        return self.env["account.bank.statement"]  # Return empty statement
 
     def _get_statement_filtered_lines(
         self,
@@ -506,10 +525,12 @@ class OnlineBankStatementProvider(models.Model):
         self.ensure_one()
         delta = self._get_next_run_period()
         now = datetime.now()
+        target_run = self.next_run
         next_run = self.next_run + delta
         while next_run < now:
-            self.next_run = next_run
-            next_run = self.next_run + delta
+            target_run = next_run
+            next_run = target_run + delta
+        self.next_run = target_run
 
     def _obtain_statement_data(self, date_since, date_until):
         """Hook for extension"""
