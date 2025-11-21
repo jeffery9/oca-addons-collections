@@ -66,14 +66,12 @@ class AccountMove(models.Model):
                     "move_id": move.id,
                     "title": _("Returned on"),
                 }
-                reconciled_payments = move._get_reconciled_payments()
                 domain = [("origin_returned_move_ids.move_id", "=", move.id)]
-                if len(reconciled_payments) > 0:
-                    for rec_payment in reconciled_payments:
-                        vals_rec_payment = self.prepare_values_returned_widget(
-                            rec_payment, rec_payment.amount
-                        )
-                        values_returned.append(vals_rec_payment)
+                for reconciled_aml in move._get_reconciled_amls():
+                    vals_rec_payment = self.prepare_values_returned_widget(
+                        reconciled_aml, -reconciled_aml.balance
+                    )
+                    values_returned.append(vals_rec_payment)
                 move_reconciles = self.env["account.partial.reconcile"].search(domain)
                 for move_reconcile in move_reconciles:
                     payment_ret = move_reconcile.debit_move_id
@@ -87,6 +85,10 @@ class AccountMove(models.Model):
                     )
                     values_returned.append(vals_reconcile)
                 if payments_widget_vals["content"]:
+                    payments_widget_vals["content"] = sorted(
+                        payments_widget_vals["content"],
+                        key=lambda x: (x["date"], x["partial_id"]),
+                    )
                     move.invoice_payments_widget = payments_widget_vals
                 else:
                     move.invoice_payments_widget = False
@@ -104,6 +106,7 @@ class AccountMoveLine(models.Model):
         relation="account_partial_reconcile_account_move_line_rel",
         column1="move_line_id",
         column2="partial_reconcile_id",
+        copy=False,
     )
 
 
@@ -115,4 +118,5 @@ class AccountPartialReconcile(models.Model):
         relation="account_partial_reconcile_account_move_line_rel",
         column1="partial_reconcile_id",
         column2="move_line_id",
+        copy=False,
     )
