@@ -1,18 +1,16 @@
 /** @odoo-module **/
 
 import {Component, onWillUpdateProps} from "@odoo/owl";
-import {registry} from "@web/core/registry";
+import {evaluateBooleanExpr, evaluateExpr} from "@web/core/py_js/py";
 import {Domain} from "@web/core/domain";
-import {evaluateExpr} from "@web/core/py_js/py";
-const fieldRegistry = registry.category("fields");
+import {Record} from "@web/model/relational_model/record";
+import {getFieldContext} from "@web/model/relational_model/utils";
 
 export class X2Many2DMatrixRenderer extends Component {
     setup() {
-        this.ValueFieldComponent = this._getValueFieldComponent();
         this.columns = this._getColumns();
         this.rows = this._getRows();
         this.matrix = this._getMatrix();
-        this.ValueFieldType = this._getValueFieldType();
 
         onWillUpdateProps((newProps) => {
             this.columns = this._getColumns(newProps.list.records);
@@ -27,6 +25,7 @@ export class X2Many2DMatrixRenderer extends Component {
             const column = {
                 value: record.data[this.matrixFields.x],
                 text: record.data[this.matrixFields.x],
+                rawValue: record.data[this.matrixFields.x],
             };
             if (record.fields[this.matrixFields.x].type === "many2one") {
                 column.text = column.value[1];
@@ -44,6 +43,7 @@ export class X2Many2DMatrixRenderer extends Component {
             const row = {
                 value: record.data[this.matrixFields.y],
                 text: record.data[this.matrixFields.y],
+                rawValue: record.data[this.matrixFields.y],
             };
             if (record.fields[this.matrixFields.y].type === "many2one") {
                 row.text = row.value[1];
@@ -93,49 +93,41 @@ export class X2Many2DMatrixRenderer extends Component {
         return this.props.matrixFields;
     }
 
-    _getValueFieldComponent() {
-        const field = this.list.fields[this.matrixFields.value];
-        if (!field.widget) {
-            return fieldRegistry.get(field.type).component;
-        }
-        return fieldRegistry.get(field.widget).component;
+    get valueFieldComponent() {
+        return this.props.list_view.fieldNodes[this.matrixFields.value + "_0"].field
+            .component;
     }
 
-    _getValueFieldType() {
-        const field = this.list.fields[this.matrixFields.value];
-        return field.type;
+    get xFieldComponent() {
+        return this.props.list_view.fieldNodes[this.matrixFields.x + "_0"].field
+            .component;
+    }
+
+    get yFieldComponent() {
+        return this.props.list_view.fieldNodes[this.matrixFields.y + "_0"].field
+            .component;
     }
 
     _aggregateRow(row) {
         const y = this.rows.findIndex((r) => r.value === row);
         const total = this.matrix[y].map((r) => r.value).reduce((aggr, x) => aggr + x);
-        if (this.ValueFieldType === "integer") {
-            return total;
-        }
-        return Number(total).toFixed(2);
+        return total;
     }
 
     _aggregateColumn(column) {
         const x = this.columns.findIndex((c) => c.value === column);
-
         const total = this.matrix
             .map((r) => r[x])
             .map((r) => r.value)
             .reduce((aggr, y) => aggr + y);
-        if (this.ValueFieldType === "integer") {
-            return total;
-        }
-        return Number(total).toFixed(2);
+        return total;
     }
 
     _aggregateAll() {
         const total = this.matrix
             .map((r) => r.map((x) => x.value).reduce((aggr, x) => aggr + x))
             .reduce((aggr, y) => aggr + y);
-        if (this.ValueFieldType === "integer") {
-            return total;
-        }
-        return Number(total).toFixed(2);
+        return total;
     }
 
     _canAggregate() {
@@ -144,55 +136,88 @@ export class X2Many2DMatrixRenderer extends Component {
         );
     }
 
-    getValueFieldProps(column, row) {
+    _getValueFieldProps(column, row) {
         const x = this.columns.findIndex((c) => c.value === column);
         const y = this.rows.findIndex((r) => r.value === row);
-        let record = null;
-        let value = null;
-        if (
-            this.matrix[y] &&
-            this.matrix[y][x] &&
-            (record = this.matrix[y][x].records[0])
-        ) {
-            record = this.matrix[y][x].records[0];
-            value = this.matrix[y][x].value;
+        const record = this.matrix[y][x].records[0];
+
+        if (!record) {
+            return null;
         }
-        value = record ? record.data[this.matrixFields.value] : value;
-        this.matrix[y][x].value = value;
-        const result = {
-            readonly: this.props.readonly,
-            record: record,
-            name: this.matrixFields.value,
-            canCreate: this.props.canCreate,
-            canOpen: this.props.canOpen,
-            canWrite: this.props.canWrite,
-            canQuickCreate: this.props.canQuickCreate,
-            canCreateEdit: this.props.canCreateEdit,
+        return this._getMatrixFieldProps(record, "value");
+    }
+
+    _getAxisFieldProps(value, axis) {
+        const fieldName = this.matrixFields[axis];
+        const record = new Record(this.list.model, this.list._config, {
+            [fieldName]: value,
+        });
+        const props = this._getMatrixFieldProps(record, axis);
+        if (this.list.fields[fieldName].type === "many2one") {
+            props.canOpen =
+                axis === "x" ? this.props.isXClickable : this.props.isYClickable;
+        }
+        props.readonly = true;
+        return props;
+    }
+
+    _getAggregateProps(value) {
+        const record = new Record(this.list.model, this.list._config, {
+            [this.matrixFields.value]: value,
+        });
+        const props = this._getMatrixFieldProps(record, "value");
+        props.readonly = true;
+        return props;
+    }
+
+    _getMatrixFieldProps(record, fieldName) {
+        const fieldInfo =
+            this.props.list_view.fieldNodes[this.matrixFields[fieldName] + "_0"];
+        const dynamicInfo = {
+            get context() {
+                return getFieldContext(record, fieldInfo.name, fieldInfo.context);
+            },
+            domain() {
+                const evalContext = record.evalContext;
+                if (fieldInfo.domain) {
+                    return new Domain(
+                        evaluateExpr(fieldInfo.domain, evalContext)
+                    ).toList();
+                }
+            },
+            required: evaluateBooleanExpr(
+                fieldInfo.required,
+                record.evalContextWithVirtualIds
+            ),
+            readonly:
+                this.props.readonly ||
+                evaluateBooleanExpr(
+                    fieldInfo.readonly,
+                    record.evalContextWithVirtualIds
+                ),
         };
-        const domain = record.fields[this.matrixFields.value].domain;
-        if (domain) {
-            result.domain = new Domain(
-                evaluateExpr(domain, record.evalContext)
-            ).toList();
-        }
-        if (value === null) {
-            result.readonly = true;
-        }
+        const result = {
+            readonly: dynamicInfo.readonly,
+            record: record,
+            name: this.matrixFields[fieldName],
+            ...(fieldInfo.field.extractProps || (() => ({}))).apply(fieldInfo.field, [
+                fieldInfo,
+                dynamicInfo,
+            ]),
+        };
         return result;
     }
 }
 
 X2Many2DMatrixRenderer.template = "web_widget_x2many_2d_matrix.X2Many2DMatrixRenderer";
 X2Many2DMatrixRenderer.props = {
-    list: {type: Object, optional: true},
-    matrixFields: {type: Object, optional: true},
+    list: {type: Object, optional: false},
+    list_view: {type: Object, optional: false},
+    matrixFields: {type: Object, optional: false},
     readonly: {type: Boolean, optional: true},
     domain: {type: [Array, Function], optional: true},
     showRowTotals: {type: Boolean, optional: true},
     showColumnTotals: {type: Boolean, optional: true},
-    canOpen: {type: Boolean, optional: true},
-    canCreate: {type: Boolean, optional: true},
-    canWrite: {type: Boolean, optional: true},
-    canQuickCreate: {type: Boolean, optional: true},
-    canCreateEdit: {type: Boolean, optional: true},
+    isXClickable: {type: Boolean, optional: true},
+    isYClickable: {type: Boolean, optional: true},
 };
