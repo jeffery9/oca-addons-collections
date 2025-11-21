@@ -7,6 +7,7 @@ from dateutil.relativedelta import relativedelta
 
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
+from odoo.tools.misc import str2bool
 
 
 class ResPartner(models.Model):
@@ -167,7 +168,34 @@ class ResPartner(models.Model):
     risk_remaining_percentage = fields.Float(
         compute="_compute_risk_remaining",
         string="Risk Remaining (Percentage)",
+        search="_search_risk_remaining_percentage",
     )
+    show_financial_risk_in_portal = fields.Boolean(
+        string="Show credit information in portal",
+        default=True,
+        help="If enabled, this partner will see their financial risk in the portal, "
+        "provided the global setting is also enabled.",
+    )
+    portal_show_financial_risk_visible = fields.Boolean(
+        compute="_compute_portal_show_financial_risk_visible",
+        help="Helper field to control visibility of the partner option based on global "
+        "config.",
+    )
+
+    @api.model
+    def _commercial_fields(self):
+        return super()._commercial_fields() + [
+            "show_financial_risk_in_portal",
+        ]
+
+    @api.depends()
+    def _compute_portal_show_financial_risk_visible(self):
+        global_enabled = (
+            self.env["ir.config_parameter"]
+            .sudo()
+            .get_param("account_financial_risk.portal_show_financial_risk")
+        )
+        self.portal_show_financial_risk_visible = str2bool(global_enabled)
 
     @api.depends("credit_limit")
     def _compute_date_credit_limit(self):
@@ -184,7 +212,8 @@ class ResPartner(models.Model):
                 record.risk_remaining_percentage = round(
                     100
                     * (record.credit_limit - record.risk_total)
-                    / record.credit_limit
+                    / record.credit_limit,
+                    2,
                 )
             else:
                 record.risk_remaining_percentage = 0
@@ -475,6 +504,15 @@ class ResPartner(models.Model):
             return [("id", "not in", risk_partner_ids)]
 
     @api.model
+    def _search_risk_remaining_percentage(self, operator, value):
+        # Make risk_remaining_percentage searchable.
+        partners = self.search([("credit_limit", ">", 0)])
+        partner_ids = partners.filtered_domain(
+            [("risk_remaining_percentage", operator, value)]
+        ).ids
+        return [("id", "in", partner_ids)]
+
+    @api.model
     def _max_risk_date_due(self):
         return fields.Date.to_string(
             fields.Date.today()
@@ -552,3 +590,34 @@ class ResPartner(models.Model):
             "context": self.env.context,
             "domain": domain,
         }
+
+    def _get_financial_risk_lines(self):
+        # Returns [(flag, value, label), ...] already evaluated for the partner itself.
+        self.ensure_one()
+        return [
+            (
+                self.risk_invoice_draft_include,
+                self.risk_invoice_draft,
+                self._fields["risk_invoice_draft"].string,
+            ),
+            (
+                self.risk_invoice_open_include,
+                self.risk_invoice_open,
+                self._fields["risk_invoice_open"].string,
+            ),
+            (
+                self.risk_invoice_unpaid_include,
+                self.risk_invoice_unpaid,
+                self._fields["risk_invoice_unpaid"].string,
+            ),
+            (
+                self.risk_account_amount_include,
+                self.risk_account_amount,
+                self._fields["risk_account_amount"].string,
+            ),
+            (
+                self.risk_account_amount_unpaid_include,
+                self.risk_account_amount_unpaid,
+                self._fields["risk_account_amount_unpaid"].string,
+            ),
+        ]
