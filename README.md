@@ -21,8 +21,13 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
+[purchase_comment_template](purchase_comment_template/) | 17.0.1.0.0 |  | Comments texts templates on Purchase documents
 [purchase_order_report_grouped_by_vendor](purchase_order_report_grouped_by_vendor/) | 17.0.1.0.0 |  | Purchase order report grouping orders by vendor
-[purchase_report_hide_line](purchase_report_hide_line/) | 17.0.1.0.0 | [![tisho99](https://github.com/tisho99.png?size=30px)](https://github.com/tisho99) | Hide purchase order lines from the Purchase Report
+[purchase_packaging_report](purchase_packaging_report/) | 17.0.1.0.0 | <a href='https://github.com/Shide'><img src='https://github.com/Shide.png' width='32' height='32' style='border-radius:50%;' alt='Shide'/></a> | Packaging data in purchase reports
+[purchase_report_date_format](purchase_report_date_format/) | 17.0.1.0.0 |  | Purchase Report Date Format
+[purchase_report_hide_line](purchase_report_hide_line/) | 17.0.1.0.0 | <a href='https://github.com/tisho99'><img src='https://github.com/tisho99.png' width='32' height='32' style='border-radius:50%;' alt='tisho99'/></a> | Hide purchase order lines from the Purchase Report
+[purchase_report_payment_term](purchase_report_payment_term/) | 17.0.1.0.0 |  | Purchase Report Payment Term
+[purchase_report_shipping_address](purchase_report_shipping_address/) | 17.0.1.0.0 |  | Purchase Report Shipping Address
 
 [//]: # (end addons)
 
