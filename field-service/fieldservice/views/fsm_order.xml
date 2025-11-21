@@ -348,6 +348,8 @@
                     string="FSM Order Name"
                 />
                 <field name="location_id" />
+                <field name="location_owner_id" />
+                <field name="category_ids" />
                 <field name="branch_id" />
                 <field name="district_id" />
                 <field name="region_id" />
@@ -378,38 +380,39 @@
                 <separator />
                 <filter
                     string="Today Orders"
-                    domain="[
-                    ('scheduled_date_start', '&gt;=', (datetime.datetime.combine(datetime.date.today(), datetime.time(0,0,0)))),
-                    ('scheduled_date_start', '&lt;', (datetime.datetime.combine(datetime.date.today(), datetime.time(23,59,59))))
-                    ]"
                     name="order_today"
+                    domain="[('date_today_order_tz', '=', context_today())]"
                 />
+
                 <filter
                     string="Future Orders"
-                    domain="[('scheduled_date_start', '&gt;=', (datetime.datetime.combine(datetime.date.today(), datetime.time(0,0,0))))]"
                     name="order_upcoming_all"
+                    domain="[('date_today_order_tz', '&gt;', context_today())]"
                 />
+
                 <filter
                     string="Due Within 7 Days"
-                    domain="[
-                    ('scheduled_date_start', '&gt;=', (datetime.datetime.combine(datetime.date.today(), datetime.time(0,0,0)))),
-                    ('scheduled_date_start', '&lt;=', (datetime.datetime.combine((datetime.date.today()+relativedelta(days=6)), datetime.time(23,59,59))))
-                    ]"
                     name="order_upcoming_week"
+                    domain="[
+                            ('date_today_order_tz', '&gt;=', context_today()),
+                            ('date_today_order_tz', '&lt;=', (context_today() + relativedelta(days=6)))
+                        ]"
                 />
+
                 <filter
                     string="Due Within 30 Days"
-                    domain="[
-                    ('scheduled_date_start', '&gt;=',(datetime.datetime.combine(datetime.date.today(), datetime.time(0,0,0)))),
-                    ('scheduled_date_start', '&lt;=', (datetime.datetime.combine((datetime.date.today()+relativedelta(days=29)), datetime.time(23,59,59))))
-                    ]"
                     name="order_upcoming_month"
+                    domain="[
+                            ('date_today_order_tz', '&gt;=', context_today()),
+                            ('date_today_order_tz', '&lt;=', (context_today() + relativedelta(days=29)))
+                        ]"
                 />
+
                 <filter
                     string="Due This Week"
                     name="this_week_orders"
-                    domain="[('scheduled_date_start', '&lt;=', ((context_today()+relativedelta(weeks=0, weekday=-1)).strftime('%Y-%m-%d'))),
-                    ('scheduled_date_start', '&gt;=', ((context_today()-relativedelta(weeks=1, weekday=0)).strftime('%Y-%m-%d')))]"
+                    domain="[('date_today_order_tz', '&lt;=', ((context_today()+relativedelta(weeks=0, weekday=-1)).strftime('%Y-%m-%d'))),
+                    ('date_today_order_tz', '&gt;=', ((context_today()-relativedelta(weeks=1, weekday=0)).strftime('%Y-%m-%d')))]"
                 />
                 <separator />
                 <group expand="0" string="Group By">
@@ -459,7 +462,7 @@
                 string="FSM Orders"
                 date_start="scheduled_date_start"
                 date_delay="scheduled_duration"
-                color="stage_id"
+                color="custom_color"
             >
                 <field name="name" />
                 <field name="stage_id" filters="1" />
@@ -473,6 +476,7 @@
                     avatar_field="image_128"
                 />
                 <field name="team_id" filters="1" />
+                <field name="description" />
                 <field name="person_phone" />
                 <field name="city" />
                 <field name="state_name" />

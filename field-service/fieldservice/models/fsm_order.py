@@ -3,6 +3,8 @@
 
 from datetime import datetime, timedelta
 
+import pytz
+
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 from odoo.tools import format_date
@@ -39,6 +41,9 @@ class FSMOrder(models.Model):
         if team:
             return team
         raise ValidationError(_("You must create an FSM team first."))
+
+    def _default_request_early(self):
+        return fields.Datetime.now().replace(second=0)
 
     @api.depends("date_start", "date_end")
     def _compute_duration(self):
@@ -112,9 +117,13 @@ class FSMOrder(models.Model):
     location_id = fields.Many2one(
         "fsm.location", string="Location", index=True, required=True
     )
+    location_owner_id = fields.Many2one(
+        related="location_id.owner_id", string="Location Related Owner"
+    )
     location_directions = fields.Html()
     request_early = fields.Datetime(
-        string="Earliest Request Date", default=datetime.now()
+        string="Earliest Request Date",
+        default=lambda self: self._default_request_early(),
     )
     color = fields.Integer("Color Index")
     company_id = fields.Many2one(
@@ -237,6 +246,22 @@ class FSMOrder(models.Model):
     type = fields.Many2one("fsm.order.type")
 
     internal_type = fields.Selection(related="type.internal_type")
+
+    date_today_order_tz = fields.Date(
+        string="Scheduled Date (User TZ)",
+        compute="_compute_date_today_order_tz",
+        store=True,
+    )
+
+    @api.depends("scheduled_date_start")
+    def _compute_date_today_order_tz(self):
+        tz = pytz.timezone(self.env.user.tz or "UTC")
+        for rec in self:
+            if rec.scheduled_date_start:
+                dt_user = rec.scheduled_date_start.astimezone(tz)
+                rec.date_today_order_tz = dt_user.date()
+            else:
+                rec.date_today_order_tz = False
 
     @api.model
     def _read_group_stage_ids(self, stages, domain, order):
@@ -394,6 +419,17 @@ class FSMOrder(models.Model):
                 self.type = self.template_id.type_id
             if self.template_id.team_id:
                 self.team_id = self.template_id.team_id
+
+    @api.onchange("person_id")
+    def _onchange_person_id(self):
+        if self.person_id and self.person_id.team_id:
+            self.team_id = self.person_id.team_id
+            self._onchange_team_id()
+
+    @api.onchange("team_id")
+    def _onchange_team_id(self):
+        if not self.location_id and self.team_id and self.team_id.location_id:
+            self.location_id = self.team_id.location_id
 
     def _get_location_directions(self, location_id):
         self.location_directions = ""
