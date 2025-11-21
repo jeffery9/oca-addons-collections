@@ -7,7 +7,6 @@ from functools import partial
 from itertools import chain
 from typing import Any
 
-from a2wsgi import ASGIMiddleware
 from starlette.middleware import Middleware
 from starlette.routing import Mount
 
@@ -16,6 +15,7 @@ from odoo import _, api, exceptions, fields, models, tools
 from fastapi import APIRouter, Depends, FastAPI
 
 from .. import dependencies
+from ..middleware import ASGIMiddleware
 
 _logger = logging.getLogger(__name__)
 
@@ -121,10 +121,10 @@ class FastapiEndpoint(models.Model):
         return tuple(res)
 
     @api.model
-    def _routing_impacting_fields(self) -> tuple[str]:
+    def _routing_impacting_fields(self) -> tuple[str, ...]:
         """The list of fields requiring to refresh the mount point of the pp
         into odoo if modified"""
-        return ("root_path",)
+        return ("root_path", "save_http_session")
 
     #
     # end of endpoint.route.sync.mixin methods implementation
@@ -198,16 +198,79 @@ class FastapiEndpoint(models.Model):
         return f"{self._name}:{self.id}:{path}"
 
     def _reset_app(self):
+        """When the app is reset we clear the cache, the system will signal to
+        others instances that the cache is not up to date and that they should
+        invalidate their cache as well. This is required to ensure that any change
+        requiring a reset of the app is propagated to all the running instances.
+        """
         self.env.registry.clear_cache()
 
     @api.model
-    @tools.ormcache("root_path")
-    # TODO cache on thread local by db to enable to get 1 middelware by
-    # thread when odoo runs in multi threads mode and to allows invalidate
-    # specific entries in place og the overall cache as we have to do into
-    # the _rest_app method
-    def get_app(self, root_path):
-        record = self.search([("root_path", "=", root_path)])
+    def _normalize_url_path(self, path) -> str:
+        """
+        Normalize a URL path:
+        * Remove redundant slashes,
+        * Remove trailing slash (unless it's the root),
+        * Lowercase for case-insensitive matching
+        """
+        parts = [part.lower() for part in path.strip().split("/") if part]
+        return "/" + "/".join(parts)
+
+    @api.model
+    def _is_suburl(self, path, prefix) -> bool:
+        """
+        Check if 'path' is a subpath of 'prefix' in URL logic:
+        * Must start with the prefix followed by a slash
+          This will ensure that the matching is done one the path
+          parts and ensures that e.g. /a/b is not prefix of /a/bc.
+        """
+        path = self._normalize_url_path(path)
+        prefix = self._normalize_url_path(prefix)
+
+        if path == prefix:
+            return True
+        if path.startswith(prefix + "/"):
+            return True
+        return False
+
+    @api.model
+    def _find_first_matching_url_path(self, paths, prefix) -> str | None:
+        """
+        Return the first path that is a subpath of 'prefix',
+        ordered by longest URL path first (most number of segments).
+        """
+        # Sort by number of segments (shallowest first)
+        sorted_paths = sorted(
+            paths,
+            key=lambda p: len(self._normalize_url_path(p).split("/")),
+            reverse=True,
+        )
+
+        for path in sorted_paths:
+            if self._is_suburl(prefix, path):
+                return path
+        return None
+
+    @api.model
+    @tools.ormcache()
+    def _get_id_by_root_path_map(self):
+        return {r.root_path: r.id for r in self.search([])}
+
+    @api.model
+    @tools.ormcache("path")
+    def _get_id_for_path(self, path):
+        id_by_path = self._get_id_by_root_path_map()
+        root_path = self._find_first_matching_url_path(id_by_path.keys(), path)
+        return id_by_path.get(root_path)
+
+    @api.model
+    def _get_endpoint(self, path):
+        id_ = self._get_id_for_path(path)
+        return self.browse(id_) if id_ else None
+
+    @api.model
+    def get_app(self, path):
+        record = self._get_endpoint(path)
         if not record:
             return None
         app = FastAPI()
@@ -231,9 +294,9 @@ class FastapiEndpoint(models.Model):
                 self._clear_fastapi_exception_handlers(route.app)
 
     @api.model
-    @tools.ormcache("root_path")
-    def get_uid(self, root_path):
-        record = self.search([("root_path", "=", root_path)])
+    @tools.ormcache("path")
+    def get_uid(self, path):
+        record = self._get_endpoint(path)
         if not record:
             return None
         return record.user_id.id
