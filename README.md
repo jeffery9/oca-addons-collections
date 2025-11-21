@@ -23,14 +23,16 @@ addon | version | maintainers | summary
 --- | --- | --- | ---
 [attachment_category](attachment_category/) | 17.0.1.0.1 |  | Adds a document category to help classification
 [attachment_zipped_download](attachment_zipped_download/) | 17.0.1.0.0 |  | Attachment Zipped Download
-[document_knowledge](document_knowledge/) | 17.0.1.0.0 |  | Documents Knowledge
-[document_page](document_page/) | 17.0.1.1.0 |  | Document Page
+[document_knowledge](document_knowledge/) | 17.0.1.0.1 |  | Documents Knowledge
+[document_page](document_page/) | 17.0.1.1.1 |  | Document Page
 [document_page_access_group](document_page_access_group/) | 17.0.2.0.0 |  | Choose groups to access document pages
 [document_page_approval](document_page_approval/) | 17.0.1.1.0 |  | Document Page Approval
 [document_page_group](document_page_group/) | 17.0.1.0.0 |  | Define access groups on documents
 [document_page_partner](document_page_partner/) | 17.0.1.0.0 |  | Allows to link doucment pages to a partner
 [document_page_project](document_page_project/) | 17.0.1.0.0 |  | This module links document pages to projects
+[document_page_reference](document_page_reference/) | 17.0.1.0.0 | <a href='https://github.com/etobella'><img src='https://github.com/etobella.png' width='32' height='32' style='border-radius:50%;' alt='etobella'/></a> | Include references on document pages
 [document_page_tag](document_page_tag/) | 17.0.1.0.0 |  | Allows you to assign tags or keywords to pages and search for them afterwards
+[document_page_tag_print_control](document_page_tag_print_control/) | 17.0.1.0.0 |  | Restricts document page printing based on assigned tags
 [document_url](document_url/) | 17.0.1.0.1 |  | URL attachment
 
 [//]: # (end addons)
