@@ -14,7 +14,7 @@ from odoo import fields, models
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
-    commitment_date = fields.Datetime("Delivery Date")
+    commitment_date = fields.Datetime("Delivery Date", copy=False)
 
     def _prepare_procurement_values(self, group_id=False):
         vals = super()._prepare_procurement_values(group_id)
@@ -30,15 +30,16 @@ class SaleOrderLine(models.Model):
         return vals
 
     def write(self, vals):
+        # Propagate a new commitment date to pending stock moves
         res = super().write(vals)
-        moves_to_upd = set()
-        if "commitment_date" in vals:
-            for line in self:
-                for move in line.move_ids:
-                    if move.state not in ["cancel", "done"]:
-                        moves_to_upd.add(move.id)
-        if moves_to_upd:
-            self.env["stock.move"].browse(moves_to_upd).write(
+        if vals.get("commitment_date"):
+            self.move_ids.filtered(lambda sm: sm.state not in ["cancel", "done"]).write(
                 {"date_deadline": vals.get("commitment_date")}
             )
+        else:
+            for line in self:
+                date_deadline = line.order_id.commitment_date or line._expected_date()
+                line.move_ids.filtered(
+                    lambda sm: sm.state not in ["cancel", "done"]
+                ).write({"date_deadline": date_deadline})
         return res

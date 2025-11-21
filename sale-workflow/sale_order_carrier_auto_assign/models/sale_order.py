@@ -1,4 +1,5 @@
 # Copyright 2020 Camptocamp SA
+# Copyright 2024 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
 from odoo import api, models
 
@@ -19,26 +20,46 @@ class SaleOrder(models.Model):
 
     def _is_auto_set_carrier_on_create(self):
         self.ensure_one()
-        if self.state not in ("draft", "sent"):
-            return False
-        return self.company_id.carrier_on_create
+        return (
+            self.state in ("draft", "sent")
+            and self.company_id.carrier_on_create
+            and not self.is_all_service
+        )
 
     @api.model_create_multi
     def create(self, vals_list):
-        orders = super().create(vals_list)
-        for order in orders:
-            if not order.carrier_id and order._is_auto_set_carrier_on_create():
-                order._set_delivery_carrier()
+        ctx_carrier_on_create = self.env.context.get("carrier_on_create")
+        orders = super(SaleOrder, self.with_context(carrier_on_create=True)).create(
+            vals_list
+        )
+        orders = orders.with_context(carrier_on_create=ctx_carrier_on_create)
+        orders._set_carrier_on_create()
         return orders
 
+    def _set_carrier_on_create(self):
+        if self.env.context.get("carrier_on_create"):
+            return
+        for order in self:
+            if not order.carrier_id and order._is_auto_set_carrier_on_create():
+                order.with_context(carrier_on_create=True)._set_delivery_carrier()
+
+    def write(self, vals):
+        # When product lines are added, set the carrier
+        res = super(SaleOrder, self.with_context(carrier_on_create=True)).write(vals)
+        self._set_carrier_on_create()
+        return res
+
+    def _is_auto_set_carrier_on_confirm(self):
+        self.ensure_one()
+        return self.company_id.carrier_auto_assign and not self.is_all_service
+
     def action_confirm(self):
-        for rec in self:
-            if not rec.company_id.carrier_auto_assign:
-                continue
-            rec._set_delivery_carrier(
-                set_delivery_line=True,
-                preserve_order_carrier=False,
-            )
+        for order in self:
+            if order._is_auto_set_carrier_on_confirm():
+                order._set_delivery_carrier(
+                    set_delivery_line=True,
+                    preserve_order_carrier=True,
+                )
         return super().action_confirm()
 
     def _set_delivery_carrier(
@@ -50,6 +71,8 @@ class SaleOrder(models.Model):
         :param preserve_order_carrier: It will respect the carrier set on the order
         """
         for order in self:
+            if not order.order_line:
+                continue
             if order.delivery_set:
                 continue
             delivery_wiz_action = order.action_open_delivery_wizard()

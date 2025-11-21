@@ -1,7 +1,7 @@
 # Copyright 2018 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import SUPERUSER_ID, _, api, fields, models
+from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 from odoo.tools import float_is_zero
 from odoo.tools.misc import format_date
@@ -101,6 +101,13 @@ class BlanketOrder(models.Model):
         change_default=True,
         default=lambda self: self.env["crm.team"]._get_default_team_id(),
     )
+    tag_ids = fields.Many2many(
+        comodel_name="crm.tag",
+        relation="sale_blanket_order_tag_rel",
+        column1="blanket_order_id",
+        column2="tag_id",
+        string="Tags",
+    )
     company_id = fields.Many2one(
         comodel_name="res.company",
         required=True,
@@ -110,7 +117,9 @@ class BlanketOrder(models.Model):
     sale_count = fields.Integer(compute="_compute_sale_count")
 
     fiscal_position_id = fields.Many2one(
-        "account.fiscal.position", string="Fiscal Position"
+        "account.fiscal.position",
+        string="Fiscal Position",
+        check_company=True,
     )
 
     amount_untaxed = fields.Monetary(
@@ -419,9 +428,9 @@ class BlanketOrderLine(models.Model):
     product_uom = fields.Many2one("uom.uom", string="Unit of Measure")
     price_unit = fields.Float(string="Price", digits="Product Price")
     taxes_id = fields.Many2many(
-        "account.tax",
-        string="Taxes",
-        domain=["|", ("active", "=", False), ("active", "=", True)],
+        comodel_name="account.tax",
+        context={"active_test": False},
+        check_company=True,
     )
     date_schedule = fields.Date(string="Scheduled Date")
     original_uom_qty = fields.Float(
@@ -616,15 +625,9 @@ class BlanketOrderLine(models.Model):
             self.name = name
 
             fpos = self.order_id.fiscal_position_id
-            if self.env.uid == SUPERUSER_ID:
-                company_id = self.env.company.id
-                self.taxes_id = fpos.map_tax(
-                    self.product_id.taxes_id.filtered(
-                        lambda r: r.company_id.id == company_id
-                    )
-                )
-            else:
-                self.taxes_id = fpos.map_tax(self.product_id.taxes_id)
+            self.taxes_id = fpos.map_tax(
+                self.product_id.taxes_id._filter_taxes_by_company(self.company_id)
+            )
 
     @api.depends(
         "sale_lines.order_id.state",
@@ -680,9 +683,6 @@ class BlanketOrderLine(models.Model):
     def _validate(self):
         try:
             for line in self:
-                assert (
-                    not line.display_type and line.price_unit > 0.0
-                ) or line.display_type, _("Price must be greater than zero")
                 assert (
                     not line.display_type and line.original_uom_qty > 0.0
                 ) or line.display_type, _("Quantity must be greater than zero")
