@@ -32,6 +32,11 @@ msgid "Based on"
 msgstr "Basado en"
 
 #. module: product_pricelist_supplierinfo
+#: model:ir.model.fields,help:product_pricelist_supplierinfo.field_product_pricelist_item__ignore_supplierinfo_margin
+msgid "Based on supplierinfo price without sale margin applied"
+msgstr ""
+
+#. module: product_pricelist_supplierinfo
 #: model:ir.model.fields,help:product_pricelist_supplierinfo.field_product_pricelist_item__no_supplierinfo_discount
 msgid ""
 "If checked, the discount set on the supplier info will be ignored in price "
@@ -49,6 +54,11 @@ msgid "Ignore Supplier Info Min. Quantity"
 msgstr "Ignorar cantidad mínima de la info de proveedor"
 
 #. module: product_pricelist_supplierinfo
+#: model:ir.model.fields,field_description:product_pricelist_supplierinfo.field_product_pricelist_item__ignore_supplierinfo_margin
+msgid "Ignore Supplierinfo Margin"
+msgstr ""
+
+#. module: product_pricelist_supplierinfo
 #: model:ir.model.fields,help:product_pricelist_supplierinfo.field_product_supplierinfo__sale_margin
 msgid "Margin to apply on price to obtain sale price"
 msgstr "Margen a aplicar sobre el precio para obtener precio de venta"
@@ -64,6 +74,7 @@ msgid "Pricelist Rule"
 msgstr "Regla de la lista de precios"
 
 #. module: product_pricelist_supplierinfo
+#: model:ir.model.fields.selection,name:product_pricelist_supplierinfo.selection__product_pricelist_assortment_item__base__supplierinfo
 #: model:ir.model.fields.selection,name:product_pricelist_supplierinfo.selection__product_pricelist_item__base__supplierinfo
 msgid "Prices based on supplier info"
 msgstr "Precios basados en la información del proveedor"
