@@ -1,8 +1,11 @@
 [project]
 name = "odoo-addons-oca-payroll"
-version = "17.0.20250105.0"
+version = "17.0.20251030.0"
 dependencies = [
+    "odoo-addon-hr_payroll_document>=17.0dev,<17.1dev",
     "odoo-addon-payroll>=17.0dev,<17.1dev",
+    "odoo-addon-payroll_account>=17.0dev,<17.1dev",
+    "odoo-addon-payroll_contract_advantages>=17.0dev,<17.1dev",
     "odoo-addon-payroll_hr_public_holidays>=17.0dev,<17.1dev",
 ]
 classifiers=[

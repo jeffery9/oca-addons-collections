@@ -19,6 +19,7 @@
                 <field name="amount_select" column_invisible="1" />
                 <field name="register_id" column_invisible="1" />
                 <field name="payslip_run_id" optional="hide" />
+                <field name="currency_id" invisible="1" />
             </tree>
         </field>
     </record>
@@ -57,6 +58,7 @@
                             <field name="rate" readonly="1" />
                             <field name="amount" readonly="1" />
                             <field name="total" decoration-bf="1" readonly="1" />
+                            <field name="currency_id" invisible="1" />
                         </group>
                         <field name="note" />
                     </group>
@@ -83,6 +85,7 @@
                                         decoration-success="total > 0 and parent_line_id == False"
                                         sum="total_net"
                                     />
+                                    <field name="currency_id" invisible="1" />
                                 </tree>
                             </field>
                         </page>

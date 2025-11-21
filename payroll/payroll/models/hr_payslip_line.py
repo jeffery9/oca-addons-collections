@@ -32,12 +32,16 @@ class HrPayslipLine(models.Model):
         "hr.contract", string="Contract", required=True, index=True
     )
     rate = fields.Float(string="Rate (%)", digits="Payroll Rate", default=100.0)
-    amount = fields.Float(digits="Payroll")
+    currency_id = fields.Many2one(
+        related="contract_id.currency_id", store=True, readonly=True
+    )
+    amount = fields.Monetary(digits="Payroll", currency_field="currency_id")
     quantity = fields.Float(digits="Payroll", default=1.0)
-    total = fields.Float(
+    total = fields.Monetary(
         compute="_compute_total",
         digits="Payroll",
         store=True,
+        currency_field="currency_id",
     )
     allow_edit_payslip_lines = fields.Boolean(
         "Allow editing", compute="_compute_allow_edit_payslip_lines"
