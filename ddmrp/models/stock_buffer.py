@@ -100,6 +100,13 @@ class StockBuffer(models.Model):
     product_uom = fields.Many2one(
         related="product_id.uom_id",
     )
+    product_categ_id = fields.Many2one(
+        comodel_name="product.category",
+        string="Product Category",
+        related="product_id.categ_id",
+        store=True,
+        readonly=True,
+    )
     # TODO: fix in method _compute_procure_recommended_qty.
     # not sure maybe they are useful for tweak batches like in multi level mrp
     procure_min_qty = fields.Float(
@@ -1451,9 +1458,9 @@ class StockBuffer(models.Model):
         elif self.adu_calculation_method.source_past == "actual":
             domain = self._past_moves_domain(date_from, date_to, locations)
             for group in self.env["stock.move"].read_group(
-                domain, ["product_id", "product_qty"], ["product_id"]
+                domain, ["product_id", "quantity_product_uom"], ["product_id"]
             ):
-                qty += group["product_qty"]
+                qty += group["quantity_product_uom"]
         return qty / horizon
 
     def _get_horizon_adu_future_demand(self):
