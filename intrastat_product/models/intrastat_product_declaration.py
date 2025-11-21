@@ -8,13 +8,23 @@ from collections import defaultdict
 from datetime import date
 
 from dateutil.relativedelta import relativedelta
-from stdnum.vatin import is_valid
 
 from odoo import Command, _, api, fields, models
 from odoo.exceptions import RedirectWarning, UserError, ValidationError
 from odoo.tools import float_is_zero
 
 _logger = logging.getLogger(__name__)
+
+
+SRC_DEST_COUNTRY_CODE_MAPPING = {
+    "GB": "XI",
+    "GR": "EL",
+}
+
+PRODUCT_ORIGIN_COUNTRY_CODE_MAPPING = {
+    "GB": "XU",
+    "GR": "EL",
+}
 
 
 class IntrastatProductDeclaration(models.Model):
@@ -884,7 +894,6 @@ class IntrastatProductDeclaration(models.Model):
         self.ensure_one()
         self.xml_attachment_id and self.xml_attachment_id.unlink()
 
-    @api.model
     def _xls_computation_line_fields(self):
         """
         Update list in custom module to add/drop columns or change order
@@ -910,7 +919,6 @@ class IntrastatProductDeclaration(models.Model):
             "invoice",
         ]
 
-    @api.model
     def _xls_declaration_line_fields(self):
         """
         Update list in custom module to add/drop columns or change order
@@ -1108,8 +1116,7 @@ class IntrastatProductComputationLine(models.Model):
     def _compute_src_dest_country_code(self):
         for this in self:
             code = this.src_dest_country_id and this.src_dest_country_id.code or False
-            if code == "GB":
-                code = "XI"  # Northern Ireland
+            code = SRC_DEST_COUNTRY_CODE_MAPPING.get(code, code)
             this.src_dest_country_code = code
 
     @api.depends("product_origin_country_id")
@@ -1120,17 +1127,23 @@ class IntrastatProductComputationLine(models.Model):
                 and this.product_origin_country_id.code
                 or False
             )
-            if code == "GB":
-                code = "XU"
-                # XU can be used when you don't know if the product
-                # originate from Great-Britain or from Northern Ireland
+            code = PRODUCT_ORIGIN_COUNTRY_CODE_MAPPING.get(code, code)
             this.product_origin_country_code = code
 
     @api.constrains("vat")
     def _check_vat(self):
+        partner_obj = self.env["res.partner"]
         for this in self:
-            if this.vat and not is_valid(this.vat):
-                raise ValidationError(_("The VAT number '%s' is invalid.") % this.vat)
+            if not this.vat:
+                continue
+            country = this.partner_id.commercial_partner_id.country_id
+            if not partner_obj._run_vat_test(this.vat, country):
+                msg = partner_obj._build_vat_error_message(
+                    country and country.code.lower() or None,
+                    this.vat,
+                    _("partner [%s]") % this.partner_id.name,
+                )
+                raise ValidationError(msg)
 
     @api.depends("partner_id")
     def _compute_vat(self):
