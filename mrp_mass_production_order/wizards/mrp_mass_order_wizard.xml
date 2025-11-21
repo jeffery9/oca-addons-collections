@@ -25,16 +25,22 @@
                         <field name="mrp_production_order_entries">
 
                             <tree editable="bottom">
-                                <field name="product_id" />
+                                <field
+                                    name="product_id"
+                                    context="{'default_detailed_type': 'product'}"
+                                />
                                 <field name="product_qty" />
                                 <field name="product_uom_id" />
                                 <field
                                     name="bom_id"
                                     column_invisible="not parent.with_bom"
+                                    required="parent.with_bom"
                                 />
                                 <field
                                     name="product_consumed_id"
+                                    context="{'default_detailed_type': 'product'}"
                                     column_invisible="parent.with_bom"
+                                    required="not parent.with_bom"
                                 />
                                 <field
                                     name="quantity"
