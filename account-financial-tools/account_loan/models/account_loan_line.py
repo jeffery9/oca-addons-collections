@@ -5,6 +5,7 @@ import logging
 
 from odoo import Command, _, api, fields, models
 from odoo.exceptions import UserError
+from odoo.tools import float_is_zero
 
 _logger = logging.getLogger(__name__)
 try:
@@ -127,16 +128,18 @@ class AccountLoanLine(models.Model):
     @api.depends("interests_amount")
     def _compute_rate(self):
         for record in self:
-            record.rate = (
-                record.interests_amount * 100
-            ) / record.pending_principal_amount
+            rate = 0
+            if not float_is_zero(record.pending_principal_amount, precision_digits=2):
+                rate = (record.interests_amount * 100) / record.pending_principal_amount
+            record.rate = rate
 
     @api.depends("rate")
     def _compute_interests_amount(self):
         for record in self:
-            record.interests_amount = (
-                record.pending_principal_amount * record.rate
-            ) / 100
+            if record.interests_amount and record.pending_principal_amount:
+                record.interests_amount = (
+                    record.pending_principal_amount * record.rate
+                ) / 100
 
     @api.depends("move_ids")
     def _compute_has_moves(self):
@@ -292,43 +295,52 @@ class AccountLoanLine(models.Model):
     def _move_line_vals(self, account=False):
         vals = []
         partner = self.loan_id.partner_id.with_company(self.loan_id.company_id)
+        # Amounts are evaled if > 0 for allowing negative loans to be able to be the
+        # donors of the loan
+        partner_account = (
+            partner.property_account_payable_id
+            if self.payment_amount > 0
+            else partner.property_account_receivable_id
+        )
         vals.append(
             {
-                "account_id": (account and account.id)
-                or partner.property_account_payable_id.id,
+                "account_id": (account and account.id) or partner_account.id,
                 "partner_id": partner.id,
-                "credit": self.payment_amount,
-                "debit": 0,
+                "credit": self.payment_amount if self.payment_amount > 0 else 0,
+                "debit": -self.payment_amount if self.payment_amount < 0 else 0,
             }
         )
         if self.interests_amount:
+            amount = self.interests_amount
             vals.append(
                 {
                     "account_id": self.loan_id.interest_expenses_account_id.id,
-                    "credit": 0,
-                    "debit": self.interests_amount,
+                    "credit": -amount if amount < 0 else 0,
+                    "debit": amount if amount > 0 else 0,
                 }
             )
+        diff_amount = self.payment_amount - self.interests_amount
         vals.append(
             {
                 "account_id": self.loan_id.short_term_loan_account_id.id,
-                "credit": 0,
-                "debit": self.payment_amount - self.interests_amount,
+                "credit": -diff_amount if diff_amount < 0 else 0,
+                "debit": diff_amount if diff_amount > 0 else 0,
             }
         )
         if self.long_term_loan_account_id and self.long_term_principal_amount:
+            amount = self.long_term_principal_amount
             vals.append(
                 {
                     "account_id": self.loan_id.short_term_loan_account_id.id,
-                    "credit": self.long_term_principal_amount,
-                    "debit": 0,
+                    "credit": amount if amount > 0 else 0,
+                    "debit": -amount if amount < 0 else 0,
                 }
             )
             vals.append(
                 {
                     "account_id": self.long_term_loan_account_id.id,
-                    "credit": 0,
-                    "debit": self.long_term_principal_amount,
+                    "credit": -amount if amount < 0 else 0,
+                    "debit": amount if amount > 0 else 0,
                 }
             )
         return vals
