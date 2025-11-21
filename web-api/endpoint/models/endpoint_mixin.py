@@ -12,6 +12,31 @@ from odoo.tools import safe_eval
 
 from odoo.addons.rpc_helper.decorator import disable_rpc
 
+hashlib = safe_eval.wrap_module(
+    __import__("hashlib"),
+    [
+        "sha1",
+        "sha224",
+        "sha256",
+        "sha384",
+        "sha512",
+        "sha3_224",
+        "sha3_256",
+        "sha3_384",
+        "sha3_512",
+        "shake_128",
+        "shake_256",
+        "blake2b",
+        "blake2s",
+        "md5",
+        "new",
+    ],
+)
+hmac = safe_eval.wrap_module(
+    __import__("hmac"),
+    ["new", "compare_digest"],
+)
+
 
 @disable_rpc()  # Block ALL RPC calls
 class EndpointMixin(models.AbstractModel):
@@ -74,6 +99,12 @@ class EndpointMixin(models.AbstractModel):
         * Response
         * werkzeug
         * exceptions
+        * hashlib: Python 'hashlib' library. Available methods:
+            'sha1', 'sha224', 'sha256',
+            'sha384', 'sha512', 'sha3_224', 'sha3_256', 'sha3_384',
+            'sha3_512', 'shake_128', 'shake_256', 'blake2b',
+            'blake2s', 'md5', 'new'
+        * hmac: Python 'hmac' library. Use 'new' to create HMAC objects.
 
         Must generate either an instance of ``Response`` into ``response`` var or:
 
@@ -108,6 +139,8 @@ class EndpointMixin(models.AbstractModel):
                 exceptions, ["UserError", "ValidationError"]
             ),
             "log": self._code_snippet_log_func,
+            "hashlib": hashlib,
+            "hmac": hmac,
         }
 
     def _code_snippet_log_func(self, message, level="info"):
