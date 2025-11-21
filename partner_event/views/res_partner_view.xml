@@ -21,12 +21,27 @@
                     name="%(partner_event.act_partner_registration)d"
                     type="action"
                     class="oe_stat_button oe_inline"
+                    groups="event.group_event_user"
                     help="Count of events with confirmed registrations."
                     icon="fa-id-card"
                 >
                     <field name="registration_count" widget="statinfo" />
                 </button>
             </div>
+        </field>
+    </record>
+    <record id="view_res_partner_filter" model="ir.ui.view">
+        <field name="name">res.partner.select</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter" />
+        <field name="arch" type="xml">
+            <field name="user_id" position="after">
+                <field
+                    name="event_registration_ids"
+                    string="Linked events"
+                    filter_domain="[('event_registration_ids.event_id', 'ilike', self)]"
+                />
+            </field>
         </field>
     </record>
 </odoo>
