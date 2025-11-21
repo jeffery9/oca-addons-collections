@@ -35,6 +35,11 @@ class OnlineBankStatementProvider(models.Model):
         store=True,
         readonly=False,
     )
+    gocardless_date_type = fields.Selection(
+        string="Date type for GoCardless Import",
+        selection=[("valueDate", "Value Date"), ("bookingDate", "Booking Date")],
+        default="valueDate",
+    )
 
     @api.depends("journal_id", "company_id")
     def _compute_gocardless_country_id(self):
@@ -83,6 +88,8 @@ class OnlineBankStatementProvider(models.Model):
             headers=self._gocardless_get_headers(basic=basic_auth),
             timeout=REQUESTS_TIMEOUT,
         )
+        if response.status_code == 429:  # Rate limit overpassed
+            raise UserError(json.loads(response.text)["detail"])
         if response.status_code in [200, 201]:
             content = json.loads(response.text)
         return response, content
@@ -98,17 +105,17 @@ class OnlineBankStatementProvider(models.Model):
             # Refresh token
             if (
                 self.gocardless_refresh_token
-                and now > self.gocardless_refresh_expiration
+                and now < self.gocardless_refresh_expiration
             ):
                 endpoint = "token/refresh"
+                request_data = {"refresh": self.gocardless_refresh_token}
             else:
                 endpoint = "token/new"
+                request_data = {"secret_id": self.username, "secret_key": self.password}
             _response, data = self._gocardless_request(
                 endpoint,
                 request_type="post",
-                data=json.dumps(
-                    {"secret_id": self.username, "secret_key": self.password}
-                ),
+                data=json.dumps(request_data),
                 basic_auth=True,
             )
             expiration_date = now + relativedelta(seconds=data.get("access_expires", 0))
@@ -332,7 +339,9 @@ class OnlineBankStatementProvider(models.Model):
         currencies_cache = {}
         for tr in transactions.get("transactions", {}).get("booked", []):
             # Reference: https://developer.gocardless.com/bank-account-data/transactions
-            string_date = tr.get("valueDate") or tr.get("bookingDate")
+            main_value = self.gocardless_date_type
+            alt_value = "bookingDate" if main_value == "valueDate" else "valueDate"
+            string_date = tr.get(main_value) or tr.get(alt_value)
             # CHECK ME: if there's not date string, is transaction still valid?
             if not string_date:
                 continue
