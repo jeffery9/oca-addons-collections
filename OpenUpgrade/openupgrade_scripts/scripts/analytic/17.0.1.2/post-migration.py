@@ -60,19 +60,12 @@ def _analytic_plan_update_applicability_into_property(env):
     in all companies as the company_id field was shifted from account.analytic.plan
     to account.analytic.applicability
     """
-    env.cr.execute(
-        """
-        SELECT id, default_applicability FROM account_analytic_plan
-        WHERE default_applicability != 'optional'
-        """
+    openupgrade.convert_to_company_dependent(
+        env,
+        "account.analytic.plan",
+        openupgrade.get_legacy_name("default_applicability"),
+        "default_applicability",
     )
-    values = dict(env.cr.fetchall())
-    for company in env["res.company"].search([]):
-        env["ir.property"].with_company(company)._set_multi(
-            "default_applicability",
-            "account.analytic.plan",
-            values,
-        )
 
 
 @openupgrade.migrate()

@@ -508,7 +508,7 @@ def _map_chart_template_id_to_chart_template(
     `l10n_` prefix removed (usually the country's iso code)
     """
     env.cr.execute(
-        f"""SELECT m.id, CONCAT(imd.module, '.', imd.name)
+        f"""SELECT m.{coa_m2o}, CONCAT(imd.module, '.', imd.name)
             FROM {model_table} m
                 JOIN ir_model_data imd
                     ON imd.model='account.chart.template'

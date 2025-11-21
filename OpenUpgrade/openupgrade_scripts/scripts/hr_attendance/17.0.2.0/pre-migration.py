@@ -8,10 +8,6 @@ _xmlid_renames = [
         "hr_attendance.group_hr_attendance_user",
         "hr_attendance.group_hr_attendance_officer",
     ),
-    (
-        "hr_attendance.group_hr_attendance_kiosk",
-        "hr_attendance.group_hr_attendance_own_reader",
-    ),
 ]
 
 

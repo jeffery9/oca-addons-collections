@@ -13,39 +13,29 @@ _deleted_xml_records = [
 
 
 def _transfer_employee_private_data(env):
-    """On v17, there's no more private res.partner records, so we should transfer the
-    information to the dedicated employee fields, and then anonymize the remaining data
-    in the res.partner record.
+    """On v17, there's no more private res.partner records, and the base migration
+    has copied private partners to table ou_res_partner_private, so we transfer the
+    information to the dedicated employee fields from the copy containing private
+    data if it exists, and from res.partner otherwise
     """
     openupgrade.logged_query(
         env.cr,
         """
         UPDATE hr_employee he
         SET lang = rp.lang,
-            private_city = rp.city,
-            private_country_id = rp.country_id,
-            private_email = rp.email,
-            private_phone = rp.phone,
-            private_state_id = rp.state_id,
-            private_street = rp.street,
-            private_street2 = rp.street2,
-            private_zip = rp.zip
+            private_city = COALESCE(he.private_city, rpp.city, rp.city),
+            private_country_id = COALESCE(
+                he.private_country_id, rpp.country_id, rp.country_id
+            ),
+            private_email = COALESCE(he.private_email, rpp.email, rp.email),
+            private_phone = COALESCE(he.private_phone, rpp.phone, rp.phone),
+            private_state_id = COALESCE(he.private_state_id, rpp.state_id, rp.state_id),
+            private_street = COALESCE(he.private_street, rpp.street, rp.street),
+            private_street2 = COALESCE(he.private_street2, rpp.street2, rp.street2),
+            private_zip = COALESCE(he.private_zip, rpp.zip, rp.zip)
         FROM res_partner rp
-        WHERE he.address_home_id = rp.id""",
-    )
-    openupgrade.logged_query(
-        env.cr,
-        """
-        UPDATE res_partner rp
-        SET city = '***',
-            country_id = NULL,
-            email = '***',
-            phone = '***',
-            state_id = NULL,
-            street = '***',
-            street2 = '***',
-            zip = '***'
-        FROM hr_employee he
+        LEFT JOIN ou_res_partner_private rpp
+        ON rp.id=rpp.id
         WHERE he.address_home_id = rp.id""",
     )
 

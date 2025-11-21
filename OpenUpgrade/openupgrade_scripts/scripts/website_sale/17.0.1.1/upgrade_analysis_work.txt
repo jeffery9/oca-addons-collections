@@ -14,9 +14,11 @@ website_sale / res.company              / website_sale_onboarding_payment_provid
 website_sale / sale.order               / access_point_address (json)   : NEW
 website_sale / website                  / currency_id (many2one)        : not related anymore
 website_sale / website                  / currency_id (many2one)        : now a function
-website_sale / website                  / show_line_subtotals_tax_selection (selection): NEW required, selection_keys: ['tax_excluded', 'tax_included'], hasdefault: default
 website_sale_delivery / sale.order               / amount_delivery (float)       : not stored anymore
 # NOTHING TO DO
+
+website_sale / website                  / show_line_subtotals_tax_selection (selection): NEW required, selection_keys: ['tax_excluded', 'tax_included'], hasdefault: default
+# DONE: post-migration: Switch default value "tax_excluded" if previous group account.group_show_line_subtotals_tax_included was selected.
 
 website_sale / product.tag              / visible_on_ecommerce (boolean): NEW hasdefault: default
 # DONE post-migration: Set to False so as not to change the behaviour of the website with new things.

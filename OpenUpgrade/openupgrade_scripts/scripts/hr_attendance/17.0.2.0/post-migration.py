@@ -1,8 +1,11 @@
 # Copyright 2025 ForgeFlow S.L. (https://www.forgeflow.com)
+# Copyright 2025 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 import uuid
 
 from openupgradelib import openupgrade
+
+from odoo import Command
 
 _deleted_xml_records = [
     "hr_attendance.hr_attendance_report_rule_multi_company",
@@ -52,6 +55,48 @@ def fill_hr_attendance_overtime_hours(env):
     attendances._compute_overtime_hours()
 
 
+def hr_attendance_menus(env):
+    group_hr_attendance = env.ref("hr_attendance.group_hr_attendance")
+    group_hr_attendance_kiosk = env.ref("hr_attendance.group_hr_attendance_kiosk")
+    # Remove the groups of 16.0 from the Attendances menu
+    env.ref("hr_attendance.menu_hr_attendance_root").write(
+        {
+            "groups_id": [
+                Command.unlink(group_hr_attendance.id),
+                Command.unlink(group_hr_attendance_kiosk.id),
+            ]
+        }
+    )
+    openupgrade.rename_xmlids(
+        env.cr,
+        [
+            (
+                "hr_attendance.group_hr_attendance",
+                "hr_attendance.group_hr_attendance_own_reader",
+            ),
+        ],
+        allow_merge=True,
+    )
+    # Remove the groups of 16.0 from the Attendances > Kiosk Mode menu
+    env.ref("hr_attendance.menu_hr_attendance_kiosk_no_user_mode").write(
+        {
+            "groups_id": [
+                Command.unlink(group_hr_attendance_kiosk.id),
+            ]
+        }
+    )
+    openupgrade.rename_xmlids(
+        env.cr,
+        [
+            (
+                "hr_attendance.group_hr_attendance_kiosk",
+                "hr_attendance.group_hr_attendance_own_reader",
+            ),
+        ],
+        allow_merge=True,
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     fill_res_company_hr_attendance_display_overtime(env)
@@ -59,3 +104,4 @@ def migrate(env, version):
     fill_res_company_attendance_kiosk_key(env)
     openupgrade.delete_records_safely_by_xml_id(env, _deleted_xml_records)
     fill_hr_attendance_overtime_hours(env)
+    hr_attendance_menus(env)

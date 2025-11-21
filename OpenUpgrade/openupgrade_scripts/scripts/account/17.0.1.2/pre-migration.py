@@ -2,8 +2,6 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from openupgradelib import openupgrade
 
-from odoo.tools.sql import convert_column_translatable
-
 _fields_renames = [
     (
         "res.company",
@@ -73,7 +71,6 @@ def _convert_account_tax_description(env):
     openupgrade.rename_columns(
         env.cr, {"account_tax": [("description", "invoice_label")]}
     )
-    convert_column_translatable(env.cr, "account_tax", "invoice_label", "jsonb")
 
 
 def _am_create_delivery_date_column(env):
