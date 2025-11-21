@@ -26,10 +26,20 @@
                 <field name="state" />
                 <field name="rate" optional="hide" />
                 <field name="loan_amount" optional="hide" />
-                <field name="pending_principal_amount" optional="hide" />
+                <field name="pending_principal_amount" optional="hide" sum="Total" />
                 <field name="periods" optional="hide" />
                 <field name="start_date" optional="hide" />
             </tree>
+        </field>
+    </record>
+    <record id="account_loan_pivot" model="ir.ui.view">
+        <field name="name">account.loan.pivot</field>
+        <field name="model">account.loan</field>
+        <field name="arch" type="xml">
+            <pivot string="Loans pivot">
+                <field name="name" type="row" />
+                <field name="loan_amount" type="measure" />
+            </pivot>
         </field>
     </record>
     <record id="account_loan_form" model="ir.ui.view">
@@ -42,8 +52,16 @@
                     <button
                         name="%(account_loan_post_action)d"
                         invisible="state != 'draft'"
+                        class="oe_highlight"
                         type="action"
                         string="Post"
+                        groups="account.group_account_manager"
+                    />
+                    <button
+                        name="button_draft"
+                        invisible="state not in ('posted', 'cancelled') or move_count != 0"
+                        type="object"
+                        string="Reset to draft"
                         groups="account.group_account_manager"
                     />
                     <field name="state" widget="statusbar" />
@@ -56,8 +74,9 @@
                             icon="fa-bars"
                             invisible="state == 'draft'"
                             type="object"
-                            string="Moves"
-                        />
+                        >
+                            <field string="Moves" name="move_count" widget="statinfo" />
+                        </button>
                         <button
                             name="view_account_invoices"
                             class="oe_stat_button"
@@ -142,7 +161,7 @@
                             <field
                                 name="line_ids"
                                 context="{'tree_view_ref': 'account_loan.account_loan_line_tree'}"
-                                readonly="state != 'draft'"
+                                readonly="state in ['canlcelled', 'closed']"
                             />
                         </page>
                         <page string="Accounts" id="accounting">
@@ -208,6 +227,7 @@
     <record id="account_loan_action" model="ir.actions.act_window">
         <field name="name">Loans</field>
         <field name="res_model">account.loan</field>
+        <field name="view_mode">tree,form,pivot</field>
     </record>
 
     <menuitem

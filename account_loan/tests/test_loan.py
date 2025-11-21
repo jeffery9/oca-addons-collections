@@ -642,12 +642,20 @@ class TestLoan(BaseCommon):
         self.assertEqual(loan.payment_amount - loan.interests_amount, amount)
         self.assertEqual(loan.pending_principal_amount, 0)
 
+    def test_negative_loan(self):
+        # Check that negatives amounts don't give an error
+        loan = self.create_loan("fixed-annuity", -4000, 1, 10)
+        self.post(loan)
+        loan.line_ids[0].view_process_values()
+
     @mute_logger("odoo.models.unlink")
     def test_cancel_loan(self):
         amount = 10000
         periods = 10
         loan = self.create_loan("fixed-annuity", amount, 1, periods)
         self.post(loan)
+        with self.assertRaises(UserError):
+            loan.button_draft()
         line = loan.line_ids.filtered(lambda r: r.sequence == 1)
         line.view_process_values()
         self.assertTrue(line.move_ids)
@@ -660,6 +668,12 @@ class TestLoan(BaseCommon):
         self.assertEqual(pay.amount, line.final_pending_principal_amount)
         pay.run()
         self.assertEqual(loan.state, "cancelled")
+        with self.assertRaises(UserError):
+            loan.button_draft()
+        loan.move_ids.button_draft()
+        loan.move_ids.unlink()
+        loan.button_draft()
+        self.assertEqual(loan.state, "draft")
 
     def post(self, loan):
         self.assertFalse(loan.move_ids)

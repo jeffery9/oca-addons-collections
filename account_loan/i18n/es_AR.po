@@ -450,6 +450,15 @@ msgid "Is Leasing"
 msgstr "Es Alquiler"
 
 #. module: account_loan
+#. odoo-python
+#: code:addons/account_loan/models/account_loan.py:0
+#, python-format
+msgid ""
+"It is only possible to change to draft if the status is cancelled or posted "
+"and there are no account moves."
+msgstr ""
+
+#. module: account_loan
 #: model_terms:ir.ui.view,arch_db:account_loan.account_loan_form
 msgid "Items"
 msgstr "Items"
@@ -602,6 +611,11 @@ msgid "Loans"
 msgstr "Préstamos"
 
 #. module: account_loan
+#: model_terms:ir.ui.view,arch_db:account_loan.account_loan_pivot
+msgid "Loans pivot"
+msgstr ""
+
+#. module: account_loan
 #: model:ir.model.fields,field_description:account_loan.field_account_loan_line__long_term_pending_principal_amount
 msgid "Long Term Pending Principal Amount"
 msgstr "Monto Principal Pendiente a Largo Plazo"
@@ -643,6 +657,11 @@ msgstr "Método de computación de la anualidad del período"
 #: model:ir.model.fields,field_description:account_loan.field_account_loan_line__move_ids
 msgid "Move"
 msgstr "Movimiento"
+
+#. module: account_loan
+#: model:ir.model.fields,field_description:account_loan.field_account_loan__move_count
+msgid "Move Count"
+msgstr ""
 
 #. module: account_loan
 #: model_terms:ir.ui.view,arch_db:account_loan.account_loan_form
@@ -822,6 +841,13 @@ msgid "Rate"
 msgstr "Tasa"
 
 #. module: account_loan
+#. odoo-python
+#: code:addons/account_loan/models/account_loan.py:0
+#, python-format
+msgid "Rate Change"
+msgstr ""
+
+#. module: account_loan
 #: model:ir.model.fields,field_description:account_loan.field_account_loan__rate_period
 msgid "Rate Period"
 msgstr "Período de la Tasa"
@@ -840,6 +866,11 @@ msgstr "Tasa real"
 #: model:ir.model.fields,help:account_loan.field_account_loan__rate_period
 msgid "Real rate that will be applied on each period"
 msgstr "Tasa real que se aplicará en cada período"
+
+#. module: account_loan
+#: model_terms:ir.ui.view,arch_db:account_loan.account_loan_form
+msgid "Reset to draft"
+msgstr ""
 
 #. module: account_loan
 #: model:ir.model.fields,field_description:account_loan.field_account_loan__residual_amount
@@ -972,6 +1003,11 @@ msgid "The total principal amount does not match the loan amount."
 msgstr ""
 
 #. module: account_loan
+#: model_terms:ir.ui.view,arch_db:account_loan.account_loan_tree
+msgid "Total"
+msgstr ""
+
+#. module: account_loan
 #: model:ir.model.fields,help:account_loan.field_account_loan_line__payment_amount
 msgid "Total amount that will be payed (Annuity)"
 msgstr "Monto total que se pagará (Anualidad)"
@@ -1029,6 +1065,16 @@ msgstr ""
 #: model:ir.model.fields,help:account_loan.field_account_loan__payment_on_first_period
 msgid "When checked, the first payment will be on start date"
 msgstr "Cuando está marcada, el primer pago será en la fecha de inicio"
+
+#. module: account_loan
+#. odoo-python
+#: code:addons/account_loan/models/account_loan.py:0
+#, python-format
+msgid ""
+"You have modified the interest rate. Click the Compute items button to "
+"update the lines. Please note that if you have manually edited these lines, "
+"those changes will be lost upon computation."
+msgstr ""
 
 #. module: account_loan
 #: model_terms:ir.ui.view,arch_db:account_loan.account_loan_line_tree
