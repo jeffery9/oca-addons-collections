@@ -23,19 +23,23 @@ def _convert_note_note_to_project_task(env):
     openupgrade.logged_query(
         env.cr, "ALTER TABLE project_task ADD COLUMN old_note_id INTEGER"
     )
+    # if the OCA project_task_code was installed, code is required
+    column_exists = openupgrade.column_exists(env.cr, "project_task", "code")
     openupgrade.logged_query(
         env.cr,
-        """
-        INSERT INTO project_task(
-            create_uid, write_uid, create_date, write_date,
-            active, name, description, priority, sequence, state, project_id,
-            display_in_project, company_id, color, old_note_id
-        )
-        SELECT create_uid, write_uid, create_date, write_date,
-               open, name, memo, '0', sequence, '01_in_progress', null,
-               true, company_id, color, id
-        FROM note_note
-        """,
+        f"""
+            INSERT INTO project_task(
+                create_uid, write_uid, create_date, write_date,
+                active, name, description, priority, sequence, state, project_id,
+                display_in_project, company_id, color, old_note_id
+                {column_exists and ", code" or ""}
+            )
+            SELECT create_uid, write_uid, create_date, write_date,
+                open, name, memo, '0', sequence, '01_in_progress', null,
+                true, company_id, color, id
+                {column_exists and ", ('OU' || id::VARCHAR)" or ""}
+            FROM note_note
+            """,
     )
 
 

@@ -3,10 +3,13 @@ from openupgradelib import openupgrade
 
 
 def _res_partner_compute_fields_values(env):
-    res_partner = env["res.partner"].with_context(active_test=False).search([])
-    res_partner._compute_ubl_cii_format()
-    res_partner._compute_peppol_endpoint()
-    res_partner._compute_peppol_eas()
+    partners = (
+        env["res.partner"]
+        .with_context(active_test=False)
+        .search(["|", ("country_id", "!=", False), ("vat", "!=", False)])
+    )
+    partners._compute_ubl_cii_format()
+    partners._compute_peppol_eas()
 
 
 @openupgrade.migrate()

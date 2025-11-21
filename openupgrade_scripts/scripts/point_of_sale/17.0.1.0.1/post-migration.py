@@ -14,7 +14,8 @@ def fill_account_move_pos_refunded_invoice_ids(env):
         JOIN pos_order_line pol ON pol.order_id = pos.id
         JOIN pos_order_line pol2 ON pol.refunded_orderline_id = pol2.id
         JOIN pos_order pos2 ON pol2.order_id = pos2.id
-        JOIN account_move am2 ON pos2.account_move = am2.id""",
+        JOIN account_move am2 ON pos2.account_move = am2.id
+        GROUP BY am.id, am2.id""",
     )
 
 

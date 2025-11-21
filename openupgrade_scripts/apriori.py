@@ -28,12 +28,12 @@ merged_modules = {
     "l10n_in_tcs_tds": "l10n_in",
     "l10n_in_upi": "l10n_in",
     "l10n_latam_account_sequence": "l10n_latam_invoice_document",
+    "l10n_multilang": "account",
     "loyalty_delivery": "sale_loyalty_delivery",
     "pos_cache": "point_of_sale",
     "pos_daily_sales_reports": "point_of_sale",
     "pos_epson_printer_restaurant": "point_of_sale",
     "purchase_price_diff": "purchase_stock",
-    "sale_quotation_builder": "sale_pdf_quote_builder",
     "spreadsheet_dashboard_sale_expense": "spreadsheet_dashboard_hr_expense",
     "web_kanban_gauge": "web",
     "website_event_crm_questions": "website_event_crm",
@@ -44,6 +44,8 @@ merged_modules = {
     "website_sale_stock_product_configurator": "website_sale_product_configurator",
     # OCA/account-invoicing
     "account_invoice_fiscal_position_update": "account",
+    # OCA/e-commerce
+    "website_sale_invoice_address": "website_sale",
     # OCA/hr-attendance
     "hr_attendance_geolocation": "hr_attendance",
     # OCA/l10n-germany
@@ -51,6 +53,7 @@ merged_modules = {
     "l10n_de_skr04_mis_reports": "l10n_de_mis_reports",
     # OCA/l10n-spain
     "l10n_es_dua": "l10n_es",
+    "l10n_es_dua_sii": "l10n_es_aeat_sii_oca",
     "l10n_es_irnr": "l10n_es",
     "l10n_es_irnr_sii": "l10n_es_aeat_sii_oca",
     # OCA/maintenance
@@ -58,8 +61,16 @@ merged_modules = {
     "maintenance_plan": "maintenance",
     "maintenance_plan_activity": "maintenance",
     "maintenance_plan_employee": "maintenance",
+    # OCA/product-attribute
+    "product_catalog": "product",
+    "product_catalog_sale": "sale",
     # OCA/purchase-workflow
     "purchase_discount": "purchase",
+    # OCA/sale-promotion
+    "loyalty_initial_date_validity": "loyalty",
+    "sale_loyalty_initial_date_validity": "sale_loyalty",
+    # OCA/sale-reporting
+    "sale_report_country_state": "sale",
     # OCA/social
     "mail_activity_plan": "mail",
     "mass_mailing_custom_unsubscribe_event": "mass_mailing",

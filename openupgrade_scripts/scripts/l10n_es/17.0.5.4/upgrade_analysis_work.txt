@@ -3773,4 +3773,4 @@ NEW product.product: l10n_es.product_dua_valuation_10
 NEW product.product: l10n_es.product_dua_valuation_21
 NEW product.product: l10n_es.product_dua_valuation_4
 NEW res.partner: l10n_es.partner_simplified [renamed from l10n_es_edi_sii module]
-# NOTHIG TO DO: Handled by ORM
+# NOTHING TO DO: Handled by ORM
