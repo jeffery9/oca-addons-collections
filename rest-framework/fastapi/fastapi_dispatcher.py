@@ -8,6 +8,7 @@ from odoo.http import Dispatcher, request
 
 from .context import odoo_env_ctx
 from .error_handlers import convert_exception_to_status_body
+from .pools import fastapi_app_pool
 
 
 class FastApiDispatcher(Dispatcher):
@@ -26,21 +27,20 @@ class FastApiDispatcher(Dispatcher):
         # don't parse the httprequest let starlette parse the stream
         self.request.params = {}  # dict(self.request.get_http_params(), **args)
         environ = self._get_environ()
-        root_path = "/" + environ["PATH_INFO"].split("/")[1]
+        path = environ["PATH_INFO"]
         # TODO store the env into contextvar to be used by the odoo_env
         # depends method
-        fastapi_endpoint = self.request.env["fastapi.endpoint"].sudo()
-        app = fastapi_endpoint.get_app(root_path)
-        uid = fastapi_endpoint.get_uid(root_path)
-        data = BytesIO()
-        with self._manage_odoo_env(uid):
-            for r in app(environ, self._make_response):
-                data.write(r)
-            if self.inner_exception:
-                raise self.inner_exception
-            return self.request.make_response(
-                data.getvalue(), headers=self.headers, status=self.status
-            )
+        with fastapi_app_pool.get_app(env=request.env, root_path=path) as app:
+            uid = request.env["fastapi.endpoint"].sudo().get_uid(path)
+            data = BytesIO()
+            with self._manage_odoo_env(uid):
+                for r in app(environ, self._make_response):
+                    data.write(r)
+                if self.inner_exception:
+                    raise self.inner_exception
+                return self.request.make_response(
+                    data.getvalue(), headers=self.headers, status=self.status
+                )
 
     def handle_error(self, exc):
         headers = getattr(exc, "headers", None)
@@ -52,6 +52,7 @@ class FastApiDispatcher(Dispatcher):
     def _make_response(self, status_mapping, headers_tuple, content):
         self.status = status_mapping[:3]
         self.headers = headers_tuple
+        self.inner_exception = None
         # in case of exception, the method asgi_done_callback of the
         # ASGIResponder will trigger an "a2wsgi.error" event with the exception
         # instance stored in a tuple with the type of the exception and the traceback.
@@ -114,5 +115,10 @@ class FastApiDispatcher(Dispatcher):
         token = odoo_env_ctx.set(env)
         try:
             yield
+            # Flush here to ensure all pending computations are being executed with
+            #  authenticated fastapi user before exiting this context manager, as it
+            #  would otherwise be done using the public user on the commit of the DB
+            #  cursor, what could potentially lead to inconsistencies or AccessError.
+            env.flush_all()
         finally:
             odoo_env_ctx.reset(token)
