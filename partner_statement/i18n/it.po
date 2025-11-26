@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-22 23:13+0000\n"
-"PO-Revision-Date: 2024-11-28 23:06+0000\n"
+"PO-Revision-Date: 2025-07-22 09:26+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
@@ -17,29 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.6.2\n"
-
-#. module: partner_statement
-#. odoo-python
-#: code:addons/partner_statement/report/activity_statement_xlsx.py:0
-#, python-format
-msgid "%(payable)sStatement between %(start)s and %(end)s in %(currency)s"
-msgstr "Estratto conto %(payable)s dal %(start)s al %(end)s in %(currency)s"
-
-#. module: partner_statement
-#. odoo-python
-#: code:addons/partner_statement/report/detailed_activity_statement_xlsx.py:0
-#: code:addons/partner_statement/report/outstanting_statement_xlsx.py:0
-#, python-format
-msgid "%(payable)sStatement up to %(end)s in %(currency)s"
-msgstr "Estratto conto %(payable)s fino al %(end)s in %(currency)s"
-
-#. module: partner_statement
-#. odoo-python
-#: code:addons/partner_statement/report/detailed_activity_statement_xlsx.py:0
-#, python-format
-msgid "%(payable)sStatement up to %(prior_day)s in %(currency)s"
-msgstr "Estratto conto %(payable)s fino al %(prior_day)s in %(currency)s"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: partner_statement
 #. odoo-python
@@ -249,6 +227,14 @@ msgid "Account Type"
 msgstr "Tipo conto"
 
 #. module: partner_statement
+#: model:ir.model.fields,field_description:partner_statement.field_activity_statement_wizard__excluded_accounts_selector
+#: model:ir.model.fields,field_description:partner_statement.field_detailed_activity_statement_wizard__excluded_accounts_selector
+#: model:ir.model.fields,field_description:partner_statement.field_outstanding_statement_wizard__excluded_accounts_selector
+#: model:ir.model.fields,field_description:partner_statement.field_statement_common_wizard__excluded_accounts_selector
+msgid "Accounts to exclude"
+msgstr "Conti da escludere"
+
+#. module: partner_statement
 #. odoo-python
 #: code:addons/partner_statement/report/activity_statement_xlsx.py:0
 #: model:ir.actions.report,name:partner_statement.action_print_activity_statement
@@ -310,11 +296,6 @@ msgid "Aging Method"
 msgstr "Metodo Scaduto"
 
 #. module: partner_statement
-#: model_terms:ir.ui.view,arch_db:partner_statement.aging_buckets
-msgid "Aging Report at"
-msgstr "Estratto conto al"
-
-#. module: partner_statement
 #. odoo-python
 #: code:addons/partner_statement/report/activity_statement_xlsx.py:0
 #: code:addons/partner_statement/report/outstanting_statement_xlsx.py:0
@@ -324,8 +305,14 @@ msgstr "Resoconto scadenze al %(end)s in %(currency)s"
 
 #. module: partner_statement
 #. odoo-python
+#: code:addons/partner_statement/report/report_statement_common.py:0
+#, python-format
+msgid "Aging Report at %(ending_date)s in %(currency)s"
+msgstr "Resoconto scadenze al %(ending_date)s in %(currency)s"
+
+#. module: partner_statement
+#. odoo-python
 #: code:addons/partner_statement/report/activity_statement_xlsx.py:0
-#: code:addons/partner_statement/report/detailed_activity_statement_xlsx.py:0
 #: model_terms:ir.ui.view,arch_db:partner_statement.activity_balance
 #, python-format
 msgid "Applied Amount"
@@ -433,21 +420,6 @@ msgid "Description"
 msgstr "Descrizione"
 
 #. module: partner_statement
-#: model_terms:ir.ui.view,arch_db:partner_statement.activity_balance
-msgid "Detailed"
-msgstr "Dettagliato"
-
-#. module: partner_statement
-#. odoo-python
-#: code:addons/partner_statement/report/detailed_activity_statement_xlsx.py:0
-#, python-format
-msgid ""
-"Detailed %(payable)sStatement between %(start)s and %(end)s in %(currency)s"
-msgstr ""
-"Estratto conto %(payable)s dettagliato dal %(start)s al %(end)s in "
-"%(currency)s"
-
-#. module: partner_statement
 #. odoo-python
 #: code:addons/partner_statement/report/detailed_activity_statement_xlsx.py:0
 #: model:ir.actions.report,name:partner_statement.action_print_detailed_activity_statement
@@ -470,6 +442,28 @@ msgstr "Resoconto XLSL estratto conto attività dettagliato"
 #: model:ir.actions.report,name:partner_statement.action_print_detailed_activity_statement_xlsx
 msgid "Detailed Activity Statement XLSX"
 msgstr "XLSX estratto conto attività dettagliato"
+
+#. module: partner_statement
+#. odoo-python
+#: code:addons/partner_statement/report/activity_statement.py:0
+#, python-format
+msgid ""
+"Detailed Statement between %(starting_date)s and %(ending_date)s in "
+"%(currency)s"
+msgstr ""
+"Estratto conto dettagliato dal %(starting_date)s al %(ending_date)s in "
+"%(currency)s"
+
+#. module: partner_statement
+#. odoo-python
+#: code:addons/partner_statement/report/activity_statement.py:0
+#, python-format
+msgid ""
+"Detailed Supplier Statement between %(starting_date)s and %(ending_date)s in "
+"%(currency)s"
+msgstr ""
+"Estratto conto dettagliato fornitore dal %(starting_date)s al "
+"%(ending_date)s in %(currency)s"
 
 #. module: partner_statement
 #: model:ir.model.fields,field_description:partner_statement.field_activity_statement_wizard__display_name
@@ -515,6 +509,13 @@ msgstr "Abilita Scaduto OCA"
 #, python-format
 msgid "Ending Balance"
 msgstr "Saldo finale"
+
+#. module: partner_statement
+#. odoo-python
+#: code:addons/partner_statement/report/detailed_activity_statement.py:0
+#, python-format
+msgid "Ending Balance up to %(ending_date)s in %(currency)s"
+msgstr "Saldo finale al %(ending_date)s in %(currency)s"
 
 #. module: partner_statement
 #: model:ir.model.fields,field_description:partner_statement.field_activity_statement_wizard__filter_negative_balances
@@ -615,7 +616,6 @@ msgstr "Originario"
 #. module: partner_statement
 #. odoo-python
 #: code:addons/partner_statement/report/activity_statement_xlsx.py:0
-#: code:addons/partner_statement/report/detailed_activity_statement_xlsx.py:0
 #: model_terms:ir.ui.view,arch_db:partner_statement.activity_balance
 #, python-format
 msgid "Original Amount"
@@ -695,6 +695,13 @@ msgid "Please set defaults under Activity Statements."
 msgstr "Per favore imposta i default Estratto conto."
 
 #. module: partner_statement
+#. odoo-python
+#: code:addons/partner_statement/report/detailed_activity_statement.py:0
+#, python-format
+msgid "Prior Balance up to %(ending_date)s in %(currency)s"
+msgstr "Saldo pregresso al %(ending_date)s in %(currency)s"
+
+#. module: partner_statement
 #: model:ir.model.fields.selection,name:partner_statement.selection__activity_statement_wizard__account_type__asset_receivable
 #: model:ir.model.fields.selection,name:partner_statement.selection__detailed_activity_statement_wizard__account_type__asset_receivable
 #: model:ir.model.fields.selection,name:partner_statement.selection__outstanding_statement_wizard__account_type__asset_receivable
@@ -718,6 +725,18 @@ msgid "Reference number"
 msgstr "Riferimento"
 
 #. module: partner_statement
+#: model:ir.model.fields,help:partner_statement.field_activity_statement_wizard__excluded_accounts_selector
+#: model:ir.model.fields,help:partner_statement.field_detailed_activity_statement_wizard__excluded_accounts_selector
+#: model:ir.model.fields,help:partner_statement.field_outstanding_statement_wizard__excluded_accounts_selector
+#: model:ir.model.fields,help:partner_statement.field_statement_common_wizard__excluded_accounts_selector
+msgid ""
+"Select account codes to be excluded with a comma-separated list of "
+"expressions like 70%."
+msgstr ""
+"Seleziona codici conto da escludere con una lista separata da virgole come "
+"70%."
+
+#. module: partner_statement
 #: model:ir.model.fields,field_description:partner_statement.field_activity_statement_wizard__show_aging_buckets
 #: model:ir.model.fields,field_description:partner_statement.field_detailed_activity_statement_wizard__show_aging_buckets
 #: model:ir.model.fields,field_description:partner_statement.field_outstanding_statement_wizard__show_aging_buckets
@@ -732,6 +751,22 @@ msgid "Show Balance column"
 msgstr "Mostra colonna saldo"
 
 #. module: partner_statement
+#: model:ir.model.fields,field_description:partner_statement.field_activity_statement_wizard__show_only_overdue
+#: model:ir.model.fields,field_description:partner_statement.field_detailed_activity_statement_wizard__show_only_overdue
+#: model:ir.model.fields,field_description:partner_statement.field_outstanding_statement_wizard__show_only_overdue
+#: model:ir.model.fields,field_description:partner_statement.field_statement_common_wizard__show_only_overdue
+msgid "Show Only Overdue"
+msgstr "Mostra solo scadute"
+
+#. module: partner_statement
+#: model:ir.model.fields,help:partner_statement.field_activity_statement_wizard__show_only_overdue
+#: model:ir.model.fields,help:partner_statement.field_detailed_activity_statement_wizard__show_only_overdue
+#: model:ir.model.fields,help:partner_statement.field_outstanding_statement_wizard__show_only_overdue
+#: model:ir.model.fields,help:partner_statement.field_statement_common_wizard__show_only_overdue
+msgid "Show only lines due before the selected date"
+msgstr "Mostra solo le righe in scadenza prima della data selezionata"
+
+#. module: partner_statement
 #: model:ir.model,name:partner_statement.model_statement_common
 msgid "Statement Reports Common"
 msgstr "Resoconti ordinari estratto conto"
@@ -742,9 +777,12 @@ msgid "Statement Reports Common Wizard"
 msgstr "Procedura guidata per resoconti ordinari estratto conto"
 
 #. module: partner_statement
-#: model_terms:ir.ui.view,arch_db:partner_statement.activity_balance
-msgid "Statement between"
-msgstr "Estratto conto tra"
+#. odoo-python
+#: code:addons/partner_statement/report/activity_statement.py:0
+#, python-format
+msgid "Statement between %(starting_date)s and %(ending_date)s in %(currency)s"
+msgstr ""
+"Estratto conto dal %(starting_date)s al %(ending_date)s in %(currency)s"
 
 #. module: partner_statement
 #. odoo-python
@@ -781,18 +819,43 @@ msgid "Statement to:"
 msgstr "Estratto conto al:"
 
 #. module: partner_statement
-#: model_terms:ir.ui.view,arch_db:partner_statement.activity_balance
-msgid "Supplier"
-msgstr "Fornitore"
+#. odoo-python
+#: code:addons/partner_statement/report/outstanding_statement.py:0
+#, python-format
+msgid "Statement up to %(ending_date)s in %(currency)s"
+msgstr "Estratto conto al %(ending_date)s in %(currency)s"
 
 #. module: partner_statement
 #. odoo-python
-#: code:addons/partner_statement/report/activity_statement_xlsx.py:0
-#: code:addons/partner_statement/report/detailed_activity_statement_xlsx.py:0
-#: code:addons/partner_statement/report/outstanting_statement_xlsx.py:0
+#: code:addons/partner_statement/report/detailed_activity_statement.py:0
 #, python-format
-msgid "Supplier "
-msgstr "Fornitore "
+msgid "Supplier Ending Balance up to %(ending_date)s in %(currency)s"
+msgstr "Saldo finale fornitore al %(ending_date)s in %(currency)s"
+
+#. module: partner_statement
+#. odoo-python
+#: code:addons/partner_statement/report/detailed_activity_statement.py:0
+#, python-format
+msgid "Supplier Prior Balance up to %(ending_date)s in %(currency)s"
+msgstr "Saldo pregresso fornitore al %(ending_date)s in %(currency)s"
+
+#. module: partner_statement
+#. odoo-python
+#: code:addons/partner_statement/report/activity_statement.py:0
+#, python-format
+msgid ""
+"Supplier Statement between %(starting_date)s and %(ending_date)s in "
+"%(currency)s"
+msgstr ""
+"Estratto conto fornitore dal %(starting_date)s al %(ending_date)s in "
+"%(currency)s"
+
+#. module: partner_statement
+#. odoo-python
+#: code:addons/partner_statement/report/outstanding_statement.py:0
+#, python-format
+msgid "Supplier Statement up to %(ending_date)s in %(currency)s"
+msgstr "Estratto conto fornitore al %(ending_date)s in %(currency)s"
 
 #. module: partner_statement
 #. odoo-python
@@ -826,26 +889,54 @@ msgid "View"
 msgstr "Vista"
 
 #. module: partner_statement
-#: model_terms:ir.ui.view,arch_db:partner_statement.activity_balance
-msgid "and"
-msgstr "al"
-
-#. module: partner_statement
-#: model_terms:ir.ui.view,arch_db:partner_statement.activity_balance
-#: model_terms:ir.ui.view,arch_db:partner_statement.aging_buckets
-#: model_terms:ir.ui.view,arch_db:partner_statement.outstanding_balance
-msgid "in"
-msgstr "in"
-
-#. module: partner_statement
 #: model_terms:ir.ui.view,arch_db:partner_statement.statement_common_view
 msgid "or"
 msgstr "o"
 
-#. module: partner_statement
-#: model_terms:ir.ui.view,arch_db:partner_statement.outstanding_balance
-msgid "up to"
-msgstr "fino al"
+#, python-format
+#~ msgid "%(payable)sStatement between %(start)s and %(end)s in %(currency)s"
+#~ msgstr "Estratto conto %(payable)s dal %(start)s al %(end)s in %(currency)s"
+
+#, python-format
+#~ msgid "%(payable)sStatement up to %(end)s in %(currency)s"
+#~ msgstr "Estratto conto %(payable)s fino al %(end)s in %(currency)s"
+
+#, python-format
+#~ msgid "%(payable)sStatement up to %(prior_day)s in %(currency)s"
+#~ msgstr "Estratto conto %(payable)s fino al %(prior_day)s in %(currency)s"
+
+#~ msgid "Aging Report at"
+#~ msgstr "Estratto conto al"
+
+#~ msgid "Detailed"
+#~ msgstr "Dettagliato"
+
+#, python-format
+#~ msgid ""
+#~ "Detailed %(payable)sStatement between %(start)s and %(end)s in "
+#~ "%(currency)s"
+#~ msgstr ""
+#~ "Estratto conto %(payable)s dettagliato dal %(start)s al %(end)s in "
+#~ "%(currency)s"
+
+#~ msgid "Statement between"
+#~ msgstr "Estratto conto tra"
+
+#~ msgid "Supplier"
+#~ msgstr "Fornitore"
+
+#, python-format
+#~ msgid "Supplier "
+#~ msgstr "Fornitore "
+
+#~ msgid "and"
+#~ msgstr "al"
+
+#~ msgid "in"
+#~ msgstr "in"
+
+#~ msgid "up to"
+#~ msgstr "fino al"
 
 #~ msgid ""
 #~ "<span class=\"o_form_label\">Aging details can be shown in the report, "
