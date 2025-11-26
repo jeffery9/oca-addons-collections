@@ -817,6 +817,11 @@ msgid "Credit Note"
 msgstr ""
 
 #. module: payroll
+#: model:ir.model.fields,field_description:payroll.field_hr_payslip_line__currency_id
+msgid "Currency"
+msgstr ""
+
+#. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_payslip_view_search
 msgid "Date"
 msgstr ""
