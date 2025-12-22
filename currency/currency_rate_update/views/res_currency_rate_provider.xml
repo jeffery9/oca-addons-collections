@@ -8,7 +8,7 @@
         <field name="name">res.currency.rate.provider.filter</field>
         <field name="model">res.currency.rate.provider</field>
         <field name="arch" type="xml">
-            <search string="Currency Rates Providers">
+            <search>
                 <field name="service" />
                 <field name="company_id" groups="base.group_multi_company" />
                 <filter
@@ -20,25 +20,32 @@
         </field>
     </record>
     <record model="ir.ui.view" id="res_currency_rate_provider_tree_view">
-        <field name="name">res.currency.rate.provider.tree</field>
+        <field name="name">res.currency.rate.provider.list</field>
         <field name="model">res.currency.rate.provider</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="service" />
                 <field name="company_id" groups="base.group_multi_company" />
                 <field name="update_schedule" />
                 <field name="available_currency_ids" column_invisible="True" />
                 <field name="currency_ids" widget="many2many_tags" />
                 <field name="daily" column_invisible="True" />
-                <field name="next_run" invisible="daily" />
-            </tree>
+                <field name="next_run" invisible="True" />
+            </list>
         </field>
     </record>
     <record model="ir.ui.view" id="res_currency_rate_provider_form_view">
         <field name="name">res.currency.rate.provider.form</field>
         <field name="model">res.currency.rate.provider</field>
         <field name="arch" type="xml">
-            <form string="Currency Rates Provider">
+            <form>
+                <header>
+                    <button
+                        name="%(res_currency_rate_update_wizard_action)d"
+                        type="action"
+                        string="Update Rates Now"
+                    />
+                </header>
                 <sheet>
                     <widget
                         name="web_ribbon"
@@ -94,45 +101,14 @@
                         </group>
                     </group>
                 </sheet>
-                <div class="oe_chatter">
-                    <field name="message_follower_ids" widget="mail_followers" />
-                    <field name="message_ids" widget="mail_thread" />
-                </div>
+                <chatter />
             </form>
-        </field>
-    </record>
-    <record
-        id="action_res_currency_rate_provider_update_wizard"
-        model="ir.actions.server"
-    >
-        <field name="name">Update Rates Wizard</field>
-        <field name="type">ir.actions.server</field>
-        <field
-            name="model_id"
-            ref="currency_rate_update.model_res_currency_rate_provider"
-        />
-        <field
-            name="binding_model_id"
-            ref="currency_rate_update.model_res_currency_rate_provider"
-        />
-        <field name="state">code</field>
-        <field name="code">
-            if records:
-                action = {
-                    'type': 'ir.actions.act_window',
-                    'res_model': 'res.currency.rate.update.wizard',
-                    'views': [[False, 'form']],
-                    'target': 'new',
-                    'context': {
-                        'default_provider_ids': [(6, False, records.ids)],
-                    },
-                }
         </field>
     </record>
     <record model="ir.actions.act_window" id="action_res_currency_rate_provider">
         <field name="name">Currency Rates Providers</field>
         <field name="res_model">res.currency.rate.provider</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
     <menuitem
         id="menu_res_currency_rate_provider"
