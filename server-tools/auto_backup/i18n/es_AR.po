@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-02-18 02:29+0000\n"
-"PO-Revision-Date: 2023-01-16 03:09+0000\n"
+"PO-Revision-Date: 2024-09-18 04:06+0000\n"
 "Last-Translator: Ignacio Buioli <ibuioli@gmail.com>\n"
 "Language-Team: Spanish (Argentina) (https://www.transifex.com/oca/"
 "teams/23907/es_AR/)\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14.1\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. module: auto_backup
 #: model_terms:ir.ui.view,arch_db:auto_backup.view_backup_conf_form
@@ -105,14 +105,12 @@ msgstr "Elija el método de almacenamiento para esta copia de seguridad."
 #. module: auto_backup
 #. odoo-python
 #: code:addons/auto_backup/models/db_backup.py:0
-#, python-format
 msgid "Connection Test Failed!"
 msgstr "¡La Prueba de Conexión Falló!"
 
 #. module: auto_backup
 #. odoo-python
 #: code:addons/auto_backup/models/db_backup.py:0
-#, python-format
 msgid "Connection Test Succeeded!"
 msgstr "¡Prueba de Conexión Exitosa!"
 
@@ -140,7 +138,6 @@ msgstr "La copia de seguridad de la base de datos falló."
 #. odoo-python
 #: code:addons/auto_backup/models/db_backup.py:0
 #: model:mail.message.subtype,description:auto_backup.mail_message_subtype_success
-#, python-format
 msgid "Database backup succeeded."
 msgstr "La copia de seguridad de la base de datos se realizó exitosamente."
 
@@ -157,7 +154,6 @@ msgstr "Mostrar Nombre"
 #. module: auto_backup
 #. odoo-python
 #: code:addons/auto_backup/models/db_backup.py:0
-#, python-format
 msgid ""
 "Do not save backups on your filestore, or you will backup your backups too!"
 msgstr ""
@@ -222,7 +218,6 @@ msgstr "Si está marcado, los nuevos mensajes requieren su atención."
 
 #. module: auto_backup
 #: model:ir.model.fields,help:auto_backup.field_db_backup__message_has_error
-#: model:ir.model.fields,help:auto_backup.field_db_backup__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr "Si está marcado, algunos mensajes tienen error de entrega."
 
@@ -279,7 +274,7 @@ msgstr "Número de errores"
 #. module: auto_backup
 #: model:ir.model.fields,help:auto_backup.field_db_backup__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "Número de mensajes que requieren una acción"
 
 #. module: auto_backup
 #: model:ir.model.fields,help:auto_backup.field_db_backup__message_has_error_counter
@@ -324,11 +319,6 @@ msgstr "Servidor SFTP"
 #: model_terms:ir.ui.view,arch_db:auto_backup.view_backup_conf_form
 msgid "SFTP Settings"
 msgstr "Configuración SFTP"
-
-#. module: auto_backup
-#: model:ir.model.fields,field_description:auto_backup.field_db_backup__message_has_sms_error
-msgid "SMS Delivery error"
-msgstr "Error de entrega de SMS"
 
 #. module: auto_backup
 #: model_terms:ir.ui.view,arch_db:auto_backup.view_backup_conf_form
@@ -438,6 +428,9 @@ msgstr "sftp.ejemplo.com"
 msgid "zip (includes filestore)"
 msgstr "zip (incluye filestore)"
 
+#~ msgid "SMS Delivery error"
+#~ msgstr "Error de entrega de SMS"
+
 #~ msgid "Changeset Changes"
 #~ msgstr "Cambios en el Conjunto de Cambios"
 
@@ -447,6 +440,9 @@ msgstr "zip (incluye filestore)"
 #, python-format
 #~ msgid "Cleanup of old database backups failed."
 #~ msgstr "La limpieza de una base de datos antigua falló."
+
+#~ msgid "Count Changesets"
+#~ msgstr "Cuenta del Conjunto de Cambios"
 
 #~ msgid "Count Pending Changeset Changes"
 #~ msgstr "Contar los Cambios Pendientes del Conjunto de Cambios"
@@ -459,6 +455,15 @@ msgstr "zip (incluye filestore)"
 
 #~ msgid "Main Attachment"
 #~ msgstr "Adjunto Principal"
+
+#~ msgid "The number of pending changes of this record"
+#~ msgstr "El número de cambios pendientes de este registro"
+
+#~ msgid "The number of pending changesets of this record"
+#~ msgstr "El número del conjunto de cambios pendiente de este registro"
+
+#~ msgid "The overall number of changesets of this record"
+#~ msgstr "El número total del conjunto de cambios de este registro"
 
 #~ msgid "User Can See Changeset"
 #~ msgstr "El usuario puede ver el Conjunto de Cambios"

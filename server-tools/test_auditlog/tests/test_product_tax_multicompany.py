@@ -8,14 +8,14 @@ from odoo.addons.auditlog.tests.common import AuditLogRuleCommon
 @tagged("post_install", "-at_install")
 class TestProductTaxMulticompany(AccountTestInvoicingCommon, AuditLogRuleCommon):
     @classmethod
-    def setUpClass(cls, chart_template_ref=None):
-        super().setUpClass(chart_template_ref=chart_template_ref)
+    def setUpClass(cls):
+        super().setUpClass()
         cls.company1 = cls.company_data["company"]
         cls.tax1 = cls.company_data["default_tax_sale"]
-        cls.company_data_2 = cls.setup_company_data("company_2")
+        cls.company_data_2 = cls.setup_other_company()
         cls.company2 = cls.company_data_2["company"]
         cls.tax2 = cls.company_data_2["default_tax_sale"]
-        cls.product_a.taxes_id = cls.tax1 + cls.tax2
+        cls.product_a.sudo().taxes_id = cls.tax1 + cls.tax2
         cls.env.user.company_ids = cls.company1
 
     def setUp(self):

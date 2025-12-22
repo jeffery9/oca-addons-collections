@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-01-06 02:25+0000\n"
-"PO-Revision-Date: 2025-09-28 14:40+0000\n"
+"PO-Revision-Date: 2025-08-19 15:27+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
@@ -25,14 +25,14 @@ msgid ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "                <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
 "                <div>\n"
-"                <p>Hello <t t-out=\"ctx.get('sender_message')."
-"get('from')\"></t>,</p>\n"
+"                <p>Hello <t t-out=\"ctx.get('sender_message').get('from')\"/"
+">,</p>\n"
 "                <p>we got a problem with your email: <i><t t-out=\"ctx."
-"get('sender_message').get('subject')\"></t></i></p>\n"
+"get('sender_message').get('subject')\"/></i></p>\n"
 "                <p>Maybe you used a wrong recipient address?</p>\n"
-"                <p><br></p>\n"
+"                <p><br/></p>\n"
 "                <p>Technical details:</p>\n"
-"                <p><i><t t-out=\"ctx.get('route_exception')\"></t></i></p>\n"
+"                <p><i><t t-out=\"ctx.get('route_exception')\"/></i></p>\n"
 "                </div>\n"
 "                </p>\n"
 "            </div>\n"
@@ -41,18 +41,42 @@ msgstr ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "                <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
 "                <div>\n"
-"                <p>Salve <t t-out=\"ctx.get('sender_message')."
-"get('from')\"></t>,</p>\n"
-"                <p>c'è un problema con la sua e-mail: <i><t t-out=\"ctx."
-"get('sender_message').get('subject')\"></t></i></p>\n"
+"                <p>Salve <t t-out=\"ctx.get('sender_message').get('from')\""
+"/>,</p>\n"
+"                <p>c'è un problema con la sua e-mail: <i><t t-out="
+"\"ctx.get('sender_message').get('subject')\"/></i></p>\n"
 "                <p>Forse è stato utilizzato un destinatario erratp??</p>\n"
-"                <p><br></p>\n"
+"                <p><br/></p>\n"
 "                <p>Dettagli tecnici:</p>\n"
-"                <p><i><t t-out=\"ctx.get('route_exception')\"></t></i></p>\n"
+"                <p><i><t t-out=\"ctx.get('route_exception')\"/></i></p>\n"
 "                </div>\n"
 "                </p>\n"
 "            </div>\n"
 "        "
+
+#. module: fetchmail_notify_error_to_sender
+#: model:ir.model.fields,field_description:fetchmail_notify_error_to_sender.field_fetchmail_server__changeset_change_ids
+#: model:ir.model.fields,field_description:fetchmail_notify_error_to_sender.field_mail_thread__changeset_change_ids
+msgid "Changeset Changes"
+msgstr "Modifiche dell'insieme di modifiche"
+
+#. module: fetchmail_notify_error_to_sender
+#: model:ir.model.fields,field_description:fetchmail_notify_error_to_sender.field_fetchmail_server__changeset_ids
+#: model:ir.model.fields,field_description:fetchmail_notify_error_to_sender.field_mail_thread__changeset_ids
+msgid "Changesets"
+msgstr "Insieme di modifiche"
+
+#. module: fetchmail_notify_error_to_sender
+#: model:ir.model.fields,field_description:fetchmail_notify_error_to_sender.field_fetchmail_server__count_pending_changeset_changes
+#: model:ir.model.fields,field_description:fetchmail_notify_error_to_sender.field_mail_thread__count_pending_changeset_changes
+msgid "Count Pending Changeset Changes"
+msgstr "Conteggio modifiche dell'insieme di modifiche in attesa"
+
+#. module: fetchmail_notify_error_to_sender
+#: model:ir.model.fields,field_description:fetchmail_notify_error_to_sender.field_fetchmail_server__count_pending_changesets
+#: model:ir.model.fields,field_description:fetchmail_notify_error_to_sender.field_mail_thread__count_pending_changesets
+msgid "Count Pending Changesets"
+msgstr "Conteggio insieme di modifiche in attesa"
 
 #. module: fetchmail_notify_error_to_sender
 #: model:ir.model,name:fetchmail_notify_error_to_sender.model_mail_thread
@@ -89,7 +113,41 @@ msgstr ""
 "si verificano errori durante il recupero dell'e-mail"
 
 #. module: fetchmail_notify_error_to_sender
-#: model:ir.model.fields,field_description:fetchmail_notify_error_to_sender.field_fetchmail_server__smart_search
-#: model:ir.model.fields,field_description:fetchmail_notify_error_to_sender.field_mail_thread__smart_search
-msgid "Smart Search"
-msgstr "Ricerca intelligente"
+#: model:ir.model.fields,field_description:fetchmail_notify_error_to_sender.field_fetchmail_server__user_can_see_changeset
+#: model:ir.model.fields,field_description:fetchmail_notify_error_to_sender.field_mail_thread__user_can_see_changeset
+msgid "User Can See Changeset"
+msgstr "L'utente può vedere l'insieme delle modifiche"
+
+#, fuzzy
+#~ msgid ""
+#~ "\n"
+#~ "            <div>\n"
+#~ "            <p>Hello ${ctx.get('sender_message').get('from')},</p>\n"
+#~ "            <p>we got a problem with your email: <i>${ctx."
+#~ "get('sender_message').get('subject')}</i></p>\n"
+#~ "            <p>Maybe you used a wrong recipient address?</p>\n"
+#~ "            <p><br/></p>\n"
+#~ "            <p>Technical details:</p>\n"
+#~ "            <p><i>${ctx.get('route_exception')}</i></p>\n"
+#~ "            </div>\n"
+#~ "        "
+#~ msgstr ""
+#~ "\n"
+#~ "<div>\n"
+#~ "    <p>Salve ${ctx.get('sender_message').get('from')},</p>\n"
+#~ "    <p>abbiamo avuto un problema con la tua mail: <i>${ctx."
+#~ "get('sender_message').get('subject')}</i></p>\n"
+#~ "    <p>Forse hai usato un indirizzo errato?</p>\n"
+#~ "    <p><br/></p>\n"
+#~ "    <p>Dettagli tecnici:</p>\n"
+#~ "    <p><i>${ctx.get('route_exception').message}</i></p>\n"
+#~ "</div>\n"
+#~ "            "
+
+#~ msgid ""
+#~ "Receiving error with: ${ctx.get('sender_message').get('subject')|safe}"
+#~ msgstr ""
+#~ "Ricezione errore con: ${ctx.get('sender_message').get('subject')|safe}"
+
+#~ msgid "POP/IMAP Server"
+#~ msgstr "Server POP/IMAP"

@@ -61,7 +61,6 @@ class IrSequenceOptionLine(models.Model):
     )
     use_sequence_option = fields.Boolean(
         related="base_id.use_sequence_option",
-        store=True,
     )
     filter_domain = fields.Char(
         string="Apply On",

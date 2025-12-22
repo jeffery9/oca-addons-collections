@@ -142,6 +142,13 @@ msgid "Draft"
 msgstr "Brouillon"
 
 #. module: auditlog
+#. odoo-python
+#: code:addons/auditlog/models/log.py:0
+#: model_terms:ir.ui.view,arch_db:auditlog.view_auditlog_log_form
+msgid "Exported Records"
+msgstr ""
+
+#. module: auditlog
 #: model:ir.model.fields.selection,name:auditlog.selection__auditlog_log__log_type__fast
 #: model:ir.model.fields.selection,name:auditlog.selection__auditlog_rule__log_type__fast
 msgid "Fast log"
@@ -157,7 +164,6 @@ msgstr "Champ"
 #. module: auditlog
 #. odoo-python
 #: code:addons/auditlog/models/rule.py:0
-#, python-format
 msgid "Field 'model_id' cannot be empty."
 msgstr ""
 
@@ -281,6 +287,11 @@ msgid "Log Deletes"
 msgstr "Enregistrer les suppressions"
 
 #. module: auditlog
+#: model:ir.model.fields,field_description:auditlog.field_auditlog_rule__log_export_data
+msgid "Log Exports"
+msgstr ""
+
+#. module: auditlog
 #: model:ir.actions.act_window,name:auditlog.action_auditlog_line
 #: model:ir.ui.menu,name:auditlog.menu_auditlog_line
 #: model_terms:ir.ui.view,arch_db:auditlog.view_auditlog_line_search
@@ -356,21 +367,18 @@ msgstr "Nouvelle valeur texte"
 #. module: auditlog
 #. odoo-python
 #: code:addons/auditlog/models/log.py:0
-#, python-format
 msgid "No field defined to create line."
 msgstr ""
 
 #. module: auditlog
 #. odoo-python
 #: code:addons/auditlog/models/rule.py:0
-#, python-format
 msgid "No model defined to create line."
 msgstr ""
 
 #. module: auditlog
 #. odoo-python
 #: code:addons/auditlog/models/log.py:0
-#, python-format
 msgid "No model defined to create log."
 msgstr ""
 
@@ -403,6 +411,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:auditlog.view_auditlog_log_search
 msgid "Resource ID"
 msgstr "ID de l'enregistrement"
+
+#. module: auditlog
+#: model:ir.model.fields,field_description:auditlog.field_auditlog_log__res_ids
+msgid "Resource IDs"
+msgstr ""
 
 #. module: auditlog
 #: model:ir.model.fields,field_description:auditlog.field_auditlog_log__name
@@ -454,6 +467,12 @@ msgid ""
 msgstr ""
 "Cochez cette case si vous voulez garder une trace des suppressions des "
 "enregistrements du modèle défini dans cette règle."
+
+#. module: auditlog
+#: model:ir.model.fields,help:auditlog.field_auditlog_rule__log_export_data
+msgid ""
+"Select this if you want to keep track of exports of the model of this rule"
+msgstr ""
 
 #. module: auditlog
 #: model:ir.model.fields,help:auditlog.field_auditlog_rule__log_write
@@ -517,14 +536,12 @@ msgstr "Nom technique"
 #. module: auditlog
 #. odoo-python
 #: code:addons/auditlog/models/log.py:0
-#, python-format
 msgid "The field 'field_id' cannot be empty."
 msgstr ""
 
 #. module: auditlog
 #. odoo-python
 #: code:addons/auditlog/models/log.py:0
-#, python-format
 msgid "The field 'model_id' cannot be empty."
 msgstr ""
 
@@ -595,7 +612,6 @@ msgstr "Valeurs"
 #. module: auditlog
 #. odoo-python
 #: code:addons/auditlog/models/rule.py:0
-#, python-format
 msgid "View logs"
 msgstr "Consulter les journaux"
 

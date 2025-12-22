@@ -3,10 +3,6 @@
 # © 2021 Stefan Rijnhart <stefan@opener.amsterdam>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from datetime import timedelta
-
-from odoo import fields
-
 from odoo.addons.base.models.ir_model import MODULE_UNINSTALL_FLAG
 from odoo.addons.base.models.res_users import name_boolean_group
 
@@ -275,12 +271,6 @@ class AuditlogCommon:
             1,
         )
 
-    def test_http_session(self):
-        display_name = self.env["auditlog.http.session"].new().display_name
-        now_plus_one_hour = fields.Datetime.now() + timedelta(hours=1)
-        expected_time_str = now_plus_one_hour.strftime("%Y-%m-%d %H:%M:%S")
-        self.assertEqual(display_name, "? (" + expected_time_str + ")")
-
 
 class TestAuditlogFull(AuditLogRuleCommon, AuditlogCommon):
     @classmethod
@@ -298,6 +288,37 @@ class TestAuditlogFull(AuditLogRuleCommon, AuditlogCommon):
                 "log_type": "full",
             }
         )
+
+
+class TestAuditlogExportData(AuditLogRuleCommon):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.groups_model_id = cls.env.ref("base.model_res_groups").id
+        cls.groups_rule = cls.env["auditlog.rule"].create(
+            {
+                "name": "testrule for groups",
+                "model_id": cls.groups_model_id,
+                "log_export_data": True,
+            }
+        )
+
+    def test_LogExport(self):
+        self.groups_rule.subscribe()
+
+        auditlog_log = self.env["auditlog.log"]
+        self.env["res.groups"].search([]).export_data(["name"])
+        created_log = auditlog_log.search(
+            [
+                ("model_id", "=", self.groups_model_id),
+                ("method", "=", "export_data"),
+            ]
+        ).ensure_one()
+        self.assertTrue(created_log)
+        action = created_log.show_res_ids()
+        domain = action["domain"]  # [('id', 'in', [1, 2, ...])]
+        self.assertIsInstance(domain, list)
+        self.assertIsInstance(domain[0][2], list)
 
 
 class TestAuditlogFast(AuditLogRuleCommon, AuditlogCommon):

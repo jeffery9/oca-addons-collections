@@ -28,7 +28,6 @@ msgstr "Mise à jour automatique des modules"
 #. module: module_auto_update
 #. odoo-python
 #: code:addons/module_auto_update/models/module.py:0
-#, python-format
 msgid "Checksum upgrade complete."
 msgstr ""
 
@@ -40,7 +39,6 @@ msgstr "Module"
 #. module: module_auto_update
 #. odoo-python
 #: code:addons/module_auto_update/models/module.py:0
-#, python-format
 msgid ""
 "No checksum change detected in installed modules and all modules installed, "
 "nothing to do."

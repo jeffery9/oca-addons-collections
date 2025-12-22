@@ -10,6 +10,7 @@
 
 import collections
 import copy
+from ast import literal_eval
 
 try:
     from odoo.addons.openupgrade_scripts import apriori
@@ -37,8 +38,12 @@ def model_rename_map(model):
     return apriori.renamed_models.get(model, model)
 
 
+def model_merge_map(model):
+    return apriori.merged_models.get(model, model)
+
+
 def model_map(model):
-    return apriori.renamed_models.get(model, apriori.merged_models.get(model, model))
+    return apriori.renamed_models.get(model, model_merge_map(model))
 
 
 def inv_model_map(model):
@@ -61,7 +66,7 @@ def compare_records(dict_old, dict_new, fields):
     with respect to the keys in the 'fields' arguments.
     Take apriori knowledge into account for mapped modules or
     model names.
-    Return True of False.
+    Return True or False.
     """
     for field in fields:
         if field == "module":
@@ -69,6 +74,9 @@ def compare_records(dict_old, dict_new, fields):
                 return False
         elif field == "model":
             if model_rename_map(dict_old["model"]) != dict_new["model"]:
+                return False
+        elif field == "relation":
+            if model_map(dict_old["relation"]) != dict_new["relation"]:
                 return False
         elif field == "other_prefix":
             if (
@@ -121,8 +129,30 @@ def fieldprint(old, new, field, text, reprs):
             text += f" [{old['table']}]"
         if field == "relation":
             text += " [nothing to do]"
-    reprs[module_map(old["module"])].append(f"{fullrepr}: {text}")
+        if field == "selection_keys":
+            old_selection_keys = old.get("selection_keys") or ""
+            new_selection_keys = new.get("selection_keys") or ""
+            try:
+                old_selection_keys = literal_eval(old_selection_keys)
+                new_selection_keys = literal_eval(new_selection_keys)
+            except Exception:  # pylint: disable=except-pass
+                pass
+            if isinstance(old_selection_keys, tuple | list) and isinstance(
+                new_selection_keys, tuple | list
+            ):
+                removed = sorted(set(old_selection_keys) - set(new_selection_keys))
+                added = sorted(set(new_selection_keys) - set(old_selection_keys))
+                text = (
+                    f"{field} {added and ('added: [' + ', '.join(added) + ']') or ''}"
+                    f"{added and removed and ', ' or ''}"
+                    f"{removed and ('removed: [' + ', '.join(removed) + ']') or ''}"
+                )
+                if added and not removed:
+                    text += " (most likely nothing to do)"
+    if field != "module":
+        reprs[module_map(new["module"])].append(f"{fullrepr}: {text}")
     if field == "module":
+        reprs[module_map(old["module"])].append(f"{fullrepr}: {text}")
         text = f"previously in module {old[field]}"
         fullrepr = "{:<12} / {:<24} / {:<30}".format(
             new["module"], old["model"], fieldrepr
@@ -139,7 +169,10 @@ def report_generic(new, old, attrs, reprs):
         elif attr == "stored":
             if old[attr] != new[attr]:
                 if new["stored"]:
-                    text = "is now stored"
+                    if new.get("isproperty") and old.get("isproperty"):
+                        text = "needs conversion to v18-style company dependent"
+                    else:
+                        text = "is now stored"
                 else:
                     text = "not stored anymore"
                 fieldprint(old, new, "", text, reprs)
@@ -163,6 +196,13 @@ def report_generic(new, old, attrs, reprs):
                     text = "now related"
                 else:
                     text = "not related anymore"
+                fieldprint(old, new, "", text, reprs)
+        elif attr == "translate":
+            if old[attr] != new[attr]:
+                if new[attr]:
+                    text = "now translatable"
+                else:
+                    text = "not translatable anymore"
                 fieldprint(old, new, "", text, reprs)
         elif attr == "table":
             if old[attr] != new[attr]:
@@ -200,9 +240,6 @@ def compare_sets(old_records, new_records):
     new_models = {column["model"] for column in new_records}
     old_models = {column["model"] for column in old_records}
 
-    matched_direct = 0
-    matched_other_module = 0
-    matched_other_type = 0
     in_obsolete_models = 0
 
     obsolete_models = []
@@ -234,7 +271,7 @@ def compare_sets(old_records, new_records):
         return count
 
     matched_direct = match(
-        ["module", "mode", "model", "field"],
+        ["module", "mode", "model", "field", "type"],
         [
             "relation",
             "type",
@@ -249,7 +286,25 @@ def compare_sets(old_records, new_records):
         ],
     )
 
-    # other module, same type and operation
+    # same module, other type
+    matched_other_type = match(
+        ["module", "mode", "model", "field"],
+        [
+            "relation",
+            "type",
+            "selection_keys",
+            "_inherits",
+            "stored",
+            "isfunction",
+            "isrelated",
+            "translate",
+            "required",
+            "table",
+            "_order",
+        ],
+    )
+
+    # other module, same type
     matched_other_module = match(
         ["mode", "model", "field", "type"],
         [
@@ -260,16 +315,36 @@ def compare_sets(old_records, new_records):
             "stored",
             "isfunction",
             "isrelated",
+            "translate",
             "required",
             "table",
             "_order",
         ],
     )
 
-    # other module, same operation, other type
-    matched_other_type = match(
-        ["module", "mode", "model", "field"],
+    # same module, other type
+    matched_other_type += match(
+        ["module", "model", "field"],
         [
+            "relation",
+            "type",
+            "selection_keys",
+            "_inherits",
+            "stored",
+            "isfunction",
+            "isrelated",
+            "translate",
+            "required",
+            "table",
+            "_order",
+        ],
+    )
+
+    # other module, other type
+    matched_other_module_other_type = match(
+        ["mode", "model", "field"],
+        [
+            "module",
             "relation",
             "type",
             "selection_keys",
@@ -295,30 +370,34 @@ def compare_sets(old_records, new_records):
     # Info that is displayed for new fields
     printkeys_new = printkeys_old + [
         "hasdefault",
+        "translate",
     ]
     for column in old_records:
         if column["field"] == "_order":
             continue
-        # we do not care about removed non stored function fields
+        # we do not care about removed non stored function/related fields
         if not column["stored"] and (column["isfunction"] or column["isrelated"]):
             continue
         if column["mode"] == "create":
             column["mode"] = ""
+        printkeys = printkeys_old.copy()
+        if not column["stored"] and not column["mode"]:
+            printkeys.extend(["stored"])
         extra_message = ", ".join(
             [
-                k + ": " + str(column[k]) if k != str(column[k]) else k
-                for k in printkeys_old
-                if column[k]
+                k + ": " + str(column[k] or False) if k != str(column[k]) else k
+                for k in printkeys
+                if k == "stored" or column[k]
             ]
         )
         if extra_message:
             extra_message = " " + extra_message
-        fieldprint(column, "", "", "DEL" + extra_message, reprs)
+        fieldprint(column, column, "", "DEL" + extra_message, reprs)
 
     for column in new_records:
         if column["field"] == "_order":
             continue
-        # we do not care about newly added non stored function fields
+        # we do not care about newly added non stored function/related fields
         if not column["stored"] and (column["isfunction"] or column["isrelated"]):
             continue
         if column["mode"] == "create":
@@ -326,22 +405,26 @@ def compare_sets(old_records, new_records):
         printkeys = printkeys_new.copy()
         if column["isfunction"] or column["isrelated"]:
             printkeys.extend(["isfunction", "isrelated", "stored"])
+        if not column["stored"] and not column["mode"]:
+            printkeys.extend(["stored"])
         extra_message = ", ".join(
             [
-                k + ": " + str(column[k]) if k != str(column[k]) else k
+                k + ": " + str(column[k] or False) if k != str(column[k]) else k
                 for k in printkeys
-                if column[k]
+                if k == "stored" or column[k]
             ]
         )
         if extra_message:
             extra_message = " " + extra_message
-        fieldprint(column, "", "", "NEW" + extra_message, reprs)
+        fieldprint(column, column, "", "NEW" + extra_message, reprs)
 
     for line in [
         "# %d fields matched," % (origlen - len(old_records)),
         "# Direct match: %d" % matched_direct,
         "# Found in other module: %d" % matched_other_module,
         "# Found with different type: %d" % matched_other_type,
+        "# Found in other module with different type: %d"
+        % matched_other_module_other_type,
         "# In obsolete models: %d" % in_obsolete_models,
         "# Not matched: %d" % len(old_records),
         "# New columns: %d" % len(new_records),
@@ -483,14 +566,22 @@ def compare_model_sets(old_records, new_records):
                         f"obsolete model {model} "
                         f"[module {module_map(column['module'])}]"
                     )
+                elif model_merge_map(model) in new_models:
+                    text = f"obsolete model {model} (merged to {model_map(model)})"
+                    if column["model_type"]:
+                        text += f" [{column['model_type']}]"
+                    reprs[module_map(column["module"])].append(text)
+                    reprs["general"].append(
+                        f"obsolete model {model} (merged to {model_map(model)}) "
+                        f"[module {module_map(column['module'])}]"
+                    )
                 else:
                     moved_module = ""
                     if module_map(column["module"]) != new_models[model_map(model)]:
                         moved_module = f" in module {new_models[model_map(model)]}"
-                    text = "obsolete model {} (renamed to {}{})".format(
-                        model,
-                        model_map(model),
-                        moved_module,
+                    text = (
+                        f"obsolete model {model}"
+                        f" (renamed to {model_map(model)}{moved_module})"
                     )
                     if column["model_type"]:
                         text += f" [{column['model_type']}]"
@@ -525,10 +616,9 @@ def compare_model_sets(old_records, new_records):
                     moved_module = ""
                     if column["module"] != module_map(old_models[inv_model_map(model)]):
                         moved_module = f" in module {old_models[inv_model_map(model)]}"
-                    text = "new model {} (renamed from {}{})".format(
-                        model,
-                        inv_model_map(model),
-                        moved_module,
+                    text = (
+                        f"new model {model} "
+                        f"(renamed from {inv_model_map(model)}{moved_module})"
                     )
                     if column["model_type"]:
                         text += f" [{column['model_type']}]"
