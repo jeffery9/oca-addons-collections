@@ -11,16 +11,19 @@
                         name="repair_service_ids"
                         readonly="state in ('cancel', 'done')"
                     >
-                        <tree editable="bottom">
+                        <list editable="bottom">
                             <field name="product_id" />
-                            <field name="display_name" />
+                            <field
+                                name="display_name"
+                                readonly="repair_id.state in ('cancel', 'done')"
+                            />
                             <field
                                 name="product_uom_category_id"
                                 column_invisible="True"
                             />
                             <field name="product_uom" />
                             <field name="product_uom_qty" string="Quantity" />
-                        </tree>
+                        </list>
                     </field>
                 </page>
             </xpath>

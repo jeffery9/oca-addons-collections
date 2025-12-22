@@ -14,10 +14,10 @@ class TestRepairTransfer(TransactionCase):
         cls.product_with_lot = cls.env["product.product"].create(
             {
                 "name": "Product with lot tracking",
-                "type": "product",
                 "tracking": "lot",
                 "list_price": 10.0,
                 "categ_id": cls.env.ref("product.product_category_all").id,
+                "is_storable": True,
             }
         )
         cls.lot_id = cls.env["stock.lot"].create(

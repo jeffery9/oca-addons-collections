@@ -48,7 +48,7 @@ class MrpInventoryProcure(models.TransientModel):
             "product_uom_qty": self.quantity,
             "product_uom": self.repair_order_id.move_id.product_uom.id,
             "quantity": 0,
-            "repair_id": self.repair_order_id.id,
+            "related_repair_id": self.repair_order_id.id,
         }
 
     def action_create_transfer(self):

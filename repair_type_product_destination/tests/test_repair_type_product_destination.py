@@ -45,7 +45,7 @@ class TestRepairTypeProductDestination(TransactionCase):
         cls.product = cls.env["product.product"].create(
             {
                 "name": "Test Product",
-                "type": "product",
+                "is_storable": True,
             }
         )
 

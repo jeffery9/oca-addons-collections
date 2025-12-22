@@ -1,7 +1,7 @@
 # Copyright (C) 2022 ForgeFlow S.L.
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html)
 
-from odoo import _, fields, models
+from odoo import fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -53,7 +53,7 @@ class Repair(models.Model):
 
         if auto_transfer and not self.product_id:
             raise ValidationError(
-                _(
+                self.env._(
                     "Automatic transfer cannot be completed because "
                     "no product is specified for this repair order. "
                     "Please ensure that a product is assigned to the "
