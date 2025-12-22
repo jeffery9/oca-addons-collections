@@ -14,7 +14,7 @@ class Rma(models.Model):
         string="Sale Order",
         domain="["
         "    ('partner_id', 'child_of', commercial_partner_id),"
-        "    ('state', 'in', ['sale', 'done']),"
+        "    ('state', '=', 'sale'),"
         "]",
         store=True,
         readonly=False,
@@ -166,7 +166,10 @@ class Rma(models.Model):
 
     def _prepare_procurement_group_vals(self):
         vals = super()._prepare_procurement_group_vals()
-        if not self.env.context.get("ignore_rma_sale_order") and self.order_id:
+        if (
+            not self.env.context.get("ignore_rma_sale_order")
+            and len(self.order_id) == 1
+        ):
             vals["sale_id"] = self.order_id.id
         return vals
 

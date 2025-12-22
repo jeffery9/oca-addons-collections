@@ -61,7 +61,6 @@ class RmaOperation(models.Model):
         default="manual_after_receipt",
         help="Define how the refund action should be handled.",
     )
-
     prevent_delivery_grouping = fields.Boolean(
         string="Do not group deliveries",
         help="If enabled, RMAs using this operation will NOT be grouped into a "
@@ -166,3 +165,8 @@ class RmaOperation(models.Model):
         self.ensure_one()
         name = self.display_name
         return self._get_action(name, domain=[("operation_id", "=", self.id)])
+
+    def copy(self, default=None):
+        self.ensure_one()
+        default = dict(default or {}, name=_("%s (copy)", self.name))
+        return super().copy(default)

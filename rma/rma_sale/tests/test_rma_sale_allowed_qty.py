@@ -14,7 +14,7 @@ class TestRmaSaleQuantityAllowed(TransactionCase):
         cls.loc_stock = cls.warehouse.lot_stock_id
         cls.partner1 = cls.env["res.partner"].create({"name": "Partner"})
         cls.p1 = cls.env["product.product"].create(
-            {"name": "Unittest P1", "type": "product"}
+            {"name": "Unittest P1", "type": "consu", "is_storable": True}
         )
         cls.so = cls.env["sale.order"].create(
             {

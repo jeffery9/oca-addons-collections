@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-10-31 10:42+0000\n"
+"PO-Revision-Date: 2025-10-31 11:42+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -19,21 +19,18 @@ msgstr ""
 #. module: rma_sale
 #. odoo-python
 #: code:addons/rma_sale/controllers/sale_portal.py:0
-#, python-format
 msgid " (Portal)"
 msgstr " (Portale)"
 
 #. module: rma_sale
 #. odoo-python
 #: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:0
-#, python-format
 msgid " has been created."
 msgstr " è stato creato."
 
 #. module: rma_sale
 #. odoo-python
 #: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:0
-#, python-format
 msgid " have been created."
 msgstr " è stato creato."
 
@@ -44,8 +41,8 @@ msgstr "<i class=\"fa fa-check\"/> Richiesta RMA"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
-msgid "<i class=\"fa fa-reply\"/> Request RMAs"
-msgstr "<i class=\"fa fa-reply\"/> Richiesta RMA"
+msgid "<i class=\"fa fa-reply me-1\"/> Request RMAs"
+msgstr "<i class=\"fa fa-reply me-1\"/> Richiedi RMA"
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
@@ -173,7 +170,6 @@ msgstr ""
 #. odoo-python
 #: code:addons/rma_sale/models/sale.py:0
 #: model_terms:ir.ui.view,arch_db:rma_sale.view_order_form
-#, python-format
 msgid "Create RMA"
 msgstr "Crea RMA"
 
@@ -408,7 +404,7 @@ msgstr "Procedura guidata RMA ordine di vendita"
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.report_rma_document
 msgid "Sale order"
-msgstr "Ordine di vendita"
+msgstr "Ordini di vendita"
 
 #. module: rma_sale
 #: model:ir.model,name:rma_sale.model_sale_order
@@ -500,7 +496,6 @@ msgstr "Puoi inviare un messaggio in ogni RMA inviato"
 #. module: rma_sale
 #. odoo-python
 #: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:0
-#, python-format
 msgid ""
 "You can't exceed the allowed quantity for returning product %(product)s."
 msgstr ""
@@ -509,9 +504,8 @@ msgstr ""
 #. module: rma_sale
 #. odoo-python
 #: code:addons/rma_sale/models/sale.py:0
-#, python-format
-msgid "You may only create RMAs from a confirmed or done sale order."
-msgstr "Puoi creare RMA solo da un ordine di vendita confermato o concluso."
+msgid "You may only create RMAs from a confirmed sale order."
+msgstr "Si possono creare RMA solo da ordini confermati."
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
@@ -525,5 +519,12 @@ msgstr ""
 #~ msgid "&amp;times;"
 #~ msgstr "&amp;volte;"
 
+#~ msgid "<i class=\"fa fa-reply\"/> Request RMAs"
+#~ msgstr "<i class=\"fa fa-reply\"/> Richiesta RMA"
+
 #~ msgid "Last Modified on"
 #~ msgstr "Ultima modifica il"
+
+#, python-format
+#~ msgid "You may only create RMAs from a confirmed or done sale order."
+#~ msgstr "Puoi creare RMA solo da un ordine di vendita confermato o concluso."
