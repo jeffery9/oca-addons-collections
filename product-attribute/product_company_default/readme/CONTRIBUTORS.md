@@ -1,3 +1,0 @@
-- Aung Ko Ko Lin (Quartile)
-- [APSL-Nagarro](<https://apsl.tech>):
-  - Antoni Marroig \<<amarroig@apsl.net>\>

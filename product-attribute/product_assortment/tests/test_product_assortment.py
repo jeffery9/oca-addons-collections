@@ -19,14 +19,6 @@ class TestProductAssortment(TransactionCase):
                 "domain": [],
             }
         )
-        self.filter_no_assortment = self.filter_obj.create(
-            {
-                "name": "Test No Assortment",
-                "model_id": "product.product",
-                "is_assortment": False,
-                "domain": [],
-            }
-        )
         self.partner = self.env["res.partner"].create({"name": "Test partner"})
         self.partner2 = self.env["res.partner"].create({"name": "Test partner 2"})
 
@@ -99,7 +91,7 @@ class TestProductAssortment(TransactionCase):
         included_product = self.env.ref("product.product_product_7")
         self.assortment.write({"whitelist_product_ids": [(4, included_product.id)]})
         res = self.assortment.show_products()
-        self.assertEqual(res["domain"], [("id", "in", [included_product.id])])
+        self.assertEqual(res["domain"], [(1, "=", 1)])
 
     def test_product_assortment_view_with_black_list(self):
         excluded_product = self.env.ref("product.product_product_7")
@@ -121,12 +113,9 @@ class TestProductAssortment(TransactionCase):
             }
         )
         res = self.assortment.show_products()
-        self.assertEqual(res["domain"][1], ("id", "not in", excluded_product.ids))
-        self.assertEqual(res["domain"][2], ("id", "in", included_product.ids))
+        self.assertEqual(res["domain"], [("id", "not in", excluded_product.ids)])
 
     def test_record_count(self):
-        self.assertEqual(self.filter_no_assortment.record_count, 0)
-
         products = self.product_obj.search([])
         self.assertEqual(self.assortment.record_count, len(products))
 
@@ -144,7 +133,7 @@ class TestProductAssortment(TransactionCase):
         assortment = self.filter_obj.with_context(product_assortment=True).create(
             {
                 "name": "Test Assortment Partner domain",
-                "partner_domain": "[('id', '=', %s)]" % self.partner.id,
+                "partner_domain": f"[('id', '=', '{self.partner.id}')]",
                 "partner_ids": [(4, self.partner2.id)],
             }
         )

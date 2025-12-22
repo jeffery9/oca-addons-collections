@@ -173,14 +173,12 @@ msgstr "Productos estatales"
 #. module: product_state
 #. odoo-python
 #: code:addons/product_state/models/product_template.py:0
-#, python-format
-msgid "The product state code %s could not be found."
-msgstr "No se ha encontrado el código de estado del producto %s."
+msgid "The product state code %(product_state)s could not be found."
+msgstr ""
 
 #. module: product_state
 #. odoo-python
 #: code:addons/product_state/models/product_state.py:0
-#, python-format
 msgid "There should be only one default state"
 msgstr "Sólo debería haber un estado predeterminado"
 
@@ -194,6 +192,10 @@ msgstr "Usado para pedir a los estados"
 
 #~ msgid "Product States"
 #~ msgstr "Estados del producto"
+
+#, python-format
+#~ msgid "The product state code %s could not be found."
+#~ msgstr "No se ha encontrado el código de estado del producto %s."
 
 #~ msgid "Product Template"
 #~ msgstr "Plantilla de producto"

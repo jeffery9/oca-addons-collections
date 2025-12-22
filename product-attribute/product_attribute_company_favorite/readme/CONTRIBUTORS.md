@@ -1,9 +1,0 @@
-- [Coop IT Easy SC](https://coopiteasy.be):
-  - Victor Champonnois
-  - Carmen Bianca Bakker
-- Akretion
-  - David Beal
-- Grap
-  - Sylvain LE GAL
-- [APSL-Nagarro](<https://apsl.tech>):
-  - Antoni Marroig \<<amarroig@apsl.net>\>

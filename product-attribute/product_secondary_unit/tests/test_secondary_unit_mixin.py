@@ -2,6 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from odoo_test_helper import FakeModelLoader
 
+from odoo.fields import Command
 from odoo.tests import TransactionCase
 
 
@@ -23,31 +24,37 @@ class TestProductSecondaryUnitMixin(TransactionCase, FakeModelLoader):
                 "uom_id": cls.product_uom_kg.id,
                 "uom_po_id": cls.product_uom_kg.id,
                 "secondary_uom_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "code": "C5",
                             "name": "box 5",
                             "uom_id": cls.product_uom_unit.id,
                             "factor": 5,
-                        },
+                        }
                     ),
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "code": "C10",
                             "name": "box 10",
                             "uom_id": cls.product_uom_unit.id,
                             "factor": 10,
-                        },
+                        }
+                    ),
+                    Command.create(
+                        {
+                            "code": "C20",
+                            "name": "box 20",
+                            "dependency_type": "independent",
+                            "uom_id": cls.product_uom_unit.id,
+                            "factor": 20,
+                        }
                     ),
                 ],
             }
         )
         cls.secondary_unit_box_5 = cls.product_template.secondary_uom_ids[0]
         cls.secondary_unit_box_10 = cls.product_template.secondary_uom_ids[1]
+        cls.secondary_unit_box_20 = cls.product_template.secondary_uom_ids[2]
         # Fake model which inherit from
         cls.secondary_unit_fake = cls.env["secondary.unit.fake"].create(
             {
@@ -86,6 +93,21 @@ class TestProductSecondaryUnitMixin(TransactionCase, FakeModelLoader):
         fake_model.product_uom_id = self.product_uom_dozen
         fake_model._onchange_helper_product_uom_for_secondary()
         self.assertEqual(fake_model.secondary_uom_qty, 12)
+
+    def test_product_secondary_unit_independent_mixin(self):
+        fake_model = self.secondary_unit_fake
+        fake_model.write(
+            {
+                "product_uom_qty": 20,
+                "secondary_uom_qty": 1,
+                "secondary_uom_id": self.secondary_unit_box_20.id,
+            }
+        )
+        self.assertEqual(fake_model.product_uom_qty, 20)
+        fake_model.invalidate_recordset()
+        fake_model.product_uom_id = self.product_uom_dozen
+        fake_model._onchange_helper_product_uom_for_secondary()
+        self.assertEqual(fake_model.secondary_uom_qty, 1)
 
     def test_product_secondary_unit_mixin_no_uom(self):
         # If secondary_uom_id is not informed product_qty on target model is

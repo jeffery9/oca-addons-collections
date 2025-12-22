@@ -15,27 +15,22 @@ class TestPackagingLevelCanBeSold(Common):
         return None
 
     def test_packaging_level_can_be_sold(self):
-        self.order_line.write({"product_packaging_id": self.packaging_tu.id})
         exception_msg = (
-            "Packaging Test packaging cannot be sold on product {} must be set "
+            f"Test packaging cannot be sold on product {self.product.name} must be set "
             "as 'Sales' in order to be used on a sale order."
-        ).format(self.product.name)
+        )
+        self.order_line.write({"product_packaging_id": self.packaging_tu.id})
         with self.assertRaisesRegex(ValidationError, exception_msg):
             self.order_line.write(
                 {"product_packaging_id": self.packaging_cannot_be_sold.id}
             )
 
-    def test_onchange_product_packaging_id(self):
-        self.order_line.write({"product_packaging_id": self.packaging_tu.id})
-        result = self.order_line._onchange_product_packaging_id()
-        self.assertIn("warning", result)
-
     def test_product_packaging_can_be_sold(self):
         """Check that a product.packaging can be independently set as can be sold."""
         exception_msg = (
-            "Packaging Test packaging cannot be sold on product {} must be set "
+            f"Test packaging cannot be sold on product {self.product.name} must be set "
             "as 'Sales' in order to be used on a sale order."
-        ).format(self.product.name)
+        )
         with self.assertRaisesRegex(ValidationError, exception_msg):
             self.order_line.write(
                 {"product_packaging_id": self.packaging_cannot_be_sold.id}

@@ -13,11 +13,11 @@
         </field>
     </record>
 
-    <record id="view_product_packaging_level_tree" model="ir.ui.view">
+    <record id="view_product_packaging_level_list" model="ir.ui.view">
         <field name="model">product.packaging.level</field>
         <field
             name="inherit_id"
-            ref="product_packaging_level.view_product_packaging_level_tree"
+            ref="product_packaging_level.view_product_packaging_level_list"
         />
         <field name="arch" type="xml">
             <field name="code" position="after">
