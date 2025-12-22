@@ -13,7 +13,3 @@
 ## 16.0.1.0.0 (2024-09-12)
 
 - \[MIG\] Module Migration
-
-## 17.0.1.0.0 (2024-12-31)
-
-- \[MIG\] Module Migration
