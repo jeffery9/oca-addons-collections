@@ -6,3 +6,5 @@
   - David Alonso \<<david.alonso@solvos.es>\>
 - [Tecnativa](https://www.tecnativa.com):
   - Juan Carlos Oñate
+- [APSL - Nagarro](https://www.apsl.tech):
+  - Miquel Pascual

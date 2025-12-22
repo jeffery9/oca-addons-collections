@@ -42,12 +42,6 @@ msgid "Config Settings"
 msgstr ""
 
 #. module: helpdesk_type
-#: model_terms:ir.ui.view,arch_db:helpdesk_type.res_config_settings_view_form_inherit_select_type
-msgid ""
-"Controls if the types are visible on the portal and if they are required."
-msgstr ""
-
-#. module: helpdesk_type
 #: model:ir.model.fields,field_description:helpdesk_type.field_helpdesk_ticket_type__create_uid
 msgid "Created by"
 msgstr "Criado por"
@@ -56,11 +50,6 @@ msgstr "Criado por"
 #: model:ir.model.fields,field_description:helpdesk_type.field_helpdesk_ticket_type__create_date
 msgid "Created on"
 msgstr "Criado em"
-
-#. module: helpdesk_type
-#: model_terms:ir.ui.view,arch_db:helpdesk_type.res_config_settings_view_form_inherit_select_type
-msgid "Display"
-msgstr ""
 
 #. module: helpdesk_type
 #: model:ir.model.fields,field_description:helpdesk_type.field_helpdesk_ticket_type__display_name
@@ -114,11 +103,6 @@ msgid "Name"
 msgstr "Nome"
 
 #. module: helpdesk_type
-#: model_terms:ir.ui.view,arch_db:helpdesk_type.res_config_settings_view_form_inherit_select_type
-msgid "Required"
-msgstr ""
-
-#. module: helpdesk_type
 #: model:ir.model.fields,field_description:helpdesk_type.field_res_company__helpdesk_mgmt_portal_type_id_required
 #: model:ir.model.fields,field_description:helpdesk_type.field_res_config_settings__helpdesk_mgmt_portal_type_id_required
 msgid "Required Type field in Helpdesk portal"
@@ -167,13 +151,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:helpdesk_type.helpdesk_ticket_view_search
 #: model_terms:ir.ui.view,arch_db:helpdesk_type.portal_create_ticket
 #: model_terms:ir.ui.view,arch_db:helpdesk_type.portal_ticket_list
+#: model_terms:ir.ui.view,arch_db:helpdesk_type.res_config_settings_view_form_inherit_select_type
 msgid "Type"
 msgstr "Tipo"
 
-#. module: helpdesk_type
-#: model_terms:ir.ui.view,arch_db:helpdesk_type.res_config_settings_view_form_inherit_select_type
-msgid "Types"
-msgstr "Tipos"
+#~ msgid "Types"
+#~ msgstr "Tipos"
 
 #~ msgid "Last Modified on"
 #~ msgstr "??ltima Modifica????o em"

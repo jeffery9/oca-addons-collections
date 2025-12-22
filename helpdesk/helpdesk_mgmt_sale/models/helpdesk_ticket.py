@@ -1,4 +1,4 @@
-from odoo import api, fields, models
+from odoo import Command, api, fields, models
 
 
 class HelpdeskTicket(models.Model):
@@ -19,7 +19,28 @@ class HelpdeskTicket(models.Model):
         action = self.env["ir.actions.actions"]._for_xml_id("sale.action_orders")
         action["domain"] = [("ticket_ids", "in", [self.id])]
         action["context"] = {
-            "default_ticket_ids": [(4, [self.id])],
+            "default_ticket_ids": [Command.link([self.id])],
             "default_partner_id": self.partner_id.id,
         }
         return action
+
+    def action_open_link_sale_order(self):
+        self.ensure_one()
+        commercial_partner = self.partner_id.commercial_partner_id
+        sale_orders = self.env["sale.order"].search(
+            [
+                ("partner_id.commercial_partner_id", "=", commercial_partner.id),
+                ("ticket_ids", "=", False),
+            ]
+        )
+        return {
+            "type": "ir.actions.act_window",
+            "res_model": "helpdesk.ticket.link.sale.order.wizard",
+            "view_mode": "form",
+            "target": "new",
+            "context": {
+                "default_ticket_id": self.id,
+                "default_commercial_partner_id": commercial_partner.id,
+                "default_sale_orders_ids": sale_orders.ids,
+            },
+        }

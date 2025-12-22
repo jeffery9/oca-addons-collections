@@ -1,1 +1,0 @@
-This module allows to have the time_type_id field of the timesheet/hr_timesheet_time_type module in the helpdesk timesheet view tab.

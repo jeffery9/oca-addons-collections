@@ -51,7 +51,9 @@
         <field name="arch" type="xml">
             <xpath expr="//templates//field[@name='number']" position="after">
                 <small class="o_kanban_record_subtitle">
-                    <i><field name="type_id" /></i>
+                    <i>
+                        <field name="type_id" />
+                    </i>
                 </small>
             </xpath>
         </field>

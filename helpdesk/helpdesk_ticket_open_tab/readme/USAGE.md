@@ -1,1 +1,0 @@
-Go to Helpdesk > Select Team > Click on the right down button to acces to the ticket in new tab.

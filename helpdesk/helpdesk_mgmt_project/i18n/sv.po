@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-09-26 14:06+0000\n"
+"PO-Revision-Date: 2025-10-07 16:42+0000\n"
 "Last-Translator: jakobkrabbe <jakob@syscare.se>\n"
 "Language-Team: none\n"
 "Language: sv\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.6.2\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: helpdesk_mgmt_project
 #: model:ir.model.fields,help:helpdesk_mgmt_project.field_project_project__label_tickets
@@ -24,13 +24,34 @@ msgstr "Ger etikett till ärendet i projektets kanbanvy."
 
 #. module: helpdesk_mgmt_project
 #: model:ir.model,name:helpdesk_mgmt_project.model_helpdesk_ticket
+#: model:ir.model.fields,field_description:helpdesk_mgmt_project.field_project_milestone__helpdesk_ticket_ids
 msgid "Helpdesk Ticket"
 msgstr "Helpdesk ärenden"
 
 #. module: helpdesk_mgmt_project
+#: model:ir.model.fields,field_description:helpdesk_mgmt_project.field_project_milestone__helpdesk_ticket_count
+msgid "Helpdesk Ticket Count"
+msgstr "Antal helpdesk ärenden"
+
+#. module: helpdesk_mgmt_project
 #: model:ir.model,name:helpdesk_mgmt_project.model_helpdesk_ticket_team
 msgid "Helpdesk Ticket Team"
-msgstr "Helpdesk ärenden team"
+msgstr "Helpdesk ärendenlag"
+
+#. module: helpdesk_mgmt_project
+#: model:ir.actions.act_window,name:helpdesk_mgmt_project.action_view_helpdesk_ticket_for_milestone
+msgid "Helpdesk Tickets"
+msgstr "Helpdeskärenden"
+
+#. module: helpdesk_mgmt_project
+#: model:ir.model.fields,field_description:helpdesk_mgmt_project.field_helpdesk_ticket__milestone_id
+msgid "Milestone"
+msgstr "Milstolpe"
+
+#. module: helpdesk_mgmt_project
+#: model_terms:ir.actions.act_window,help:helpdesk_mgmt_project.action_view_helpdesk_ticket_for_milestone
+msgid "No tickets found. Let's create one!"
+msgstr "Inget ärende hittades. Låt oss skapa en!"
 
 #. module: helpdesk_mgmt_project
 #: model:ir.model.fields,field_description:helpdesk_mgmt_project.field_project_project__todo_ticket_count
@@ -52,6 +73,11 @@ msgid "Project"
 msgstr "Projekt"
 
 #. module: helpdesk_mgmt_project
+#: model:ir.model,name:helpdesk_mgmt_project.model_project_milestone
+msgid "Project Milestone"
+msgstr "Projekt Milstolpe"
+
+#. module: helpdesk_mgmt_project
 #: model:ir.model,name:helpdesk_mgmt_project.model_project_task
 #: model:ir.model.fields,field_description:helpdesk_mgmt_project.field_helpdesk_ticket__task_id
 msgid "Task"
@@ -71,8 +97,8 @@ msgstr "Antal ärenden"
 #: model:ir.model.fields,field_description:helpdesk_mgmt_project.field_project_project__ticket_ids
 #: model:ir.model.fields,field_description:helpdesk_mgmt_project.field_project_task__ticket_ids
 #: model_terms:ir.ui.view,arch_db:helpdesk_mgmt_project.edit_project
+#: model_terms:ir.ui.view,arch_db:helpdesk_mgmt_project.project_milestone_form_view
 #: model_terms:ir.ui.view,arch_db:helpdesk_mgmt_project.view_task_form2
-#, python-format
 msgid "Tickets"
 msgstr "Ärenden"
 
@@ -81,3 +107,13 @@ msgstr "Ärenden"
 #: model:ir.model.fields,field_description:helpdesk_mgmt_project.field_project_task__label_tickets
 msgid "Use Tickets as"
 msgstr "Använd ärenden som"
+
+#. module: helpdesk_mgmt_project
+#: model_terms:ir.ui.view,arch_db:helpdesk_mgmt_project.project_milestone_tree_view
+msgid "View Helpdesk Tickets"
+msgstr "Visa helpdeskärenden"
+
+#. module: helpdesk_mgmt_project
+#: model_terms:ir.ui.view,arch_db:helpdesk_mgmt_project.project_milestone_form_view
+msgid "View Tickets"
+msgstr "Visa ärenden"

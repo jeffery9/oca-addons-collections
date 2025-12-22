@@ -19,9 +19,9 @@ class HelpdeskTicketControllerTypes(HelpdeskTicketController):
         company = request.env.company
         response = super().create_new_ticket(**kw)
         response.qcontext["types"] = self._get_types()
-        response.qcontext[
-            "ticket_type_id_required"
-        ] = company.helpdesk_mgmt_portal_type_id_required
+        response.qcontext["ticket_type_id_required"] = (
+            company.helpdesk_mgmt_portal_type_id_required
+        )
         return response
 
     def _prepare_submit_ticket_vals(self, **kw):

@@ -1,4 +1,4 @@
-from odoo import _, api, fields, models, tools
+from odoo import api, fields, models, tools
 from odoo.exceptions import AccessError
 
 
@@ -19,19 +19,12 @@ class HelpdeskTicket(models.Model):
 
     @api.depends("team_id")
     def _compute_stage_id(self):
-        # This compute is executed on user change, even if not changing team, so let's
-        # apply a preventive check for not changing stage if the current one is still
-        # applicable to the current team
         for ticket in self:
-            applicable_stages = ticket.team_id._get_applicable_stages()
-            if ticket.stage_id not in applicable_stages:
-                ticket.stage_id = applicable_stages[:1]
+            ticket.stage_id = ticket.team_id._get_applicable_stages()[:1]
 
     @api.depends("team_id")
     def _compute_user_id(self):
         for ticket in self:
-            if not ticket.user_id:
-                ticket.user_id = self.env.user
             if ticket.team_id and ticket.user_id not in ticket.team_id.user_ids:
                 # If the user is not part of the team, we remove the user
                 ticket.user_id = False
@@ -44,7 +37,7 @@ class HelpdeskTicket(models.Model):
                 ticket.team_id = ticket.user_id.helpdesk_team_ids[0]
 
     @api.model
-    def _read_group_stage_ids(self, stages, domain, order):
+    def _read_group_stage_ids(self, stages, domain):
         """Show always the stages without team, or stages of the default team."""
         search_domain = [
             "|",
@@ -57,7 +50,12 @@ class HelpdeskTicket(models.Model):
                 "|",
                 ("team_ids", "=", default_team_id["team_id"]),
             ] + search_domain
-        return stages.search(search_domain, order=order)
+        return stages.search(search_domain)
+
+    @api.depends("duplicate_ids")
+    def _compute_duplicate_count(self):
+        for record in self:
+            record.duplicate_count = len(record.duplicate_ids)
 
     number = fields.Char(string="Ticket number", default="/", readonly=True)
     name = fields.Char(string="Title", required=True)
@@ -97,8 +95,8 @@ class HelpdeskTicket(models.Model):
     partner_name = fields.Char()
     partner_email = fields.Char(string="Email")
     last_stage_update = fields.Datetime(default=fields.Datetime.now)
-    assigned_date = fields.Datetime()
-    closed_date = fields.Datetime()
+    assigned_date = fields.Datetime(copy=False)
+    closed_date = fields.Datetime(copy=False)
     closed = fields.Boolean(related="stage_id.closed")
     unattended = fields.Boolean(related="stage_id.unattended", store=True)
     tag_ids = fields.Many2many(comodel_name="helpdesk.ticket.tag", string="Tags")
@@ -155,6 +153,63 @@ class HelpdeskTicket(models.Model):
         help="Gives the sequence order when displaying a list of tickets.",
     )
     active = fields.Boolean(default=True)
+
+    duplicate_id = fields.Many2one(
+        "helpdesk.ticket", string="Duplicate of", tracking=True, copy=False
+    )
+    duplicate_ids = fields.One2many(
+        "helpdesk.ticket", "duplicate_id", string="Duplicate tickets"
+    )
+    duplicate_count = fields.Integer(compute="_compute_duplicate_count")
+    duplicate_tracking_enabled = fields.Boolean(
+        related="company_id.helpdesk_mgmt_duplicate_tracking"
+    )
+
+    def action_open_duplicate_wizard(self):
+        self.ensure_one()
+        target_stage = self.env.company.helpdesk_mgmt_duplicate_ticket_stage_id
+        return {
+            "name": "Mark as Duplicate",
+            "type": "ir.actions.act_window",
+            "res_model": "helpdesk.ticket.duplicate.wizard",
+            "view_mode": "form",
+            "target": "new",
+            "context": {
+                "default_ticket_id": self.id,
+                "default_target_stage_id": target_stage.id,
+            },
+        }
+
+    def action_view_duplicates(self):
+        self.ensure_one()
+        return {
+            "name": "Duplicates",
+            "type": "ir.actions.act_window",
+            "res_model": "helpdesk.ticket",
+            "view_mode": "list",
+            "target": "new",
+            "domain": [("duplicate_id", "=", self.id)],
+        }
+
+    @api.model
+    def default_get(self, fields):
+        # The appropriate user is defined only if the "Auto assign User" option is
+        # checked in the company.
+        # If the team is set, the user must belong to that team.
+        defaults = super().default_get(fields)
+        company_id = defaults.get("company_id") or self.env.company.id
+        if "user_id" in fields and not defaults.get("user_id"):
+            company = self.env["res.company"].browse(company_id)
+            if company.helpdesk_mgmt_ticket_auto_assign:
+                if defaults.get("team_id"):
+                    team = self.env["helpdesk.ticket.team"].browse(
+                        defaults.get("team_id")
+                    )
+                    if self.env.user in team.user_ids:
+                        defaults["user_id"] = self.env.user.id
+                else:
+                    defaults["user_id"] = self.env.user.id
+        return defaults
 
     @api.depends("name")
     def _compute_display_name(self):
@@ -241,7 +296,7 @@ class HelpdeskTicket(models.Model):
     def _compute_access_url(self):
         res = super()._compute_access_url()
         for item in self:
-            item.access_url = "/my/ticket/%s" % (item.id)
+            item.access_url = f"/my/ticket/{item.id}"
         return res
 
     # ---------------------------------------------------
@@ -274,7 +329,8 @@ class HelpdeskTicket(models.Model):
         if custom_values is None:
             custom_values = {}
         defaults = {
-            "name": msg.get("subject") or _("No Subject"),
+            "name": msg.get("subject") or self.env._("No Subject"),
+            "number": "/",
             "description": msg.get("body"),
             "partner_email": msg.get("from"),
             "partner_id": msg.get("author_id"),
@@ -320,13 +376,15 @@ class HelpdeskTicket(models.Model):
             for ticket in self:
                 if ticket.partner_id:
                     ticket._message_add_suggested_recipient(
-                        recipients, partner=ticket.partner_id, reason=_("Customer")
+                        recipients,
+                        partner=ticket.partner_id,
+                        reason=self.env._("Customer"),
                     )
                 elif ticket.partner_email:
                     ticket._message_add_suggested_recipient(
                         recipients,
                         email=ticket.partner_email,
-                        reason=_("Customer Email"),
+                        reason=self.env._("Customer Email"),
                     )
         except AccessError:
             # no read access rights -> just ignore suggested recipients because this

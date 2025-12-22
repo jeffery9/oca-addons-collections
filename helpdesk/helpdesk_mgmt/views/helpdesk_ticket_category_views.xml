@@ -10,6 +10,7 @@
                     name="inactive"
                     domain="[('active','=',False)]"
                 />
+                <separator />
                 <filter
                     string="Displayed in portal"
                     name="show_in_portal"
@@ -40,8 +41,7 @@
         <field name="model">helpdesk.ticket.category</field>
         <field name="arch" type="xml">
             <form string="Stages">
-                <header>
-                </header>
+                <header />
                 <sheet>
                     <widget
                         name="web_ribbon"
@@ -68,10 +68,10 @@
         </field>
     </record>
     <record id="view_helpdesk_category_tree" model="ir.ui.view">
-        <field name="name">view.helpdesk_category.tree</field>
+        <field name="name">view.helpdesk_category.list</field>
         <field name="model">helpdesk.ticket.category</field>
         <field name="arch" type="xml">
-            <tree editable="bottom">
+            <list editable="bottom">
                 <field name="sequence" widget="handle" />
                 <field name="name" />
                 <field name="parent_id" />
@@ -81,7 +81,7 @@
                     optional="hide"
                     groups="base.group_multi_company"
                 />
-            </tree>
+            </list>
         </field>
     </record>
 </odoo>
