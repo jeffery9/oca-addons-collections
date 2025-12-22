@@ -4,9 +4,9 @@
         <field name="inherit_id" ref="sale.view_order_product_search" />
         <field name="model">sale.report</field>
         <field name="arch" type="xml">
-            <filter name="Category" position="after">
+            <filter name="Customer" position="after">
                 <filter
-                    string="Product Brand"
+                    string="Brand"
                     name="brand"
                     context="{'group_by':'product_brand_id'}"
                 />

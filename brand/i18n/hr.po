@@ -23,18 +23,6 @@ msgid "# Vendor Bills"
 msgstr ""
 
 #. module: brand
-#: model:ir.model.fields,help:brand.field_res_brand__type
-msgid ""
-"- Contact: Use this to organize the contact details of employees of a given "
-"company (e.g. CEO, CFO, ...).\n"
-"- Invoice Address: Preferred address for all invoices. Selected by default "
-"when you invoice an order that belongs to this company.\n"
-"- Delivery Address: Preferred address for all deliveries. Selected by "
-"default when you deliver an order that belongs to this company.\n"
-"- Other: Other address for the company (e.g. subsidiary, ...)"
-msgstr ""
-
-#. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__property_account_payable_id
 msgid "Account Payable"
 msgstr "Dugovni konto"
@@ -108,6 +96,23 @@ msgid "Attachment Count"
 msgstr "Broj priloga"
 
 #. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__autopost_bills
+msgid "Auto-post bills"
+msgstr ""
+
+#. module: brand
+#: model:ir.model.fields,help:brand.field_res_brand__autopost_bills
+msgid "Automatically post bills for this trusted partner"
+msgstr ""
+
+#. module: brand
+#: model:ir.model.fields,help:brand.field_res_brand__receipt_reminder_email
+msgid ""
+"Automatically send a confirmation email to the vendor X days before the "
+"expected receipt date, asking him to confirm the exact date."
+msgstr ""
+
+#. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__avatar_1920
 msgid "Avatar"
 msgstr "Avatar"
@@ -179,14 +184,12 @@ msgstr "Razina upotrebe Brenda"
 #. module: brand
 #. odoo-python
 #: code:addons/brand/models/res_brand_mixin.py:0
-#, python-format
 msgid "Brand company must match document company for %s"
 msgstr "Tvrtka brenda mora odgovarati tvrtci dokumenta za %s"
 
 #. module: brand
 #. odoo-python
 #: code:addons/brand/models/res_brand_mixin.py:0
-#, python-format
 msgid "Brand is required"
 msgstr "Brand je obavezan"
 
@@ -198,10 +201,15 @@ msgstr "Koristi Brand u ovoj prodaji"
 #. module: brand
 #: model:ir.actions.act_window,name:brand.res_brand_act_window
 #: model:ir.ui.menu,name:brand.res_brand_menu
+#: model_terms:ir.ui.view,arch_db:brand.res_brand_list_view
 #: model_terms:ir.ui.view,arch_db:brand.res_brand_search_view
-#: model_terms:ir.ui.view,arch_db:brand.res_brand_tree_view
 msgid "Brands"
 msgstr "Brandovi"
+
+#. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__buyer_id
+msgid "Buyer"
+msgstr ""
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__channel_ids
@@ -223,14 +231,6 @@ msgstr "Oznaćite ovdje ako je kontakt Djelatnik."
 #: model_terms:ir.ui.view,arch_db:brand.res_brand_form_view
 msgid "City"
 msgstr "Grad"
-
-#. module: brand
-#: model:ir.model.fields,help:brand.field_res_brand__peppol_eas
-msgid ""
-"Code used to identify the Endpoint for BIS Billing 3.0 and its derivatives.\n"
-"             List available at https://docs.peppol.eu/poacc/billing/3.0/"
-"codelist/eas/"
-msgstr ""
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__color
@@ -262,6 +262,11 @@ msgstr "Tvrtka"
 #: model:ir.model.fields,field_description:brand.field_res_brand__company_registry
 msgid "Company ID"
 msgstr "ID Tvrtke"
+
+#. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__company_registry_label
+msgid "Company ID Label"
+msgstr ""
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__company_name
@@ -305,6 +310,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:brand.field_res_brand__child_ids
 msgid "Contact"
 msgstr "Kontakt"
+
+#. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__contract_ids
+msgid "Contracts"
+msgstr ""
 
 #. module: brand
 #: model:ir.model.fields,help:brand.field_res_brand__message_bounce
@@ -353,6 +363,16 @@ msgid "Currency"
 msgstr "Valuta"
 
 #. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__property_stock_customer
+msgid "Customer Location"
+msgstr ""
+
+#. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__customer_payment_mode_id
+msgid "Customer Payment Mode"
+msgstr ""
+
+#. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__property_payment_term_id
 msgid "Customer Payment Terms"
 msgstr "Uvjeti plaćanja kupca"
@@ -363,9 +383,9 @@ msgid "Customer Rank"
 msgstr "Rang kupca"
 
 #. module: brand
-#: model:ir.model.fields,field_description:brand.field_res_brand__date
-msgid "Date"
-msgstr "Datum"
+#: model:ir.model.fields,field_description:brand.field_res_brand__reminder_date_before_receipt
+msgid "Days Before Receipt"
+msgstr ""
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__days_sales_outstanding
@@ -378,6 +398,16 @@ msgid "Degree of trust you have in this debtor"
 msgstr "Nivo povjerenja koji imate za ovog partnera"
 
 #. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__display_invoice_edi_format
+msgid "Display Invoice Edi Format"
+msgstr ""
+
+#. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__display_invoice_template_pdf_report_id
+msgid "Display Invoice Template Pdf Report"
+msgstr ""
+
+#. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__display_name
 msgid "Display Name"
 msgstr "Naziv za prikaz"
@@ -386,6 +416,11 @@ msgstr "Naziv za prikaz"
 #: model:ir.model.fields.selection,name:brand.selection__res_company__brand_use_level__no
 msgid "Do not use brands on business document"
 msgstr "Ne koristi Brandove na poslovnim dokumentima"
+
+#. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__duplicate_bank_partner_ids
+msgid "Duplicate Bank Partner"
+msgstr ""
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__duplicated_bank_account_partners_count
@@ -436,11 +471,6 @@ msgid "Font awesome icon e.g. fa-tasks"
 msgstr ""
 
 #. module: brand
-#: model:ir.model.fields,field_description:brand.field_res_brand__ubl_cii_format
-msgid "Format"
-msgstr ""
-
-#. module: brand
 #: model:ir.model.fields,help:brand.field_res_brand__email_formatted
 msgid "Format email address \"Name <email@domain>\""
 msgstr "Format email adrese \"Naziv <email@domena>\""
@@ -464,16 +494,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:brand.field_res_brand__has_message
 msgid "Has Message"
 msgstr "Ima poruke"
-
-#. module: brand
-#: model:ir.model.fields,field_description:brand.field_res_brand__has_unreconciled_entries
-msgid "Has Unreconciled Entries"
-msgstr "Ima otvorenih stavaka"
-
-#. module: brand
-#: model:ir.model.fields,field_description:brand.field_res_brand__hide_peppol_fields
-msgid "Hide Peppol Fields"
-msgstr ""
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__id
@@ -506,17 +526,20 @@ msgid "If checked, some messages have a delivery error."
 msgstr ""
 
 #. module: brand
-#: model:ir.model.fields,help:brand.field_res_brand__team_id
-msgid ""
-"If set, this Sales Team will be used for sales and assignments related to "
-"this partner"
-msgstr ""
-
-#. module: brand
 #: model:ir.model.fields,help:brand.field_res_brand__is_blacklisted
 msgid ""
 "If the email address is on the blacklist, the contact won't receive mass "
 "mailing anymore, from any list"
+msgstr ""
+
+#. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__ignore_abnormal_invoice_amount
+msgid "Ignore Abnormal Invoice Amount"
+msgstr ""
+
+#. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__ignore_abnormal_invoice_date
+msgid "Ignore Abnormal Invoice Date"
 msgstr ""
 
 #. module: brand
@@ -560,9 +583,29 @@ msgid "Invoice"
 msgstr "Račun"
 
 #. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__invoice_edi_format_store
+msgid "Invoice Edi Format Store"
+msgstr ""
+
+#. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__invoice_sending_method
+msgid "Invoice sending"
+msgstr ""
+
+#. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__invoice_template_pdf_report_id
+msgid "Invoice template"
+msgstr ""
+
+#. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__invoice_ids
 msgid "Invoices"
 msgstr "Računi"
+
+#. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand_mixin__is_brand_required
+msgid "Is Brand Required"
+msgstr ""
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__is_coa_installed
@@ -610,19 +653,6 @@ msgid "Last Updated on"
 msgstr ""
 
 #. module: brand
-#: model:ir.model.fields,help:brand.field_res_brand__last_time_entries_checked
-msgid ""
-"Last time the invoices & payments matching was performed for this partner. "
-"It is set either if there's not at least an unreconciled debit and an "
-"unreconciled credit or if you click the \"Done\" button."
-msgstr ""
-
-#. module: brand
-#: model:ir.model.fields,field_description:brand.field_res_brand__last_time_entries_checked
-msgid "Latest Invoices & Payments Matching Date"
-msgstr ""
-
-#. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__message_has_error
 msgid "Message Delivery error"
 msgstr ""
@@ -633,8 +663,18 @@ msgid "Message for Invoice"
 msgstr ""
 
 #. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__purchase_warn_msg
+msgid "Message for Purchase Order"
+msgstr ""
+
+#. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__sale_warn_msg
 msgid "Message for Sales Order"
+msgstr ""
+
+#. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__picking_warn_msg
+msgid "Message for Stock Picking"
 msgstr ""
 
 #. module: brand
@@ -688,6 +728,11 @@ msgid "Number of Actions"
 msgstr "Broj radnji"
 
 #. module: brand
+#: model:ir.model.fields,help:brand.field_res_brand__reminder_date_before_receipt
+msgid "Number of days to send reminder email before the promised receipt date"
+msgstr ""
+
+#. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__message_has_error_counter
 msgid "Number of errors"
 msgstr "Broj grešaka"
@@ -703,9 +748,22 @@ msgid "Number of messages with delivery error"
 msgstr "Broj poruka sa greškom isporuke"
 
 #. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__on_time_rate
+msgid "On-Time Delivery Rate"
+msgstr ""
+
+#. module: brand
 #: model:ir.model.fields.selection,name:brand.selection__res_company__brand_use_level__optional
 msgid "Optional"
 msgstr "Opcionalno"
+
+#. module: brand
+#: model:ir.model.fields,help:brand.field_res_brand__on_time_rate
+msgid ""
+"Over the past x days; the number of products received on time divided by the "
+"number of ordered products.x is either the System Parameter purchase_stock."
+"on_time_delivery_days or the default 365"
+msgstr ""
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__parent_name
@@ -718,14 +776,19 @@ msgid "Partner"
 msgstr ""
 
 #. module: brand
-#: model:ir.model.fields,field_description:brand.field_res_brand__contract_ids
-msgid "Partner Contracts"
-msgstr "Kontakti partnera"
+#: model:ir.model.fields,field_description:brand.field_res_brand__partner_company_registry_placeholder
+msgid "Partner Company Registry Placeholder"
+msgstr ""
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__use_partner_credit_limit
 msgid "Partner Limit"
 msgstr "Ograničenje partnera"
+
+#. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__partner_vat_placeholder
+msgid "Partner Vat Placeholder"
+msgstr ""
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__same_company_registry_partner_id
@@ -748,11 +811,6 @@ msgid "Payable Limit"
 msgstr ""
 
 #. module: brand
-#: model:ir.model.fields,field_description:brand.field_res_brand__property_payment_method_id
-msgid "Payment Method"
-msgstr ""
-
-#. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__payment_token_count
 msgid "Payment Token Count"
 msgstr ""
@@ -763,32 +821,63 @@ msgid "Payment Tokens"
 msgstr "Tokeni plaćanja"
 
 #. module: brand
-#: model:ir.model.fields,field_description:brand.field_res_brand__peppol_endpoint
-msgid "Peppol Endpoint"
-msgstr ""
-
-#. module: brand
-#: model:ir.model.fields,field_description:brand.field_res_brand__peppol_eas
-msgid "Peppol e-address (EAS)"
-msgstr ""
-
-#. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__phone
 msgid "Phone"
 msgstr "Telefon"
 
 #. module: brand
-#: model:ir.model.fields,help:brand.field_res_brand__property_payment_method_id
+#: model:ir.model.fields,help:brand.field_res_brand__property_outbound_payment_method_line_id
 msgid ""
-"Preferred payment method when paying this vendor. This is used to filter "
-"vendor bills by preferred payment method to register payments in mass. Use "
-"cases: create bank files for batch wires, check runs."
+"Preferred payment method when buying from this vendor. This will be set by "
+"default on all outgoing payments created for this vendor"
+msgstr ""
+
+#. module: brand
+#: model:ir.model.fields,help:brand.field_res_brand__property_inbound_payment_method_line_id
+msgid ""
+"Preferred payment method when selling to this customer. This will be set by "
+"default on all incoming payments created for this customer"
 msgstr ""
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__property_product_pricelist
 msgid "Pricelist"
 msgstr "Cjenik"
+
+#. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__property_inbound_payment_method_line_id
+msgid "Property Inbound Payment Method Line"
+msgstr ""
+
+#. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__property_outbound_payment_method_line_id
+msgid "Property Outbound Payment Method Line"
+msgstr ""
+
+#. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__purchase_contract_count
+msgid "Purchase Contracts"
+msgstr ""
+
+#. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__purchase_line_ids
+msgid "Purchase Lines"
+msgstr ""
+
+#. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__purchase_order_count
+msgid "Purchase Order Count"
+msgstr ""
+
+#. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__purchase_warn
+msgid "Purchase Order Warning"
+msgstr ""
+
+#. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__receipt_reminder_email
+msgid "Receipt Reminder"
+msgstr ""
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__ref
@@ -811,6 +900,11 @@ msgid "Responsible User"
 msgstr "Odgovorni korisnik"
 
 #. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__sale_contract_count
+msgid "Sale Contracts"
+msgstr ""
+
+#. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__sale_order_count
 msgid "Sale Order Count"
 msgstr "Broj prodajnih naloga"
@@ -819,11 +913,6 @@ msgstr "Broj prodajnih naloga"
 #: model:ir.model.fields,field_description:brand.field_res_brand__sale_order_ids
 msgid "Sales Order"
 msgstr "Prodajni nalog"
-
-#. module: brand
-#: model:ir.model.fields,field_description:brand.field_res_brand__team_id
-msgid "Sales Team"
-msgstr "Prodajni tim"
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__sale_warn
@@ -836,7 +925,19 @@ msgid "Salesperson"
 msgstr ""
 
 #. module: brand
+#: model:ir.model.fields,help:brand.field_res_brand__customer_payment_mode_id
+msgid "Select the default payment mode for this customer."
+msgstr ""
+
+#. module: brand
+#: model:ir.model.fields,help:brand.field_res_brand__supplier_payment_mode_id
+msgid "Select the default payment mode for this supplier."
+msgstr ""
+
+#. module: brand
 #: model:ir.model.fields,help:brand.field_res_brand__invoice_warn
+#: model:ir.model.fields,help:brand.field_res_brand__picking_warn
+#: model:ir.model.fields,help:brand.field_res_brand__purchase_warn
 #: model:ir.model.fields,help:brand.field_res_brand__sale_warn
 msgid ""
 "Selecting the \"Warning\" option will notify user with the message, "
@@ -865,28 +966,13 @@ msgid "Show Credit Limit"
 msgstr ""
 
 #. module: brand
-#: model:ir.model.fields,field_description:brand.field_res_brand__signup_expiration
-msgid "Signup Expiration"
-msgstr "Istek prijave"
-
-#. module: brand
-#: model:ir.model.fields,field_description:brand.field_res_brand__signup_token
-msgid "Signup Token"
-msgstr "Token prijave"
-
-#. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__signup_type
 msgid "Signup Token Type"
 msgstr "Vrsta tokena prijave"
 
 #. module: brand
-#: model:ir.model.fields,field_description:brand.field_res_brand__signup_valid
-msgid "Signup Token is Valid"
-msgstr ""
-
-#. module: brand
-#: model:ir.model.fields,field_description:brand.field_res_brand__signup_url
-msgid "Signup URL"
+#: model:ir.model.fields,field_description:brand.field_res_brand__specific_property_product_pricelist
+msgid "Specific Property Product Pricelist"
 msgstr ""
 
 #. module: brand
@@ -910,6 +996,11 @@ msgid ""
 msgstr ""
 
 #. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__picking_warn
+msgid "Stock Picking"
+msgstr ""
+
+#. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__street
 msgid "Street"
 msgstr "Ulica"
@@ -930,6 +1021,16 @@ msgid "Street2"
 msgstr "Ulica2"
 
 #. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__property_purchase_currency_id
+msgid "Supplier Currency"
+msgstr ""
+
+#. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__supplier_payment_mode_id
+msgid "Supplier Payment Mode"
+msgstr ""
+
+#. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__supplier_rank
 msgid "Supplier Rank"
 msgstr "Rang dobavljača"
@@ -942,6 +1043,11 @@ msgstr "Oznake"
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__vat
 msgid "Tax ID"
+msgstr ""
+
+#. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__vat_label
+msgid "Tax ID Label"
 msgstr ""
 
 #. module: brand
@@ -971,17 +1077,22 @@ msgid "The internal user in charge of this contact."
 msgstr ""
 
 #. module: brand
-#: model:ir.model.fields,help:brand.field_res_brand__has_unreconciled_entries
-msgid ""
-"The partner has at least one unreconciled debit and credit since last time "
-"the invoices & payments matching was performed."
-msgstr ""
-
-#. module: brand
 #: model:ir.model.fields,help:brand.field_res_brand__company_registry
 msgid ""
 "The registry number of the company. Use it if it is different from the Tax "
 "ID. It must be unique across all partners of a same country"
+msgstr ""
+
+#. module: brand
+#: model:ir.model.fields,help:brand.field_res_brand__property_stock_customer
+msgid ""
+"The stock location used as destination when sending goods to this contact."
+msgstr ""
+
+#. module: brand
+#: model:ir.model.fields,help:brand.field_res_brand__property_stock_supplier
+msgid ""
+"The stock location used as source when receiving goods from this contact."
 msgstr ""
 
 #. module: brand
@@ -996,6 +1107,13 @@ msgstr ""
 msgid ""
 "This account will be used instead of the default one as the receivable "
 "account for the current partner"
+msgstr ""
+
+#. module: brand
+#: model:ir.model.fields,help:brand.field_res_brand__property_purchase_currency_id
+msgid ""
+"This currency will be used, instead of the default one, for purchases from "
+"the current partner"
 msgstr ""
 
 #. module: brand
@@ -1072,13 +1190,6 @@ msgid "Type of the exception activity on record."
 msgstr ""
 
 #. module: brand
-#: model:ir.model.fields,help:brand.field_res_brand__peppol_endpoint
-msgid ""
-"Unique identifier used by the BIS Billing 3.0 and its derivatives, also "
-"known as 'Endpoint ID'."
-msgstr ""
-
-#. module: brand
 #: model:ir.model.fields,help:brand.field_res_brand__barcode
 msgid "Use a barcode to identify this contact."
 msgstr ""
@@ -1086,6 +1197,11 @@ msgstr ""
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__user_ids
 msgid "Users"
+msgstr ""
+
+#. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__property_stock_supplier
+msgid "Vendor Location"
 msgstr ""
 
 #. module: brand
@@ -1150,6 +1266,14 @@ msgstr ""
 msgid "e.g. https://www.odoo.com"
 msgstr ""
 
+#. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__invoice_edi_format
+msgid "eInvoice format"
+msgstr ""
+
+#~ msgid "Partner Contracts"
+#~ msgstr "Kontakti partnera"
+
 #~ msgid "Additional info"
 #~ msgstr "Dodatne informacije"
 
@@ -1167,6 +1291,21 @@ msgstr ""
 
 #~ msgid "Phone/Mobile"
 #~ msgstr "Telefon/Mobitel"
+
+#~ msgid "Date"
+#~ msgstr "Datum"
+
+#~ msgid "Has Unreconciled Entries"
+#~ msgstr "Ima otvorenih stavaka"
+
+#~ msgid "Sales Team"
+#~ msgstr "Prodajni tim"
+
+#~ msgid "Signup Expiration"
+#~ msgstr "Istek prijave"
+
+#~ msgid "Signup Token"
+#~ msgstr "Token prijave"
 
 #~ msgid ""
 #~ "- Contact: Use this to organize the contact details of employees of a "
