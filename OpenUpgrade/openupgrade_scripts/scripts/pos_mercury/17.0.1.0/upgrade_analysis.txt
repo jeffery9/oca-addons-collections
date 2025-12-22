@@ -1,5 +1,0 @@
----Models in module 'pos_mercury'---
----Fields in module 'pos_mercury'---
----XML records in module 'pos_mercury'---
-NEW ir.model.access: pos_mercury.access_pos_mercury_mercury_transaction_employee
-DEL ir.model.access: pos_mercury.access_pos_mercury_mercury_transaction

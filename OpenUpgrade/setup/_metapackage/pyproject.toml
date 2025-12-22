@@ -1,12 +1,12 @@
 [project]
 name = "odoo-addons-oca-OpenUpgrade"
-version = "17.0.20240523.0"
+version = "18.0.20250321.0"
 dependencies = [
-    "odoo-addon-openupgrade_framework>=17.0dev,<17.1dev",
-    "odoo-addon-openupgrade_scripts>=17.0dev,<17.1dev",
+    "odoo-addon-openupgrade_framework==18.0.*",
+    "odoo-addon-openupgrade_scripts==18.0.*",
 ]
 classifiers=[
     "Programming Language :: Python",
     "Framework :: Odoo",
-    "Framework :: Odoo :: 17.0",
+    "Framework :: Odoo :: 18.0",
 ]

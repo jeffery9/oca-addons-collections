@@ -7,7 +7,7 @@ name: Test OpenUpgrade migration
 
 on:
   push:
-    branches: ["17.0*"]
+    branches: ["18.0*"]
   pull_request:
 
 jobs:
@@ -45,20 +45,20 @@ jobs:
         run: createdb $DB
       - name: DB Restore
         run: |
-          wget -q -O- $DOWNLOADS/16.0.psql | pg_restore -d $DB --no-owner
+          wget -q -O- $DOWNLOADS/17.0.psql | pg_restore -d $DB --no-owner
           psql $DB -c "UPDATE ir_module_module SET demo=False"
       - name: Check out Odoo
         uses: actions/checkout@v4
         with:
           repository: odoo/odoo
-          ref: "17.0"
+          ref: "18.0"
           fetch-depth: 1
           path: odoo
       - name: Check out previous Odoo
         uses: actions/checkout@v4
         with:
           repository: odoo/odoo
-          ref: "16.0"
+          ref: "17.0"
           fetch-depth: 1
           path: odoo-old
       - name: Check out OpenUpgrade
@@ -88,11 +88,15 @@ jobs:
       - name: Requirements Installation
         run: |
           sed -i -E "s/(gevent==)21\.8\.0( ; sys_platform != 'win32' and python_version == '3.10')/\122.10.2\2/;s/(greenlet==)1.1.2( ; sys_platform != 'win32' and python_version == '3.10')/\12.0.2\2/" odoo/requirements.txt
+          sed -i -E "s/(^cbor2==)5\.4\.2/\15.6.2/" odoo/requirements.txt
           pip install -q -r odoo/requirements.txt
           pip install -r ./openupgrade/requirements.txt
+          pip install -U git+https://github.com/oca/openupgradelib
           # this is for v16 l10n_eg_edi_eta which crashes without it
           pip install asn1crypto
           pip install coverage
+          # this is for account_peppol
+          pip install phonenumbers
       - name: Test data
         run: |
           if test -n "$(ls openupgrade/openupgrade_scripts/scripts/*/tests/data*.py 2> /dev/null)"; then
@@ -105,7 +109,7 @@ jobs:
           # select modules and perform the upgrade
           MODULES_OLD=$(\
               sed -n '/^+========/,$p' \
-              openupgrade/docsource/modules160-170.rst \
+              openupgrade/docsource/modules170-180.rst \
               | grep "Done\|Partial\|Nothing" \
               | grep -v "theme_" \
               | sed -rn 's/((^\| *\|del\| *)|^\| *)([0-9a-z_]*)[ \|].*/\3/g p' \
@@ -113,7 +117,7 @@ jobs:
               | paste -d, -s)
           MODULES_NEW=$(\
               sed -n '/^+========/,$p' \
-              openupgrade/docsource/modules160-170.rst \
+              openupgrade/docsource/modules170-180.rst \
               | grep "Done\|Partial\|Nothing" \
               | grep -v "theme_" \
               | sed -rn 's/((^\| *\|new\| *)|^\| *)([0-9a-z_]*)[ \|].*/\3/g p' \
@@ -127,14 +131,6 @@ jobs:
               where name not in ('$(echo $MODULES_OLD | sed -e "s/,/','/g")')"
           echo Set the modules as not installable if they are not in the following list : $MODULES_OLD
           echo Running $REQUEST
-          psql $DB -c "$REQUEST"
-          echo Set chart template to generic for companies with charts from not yet migrated localizations
-          REQUEST="update res_company set chart_template_id=(
-            select res_id from ir_model_data where module='l10n_generic_coa' and name='configurable_chart_template'
-          ) where id in (
-            select res_id from ir_model_data where model='res.company' and module not in
-            ('$(echo $MODULES_OLD | sed -e "s/,/','/g")')
-          )"
           psql $DB -c "$REQUEST"
           ADDONS_PATHS="\
               $GITHUB_WORKSPACE/odoo/addons \
