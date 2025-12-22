@@ -1,7 +1,7 @@
 # Copyright 2019 Kitti Upariphutthiphong <kittiu@ecosoft.co.th>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import Command, _, api, fields, models
+from odoo import Command, api, fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -35,20 +35,26 @@ class HrExpense(models.Model):
             emp_advance = expense._get_product_advance()
             if not emp_advance.property_account_expense_id:
                 raise ValidationError(
-                    _("Employee advance product has no payable account")
+                    self.env._("Employee advance product has no payable account")
                 )
             if expense.product_id != emp_advance:
                 raise ValidationError(
-                    _("Employee advance, selected product is not valid")
+                    self.env._("Employee advance, selected product is not valid")
                 )
             if expense.account_id != emp_advance.property_account_expense_id:
                 raise ValidationError(
-                    _("Employee advance, account must be the same payable account")
+                    self.env._(
+                        "Employee advance, account must be the same payable account"
+                    )
                 )
             if expense.tax_ids:
-                raise ValidationError(_("Employee advance, all taxes must be removed"))
+                raise ValidationError(
+                    self.env._("Employee advance, all taxes must be removed")
+                )
             if expense.payment_mode != "own_account":
-                raise ValidationError(_("Employee advance, paid by must be employee"))
+                raise ValidationError(
+                    self.env._("Employee advance, paid by must be employee")
+                )
         return True
 
     @api.onchange("advance")
@@ -64,14 +70,10 @@ class HrExpense(models.Model):
         taxes = self.tax_ids.with_context(round=True).compute_all(
             price_unit, self.currency_id, quantity, self.product_id
         )
-        amount_currency = self.total_amount_currency - self.tax_amount_currency
-        balance = self.total_amount - self.tax_amount
         ml_src_dict = {
             "name": move_line_name,
             "quantity": quantity,
-            "debit": balance if balance > 0 else 0,
-            "credit": -balance if balance < 0 else 0,
-            "amount_currency": amount_currency,
+            "amount_currency": self.total_amount_currency,
             "account_id": self.account_id.id,
             "product_id": self.product_id.id,
             "product_uom_id": self.product_uom_id.id,

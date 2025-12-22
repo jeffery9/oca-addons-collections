@@ -6,23 +6,17 @@ import base64
 
 from odoo import fields
 from odoo.exceptions import UserError, ValidationError
-from odoo.tests import tagged
-from odoo.tests.common import Form
+from odoo.tests import Form, tagged
 
-from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
 from odoo.addons.hr_expense.tests.common import TestExpenseCommon
 
 
 @tagged("post_install", "-at_install")
 class TestHrExpenseInvoice(TestExpenseCommon):
     @classmethod
-    def setUpClass(cls, chart_template_ref=None):
-        super().setUpClass(chart_template_ref=chart_template_ref)
-        cls.env = cls.env(
-            context=dict(
-                cls.env.context, **DISABLED_MAIL_CONTEXT, test_hr_expense_invoice=True
-            )
-        )
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.env = cls.env(context=dict(cls.env.context, test_hr_expense_invoice=True))
         cls.account_payment_register = cls.env["account.payment.register"]
         cls.payment_obj = cls.env["account.payment"]
         cls.cash_journal = cls.company_data["default_journal_cash"]
@@ -69,6 +63,7 @@ class TestHrExpenseInvoice(TestExpenseCommon):
         payment = self.env[res2["res_model"]].browse(res2["res_id"])
         self.assertEqual(len(payment), 1)
         self.assertEqual(sheet.payment_state, "paid")
+        return payment
 
     def _create_attachment(self, res_model, res_id):
         return self.env["ir.attachment"].create(
@@ -103,11 +98,12 @@ class TestHrExpenseInvoice(TestExpenseCommon):
             self.expense.total_amount_currency, self.product_a.standard_price
         )
         # We approve sheet, no invoice
+        sheet.action_submit_sheet()
         sheet.action_approve_expense_sheets()
         self.assertEqual(sheet.state, "approve")
         self.assertFalse(sheet.account_move_ids)
         # We post journal entries
-        sheet.action_sheet_move_create()
+        sheet.action_sheet_move_post()
         self.assertEqual(sheet.state, "post")
         self.assertTrue(sheet.account_move_ids)
         # We make payment on expense sheet
@@ -130,25 +126,22 @@ class TestHrExpenseInvoice(TestExpenseCommon):
         # Test state not posted
         self.invoice.button_draft()
         with self.assertRaises(UserError):
-            sheet.action_sheet_move_create()
+            sheet.action_sheet_move_post()
         self.invoice.action_post()
         # We post journal entries
-        sheet.action_sheet_move_create()
+        sheet.action_sheet_move_post()
         self.assertEqual(sheet.state, "post")
         self.assertEqual(self.invoice.payment_state, "paid")
         self.assertEqual(sheet.payment_state, "not_paid")
         self.assertEqual(self.expense.amount_residual, 100)
         self.assertTrue(self.expense.transfer_move_ids)
         # Pay the transferred amount (through a hack using reversal)
-        reverse_move = self.expense.transfer_move_ids._reverse_moves(
-            default_values_list=[{"source_invoice_expense_id": False}]  # , cancel=True
-        )
-        reverse_move.action_post()
+        payment = self._register_payment(sheet)
         self.assertEqual(self.expense.amount_residual, 0)
         self.assertEqual(sheet.payment_state, "paid")
         self.assertEqual(sheet.state, "done")
         # Unreconcile the payment
-        reverse_move.button_draft()
+        payment.action_draft()
         self.assertEqual(self.expense.amount_residual, 100)
         self.assertEqual(sheet.payment_state, "not_paid")
 
@@ -167,7 +160,7 @@ class TestHrExpenseInvoice(TestExpenseCommon):
         self.assertFalse(sheet.account_move_ids)
         self.assertEqual(self.invoice.state, "posted")
         # We post journal entries
-        sheet.action_sheet_move_create()
+        sheet.action_sheet_move_post()
         self.assertEqual(sheet.state, "done")
         self.assertEqual(self.invoice.payment_state, "not_paid")
         # Click on View Invoice button link to the correct invoice
@@ -195,7 +188,7 @@ class TestHrExpenseInvoice(TestExpenseCommon):
         self.assertFalse(sheet.account_move_ids)
         self.assertEqual(self.invoice.state, "posted")
         # We post journal entries
-        sheet.action_sheet_move_create()
+        sheet.action_sheet_move_post()
         self.assertEqual(sheet.state, "post")
         self.assertEqual(self.invoice.payment_state, "paid")
         self.assertEqual(self.invoice2.payment_state, "paid")
@@ -235,7 +228,7 @@ class TestHrExpenseInvoice(TestExpenseCommon):
         # We approve sheet
         sheet.action_approve_expense_sheets()
         # We post journal entries
-        sheet.action_sheet_move_create()
+        sheet.action_sheet_move_post()
 
     def test_4_hr_expense_constraint(self):
         # Only invoice with status open is allowed
@@ -255,16 +248,44 @@ class TestHrExpenseInvoice(TestExpenseCommon):
         """Test that expenses linked to invoices don't create
         duplicate accounting entries."""
         sheet = self._action_submit_expenses(self.expense + self.expense2)
-
+        self.invoice.action_post()
         with Form(self.expense) as f:
             f.invoice_id = self.invoice
         sheet.action_approve_expense_sheets()
-        with self.assertRaises(UserError):
-            sheet.action_sheet_move_create()
-        self.invoice.action_post()
-        sheet.action_sheet_move_create()
-        self.assertEqual(len(sheet.account_move_ids.invoice_line_ids), 1)
+        sheet.action_sheet_move_post()
+        self.assertEqual(len(sheet.account_move_ids[0].invoice_line_ids), 1)
         self.assertEqual(
-            sheet.account_move_ids.invoice_line_ids.price_total,
+            sheet.account_move_ids[0].invoice_line_ids.price_total,
             self.expense2.total_amount,
         )
+        self.assertEqual(
+            sheet.account_move_ids[1].amount_total,
+            self.expense.total_amount,
+        )
+
+    def test_6_hr_expense_mixed_invoice_same_sheet(self):
+        # We add 3 expenses
+        self.expense.price_unit = 10
+        self.expense2.price_unit = 20
+        self.expense3.price_unit = 30
+        expenses = self.expense + self.expense2 + self.expense3
+        sheet = self._action_submit_expenses(expenses)
+        self.assertIn(self.expense, sheet.expense_line_ids)
+        self.assertIn(self.expense2, sheet.expense_line_ids)
+        self.assertIn(self.expense3, sheet.expense_line_ids)
+        # We add invoices to expenses 1 and 2
+        self.invoice.action_post()
+        self.invoice2.action_post()
+        self.expense.invoice_id = self.invoice.id
+        self.expense2.invoice_id = self.invoice2.id
+        # We approve sheet
+        sheet.action_approve_expense_sheets()
+        self.assertEqual(sheet.state, "approve")
+        self.assertFalse(sheet.account_move_ids)
+        # We post journal entries
+        sheet.action_sheet_move_post()
+        self.assertEqual(sheet.state, "post")
+        self.assertEqual(self.invoice.payment_state, "paid")
+        self.assertEqual(self.invoice2.payment_state, "paid")
+        # 2 ap moves and 1 vendor bill
+        self.assertEqual(len(sheet.account_move_ids), 3)
