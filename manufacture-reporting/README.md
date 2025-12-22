@@ -1,15 +1,15 @@
 
-[![Runboat](https://img.shields.io/badge/runboat-Try%20me-875A7B.png)](https://runboat.odoo-community.org/builds?repo=OCA/manufacture-reporting&target_branch=17.0)
-[![Pre-commit Status](https://github.com/OCA/manufacture-reporting/actions/workflows/pre-commit.yml/badge.svg?branch=17.0)](https://github.com/OCA/manufacture-reporting/actions/workflows/pre-commit.yml?query=branch%3A17.0)
-[![Build Status](https://github.com/OCA/manufacture-reporting/actions/workflows/test.yml/badge.svg?branch=17.0)](https://github.com/OCA/manufacture-reporting/actions/workflows/test.yml?query=branch%3A17.0)
-[![codecov](https://codecov.io/gh/OCA/manufacture-reporting/branch/17.0/graph/badge.svg)](https://codecov.io/gh/OCA/manufacture-reporting)
-[![Translation Status](https://translation.odoo-community.org/widgets/manufacture-reporting-17-0/-/svg-badge.svg)](https://translation.odoo-community.org/engage/manufacture-reporting-17-0/?utm_source=widget)
+[![Runboat](https://img.shields.io/badge/runboat-Try%20me-875A7B.png)](https://runboat.odoo-community.org/builds?repo=OCA/manufacture-reporting&target_branch=18.0)
+[![Pre-commit Status](https://github.com/OCA/manufacture-reporting/actions/workflows/pre-commit.yml/badge.svg?branch=18.0)](https://github.com/OCA/manufacture-reporting/actions/workflows/pre-commit.yml?query=branch%3A18.0)
+[![Build Status](https://github.com/OCA/manufacture-reporting/actions/workflows/test.yml/badge.svg?branch=18.0)](https://github.com/OCA/manufacture-reporting/actions/workflows/test.yml?query=branch%3A18.0)
+[![codecov](https://codecov.io/gh/OCA/manufacture-reporting/branch/18.0/graph/badge.svg)](https://codecov.io/gh/OCA/manufacture-reporting)
+[![Translation Status](https://translation.odoo-community.org/widgets/manufacture-reporting-18-0/-/svg-badge.svg)](https://translation.odoo-community.org/engage/manufacture-reporting-18-0/?utm_source=widget)
 
 <!-- /!\ do not modify above this line -->
 
 # manufacture-reporting
 
-TODO: add repo description.
+manufacture-reporting
 
 <!-- /!\ do not modify below this line -->
 
@@ -21,11 +21,10 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[mrp_bom_current_stock](mrp_bom_current_stock/) | 17.0.1.0.0 |  | Add a report that explodes the bill of materials and show the stock available in the source location.
-[mrp_bom_structure_report_level_1](mrp_bom_structure_report_level_1/) | 17.0.1.0.0 |  | MRP BOM Structure Report Level 1
-[mrp_bom_structure_xlsx](mrp_bom_structure_xlsx/) | 17.0.1.0.1 |  | Export BoM Structure to Excel .XLSX
-[mrp_bom_structure_xlsx_level_1](mrp_bom_structure_xlsx_level_1/) | 17.0.1.0.0 |  | Export BOM Structure (Level 1) to Excel .XLSX
-[mrp_flattened_bom_xlsx](mrp_flattened_bom_xlsx/) | 17.0.1.0.0 |  | Export Flattened BOM to Excel
+[mrp_bom_current_stock](mrp_bom_current_stock/) | 18.0.1.0.0 |  | Add a report that explodes the bill of materials and show the stock available in the source location.
+[mrp_bom_matrix_report](mrp_bom_matrix_report/) | 18.0.1.0.0 |  | MRP BOM Matrix Report
+[mrp_bom_structure_xlsx](mrp_bom_structure_xlsx/) | 18.0.1.0.0 |  | Export BoM Structure to Excel .XLSX
+[mrp_flattened_bom_xlsx](mrp_flattened_bom_xlsx/) | 18.0.1.0.0 |  | Export Flattened BOM to Excel
 
 [//]: # (end addons)
 
