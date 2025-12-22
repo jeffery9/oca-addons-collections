@@ -9,7 +9,7 @@ class ProductSet(models.Model):
     _description = "Product set"
 
     name = fields.Char(help="Product set name", required=True, translate=True)
-    active = fields.Boolean(default=True)
+    active = fields.Boolean(default=True, inverse="_inverse_active")
     ref = fields.Char(
         string="Internal Reference", help="Product set internal reference", copy=False
     )
@@ -32,15 +32,35 @@ class ProductSet(models.Model):
         "it's going to be available for all of them.",
     )
 
-    display_name = fields.Char(compute="_compute_display_name")
+    display_name = fields.Char(
+        compute="_compute_display_name", search="_search_display_name"
+    )
+
+    def _inverse_active(self):
+        """Set the active field on the set lines."""
+        for rec in self:
+            if rec.active:
+                rec.set_line_ids.filtered(lambda x: not x.active).active = True
+            else:
+                rec.set_line_ids.filtered(lambda x: x.active).active = False
 
     @api.depends("name", "ref", "partner_id.name")
     def _compute_display_name(self):
         for rec in self:
             parts = []
             if rec.ref:
-                parts.append("[%s]" % rec.ref)
+                parts.append(f"[{rec.ref}]")
             parts.append(rec.name or "")
             if rec.partner_id and rec.partner_id.name:
-                parts.append("@ %s" % rec.partner_id.name)
+                parts.append(f"@ {rec.partner_id.name}")
             rec.display_name = " ".join(map(str, parts))
+
+    @api.model
+    def _search_display_name(self, operator, value):
+        return [
+            "|",
+            "|",
+            ("name", operator, value),
+            ("ref", operator, value),
+            ("partner_id.name", operator, value),
+        ]

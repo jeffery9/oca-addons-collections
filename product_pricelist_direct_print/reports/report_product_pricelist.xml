@@ -14,11 +14,11 @@
                         <div class="col-7">
                         <strong>Price List Name</strong>:<br />
                         <t t-if="o.show_pricelist_name">
-                                <span t-field="pricelist.name" />
-                            </t>
+                            <span t-field="pricelist.name" />
+                        </t>
                         <t t-else="">
-                                <span>Special Pricelist</span>
-                            </t>
+                            <span>Special Pricelist</span>
+                        </t>
                     </div>
                         <div class="col-2">
                         <strong>Currency</strong>:<br />
@@ -59,9 +59,6 @@
                                 <th t-if="o.show_product_uom" class="text-right">
                                     <strong>UoM</strong>
                                 </th>
-                                <th t-if="o.show_product_images" class="text-right">
-                                    <strong>Image</strong>
-                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -81,6 +78,10 @@
                                 <tr t-foreach="category_products" t-as="product">
                                     <td>
                                         <span t-field="product.display_name" />
+                                        <span t-if="o.show_description_sale">
+                                            <br />
+                                            <span t-out="product.description_sale" />
+                                        </span>
                                     </td>
                                     <td t-if="o.show_standard_price" class="text-right">
                                         <span
@@ -102,14 +103,6 @@
                                     </td>
                                     <td t-if="o.show_product_uom" class="text-right">
                                         <span t-field="product.uom_id.name" />
-                                    </td>
-                                    <td t-if="o.show_product_images" class="text-right">
-                                        <img
-                                            t-if="product.image_128"
-                                            t-att-src="image_data_uri(product.image_128)"
-                                            alt="Img"
-                                            style="max-height: 80px;"
-                                        />
                                     </td>
                                 </tr>
                             </t>
@@ -138,5 +131,8 @@
         <field
             name="report_file"
         >product_pricelist_direct_print.report_product_pricelist</field>
+        <field
+            name="print_report_name"
+        >'Pricelist- %s' % (object.pricelist_id.name or '')</field>
     </record>
 </odoo>

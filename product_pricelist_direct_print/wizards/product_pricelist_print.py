@@ -7,7 +7,6 @@ from collections import defaultdict
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.osv import expression
-from odoo.tools import float_round
 
 
 @api.model
@@ -17,6 +16,7 @@ def _lang_get(self):
 
 class ProductPricelistPrint(models.TransientModel):
     _name = "product.pricelist.print"
+    _inherit = ["mail.thread", "mail.activity.mixin"]
     _description = "Product Pricelist Print"
 
     context_active_model = fields.Char(
@@ -27,7 +27,7 @@ class ProductPricelistPrint(models.TransientModel):
     partner_ids = fields.Many2many(comodel_name="res.partner", string="Customers")
     categ_ids = fields.Many2many(comodel_name="product.category", string="Categories")
     show_only_defined_products = fields.Boolean(
-        string="Show the products defined on pricelist",
+        string="Show only the products defined on pricelist",
         help="Check this field to print only the products defined in the pricelist. "
         "The entries in the list referring to all products will not be displayed.",
     )
@@ -52,6 +52,7 @@ class ProductPricelistPrint(models.TransientModel):
     show_standard_price = fields.Boolean(string="Show Cost Price")
     show_sale_price = fields.Boolean()
     show_pricelist_name = fields.Boolean(default=True)
+    show_description_sale = fields.Boolean(string="Show Sales Description")
     order_field = fields.Selection(
         [("name", "Name"), ("default_code", "Internal Reference")], string="Order"
     )
@@ -84,7 +85,7 @@ class ProductPricelistPrint(models.TransientModel):
         string="Selling date threshold",
         help="Filter only the products ordered since this date",
     )
-    show_product_images = fields.Boolean(string="Show product images")
+
     product_price = fields.Float(compute="_compute_product_price")
 
     @api.onchange("categ_ids")
@@ -97,17 +98,12 @@ class ProductPricelistPrint(models.TransientModel):
         price = self.get_pricelist_to_print()._get_product_price(
             product, 1, date=self.date
         )
-        precision = self.env["decimal.precision"].precision_get("Product Price")
         if self.vat_mode == "vat_excl":
-            self.product_price = float_round(
-                product.taxes_id.compute_all(price)["total_excluded"], precision
-            )
+            self.product_price = product.taxes_id.compute_all(price)["total_excluded"]
         elif self.vat_mode == "vat_incl":
-            self.product_price = float_round(
-                product.taxes_id.compute_all(price)["total_included"], precision
-            )
+            self.product_price = product.taxes_id.compute_all(price)["total_included"]
         else:
-            self.product_price = float_round(price, precision)
+            self.product_price = price
 
     @api.depends("partner_ids")
     def _compute_partner_count(self):
@@ -316,14 +312,14 @@ class ProductPricelistPrint(models.TransientModel):
     def get_products_domain(self):
         domain = [("sale_ok", "=", True)]
         if self.show_only_defined_products:
-            aux_domain = []
+            aux_domain = [(0, "=", 1)]
             items_dic = {"categ_ids": [], "product_ids": [], "variant_ids": []}
             for item in self.pricelist_id.item_ids:
                 if item.applied_on == "0_product_variant":
                     items_dic["variant_ids"].append(item.product_id.id)
                 if item.applied_on == "1_product":
                     items_dic["product_ids"].append(item.product_tmpl_id.id)
-                if item.applied_on == "2_product_category" and item.categ_id.parent_id:
+                if item.applied_on == "2_product_category":
                     items_dic["categ_ids"].append(item.categ_id.id)
             if items_dic["categ_ids"]:
                 aux_domain = expression.OR(
@@ -378,8 +374,6 @@ class ProductPricelistPrint(models.TransientModel):
         return products
 
     def get_group_key(self, product):
-        if not self.breakage_per_category:
-            return _("Products")
         group_field = getattr(product, self.group_field)
         complete_name = getattr(group_field, "complete_name", group_field.name) or _(
             "Undefined"
