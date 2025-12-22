@@ -3,7 +3,7 @@
 # Copyright 2018-2019 Tecnativa - Carlos Dauden
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import _, fields, models
+from odoo import fields, models
 from odoo.exceptions import UserError
 
 
@@ -37,8 +37,8 @@ class PurchaseOrder(models.Model):
                 purchase_order.partner_id.commercial_partner_id.ref_company_ids
             )
             if dest_company and dest_company.so_from_po:
-                purchase_order.with_company(
-                    dest_company.id
+                purchase_order.with_context(
+                    allowed_company_ids=dest_company.ids
                 )._inter_company_create_sale_order(dest_company)
         return res
 
@@ -83,7 +83,7 @@ class PurchaseOrder(models.Model):
             or dest_company.currency_id.id
         ):
             raise UserError(
-                _(
+                self.env._(
                     "You cannot create SO from PO because "
                     "sale price list currency is different than "
                     "purchase price list currency."
@@ -111,7 +111,7 @@ class PurchaseOrder(models.Model):
             self.partner_ref = sale_order.name
         # Validation of sale order
         if dest_company.sale_auto_validation:
-            sale_order.with_user(intercompany_user.id).sudo().action_confirm()
+            sale_order.with_user(intercompany_user.id).action_confirm()
         return sale_order
 
     def _prepare_sale_order_data(
@@ -181,7 +181,9 @@ class PurchaseOrder(models.Model):
         )
         for so in sale_orders:
             if so.state not in ["draft", "sent", "cancel"]:
-                raise UserError(_("You can't cancel an order that is %s") % so.state)
+                raise UserError(
+                    self.env._("You can't cancel an order that is %s", so.state)
+                )
         for so in sale_orders:
             so.action_cancel()
         self.write({"partner_ref": False})

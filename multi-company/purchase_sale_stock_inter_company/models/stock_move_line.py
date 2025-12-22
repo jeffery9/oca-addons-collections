@@ -7,6 +7,8 @@ class StockMoveLine(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         new_move_lines = super().create(vals_list)
+        # When a picking is unlocked, the user can add new moves.
+        # So, create the corresponding move lines in the intercompany picking.
         for move_line in new_move_lines.filtered(lambda x: x.state == "done"):
             po_moves = move_line._get_stock_moves_to_sync()
             for po_move in po_moves:
@@ -14,10 +16,9 @@ class StockMoveLine(models.Model):
                     quantity=move_line.quantity
                 )
                 if move_line.lot_id:
-                    dest_lot = move_line._get_or_create_lot_intercompany(
-                        po_move.company_id
+                    po_move_line_vals["lot_id"] = (
+                        move_line._ensure_lot_multicompany().id
                     )
-                    po_move_line_vals["lot_id"] = dest_lot.id
                 po_move_line_vals["quantity"] = move_line.quantity
                 self.sudo().create(po_move_line_vals)
         return new_move_lines
@@ -38,6 +39,12 @@ class StockMoveLine(models.Model):
         return res
 
     def _sync_intercompany_move(self, lot_name, vals):
+        """
+        Sync the intercompany stock move lines
+        with the changes made in this move line.
+        :param lot_name: the name of the lot to match the move lines
+        :param vals: the values to sync
+        """
         self.ensure_one()
         fields_to_sync = self._get_fields_to_sync_intercompany()
         po_moves = self._get_stock_moves_to_sync()
@@ -53,10 +60,7 @@ class StockMoveLine(models.Model):
                     continue
                 field_value = self[field]
                 if field == "lot_id" and field_value:
-                    dest_lot = self._get_or_create_lot_intercompany(
-                        po_move_line.company_id
-                    )
-                    field_value = dest_lot.id
+                    field_value = self._ensure_lot_multicompany().id
                 vals_to_write[field] = field_value
             if vals_to_write:
                 po_move_line.write(vals_to_write)
@@ -78,22 +82,18 @@ class StockMoveLine(models.Model):
 
     @api.model
     def _get_fields_to_sync_intercompany(self):
+        """
+        Get the fields that need to be synced with the intercompany move line.
+        :return: set of field names
+        """
         return {"quantity", "lot_id"}
 
-    def _get_or_create_lot_intercompany(self, dest_company):
-        # search if the same lot exists in destination company
+    def _ensure_lot_multicompany(self):
+        """
+        Ensure that the lot can be shared across multiple companies.
+        """
         self.ensure_one()
-        StockLot = self.env["stock.lot"].sudo()
         lot = self.lot_id.sudo()
-        dest_lot = StockLot.search(
-            [
-                ("product_id", "=", lot.product_id.id),
-                ("name", "=", lot.name),
-                ("company_id", "=", dest_company.id),
-            ],
-            limit=1,
-        )
-        if not dest_lot:
-            # if it doesn't exist, create it by copying from original company
-            dest_lot = lot.copy({"company_id": dest_company.id, "name": lot.name})
-        return dest_lot
+        if lot.company_id:
+            lot.company_id = False
+        return lot

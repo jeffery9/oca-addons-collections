@@ -16,12 +16,10 @@ class StockPicking(models.Model):
 
     @api.depends("intercompany_picking_id.move_ids.state")
     def _compute_state(self):
-        """
-        If the picking is inter-company, it's an 'incoming'
-        type of picking, and it has not been validated nor canceled
-        we compute it's state based on the other picking state
-        """
         res = super()._compute_state()
+        # If the picking is inter-company, it's an 'incoming'
+        # type of picking, and it has not been validated nor canceled
+        # we compute it's state based on the other picking state
         for picking in self.filtered(
             lambda pick: pick._is_intercompany_reception()
             and pick.state not in ["done", "cancel"]
@@ -90,7 +88,9 @@ class StockPicking(models.Model):
             po_picking_pending.intercompany_picking_id = self.id
             if not self.intercompany_picking_id and po_picking_pending:
                 self.intercompany_picking_id = po_picking_pending[0]
-            dest_picking = self.intercompany_picking_id.with_user(intercompany_user)
+            dest_picking = self.intercompany_picking_id.with_user(
+                intercompany_user
+            ).with_company(dest_company)
             for move in self.move_ids:
                 move_lines = move.move_line_ids.filtered(lambda x: x.quantity > 0)
                 # To identify the correct move to write to,
@@ -102,7 +102,14 @@ class StockPicking(models.Model):
                     )
                 )
                 po_move_lines = po_move_pending.move_line_ids
-                if not po_move_lines:
+                # Don’t raise an error
+                # if there are no move_line_ids and the location is transit.
+                # In vendor locations, reservations are bypassed,
+                # but in transit locations,
+                # we need to create the move lines to assign lots/serials.
+                if not po_move_pending or (
+                    po_move_lines and move.location_dest_id.usage != "transit"
+                ):
                     raise UserError(
                         _(
                             "There's no corresponding line in PO %(po)s for assigning "
@@ -161,9 +168,7 @@ class StockPicking(models.Model):
                     lot_id = ml.lot_id
                     if not lot_id:
                         continue
-                    # search if the same lot exists in destination company
-                    dest_lot = ml._get_or_create_lot_intercompany(po_ml.company_id)
-                    po_ml.lot_id = dest_lot
+                    po_ml.lot_id = ml._ensure_lot_multicompany()
             if dest_company.sync_picking and self.state == "done":
                 dest_picking.sudo().with_context(
                     cancel_backorder=bool(
@@ -177,6 +182,10 @@ class StockPicking(models.Model):
                 self._notify_picking_problem(purchase)
 
     def _notify_picking_problem(self, purchase):
+        """
+        Create an activity to notify of a problem when syncing the intercompany picking.
+        :param purchase: browse_record(purchase.order)
+        """
         self.ensure_one()
         note = _(
             "Failure to confirm picking for PO %(purchase_name)s. "
@@ -204,7 +213,7 @@ class StockPicking(models.Model):
         :return: bool
         """
         return (
-            self.location_id.usage == "supplier"
+            self.location_id.usage in ["supplier", "transit"]
             and self.purchase_id.sudo().intercompany_sale_order_id
         )
 
@@ -214,6 +223,6 @@ class StockPicking(models.Model):
         :return: bool
         """
         return (
-            self.location_dest_id.usage == "customer"
+            self.location_dest_id.usage in ["customer", "transit"]
             and self.sale_id.sudo().auto_purchase_order_id
         )
