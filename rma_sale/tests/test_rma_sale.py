@@ -3,9 +3,11 @@
 # Copyright 2023 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
+from odoo import Command
 from odoo.exceptions import ValidationError
-from odoo.tests import Form
+from odoo.tests import Form, new_test_user
 from odoo.tests.common import users
+from odoo.tools import mute_logger
 
 from odoo.addons.base.tests.common import BaseCommon
 
@@ -19,10 +21,10 @@ class TestRmaSaleBase(BaseCommon):
         cls.so_model = cls.env["sale.order"]
 
         cls.product_1 = cls.product_product.create(
-            {"name": "Product test 1", "type": "product"}
+            {"name": "Product test 1", "type": "consu", "is_storable": True}
         )
         cls.product_2 = cls.product_product.create(
-            {"name": "Product test 2", "type": "product"}
+            {"name": "Product test 2", "type": "consu", "is_storable": True}
         )
         cls.partner = cls.res_partner.create(
             {"name": "Partner test", "email": "partner@rma"}
@@ -134,6 +136,7 @@ class TestRmaSale(TestRmaSaleBase):
         rma.delivery_move_ids.picking_id.button_validate()
         self.assertEqual(len(self.sale_order.order_line), 1)
 
+    @mute_logger("odoo.models.unlink")
     def test_create_rma_from_so(self):
         order = self.sale_order
         wizard = self._rma_sale_wizard(order)
@@ -154,9 +157,7 @@ class TestRmaSale(TestRmaSaleBase):
             rma.reception_move_id.picking_id + self.order_out_picking,
             order.picking_ids,
         )
-        user = self.env["res.users"].create(
-            {"login": "test_refund_with_so", "name": "Test"}
-        )
+        user = new_test_user(self.env, login="test_refund_with_so")
         order.user_id = user.id
         # Receive the RMA
         rma.action_confirm()
@@ -185,9 +186,7 @@ class TestRmaSale(TestRmaSaleBase):
         )
         operation = self.rma_operation_model.sudo().search([], limit=1)
         line_vals = [
-            (
-                0,
-                0,
+            Command.create(
                 {
                     "product_id": order.order_line.product_id.id,
                     "sale_line_id": order.order_line.id,
@@ -319,7 +318,7 @@ class TestRmaSale(TestRmaSaleBase):
         ):
             rma = self.env["rma"].browse(wizard.create_and_open_rma()["res_id"])
         return_product = self.product_product.create(
-            {"name": "return Product test 1", "type": "product"}
+            {"name": "return Product test 1", "type": "consu", "is_storable": True}
         )
         wizard.line_ids.return_product_id = return_product
         rma = self.env["rma"].browse(wizard.create_and_open_rma()["res_id"])
@@ -329,3 +328,85 @@ class TestRmaSale(TestRmaSaleBase):
         rma.reception_move_id._set_quantity_done(rma.product_uom_qty)
         rma.reception_move_id.picking_id.button_validate()
         self.assertEqual(order.order_line.qty_delivered, 5)
+
+    def test_reception_grouped_even_from_different_sale_order(self):
+        """
+        ensure that RMAs linked to different sale orders are grouped and the procurement
+        group is not linked to any of the so
+        """
+        sale_order1 = self._create_sale_order([[self.product_1, 5]])
+        sale_order1.action_confirm()
+        sale_order1.picking_ids.move_ids.quantity = 5
+        sale_order1.picking_ids.button_validate()
+        rma1 = self.env["rma"].create(
+            {
+                "partner_id": self.partner.id,
+                "product_id": self.product_1.id,
+                "product_uom_qty": 5,
+                "move_id": sale_order1.order_line.move_ids.id,
+                "order_id": sale_order1.id,
+                "operation_id": self.operation.id,
+            }
+        )
+        sale_order2 = self._create_sale_order([[self.product_1, 5]])
+        sale_order2.action_confirm()
+        sale_order2.picking_ids.move_ids.quantity = 5
+        sale_order2.picking_ids.button_validate()
+        rma2 = self.env["rma"].create(
+            {
+                "partner_id": self.partner.id,
+                "product_id": self.product_1.id,
+                "product_uom_qty": 5,
+                "move_id": sale_order2.order_line.move_ids.id,
+                "order_id": sale_order2.id,
+                "operation_id": self.operation.id,
+            }
+        )
+        (rma1 + rma2).action_confirm()
+
+        self.assertEqual(
+            rma1.reception_move_id.picking_id, rma2.reception_move_id.picking_id
+        )
+        self.assertFalse(rma1.procurement_group_id.sale_id)
+
+    def test_reception_grouped_from_same_sale_order(self):
+        """
+        ensure that RMAs linked to same sale orders are grouped and the procurement
+        group is linked to the so
+        """
+        sale_order = self._create_sale_order([[self.product_1, 5], [self.product_2, 5]])
+        sale_order.action_confirm()
+        sale_order.picking_ids.move_ids.quantity = 5
+        sale_order.picking_ids.button_validate()
+        sale_line1 = sale_order.order_line.filtered(
+            lambda sol: sol.product_id == self.product_1
+        )
+        sale_line2 = sale_order.order_line.filtered(
+            lambda sol: sol.product_id == self.product_2
+        )
+        rma1 = self.env["rma"].create(
+            {
+                "partner_id": self.partner.id,
+                "product_id": self.product_1.id,
+                "product_uom_qty": 5,
+                "move_id": sale_line1.move_ids.id,
+                "order_id": sale_order.id,
+                "operation_id": self.operation.id,
+            }
+        )
+        rma2 = self.env["rma"].create(
+            {
+                "partner_id": self.partner.id,
+                "product_id": self.product_2.id,
+                "product_uom_qty": 5,
+                "move_id": sale_line2.move_ids.id,
+                "order_id": sale_order.id,
+                "operation_id": self.operation.id,
+            }
+        )
+        (rma1 + rma2).action_confirm()
+
+        self.assertEqual(
+            rma1.reception_move_id.picking_id, rma2.reception_move_id.picking_id
+        )
+        self.assertEqual(rma1.procurement_group_id.sale_id, sale_order)

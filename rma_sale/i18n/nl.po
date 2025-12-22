@@ -19,21 +19,18 @@ msgstr ""
 #. module: rma_sale
 #. odoo-python
 #: code:addons/rma_sale/controllers/sale_portal.py:0
-#, python-format
 msgid " (Portal)"
 msgstr " (Portal)"
 
 #. module: rma_sale
 #. odoo-python
 #: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:0
-#, python-format
 msgid " has been created."
 msgstr " is aangemaakt."
 
 #. module: rma_sale
 #. odoo-python
 #: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:0
-#, python-format
 msgid " have been created."
 msgstr " is aangemaakt."
 
@@ -44,7 +41,7 @@ msgstr ""
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_order_portal_template
-msgid "<i class=\"fa fa-reply\"/> Request RMAs"
+msgid "<i class=\"fa fa-reply me-1\"/> Request RMAs"
 msgstr ""
 
 #. module: rma_sale
@@ -167,7 +164,6 @@ msgstr ""
 #. odoo-python
 #: code:addons/rma_sale/models/sale.py:0
 #: model_terms:ir.ui.view,arch_db:rma_sale.view_order_form
-#, python-format
 msgid "Create RMA"
 msgstr "RMA aanmaken"
 
@@ -487,7 +483,6 @@ msgstr "U kunt een bericht sturen in elke RMA zending"
 #. module: rma_sale
 #. odoo-python
 #: code:addons/rma_sale/wizard/sale_order_rma_wizard.py:0
-#, python-format
 msgid ""
 "You can't exceed the allowed quantity for returning product %(product)s."
 msgstr ""
@@ -495,9 +490,8 @@ msgstr ""
 #. module: rma_sale
 #. odoo-python
 #: code:addons/rma_sale/models/sale.py:0
-#, python-format
-msgid "You may only create RMAs from a confirmed or done sale order."
-msgstr "U mag alleen een RMA maken van bevestigde of afgehandelde verkopen."
+msgid "You may only create RMAs from a confirmed sale order."
+msgstr ""
 
 #. module: rma_sale
 #: model_terms:ir.ui.view,arch_db:rma_sale.sale_rma_request_form
@@ -511,3 +505,7 @@ msgstr ""
 
 #~ msgid "Last Modified on"
 #~ msgstr "Laatst bijgewerkt op"
+
+#, python-format
+#~ msgid "You may only create RMAs from a confirmed or done sale order."
+#~ msgstr "U mag alleen een RMA maken van bevestigde of afgehandelde verkopen."

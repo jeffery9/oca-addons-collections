@@ -262,7 +262,7 @@ class TestRmaOperation(TestRma):
         )
         self.assertEqual(return_line.rma_operation_id, self.operation)
         return_line.quantity = return_line.move_id.product_uom_qty
-        picking_action = return_wizard.create_returns()
+        picking_action = return_wizard.action_create_returns()
         reception = self.env["stock.picking"].browse(picking_action["res_id"])
         move = reception.move_ids.filtered(lambda m, p=self.product: m.product_id == p)
         self.assertFalse(move.to_refund)
@@ -287,7 +287,7 @@ class TestRmaOperation(TestRma):
         )
         self.assertEqual(return_line.rma_operation_id, self.operation)
         return_line.quantity = return_line.move_id.product_uom_qty
-        picking_action = return_wizard.create_returns()
+        picking_action = return_wizard.action_create_returns()
         reception = self.env["stock.picking"].browse(picking_action["res_id"])
         move = reception.move_ids.filtered(lambda m, p=self.product: m.product_id == p)
         self.assertTrue(move.to_refund)
@@ -299,7 +299,7 @@ class TestRmaOperation(TestRma):
         rma.action_confirm()
         self.assertEqual(rma.state, "waiting_replacement")
         pickings = rma.mapped("delivery_move_ids.picking_id")
-        self.assertEqual(rma.delivery_picking_count, 2)
+        self.assertEqual(rma.delivery_picking_count, 1)
         self.assertIn(self.warehouse.pick_type_id, pickings.picking_type_id)
         pick_move = rma.delivery_move_ids.filtered(
             lambda m: m.picking_type_id == self.warehouse.pick_type_id

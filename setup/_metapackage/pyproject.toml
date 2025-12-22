@@ -1,15 +1,16 @@
 [project]
 name = "odoo-addons-oca-rma"
-version = "17.0.20250602.0"
+version = "18.0.20251105.0"
 dependencies = [
-    "odoo-addon-product_warranty>=17.0dev,<17.1dev",
-    "odoo-addon-rma>=17.0dev,<17.1dev",
-    "odoo-addon-rma_lot>=17.0dev,<17.1dev",
-    "odoo-addon-rma_repair>=17.0dev,<17.1dev",
-    "odoo-addon-rma_sale>=17.0dev,<17.1dev",
+    "odoo-addon-product_warranty==18.0.*",
+    "odoo-addon-rma==18.0.*",
+    "odoo-addon-rma_lot==18.0.*",
+    "odoo-addon-rma_reason==18.0.*",
+    "odoo-addon-rma_sale==18.0.*",
+    "odoo-addon-rma_sale_reason==18.0.*",
 ]
 classifiers=[
     "Programming Language :: Python",
     "Framework :: Odoo",
-    "Framework :: Odoo :: 17.0",
+    "Framework :: Odoo :: 18.0",
 ]
