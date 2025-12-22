@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~11.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-23 13:42+0000\n"
+"POT-Creation-Date: 2022-01-26 09:11+0000\n"
 "PO-Revision-Date: 2018-08-24 09:15+0000\n"
 "Last-Translator: Bjorn Ingvarsson <boi@exigo.is>, 2018\n"
 "Language-Team: Icelandic (https://www.transifex.com/odoo/teams/41243/is/)\n"
@@ -24,14 +24,12 @@ msgstr ""
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid "%d transactions had already been imported and were ignored."
 msgstr ""
 
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid "1 transaction had already been imported and was ignored."
 msgstr ""
 
@@ -48,7 +46,6 @@ msgstr "Hætta við"
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid ""
 "Could not find any bank account with number '%(account_number)s'  linked to "
 "partner '%(partner_name)s'. You should create the bank account and set it on "
@@ -80,6 +77,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__id
 msgid "ID"
 msgstr "Auðkenni"
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/models/account_journal.py:0
+msgid "Import (OCA) (%s)"
+msgstr ""
 
 #. module: account_statement_import_file
 #: model:ir.actions.act_window,name:account_statement_import_file.account_statement_import_action
@@ -126,23 +129,14 @@ msgstr "Síðast uppfært þann"
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid "Missing currency code in the bank statement file."
 msgstr ""
 
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid "Missing payment_ref on a transaction."
 msgstr ""
-
-#. module: account_statement_import_file
-#. odoo-python
-#: code:addons/account_statement_import_file/models/account_journal.py:0
-#, fuzzy, python-format
-msgid "OCA Import"
-msgstr "_Import"
 
 #. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__statement_file
@@ -164,14 +158,12 @@ msgstr ""
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid "The Bank Accounting Account is not set on the journal '%s'."
 msgstr ""
 
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid ""
 "The bank account with number '%(account_number)s' exists in Odoo but it is "
 "not set on any bank journal. You should set it on the related bank journal. "
@@ -181,7 +173,6 @@ msgstr ""
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid ""
 "The bank statement file uses currency '%s' but there is no such currency in "
 "Odoo."
@@ -190,7 +181,6 @@ msgstr ""
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid ""
 "The currency of the bank statement (%(currency_name)s) is not the same as "
 "the currency of the journal '%(journal_name)s' (%(journal_currency_name)s)."
@@ -199,7 +189,6 @@ msgstr ""
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid ""
 "The format of this bank statement file doesn't contain the bank account "
 "number, so you must start the wizard from the right bank journal in the "
@@ -209,7 +198,6 @@ msgstr ""
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid ""
 "The journal found for the file (%(journal_match)s) is different from the "
 "selected journal (%(journal_selected)s)."
@@ -218,14 +206,12 @@ msgstr ""
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid "The parsing of the statement file returned an invalid result."
 msgstr ""
 
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid ""
 "This bank statement file format is not supported.\n"
 "Did you install the Odoo module to support this format?"
@@ -246,175 +232,7 @@ msgstr "Bank Statement Line"
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid ""
 "You have already imported this file, or this file only contains already "
 "imported transactions."
 msgstr ""
-
-#~ msgid "Last Modified on"
-#~ msgstr "Síðast breytt þann"
-
-#~ msgid "or"
-#~ msgstr "eða"
-
-#~ msgid "Bank Statement Line"
-#~ msgstr "Bank Statement Line"
-
-#, fuzzy
-#~ msgid "Partner Bank Account"
-#~ msgstr "Bankareikningur"
-
-#~ msgid "Account Holder"
-#~ msgstr "Account Holder"
-
-#~ msgid "Account Number"
-#~ msgstr "Account Number"
-
-#~ msgid "Account Types Allowed"
-#~ msgstr "Account Types Allowed"
-
-#~ msgid "Accounts Allowed"
-#~ msgstr "Accounts Allowed"
-
-#~ msgid "Active"
-#~ msgstr "Virkur"
-
-#~ msgid "Alias"
-#~ msgstr "Alias"
-
-#~ msgid "Alias domain"
-#~ msgstr "Alias domain"
-
-#~ msgid "Allow Cancelling Entries"
-#~ msgstr "Allow Cancelling Entries"
-
-#~ msgid "Bank"
-#~ msgstr "Banki"
-
-#~ msgid "Bank Feeds"
-#~ msgstr "Bank Feeds"
-
-#~ msgid "Belong to the user's current company"
-#~ msgstr "Belong to the user's current company"
-
-#~ msgid ""
-#~ "Check this box if you want to allow the cancellation the entries related "
-#~ "to this journal or of the invoice related to this journal"
-#~ msgstr ""
-#~ "Check this box if you want to allow the cancellation the entries related "
-#~ "to this journal or of the invoice related to this journal"
-
-#~ msgid "Color Index"
-#~ msgstr "Color Index"
-
-#~ msgid "Company"
-#~ msgstr "Fyrirtæki"
-
-#~ msgid "Company related to this journal"
-#~ msgstr "Company related to this journal"
-
-#~ msgid "Currency"
-#~ msgstr "Gjaldmiðill"
-
-#~ msgid "Default Credit Account"
-#~ msgstr "Default Credit Account"
-
-#~ msgid "Default Debit Account"
-#~ msgstr "Default Debit Account"
-
-#~ msgid "Entry Sequence"
-#~ msgstr "Entry Sequence"
-
-#~ msgid "Group Invoice Lines"
-#~ msgstr "Group Invoice Lines"
-
-#~ msgid ""
-#~ "If this box is checked, the system will try to group the accounting lines "
-#~ "when generating them from invoices."
-#~ msgstr ""
-#~ "If this box is checked, the system will try to group the accounting lines "
-#~ "when generating them from invoices."
-
-#~ msgid "It acts as a default account for credit amount"
-#~ msgstr "It acts as a default account for credit amount"
-
-#~ msgid "It acts as a default account for debit amount"
-#~ msgstr "Notast sem sjálfvalinn reikningur fyrir debit upphæð"
-
-#~ msgid "Journal Name"
-#~ msgstr "Journal Name"
-
-#~ msgid "Kanban Dashboard"
-#~ msgstr "Kanban stjórnborð"
-
-#~ msgid "Loss Account"
-#~ msgstr "Loss Account"
-
-#~ msgid "Next Number"
-#~ msgstr "Next Number"
-
-#~ msgid "OK"
-#~ msgstr "OK"
-
-#~ msgid "Profit Account"
-#~ msgstr "Profit Account"
-
-#~ msgid ""
-#~ "Select 'Sale' for customer invoices journals.\n"
-#~ "Select 'Purchase' for vendor bills journals.\n"
-#~ "Select 'Cash' or 'Bank' for journals that are used in customer or vendor "
-#~ "payments.\n"
-#~ "Select 'General' for miscellaneous operations journals."
-#~ msgstr ""
-#~ "Select 'Sale' for customer invoices journals.\n"
-#~ "Select 'Purchase' for vendor bills journals.\n"
-#~ "Select 'Cash' or 'Bank' for journals that are used in customer or vendor "
-#~ "payments.\n"
-#~ "Select 'General' for miscellaneous operations journals."
-
-#~ msgid "Sequence"
-#~ msgstr "Runa"
-
-#~ msgid "Short Code"
-#~ msgstr "Short Code"
-
-#~ msgid "Show journal on dashboard"
-#~ msgstr "Show journal on dashboard"
-
-#~ msgid "The currency used to enter statement"
-#~ msgstr "The currency used to enter statement"
-
-#~ msgid "The journal entries of this journal will be named using this prefix."
-#~ msgstr ""
-#~ "The journal entries of this journal will be named using this prefix."
-
-#~ msgid ""
-#~ "This field contains the information related to the numbering of the "
-#~ "journal entries of this journal."
-#~ msgstr ""
-#~ "This field contains the information related to the numbering of the "
-#~ "journal entries of this journal."
-
-#~ msgid "Type"
-#~ msgstr "Gerð"
-
-#~ msgid "Used to order Journals in the dashboard view"
-#~ msgstr "Used to order Journals in the dashboard view"
-
-#~ msgid ""
-#~ "Used to register a loss when the ending balance of a cash register "
-#~ "differs from what the system computes"
-#~ msgstr ""
-#~ "Used to register a loss when the ending balance of a cash register "
-#~ "differs from what the system computes"
-
-#~ msgid ""
-#~ "Used to register a profit when the ending balance of a cash register "
-#~ "differs from what the system computes"
-#~ msgstr ""
-#~ "Used to register a profit when the ending balance of a cash register "
-#~ "differs from what the system computes"
-
-#~ msgid "Whether this journal should be displayed on the dashboard or not"
-#~ msgstr "Whether this journal should be displayed on the dashboard or not"

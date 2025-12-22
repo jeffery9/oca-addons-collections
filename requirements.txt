@@ -1,4 +1,3 @@
 # generated from manifests external_dependencies
-chardet
 ofxparse
-xlrd
+plaid-python
