@@ -57,8 +57,7 @@ class AccountMove(models.Model):
             dest_company = src_invoice._find_company_from_invoice_partner()
             if not dest_company:
                 continue
-            # If one of the involved companies have the intercompany
-            # setting disabled, skip
+            # Skip if one of the involved companies have intercompany setting disabled
             if (
                 not dest_company.intercompany_invoicing
                 or not src_invoice.company_id.intercompany_invoicing
@@ -111,7 +110,7 @@ class AccountMove(models.Model):
                     dest_user
                 ).with_context(
                     **{"allowed_company_ids": [dest_company.id]}
-                ).check_access_rule("read")
+                ).check_access("read")
             except AccessError as e:
                 raise UserError(
                     _(
@@ -152,11 +151,7 @@ class AccountMove(models.Model):
         :rtype dest_company : res.company record
         """
         self.ensure_one()
-        # Remove default_ context keys
-        ctx = clean_context(self.env.context)
-        ctx["check_move_validity"] = False
-        # pylint: disable=W8121
-        self = self.with_context(ctx)
+        self = self.with_context(check_move_validity=False)
         # check intercompany product
         self._check_intercompany_product(dest_company)
         # if an invoice has already been generated
@@ -248,6 +243,7 @@ class AccountMove(models.Model):
         :rtype dest_company : res.company record
         """
         self.ensure_one()
+        self = self.with_context(**clean_context(self.env.context))
         # check if the journal is define in dest company
         self._check_dest_journal(dest_company)
         vals = {

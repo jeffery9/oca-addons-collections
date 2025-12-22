@@ -3,5 +3,4 @@
 - Andrea Stirpe \<<a.stirpe@onestein.nl>\>
 - Alberto Nieto de Pablos \<<alberto.nieto@braintec.com>\>
   (<https://braintec.com>)
-- [APSL-Nagarro](https://apsl.tech):
-  - Antoni Marroig \<<amarroig@apsl.net>\>
+- [Heliconia Solutions Pvt. Ltd.](https://www.heliconia.io)
