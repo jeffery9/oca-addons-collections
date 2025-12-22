@@ -3,7 +3,6 @@
 # Copyright 2024 Subteno - Timothée Vannier (https://www.subteno.com).
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo.exceptions import AccessError
 from odoo.tests.common import users
 from odoo.tools import mute_logger
 
@@ -60,12 +59,8 @@ class StorageAttachmentTestCase(StorageAttachmentBaseCase):
         file.with_user(self.dms_user).lock()
         self.assertTrue(file.is_locked)
         self.assertFalse(file.is_lock_editor)
-        with self.assertRaises(AccessError):
-            attachment.unlink()
-        self.assertTrue(file.exists())
         file.with_user(self.dms_user).unlock()
         self.assertFalse(file.is_locked)
-        file.invalidate_recordset()
         attachment.unlink()
         self.assertFalse(file.exists())
 

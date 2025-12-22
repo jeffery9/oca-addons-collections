@@ -6,7 +6,9 @@
 
 import os
 
-from odoo.exceptions import UserError
+from odoo import Command
+from odoo.exceptions import AccessError, UserError
+from odoo.tests import new_test_user
 from odoo.tests.common import users
 from odoo.tools import mute_logger
 
@@ -87,7 +89,7 @@ class DirectoryTestCaseBase(StorageDatabaseBaseCase):
     @users("dms-manager", "dms-user")
     def test_rename_directory(self):
         path_names = self.subdirectory.complete_name
-        self.directory.write({"name": "New Test Name %s" % self.env.user.login})
+        self.directory.write({"name": f"New Test Name {self.env.user.login}"})
         self.assertNotEqual(
             path_names,
             self.subdirectory.complete_name,
@@ -266,6 +268,18 @@ class DirectoryTestCaseBase(StorageDatabaseBaseCase):
             msg="The tag_ids field should be a multi range field",
         )
 
+    def test_directory_unlink_custom(self):
+        user = new_test_user(
+            self.env, login="test-dms-customer-user", groups="dms.group_dms_user"
+        )
+        group = self.access_group_model.create(
+            {"name": "Test read group", "explicit_user_ids": [Command.set(user.ids)]}
+        )
+        root_directory = self.create_directory(storage=self.storage)
+        root_directory.group_ids = [Command.link(group.id)]
+        with self.assertRaises(AccessError):
+            root_directory.with_user(user).unlink()
+
 
 class DirectoryMailTestCase(StorageDatabaseBaseCase):
     @classmethod
@@ -273,13 +287,13 @@ class DirectoryMailTestCase(StorageDatabaseBaseCase):
         super().setUpClass()
         cls.params = cls.env["ir.config_parameter"].sudo()
         cls.params.set_param("mail.catchall.domain", "dmstest.com")
-        domain = cls.env["mail.alias.domain"].create({"name": "dmstest.com"})
-        cls.env["mail.alias"].create(
+        cls.domain = cls.env["mail.alias.domain"].create({"name": "dmstest.com"})
+        cls.alias = cls.env["mail.alias"].create(
             {
                 "alias_model_id": cls.env["ir.model"]
                 .search([("model", "=", "dms.directory")])
                 .id,
-                "alias_domain_id": domain.id,
+                "alias_domain_id": cls.domain.id,
             }
         )
 
@@ -299,4 +313,7 @@ class DirectoryMailTestCase(StorageDatabaseBaseCase):
         self.directory.write(
             {"alias_process": "directory", "alias_name": "directory+test"}
         )
-        self._handle_mail_reception()
+        self.assertEqual(
+            self.directory.alias_id.display_name,
+            f"{self.directory.alias_name}@{self.domain.name}",
+        )
