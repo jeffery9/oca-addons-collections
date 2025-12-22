@@ -25,7 +25,6 @@ msgstr ""
 #. module: purchase_request
 #. odoo-python
 #: code:addons/purchase_request/models/purchase_order.py:0
-#, python-format
 msgid ""
 "<li><b>%(prl_name)s</b>: Ordered quantity %(prl_qty)s %(prl_uom)s, Planned "
 "date %(prl_date_planned)s</li>"
@@ -33,20 +32,9 @@ msgstr ""
 
 #. module: purchase_request
 #. odoo-python
-#: code:addons/purchase_request/models/purchase_order.py:0
 #: code:addons/purchase_request/models/purchase_request_allocation.py:0
-#, python-format
 msgid ""
 "<li><b>%(product_name)s</b>: Received quantity %(product_qty)s "
-"%(product_uom)s</li>"
-msgstr ""
-
-#. module: purchase_request
-#. odoo-python
-#: code:addons/purchase_request/models/stock_move_line.py:0
-#, python-format
-msgid ""
-"<li><b>%(product_name)s</b>: Transferred quantity %(product_qty)s "
 "%(product_uom)s</li>"
 msgstr ""
 
@@ -159,7 +147,6 @@ msgstr "请购是为了指导采购在某个时间点满足一定数量的材料
 #. module: purchase_request
 #. odoo-python
 #: code:addons/purchase_request/models/stock_move.py:0
-#, python-format
 msgid ""
 "A sale/manufacturing order that generated this purchase request has been "
 "cancelled/deleted. Check if an action is needed."
@@ -215,11 +202,6 @@ msgstr "分配"
 #: model:ir.model.fields,field_description:purchase_request.field_purchase_request_line__analytic_distribution
 #: model_terms:ir.ui.view,arch_db:purchase_request.purchase_request_line_search
 msgid "Analytic Distribution"
-msgstr ""
-
-#. module: purchase_request
-#: model:ir.model.fields,field_description:purchase_request.field_purchase_request_line__analytic_distribution_search
-msgid "Analytic Distribution Search"
 msgstr ""
 
 #. module: purchase_request
@@ -388,7 +370,6 @@ msgstr "说明"
 #. module: purchase_request
 #. odoo-python
 #: code:addons/purchase_request/models/purchase_request_line.py:0
-#, python-format
 msgid "Detailed Line"
 msgstr ""
 
@@ -428,14 +409,12 @@ msgstr "草稿"
 #. module: purchase_request
 #. odoo-python
 #: code:addons/purchase_request/wizard/purchase_request_line_make_purchase_order.py:0
-#, python-format
 msgid "Enter a positive quantity."
 msgstr "输入一个正数。"
 
 #. module: purchase_request
 #. odoo-python
 #: code:addons/purchase_request/wizard/purchase_request_line_make_purchase_order.py:0
-#, python-format
 msgid "Enter a supplier."
 msgstr "输入一个供应商。"
 
@@ -475,7 +454,6 @@ msgstr ""
 #. module: purchase_request
 #. odoo-python
 #: code:addons/purchase_request/models/purchase_request_allocation.py:0
-#, python-format
 msgid ""
 "From last reception this quantity has been allocated to this purchase request"
 msgstr "自上次收货起，已分配给这个采购请求的数量"
@@ -549,7 +527,6 @@ msgstr ""
 
 #. module: purchase_request
 #: model:ir.model.fields,field_description:purchase_request.field_purchase_request__is_editable
-#: model:ir.model.fields,field_description:purchase_request.field_purchase_request_line__is_editable
 msgid "Is Editable"
 msgstr ""
 
@@ -563,6 +540,11 @@ msgstr "是关注者"
 #: model:ir.model.fields,field_description:purchase_request.field_purchase_request__is_name_editable
 msgid "Is Name Editable"
 msgstr ""
+
+#. module: purchase_request
+#: model:ir.model.fields,field_description:purchase_request.field_purchase_request_line__is_editable
+msgid "Is editable"
+msgstr "可编辑"
 
 #. module: purchase_request
 #: model:ir.model.fields,field_description:purchase_request.field_purchase_request_line_make_purchase_order__item_ids
@@ -634,7 +616,6 @@ msgstr "我的请购单"
 #. module: purchase_request
 #. odoo-python
 #: code:addons/purchase_request/models/purchase_request.py:0
-#, python-format
 msgid "New"
 msgstr ""
 
@@ -704,7 +685,6 @@ msgstr "订单编号"
 #. module: purchase_request
 #. odoo-python
 #: code:addons/purchase_request/models/purchase_order.py:0
-#, python-format
 msgid "Order confirmation %(po_name)s for your Request %(pr_name)s"
 msgstr ""
 
@@ -742,7 +722,6 @@ msgstr ""
 #. module: purchase_request
 #. odoo-python
 #: code:addons/purchase_request/wizard/purchase_request_line_make_purchase_order.py:0
-#, python-format
 msgid "Please select a product for all lines"
 msgstr "请为明细行选择一个产品"
 
@@ -849,14 +828,12 @@ msgstr "请购单"
 #. module: purchase_request
 #. odoo-python
 #: code:addons/purchase_request/models/purchase_order.py:0
-#, python-format
 msgid "Purchase Request %s has already been completed"
 msgstr "请购单 %s 已完成"
 
 #. module: purchase_request
 #. odoo-python
 #: code:addons/purchase_request/wizard/purchase_request_line_make_purchase_order.py:0
-#, python-format
 msgid "Purchase Request %s is not approved or in progress"
 msgstr ""
 
@@ -905,7 +882,6 @@ msgstr "请购明细计数"
 #: model:ir.ui.menu,name:purchase_request.menu_purchase_request_line_act
 #: model_terms:ir.ui.view,arch_db:purchase_request.purchase_order_line_form2
 #: model_terms:ir.ui.view,arch_db:purchase_request.purchase_order_line_form2_sub
-#, python-format
 msgid "Purchase Request Lines"
 msgstr "请购明细"
 
@@ -1036,7 +1012,6 @@ msgstr "待采购数量"
 #. module: purchase_request
 #. odoo-python
 #: code:addons/purchase_request/wizard/purchase_request_line_make_purchase_order.py:0
-#, python-format
 msgid "RFQ"
 msgstr "询价单"
 
@@ -1048,20 +1023,24 @@ msgstr ""
 #. module: purchase_request
 #. odoo-python
 #: code:addons/purchase_request/models/stock_move_line.py:0
-#, python-format
-msgid "Receipt confirmation %(picking_name)s for your Request %(request_name)s"
+msgid "Receipt confirmation for Request {name}"
 msgstr ""
 
 #. module: purchase_request
 #. odoo-python
 #: code:addons/purchase_request/models/stock_move_line.py:0
-#, python-format
-msgid "Receipt confirmation for Request %s"
-msgstr "请购单 %s  收货确认"
+msgid "Receipt confirmation {picking_name} for your Request {request_name}"
+msgstr ""
 
 #. module: purchase_request
 #: model:mail.message.subtype,description:purchase_request.mt_request_picking_done
 msgid "Receipt is done"
+msgstr ""
+
+#. module: purchase_request
+#. odoo-python
+#: code:addons/purchase_request/models/purchase_order.py:0
+msgid "Received quantity"
 msgstr ""
 
 #. module: purchase_request
@@ -1193,9 +1172,8 @@ msgstr "服务型采购订单明细"
 #. module: purchase_request
 #. odoo-python
 #: code:addons/purchase_request/models/purchase_order.py:0
-#, python-format
-msgid "Service confirmation for Request %s"
-msgstr "请购单 %s 服务确认"
+msgid "Service confirmation for Request {request_name}"
+msgstr ""
 
 #. module: purchase_request
 #: model:ir.model.fields,help:purchase_request.field_purchase_request_line_make_purchase_order_item__keep_description
@@ -1281,7 +1259,6 @@ msgstr "供应商"
 #. module: purchase_request
 #. odoo-python
 #: code:addons/purchase_request/models/stock_move.py:0
-#, python-format
 msgid ""
 "The company of the purchase request must match with that of the location."
 msgstr "发起请购的公司所选库位必须属于该公司。"
@@ -1289,7 +1266,6 @@ msgstr "发起请购的公司所选库位必须属于该公司。"
 #. module: purchase_request
 #. odoo-python
 #: code:addons/purchase_request/models/purchase_order.py:0
-#, python-format
 msgid ""
 "The following requested items from Purchase Request %(pr_name)s have now "
 "been confirmed in Purchase Order %(po_name)s:"
@@ -1298,34 +1274,30 @@ msgstr ""
 #. module: purchase_request
 #. odoo-python
 #: code:addons/purchase_request/models/stock_move_line.py:0
-#, python-format
 msgid ""
-"The following requested items from Purchase Request %(request_name)s have "
-"now been received in %(location_name)s using Picking %(picking_name)s:"
+"The following requested items from Purchase Request {request_name} have now "
+"been received in {location_name} using Picking {picking_name}:"
 msgstr ""
 
 #. module: purchase_request
 #. odoo-python
 #: code:addons/purchase_request/models/stock_move_line.py:0
-#, python-format
 msgid ""
-"The following requested items from Purchase Request %(request_name)s "
-"requested by %(requestor)s have now been received in %(location_name)s:"
+"The following requested items from Purchase Request {request_name} requested "
+"by {requestor} have now been received in {location_name}:"
 msgstr ""
 
 #. module: purchase_request
 #. odoo-python
 #: code:addons/purchase_request/models/purchase_order.py:0
-#, python-format
 msgid ""
-"The following requested services from Purchase Request %(request_name)s "
-"requested by %(requestor)s have now been received:"
+"The following requested services from Purchase Request {request_name} "
+"requested by {requestor} have now been received:"
 msgstr ""
 
 #. module: purchase_request
 #. odoo-python
 #: code:addons/purchase_request/wizard/purchase_request_line_make_purchase_order.py:0
-#, python-format
 msgid "The purchase has already been completed."
 msgstr "采购已完成。"
 
@@ -1360,6 +1332,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:purchase_request.view_purchase_request_line_details
 msgid "Tracking"
 msgstr "追踪"
+
+#. module: purchase_request
+#. odoo-python
+#: code:addons/purchase_request/models/stock_move_line.py:0
+msgid "Transferred quantity"
+msgstr ""
 
 #. module: purchase_request
 #: model:ir.model.fields,help:purchase_request.field_purchase_request__activity_exception_decoration
@@ -1427,7 +1405,6 @@ msgstr "向导"
 #. module: purchase_request
 #. odoo-python
 #: code:addons/purchase_request/models/purchase_request_line.py:0
-#, python-format
 msgid ""
 "You can only delete a purchase request line if the purchase request is in "
 "draft state."
@@ -1436,7 +1413,6 @@ msgstr "如果请购单处于草稿状态，则只能删除请购单的明细。
 #. module: purchase_request
 #. odoo-python
 #: code:addons/purchase_request/models/purchase_request.py:0
-#, python-format
 msgid ""
 "You can't request an approval for a purchase request which is empty. (%s)"
 msgstr "您不能为空的请购单执行准批操作。（%s）"
@@ -1444,7 +1420,6 @@ msgstr "您不能为空的请购单执行准批操作。（%s）"
 #. module: purchase_request
 #. odoo-python
 #: code:addons/purchase_request/wizard/purchase_request_line_make_purchase_order.py:0
-#, python-format
 msgid ""
 "You cannot create a single purchase order from purchase requests that have "
 "different procurement group."
@@ -1453,44 +1428,45 @@ msgstr "您不能从含有不同补货组的请购单中创建单个采购订单
 #. module: purchase_request
 #. odoo-python
 #: code:addons/purchase_request/models/purchase_request.py:0
-#, python-format
 msgid "You cannot delete a purchase request which is not draft."
 msgstr "您不能删除非草稿的请购单。"
 
 #. module: purchase_request
 #. odoo-python
 #: code:addons/purchase_request/models/purchase_request_line.py:0
-#, python-format
 msgid "You cannot delete a record that refers to purchase lines!"
 msgstr "您不能删除关联了采购明细的记录！"
 
 #. module: purchase_request
 #. odoo-python
 #: code:addons/purchase_request/wizard/purchase_request_line_make_purchase_order.py:0
-#, python-format
 msgid "You have to enter a Picking Type."
 msgstr "您必须输入一个作业类型。"
 
 #. module: purchase_request
 #. odoo-python
 #: code:addons/purchase_request/wizard/purchase_request_line_make_purchase_order.py:0
-#, python-format
 msgid "You have to select lines from the same Picking Type."
 msgstr "您必须选择相同作业类型的请购明细。"
 
 #. module: purchase_request
 #. odoo-python
 #: code:addons/purchase_request/wizard/purchase_request_line_make_purchase_order.py:0
-#, python-format
 msgid "You have to select lines from the same company."
 msgstr "您必须选择同一个公司的请购明细。"
 
-#, python-format
+#~ msgid "SMS Delivery error"
+#~ msgstr "交货错误短信"
+
 #~ msgid "Purchase Request %s is not approved"
 #~ msgstr "请购单 %s 未获批准"
 
-#~ msgid "SMS Delivery error"
-#~ msgstr "交货错误短信"
+#~ msgid "Service confirmation for Request %s"
+#~ msgstr "请购单 %s 服务确认"
+
+#, python-format
+#~ msgid "Receipt confirmation for Request %s"
+#~ msgstr "请购单 %s  收货确认"
 
 #~ msgid "Last Modified on"
 #~ msgstr "最近修改时间"
@@ -1533,9 +1509,6 @@ msgstr "您必须选择同一个公司的请购明细。"
 
 #~ msgid "Followers (Channels)"
 #~ msgstr "关注者(频道)"
-
-#~ msgid "Is editable"
-#~ msgstr "可编辑"
 
 #~ msgid "Order confirmation %s for your Request %s"
 #~ msgstr "确认订单 %s 根据您的请购单 %s"

@@ -3,7 +3,7 @@
 
 {
     "name": "Purchase Advance Payment",
-    "version": "17.0.1.5.1",
+    "version": "18.0.1.2.0",
     "author": "Forgeflow, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/purchase-workflow",
     "category": "Purchase",

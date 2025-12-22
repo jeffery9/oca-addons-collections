@@ -5,7 +5,7 @@
         <field name="inherit_id" ref="purchase.purchase_order_view_tree" />
         <field name="arch" type="xml">
             <!-- Add missing decoration-info on that tree view-->
-            <xpath expr="//tree" position="attributes">
+            <xpath expr="//list" position="attributes">
                 <attribute name="decoration-info">state in ('draft','sent')</attribute>
             </xpath>
             <field name="state" position="attributes">
@@ -20,7 +20,7 @@
                     name="decoration-success"
                 >state == 'purchase' or state == 'done'</attribute>
             </field>
-             <field name="date_order" position="attributes">
+            <field name="date_order" position="attributes">
                 <attribute name="widget">remaining_days</attribute>
                 <attribute name="column_invisible">0</attribute>
             </field>
@@ -77,5 +77,4 @@
     <record id="purchase.purchase_form_action" model="ir.actions.act_window">
         <field name="domain">[]</field>
     </record>
-
 </odoo>

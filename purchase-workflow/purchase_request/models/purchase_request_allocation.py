@@ -111,7 +111,7 @@ class PurchaseRequestAllocation(models.Model):
             "product_uom": message_data["product_uom"],
         }
         message += "</ul>"
-        return Markup(message)
+        return message
 
     def _prepare_message_data(self, po_line, request, allocated_qty):
         return {
@@ -131,6 +131,6 @@ class PurchaseRequestAllocation(models.Model):
             message_data = self._prepare_message_data(po_line, request, allocated_qty)
             message = self._purchase_request_confirm_done_message_content(message_data)
             request.message_post(
-                body=message,
+                body=Markup(message),
                 subtype_id=self.env.ref("mail.mt_note").id,
             )

@@ -2,8 +2,7 @@
 # Copyright 2019 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.tests import common
-from odoo.tests.common import Form
+from odoo.tests import Form, common
 
 
 class TestPurchaseOrder(common.TransactionCase):
@@ -39,6 +38,7 @@ class TestPurchaseOrder(common.TransactionCase):
                 "min_qty": 0.0,
                 "partner_id": cls.partner2.id,
                 "product_tmpl_id": cls.product1.product_tmpl_id.id,
+                "price": 100,
                 "discount1": 10,
                 "discount2": 20,
                 "discount3": 30,
@@ -49,6 +49,7 @@ class TestPurchaseOrder(common.TransactionCase):
                 "min_qty": 10.0,
                 "partner_id": cls.partner2.id,
                 "product_tmpl_id": cls.product1.product_tmpl_id.id,
+                "price": 100,
                 "discount3": 50,
             }
         )
@@ -109,7 +110,7 @@ class TestPurchaseOrder(common.TransactionCase):
         )
 
     def test_01_purchase_order_classic_discount(self):
-        """Tests with single discount1"""
+        """Tests with single discount"""
         self.po_line1.discount1 = 50.0
         self.po_line2.discount1 = 75.0
         self.assertEqual(self.po_line1.price_subtotal, 300.0)
@@ -123,14 +124,14 @@ class TestPurchaseOrder(common.TransactionCase):
     def test_02_purchase_order_simple_triple_discount(self):
         """Tests on a single line"""
         self.po_line2.unlink()
-        # Divide by two on every discount1:
+        # Divide by two on every discount:
         self.po_line1.discount1 = 50.0
         self.po_line1.discount2 = 50.0
         self.po_line1.discount3 = 50.0
         self.assertEqual(self.po_line1.price_subtotal, 75.0)
         self.assertEqual(self.order.amount_untaxed, 75.0)
         self.assertEqual(self.order.amount_tax, 11.25)
-        # Unset first discount1:
+        # Unset first discount:
         self.po_line1.discount1 = 0.0
         self.assertEqual(self.po_line1.price_subtotal, 150.0)
         self.assertEqual(self.order.amount_untaxed, 150.0)
@@ -185,7 +186,18 @@ class TestPurchaseOrder(common.TransactionCase):
         )
         self.assertEqual(self.order.amount_total, self.invoice.amount_total)
 
-    def test_07_supplierinfo_from_purchaseorder(self):
+    def test_05_purchase_order_default_discounts(self):
+        with Form(self.order2).order_line.edit(0) as line:
+            line.product_qty = 1.0
+            self.assertEqual(line.discount1, 10)
+            self.assertEqual(line.discount2, 20)
+            self.assertEqual(line.discount3, 30)
+            line.product_qty = 10
+            self.assertFalse(line.discount1)
+            self.assertFalse(line.discount2)
+            self.assertEqual(line.discount3, 50)
+
+    def test_06_supplierinfo_from_purchaseorder(self):
         self.order2.order_line.create(
             {
                 "order_id": self.order2.id,

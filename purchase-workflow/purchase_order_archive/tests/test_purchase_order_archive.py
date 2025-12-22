@@ -1,4 +1,4 @@
-# Copyright 2017 Eficent Business and IT Consulting Services S.L.
+# Copyright 2017 ForgeFlow, S.L.
 # Copyright 2017 Luxim d.o.o.
 # Copyright 2017 Matmoz d.o.o.
 # Copyright 2017 Deneroteam.
@@ -61,3 +61,9 @@ class TestPurchaseOrderArchive(TransactionCase):
         self.assertEqual(self.po_done.active, False)
         self.po_cancel.toggle_active()
         self.assertEqual(self.po_cancel.active, False)
+
+    def test_check_state_constraint(self):
+        """Test that archived orders cannot have their state changed"""
+        self.po_done.toggle_active()
+        with self.assertRaises(UserError):
+            self.po_done.state = "purchase"

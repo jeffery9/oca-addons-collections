@@ -114,12 +114,9 @@ msgstr "¡El nombre de etiqueta ya existe!"
 msgid "Tags"
 msgstr "Etiquetas"
 
-#. module: purchase_tag
-#. odoo-python
-#: code:addons/purchase_tag/models/purchase_tag.py:0
 #, python-format
-msgid "Tags cannot be recursive."
-msgstr "Las etiquetas no pueden ser recursivas."
+#~ msgid "Tags cannot be recursive."
+#~ msgstr "Las etiquetas no pueden ser recursivas."
 
 #~ msgid "Last Modified on"
 #~ msgstr "Última Modificación el"

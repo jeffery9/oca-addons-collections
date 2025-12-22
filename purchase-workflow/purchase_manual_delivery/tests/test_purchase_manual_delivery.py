@@ -3,7 +3,7 @@
 
 from odoo import fields
 from odoo.exceptions import UserError
-from odoo.tests.common import Form, TransactionCase
+from odoo.tests import Form, TransactionCase
 
 from odoo.addons.mail.tests.common import mail_new_test_user
 
@@ -87,7 +87,7 @@ class TestPurchaseManualDelivery(TransactionCase):
         add second PO line to same picking afterwards)
         """
         # confirm RFQ
-        self.po1.button_confirm_manual()
+        self.po1.button_confirm()
         self.assertTrue(self.po1_line1.pending_to_receive)
         self.assertTrue(self.po1_line2.pending_to_receive)
         self.assertEqual(self.po1_line1.qty_in_receipt, 0)
@@ -207,7 +207,7 @@ class TestPurchaseManualDelivery(TransactionCase):
                 "to_refund": False,
             }
         )
-        return_wiz.create_returns()
+        return_wiz.action_create_returns()
 
         # The refund line is open to re-receive the returned item
         self.assertTrue(self.po1_line1.pending_to_receive)
@@ -225,8 +225,8 @@ class TestPurchaseManualDelivery(TransactionCase):
         for two PO lines from same PO twice.
         """
         # confirm RFQ
-        self.po1.button_confirm_manual()
-        self.po2.button_confirm_manual()
+        self.po1.button_confirm()
+        self.po2.button_confirm()
         self.assertTrue(self.po1_line1.pending_to_receive)
         self.assertTrue(self.po1_line2.pending_to_receive)
         self.assertTrue(self.po2_line1.pending_to_receive)
@@ -279,7 +279,7 @@ class TestPurchaseManualDelivery(TransactionCase):
         grp_multi_loc = self.env.ref("stock.group_stock_multi_locations")
         self.env.user.write({"groups_id": [(4, grp_multi_loc.id, 0)]})
         # confirm RFQ
-        self.po1.button_confirm_manual()
+        self.po1.button_confirm()
         self.assertTrue(self.po1_line1.pending_to_receive)
         self.assertTrue(self.po1_line2.pending_to_receive)
         self.assertEqual(self.po1_line1.qty_in_receipt, 0)
@@ -332,7 +332,7 @@ class TestPurchaseManualDelivery(TransactionCase):
                 "product_qty": 5.0,
             }
         )
-        po_existing_bigger.button_confirm_manual()
+        po_existing_bigger.button_confirm()
         # create a manual delivery for line in po_existing_bigger
         wizard = (
             self.env["create.stock.picking.wizard"]
@@ -369,7 +369,8 @@ class TestPurchaseManualDelivery(TransactionCase):
         product_in_progress = self.env["product.product"].create(
             {
                 "name": "Test product pending",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
                 "list_price": 1,
                 "standard_price": 1,
             }
@@ -390,7 +391,7 @@ class TestPurchaseManualDelivery(TransactionCase):
                 "product_qty": 5.0,
             }
         )
-        po_in_progress.button_confirm_manual()
+        po_in_progress.button_confirm()
         location = self.env["stock.location"].browse(
             po_in_progress.picking_type_id.default_location_dest_id.id
         )
@@ -469,7 +470,7 @@ class TestPurchaseManualDelivery(TransactionCase):
         )
 
         # confirm RFQ
-        self.po.button_confirm_manual()
+        self.po.button_confirm()
         self.assertTrue(self.po.order_line.pending_to_receive)
         self.assertEqual(self.po.order_line.qty_in_receipt, 0)
         self.assertFalse(
@@ -488,3 +489,46 @@ class TestPurchaseManualDelivery(TransactionCase):
             "Purchase Manual Delivery: no picking should had been created",
         )
         self.assertEqual(self.po.state, "purchase")
+
+    def test_07_purchase_order_ignore_manual_delivery(self):
+        """Manual delivery can be overridden with a context key during confirmation"""
+        self.po1.with_context(ignore_manual_delivery=True).button_confirm()
+        self.assertTrue(
+            self.po1.picking_ids,
+            "Context key failed to trigger picking creation",
+        )
+        self.assertTrue(
+            self.po1.picking_ids.move_ids,
+            "Context key failed to trigger stock move creation",
+        )
+        for line in self.po1.order_line:
+            self.assertFalse(
+                line.pending_to_receive,
+                "Context key did not create stock moves for all quantities",
+            )
+
+    def test_08_purchase_order_line_increase_quantity(self):
+        """Increasing the quantity on a confirmed line does not trigger delivery"""
+        self.po1.button_confirm()
+        self.assertFalse(self.po1.picking_ids)
+        self.po1.order_line[0].product_qty += 1
+        self.assertFalse(
+            self.po1.picking_ids,
+            "Increasing the quantity on a confirmed line should not create deliveries",
+        )
+        # Same on line creation
+        self.po1.order_line[0].copy()
+        self.assertFalse(self.po1.picking_ids)
+        self.assertFalse(
+            self.po1.picking_ids,
+            "Adding a line to a confirmed order should not create a delivery",
+        )
+        # Context key forces the delivery
+        self.po1.order_line[0].with_context(
+            ignore_manual_delivery=True
+        ).product_qty += 1
+        self.assertTrue(
+            self.po1.picking_ids,
+            "Passing context key when increasing the quantity on a confirmed line did "
+            "not create a delivery",
+        )

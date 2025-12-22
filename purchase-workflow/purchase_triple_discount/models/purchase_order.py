@@ -15,5 +15,4 @@ class PurchaseOrder(models.Model):
                 for fname in line._get_multiple_discount_field_names()
             )
         )
-        res.pop("discount")
         return res

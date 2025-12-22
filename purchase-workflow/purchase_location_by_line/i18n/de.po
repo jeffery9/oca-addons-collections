@@ -29,5 +29,7 @@ msgstr "Ziellager"
 msgid "Purchase Order Line"
 msgstr "Bestellposition"
 
-#~ msgid "Transfer"
-#~ msgstr "Transfer"
+#. module: purchase_location_by_line
+#: model:ir.model,name:purchase_location_by_line.model_stock_picking
+msgid "Transfer"
+msgstr "Transfer"

@@ -1,25 +1,28 @@
-# Copyright 2024-Today - Sylvain Le GAL (GRAP)
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-
-import logging
-
-_logger = logging.getLogger(__name__)
-
-
 def post_init_hook(env):
-    _logger.info("Initializing column discount1 on table purchase_order_line")
     env.cr.execute(
         """
-            UPDATE purchase_order_line
-            SET discount1 = discount
-            WHERE discount != 0
-        """
+        UPDATE purchase_order_line upd
+        SET discount1=pol.discount
+        FROM (SELECT *
+              FROM purchase_order_line
+              WHERE discount IS NOT NULL
+                AND discount1 IS NULL
+                AND discount2 IS NULL
+                AND discount3 IS NULL) as pol
+        WHERE upd.id = pol.id
+    """
     )
-    _logger.info("Initializing column discount1 on table product_supplierinfo")
+
     env.cr.execute(
         """
-            UPDATE product_supplierinfo
-            SET discount1 = discount
-            WHERE discount != 0
+            UPDATE product_supplierinfo upd
+            SET discount1=psi.discount
+            FROM (SELECT *
+                  FROM product_supplierinfo
+                  WHERE discount IS NOT NULL
+                    AND discount1 IS NULL
+                    AND discount2 IS NULL
+                    AND discount3 IS NULL) as psi
+            WHERE upd.id = psi.id
         """
     )
