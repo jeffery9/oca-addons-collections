@@ -1,4 +1,0 @@
-- Kitti Upariphutthiphong. \<kittiu@gmail.com\> (<http://ecosoft.co.th>)
-- Saran Lim. \<saranl@ecosoft.co.th\>
-- Randall Castro. \<randall@vauxoo.com\>
-- Jesús Valdez. \<jvaldez@vauxoo.com\>

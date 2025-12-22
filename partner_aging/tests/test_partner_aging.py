@@ -5,7 +5,7 @@
 from datetime import datetime, timedelta
 
 from odoo import fields
-from odoo.tests import common
+from odoo.tests import Form, common
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
@@ -13,10 +13,6 @@ from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 
 @common.tagged("-at_install", "post_install")
 class TestPartnerAging(AccountTestInvoicingCommon):
-    @classmethod
-    def setUpClass(cls, chart_template_ref=None):
-        super().setUpClass(chart_template_ref=chart_template_ref)
-
     def setUp(self):
         super().setUp()
         self.partner_aging_date_model = self.env["res.partner.aging.date"]
@@ -147,7 +143,7 @@ class TestPartnerAging(AccountTestInvoicingCommon):
                 "partner_id": invoice_data[2],
             }
         )
-        invoice_form = common.Form(invoice)
+        invoice_form = Form(invoice)
         with invoice_form.invoice_line_ids.new() as line_form:
             line_form.product_id = self.env.ref("product.product_product_4")
             line_form.quantity = 1

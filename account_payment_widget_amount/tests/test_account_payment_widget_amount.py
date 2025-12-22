@@ -24,7 +24,7 @@ class TestAccountPaymentWidgetAmount(TransactionCase):
                 "code": "TEST.BANK",
                 "account_type": "asset_cash",
                 "reconcile": False,
-                "company_id": self.company.id,
+                "company_ids": [(6, 0, [self.company.id])],
             }
         )
         self.account_receivable = self.account_account_model.create(
@@ -33,7 +33,7 @@ class TestAccountPaymentWidgetAmount(TransactionCase):
                 "code": "TEST.AR",
                 "account_type": "asset_receivable",
                 "reconcile": True,
-                "company_id": self.company.id,
+                "company_ids": [(6, 0, [self.company.id])],
             }
         )
         self.account_payable = self.account_account_model.create(
@@ -42,7 +42,7 @@ class TestAccountPaymentWidgetAmount(TransactionCase):
                 "code": "TEST.AP",
                 "account_type": "liability_payable",
                 "reconcile": True,
-                "company_id": self.company.id,
+                "company_ids": [(6, 0, [self.company.id])],
             }
         )
         self.partner.property_account_receivable_id = self.account_receivable
@@ -53,7 +53,7 @@ class TestAccountPaymentWidgetAmount(TransactionCase):
                 "code": "TEST.IN",
                 "account_type": "income",
                 "reconcile": False,
-                "company_id": self.company.id,
+                "company_ids": [(6, 0, [self.company.id])],
             }
         )
         self.account_expense = self.account_account_model.create(
@@ -62,7 +62,7 @@ class TestAccountPaymentWidgetAmount(TransactionCase):
                 "code": "TEST.EX",
                 "account_type": "expense",
                 "reconcile": False,
-                "company_id": self.company.id,
+                "company_ids": [(6, 0, [self.company.id])],
             }
         )
         self.bank_journal = self.account_journal_model.create(
@@ -139,7 +139,7 @@ class TestAccountPaymentWidgetAmount(TransactionCase):
             }
         )
         payment.action_post()
-        payment_ml = payment.line_ids.filtered(
+        payment_ml = payment.move_id.line_ids.filtered(
             lambda line: line.account_id == self.account_receivable
         )
         invoice.with_context(paid_amount=100.0).js_assign_outstanding_line(
@@ -208,7 +208,7 @@ class TestAccountPaymentWidgetAmount(TransactionCase):
             }
         )
         payment.action_post()
-        payment_ml = payment.line_ids.filtered(
+        payment_ml = payment.move_id.line_ids.filtered(
             lambda line: line.account_id == self.account_receivable
         )
         # We pay 100 in the currency of the invoice. Which means that in
@@ -275,7 +275,7 @@ class TestAccountPaymentWidgetAmount(TransactionCase):
             }
         )
         payment.action_post()
-        payment_ml = payment.line_ids.filtered(
+        payment_ml = payment.move_id.line_ids.filtered(
             lambda line: line.account_id == self.account_receivable
         )
         # We collect 100 in the currency of the refund. Which means that in
@@ -341,7 +341,7 @@ class TestAccountPaymentWidgetAmount(TransactionCase):
             }
         )
         payment.action_post()
-        payment_ml = payment.line_ids.filtered(
+        payment_ml = payment.move_id.line_ids.filtered(
             lambda line: line.account_id == self.account_receivable
         )
         # We pay 100 in the currency of the invoice, which is the
@@ -414,7 +414,7 @@ class TestAccountPaymentWidgetAmount(TransactionCase):
             }
         )
         payment.action_post()
-        payment_ml = payment.line_ids.filtered(
+        payment_ml = payment.move_id.line_ids.filtered(
             lambda line: line.account_id == self.account_payable
         )
         invoice.with_context(paid_amount=100.0).js_assign_outstanding_line(

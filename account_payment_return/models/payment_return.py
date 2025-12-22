@@ -6,8 +6,9 @@
 # Copyright 2017 Tecnativa - Luis M. Ontalba
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError, ValidationError
+from odoo.tools.translate import _
 
 
 class PaymentReturn(models.Model):
@@ -71,7 +72,7 @@ class PaymentReturn(models.Model):
     def _check_duplicate_move_line(self):
         def append_error(error_line):
             error_list.append(
-                _(
+                self.env._(
                     "Payment Line: %(move_names)s (%(partner_name)s) "
                     "in Payment Return: %(return_name)s"
                 )
@@ -152,12 +153,18 @@ class PaymentReturn(models.Model):
 
     def _prepare_move_line(self, move, total_amount):
         self.ensure_one()
+        account = self.payment_method_line_id.payment_account_id
+        if not account:
+            account = (
+                self.env["account.payment"]
+                .with_company(self.company_id)
+                ._get_outstanding_account("inbound")
+            )
         return {
             "name": move.ref,
             "debit": 0.0,
             "credit": total_amount,
-            "account_id": self.payment_method_line_id.payment_account_id.id
-            or self.company_id.account_journal_payment_debit_account_id.id,
+            "account_id": account.id,
             "move_id": move.id,
             "journal_id": move.journal_id.id,
         }
@@ -318,8 +325,7 @@ class PaymentReturnLine(models.Model):
             invoice = self.env["account.move"].search(domain)
             if invoice:
                 invoice_line_ids = invoice.line_ids.filtered(
-                    lambda line: line.account_id.account_type
-                    in ("asset_receivable", "liability_payable")
+                    lambda line: line.account_id.account_type == "asset_receivable"
                 )
                 payment_lines = invoice_line_ids.mapped(
                     "matched_debit_ids.debit_move_id"
@@ -328,7 +334,8 @@ class PaymentReturnLine(models.Model):
                     "matched_credit_ids.credit_move_id"
                 )
                 if payment_lines:
-                    line.move_line_ids = payment_lines[0].ids
+                    # Get last payment if several payments
+                    line.move_line_ids = payment_lines[-1].ids
                     if not line.concept:
                         line.concept = _("Invoice: %s") % invoice.name
 
@@ -337,7 +344,7 @@ class PaymentReturnLine(models.Model):
             domain = line.partner_id and [("partner_id", "=", line.partner_id.id)] or []
             if line.return_id.journal_id:
                 domain += [
-                    ("journal_id", "=", line.return_id.journal_id.id),
+                    ("credit", ">", 0.0),
                     ("move_id.move_type", "=", "entry"),
                 ]
             domain.extend(
