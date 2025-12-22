@@ -1,12 +1,11 @@
 [project]
 name = "odoo-addons-oca-wms"
-version = "17.0.20241004.0"
+version = "18.0.20241231.0"
 dependencies = [
-    "odoo-addon-stock_picking_type_shipping_policy>=17.0dev,<17.1dev",
-    "odoo-addon-stock_warehouse_flow>=17.0dev,<17.1dev",
+    "odoo-addon-delivery_carrier_warehouse==18.0.*",
 ]
 classifiers=[
     "Programming Language :: Python",
     "Framework :: Odoo",
-    "Framework :: Odoo :: 17.0",
+    "Framework :: Odoo :: 18.0",
 ]
