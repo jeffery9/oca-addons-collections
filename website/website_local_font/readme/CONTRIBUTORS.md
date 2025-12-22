@@ -1,4 +1,0 @@
-- [Onestein](https://www.onestein.nl):
-  - Anjeel Haria
-- [Binhex](https://binhex.cloud):
-  - Antonio Ruban

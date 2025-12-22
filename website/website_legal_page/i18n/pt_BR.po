@@ -9,16 +9,17 @@ msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-01-27 03:46+0000\n"
-"PO-Revision-Date: 2019-09-03 15:23+0000\n"
-"Last-Translator: Rodrigo Macedo <rmsolucoeseminformatic4@gmail.com>\n"
-"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/"
-"teams/23907/pt_BR/)\n"
+"PO-Revision-Date: 2024-07-06 21:58+0000\n"
+"Last-Translator: Rodrigo Sottomaior Macedo "
+"<sottomaiormacedotec@sottomaiormacedo.tech>\n"
+"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/teams/"
+"23907/pt_BR/)\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.8\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. module: website_legal_page
 #: model_terms:ir.ui.view,arch_db:website_legal_page.legal_page
@@ -27,16 +28,19 @@ msgid ""
 "fit, and by using this Website you are expected to review these Terms on a "
 "regular basis."
 msgstr ""
+"**NOME DA EMPRESA** tem permissão para revisar estes Termos a qualquer "
+"momento conforme achar adequado e, ao usar este Site, espera-se que você "
+"revise estes Termos regularmente."
 
 #. module: website_legal_page
 #: model_terms:ir.ui.view,arch_db:website_legal_page.legal_page
 msgid "<font style=\"font-size: 42px;\">Table of Content</font>"
-msgstr ""
+msgstr "<font style=\"font-size: 42px;\">Índice</font>"
 
 #. module: website_legal_page
 #: model_terms:ir.ui.view,arch_db:website_legal_page.legal_page
 msgid "Assignment"
-msgstr ""
+msgstr "Atribuição"
 
 #. module: website_legal_page
 #: model_terms:ir.ui.view,arch_db:website_legal_page.legal_page
@@ -47,11 +51,16 @@ msgid ""
 "may have for this Website are confidential and you must maintain "
 "confidentiality as well."
 msgstr ""
+"Certas áreas deste Site estão proibidas de serem acessadas por você e **NOME "
+"DA EMPRESA** pode restringir ainda mais o seu acesso a quaisquer áreas deste "
+"Site, a qualquer momento, a critério absoluto. Qualquer ID de usuário e "
+"senha que você possa ter neste Site são confidenciais e você também deve "
+"manter a confidencialidade."
 
 #. module: website_legal_page
 #: model_terms:ir.ui.view,arch_db:website_legal_page.legal_page
 msgid "Governing Law &amp;amp; Jurisdiction"
-msgstr ""
+msgstr "Lei Aplicável e Jurisdição"
 
 #. module: website_legal_page
 #: model_terms:ir.ui.view,arch_db:website_legal_page.legal_page
@@ -60,6 +69,9 @@ msgid ""
 "law, such provisions shall be deleted without affecting the remaining "
 "provisions herein."
 msgstr ""
+"Se qualquer disposição destes Termos for considerada inválida sob qualquer "
+"lei aplicável, tais disposições serão excluídas sem afetar as demais "
+"disposições aqui contidas."
 
 #. module: website_legal_page
 #: model_terms:ir.ui.view,arch_db:website_legal_page.legal_page
@@ -71,6 +83,13 @@ msgid ""
 "shall not be held liable for any indirect, consequential or special "
 "liability arising out of or in any way related to your use of this Website."
 msgstr ""
+"Em nenhum caso a **NOME DA EMPRESA**, nem qualquer um de seus executivos, "
+"diretores e funcionários, será responsabilizado por qualquer coisa "
+"decorrente ou de alguma forma relacionada ao uso deste Site, "
+"independentemente de tal responsabilidade estar sob contrato. **NOME DA "
+"EMPRESA**, incluindo seus dirigentes, diretores e funcionários, não serão "
+"responsabilizados por qualquer responsabilidade indireta, consequencial ou "
+"especial decorrente ou de alguma forma relacionada ao uso deste site."
 
 #. module: website_legal_page
 #: model_terms:ir.ui.view,arch_db:website_legal_page.legal_page
@@ -85,38 +104,46 @@ msgid ""
 "right to remove any of Your Content from this Website at any time without "
 "notice."
 msgstr ""
+"Nestes Termos e Condições Padrão do Site, “Seu Conteúdo” significa qualquer "
+"áudio, texto de vídeo, imagens ou outro material que você opte por exibir "
+"neste Site. Ao exibir Seu Conteúdo, você concede à **NOME DA EMPRESA** uma "
+"licença não exclusiva, irrevogável e sublicenciável em todo o mundo para usá-"
+"lo, reproduzi-lo, adaptá-lo, publicá-lo, traduzi-lo e distribuí-lo em toda e "
+"qualquer mídia. <br/>\n"
+"                                        Seu Conteúdo deve ser seu e não deve "
+"estar invadindo os direitos de terceiros. **NOME DA EMPRESA** reserva-se o "
+"direito de remover qualquer conteúdo seu deste site a qualquer momento, sem "
+"aviso prévio."
 
 #. module: website_legal_page
 #: model_terms:ir.ui.view,arch_db:website_legal_page.legal_page
-#, fuzzy
 msgid "Indemnification"
-msgstr "Conclusão"
+msgstr "Indenização"
 
 #. module: website_legal_page
 #: model_terms:ir.ui.view,arch_db:website_legal_page.legal_page
 msgid "Intellectual Property Rights"
-msgstr ""
+msgstr "Direito de propriedade intelectual"
 
 #. module: website_legal_page
 #: model_terms:ir.ui.view,arch_db:website_legal_page.legal_page
 msgid "Introduction"
-msgstr ""
+msgstr "Introdução"
 
 #. module: website_legal_page
 #: model_terms:ir.ui.view,arch_db:website_legal_page.legal_page_link
-#, fuzzy
 msgid "Legal Page"
-msgstr "Aconselhamento jurídico"
+msgstr "Página Jurídica"
 
 #. module: website_legal_page
 #: model_terms:ir.ui.view,arch_db:website_legal_page.legal_page
 msgid "Limitation of liability"
-msgstr ""
+msgstr "Limitação de responsabilidade"
 
 #. module: website_legal_page
 #: model_terms:ir.ui.view,arch_db:website_legal_page.legal_page
 msgid "No warranties"
-msgstr ""
+msgstr "Sem garantias"
 
 #. module: website_legal_page
 #: model_terms:ir.ui.view,arch_db:website_legal_page.legal_page
@@ -127,17 +154,21 @@ msgid ""
 "                                        You are granted limited license only "
 "for purposes of viewing the material contained on this Website."
 msgstr ""
+"Além do conteúdo que você possui, sob estes Termos, **NOME DA EMPRESA** e/ou "
+"seus licenciadores possuem todos os direitos de propriedade intelectual e "
+"materiais contidos neste Site. <br/>\n"
+"                                        Você recebe licença limitada apenas "
+"para fins de visualização do material contido neste Site."
 
 #. module: website_legal_page
 #: model_terms:ir.ui.view,arch_db:website_legal_page.legal_page
-#, fuzzy
 msgid "Restrictions"
-msgstr "Conclusão"
+msgstr "Restrições"
 
 #. module: website_legal_page
 #: model_terms:ir.ui.view,arch_db:website_legal_page.legal_page
 msgid "Severability"
-msgstr ""
+msgstr "Divisibilidade"
 
 #. module: website_legal_page
 #: model_terms:ir.ui.view,arch_db:website_legal_page.legal_page
@@ -145,6 +176,8 @@ msgid ""
 "THIS IS A SAMPLE PAGE! <br/>Please, edit this page to be valid with your use "
 "case."
 msgstr ""
+"ESTA É UMA PÁGINA DE EXEMPLO! <br/>Por favor, edite esta página para que "
+"seja válida para seu caso de uso."
 
 #. module: website_legal_page
 #: model_terms:ir.ui.view,arch_db:website_legal_page.legal_page
@@ -154,6 +187,10 @@ msgid ""
 "However, you are not allowed to assign, transfer, or subcontract any of your "
 "rights and/or obligations under these Terms."
 msgstr ""
+"A **NOME DA EMPRESA** tem permissão para ceder, transferir e subcontratar "
+"seus direitos e/ou obrigações sob estes Termos sem qualquer notificação. No "
+"entanto, você não tem permissão para ceder, transferir ou subcontratar "
+"qualquer um dos seus direitos e/ou obrigações sob estes Termos."
 
 #. module: website_legal_page
 #: model_terms:ir.ui.view,arch_db:website_legal_page.legal_page
@@ -163,6 +200,10 @@ msgid ""
 "jurisdiction of the state and federal courts located in **COUNTRY** for the "
 "resolution of any disputes."
 msgstr ""
+"Estes Termos serão regidos e interpretados de acordo com as leis do Estado "
+"de **PAÍS**, e você se submete à jurisdição não exclusiva dos tribunais "
+"estaduais e federais localizados em **PAÍS** para a resolução de qualquer "
+"disputas."
 
 #. module: website_legal_page
 #: model_terms:ir.ui.view,arch_db:website_legal_page.legal_page
@@ -178,6 +219,16 @@ msgid ""
 "                                        Minors or people below 18 years old "
 "are not allowed to use this Website."
 msgstr ""
+"Estes Termos e Condições Padrão do Site escritos nesta página da Web "
+"gerenciarão o uso do nosso site, **NOME DO SITE** acessível em **URL DO "
+"SITE**.<br/>\n"
+"                                        Estes Termos serão aplicados "
+"integralmente e afetarão o uso deste Site. Ao utilizar este site, você "
+"concorda em aceitar todos os termos e condições aqui escritos. Você não deve "
+"usar este Site se discordar de algum destes Termos e Condições Padrão do "
+"Site.<br/>\n"
+"                                        Menores ou pessoas com menos de 18 "
+"anos não estão autorizadas a utilizar este Site."
 
 #. module: website_legal_page
 #: model_terms:ir.ui.view,arch_db:website_legal_page.legal_page
@@ -187,16 +238,20 @@ msgid ""
 "Website or the materials contained on this Website. Also, nothing contained "
 "on this Website shall be interpreted as advising you."
 msgstr ""
+"Este Site é fornecido “como está”, com todas as falhas, e **NOME DA EMPRESA**"
+" não expressa nenhuma representação ou garantia de qualquer tipo relacionada "
+"a este Site ou aos materiais contidos neste Site. Além disso, nada contido "
+"neste Site deverá ser interpretado como aconselhamento."
 
 #. module: website_legal_page
 #: model_terms:ir.ui.view,arch_db:website_legal_page.legal_page
 msgid "Variation of Terms"
-msgstr ""
+msgstr "Variação de Termos"
 
 #. module: website_legal_page
 #: model_terms:ir.ui.view,arch_db:website_legal_page.legal_page
 msgid "You are specifically restricted from all of the following:"
-msgstr ""
+msgstr "Você está especificamente restrito a todos os itens a seguir:"
 
 #. module: website_legal_page
 #: model_terms:ir.ui.view,arch_db:website_legal_page.legal_page
@@ -206,11 +261,15 @@ msgid ""
 "expenses arising in any way related to your breach of any of the provisions "
 "of these Terms."
 msgstr ""
+"Você indeniza em toda a extensão **NOME DA EMPRESA** de e contra quaisquer e/"
+"ou todas as responsabilidades, custos, demandas, causas de ação, danos e "
+"despesas decorrentes de qualquer forma relacionadas à sua violação de "
+"qualquer uma das disposições destes Termos. ."
 
 #. module: website_legal_page
 #: model_terms:ir.ui.view,arch_db:website_legal_page.legal_page
 msgid "Your Content"
-msgstr ""
+msgstr "Seu conteúdo"
 
 #. module: website_legal_page
 #: model_terms:ir.ui.view,arch_db:website_legal_page.legal_page
@@ -218,22 +277,26 @@ msgid ""
 "engaging in any data mining, data harvesting, data extracting or any other "
 "similar activity in relation to this Website;"
 msgstr ""
+"envolver-se em qualquer mineração de dados, coleta de dados, extração de "
+"dados ou qualquer outra atividade semelhante em relação a este Site;"
 
 #. module: website_legal_page
 #: model_terms:ir.ui.view,arch_db:website_legal_page.legal_page
 msgid "publicly performing and/or showing any Website material;"
-msgstr ""
+msgstr "apresentar e/ou exibir publicamente qualquer material do Site;"
 
 #. module: website_legal_page
 #: model_terms:ir.ui.view,arch_db:website_legal_page.legal_page
 msgid "publishing any Website material in any other media;"
-msgstr ""
+msgstr "publicar qualquer material do Site em qualquer outra mídia;"
 
 #. module: website_legal_page
 #: model_terms:ir.ui.view,arch_db:website_legal_page.legal_page
 msgid ""
 "selling, sublicensing and/or otherwise commercializing any Website material;"
 msgstr ""
+"vender, sublicenciar e/ou de outra forma comercializar qualquer material do "
+"Site;"
 
 #. module: website_legal_page
 #: model_terms:ir.ui.view,arch_db:website_legal_page.legal_page
@@ -241,473 +304,25 @@ msgid ""
 "using this Website contrary to applicable laws and regulations, or in any "
 "way may cause harm to the Website, or to any person or business entity;"
 msgstr ""
+"usar este Site de forma contrária às leis e regulamentos aplicáveis, ou de "
+"qualquer forma que possa causar danos ao Site, ou a qualquer pessoa ou "
+"entidade empresarial;"
 
 #. module: website_legal_page
 #: model_terms:ir.ui.view,arch_db:website_legal_page.legal_page
 msgid "using this Website in any way that impacts user access to this Website;"
 msgstr ""
+"usar este Site de qualquer forma que afete o acesso do usuário a este Site;"
 
 #. module: website_legal_page
 #: model_terms:ir.ui.view,arch_db:website_legal_page.legal_page
 msgid ""
 "using this Website in any way that is or may be damaging to this Website;"
 msgstr ""
+"usar este Site de qualquer forma que seja ou possa ser prejudicial a este "
+"Site;"
 
 #. module: website_legal_page
 #: model_terms:ir.ui.view,arch_db:website_legal_page.legal_page
 msgid "using this Website to engage in any advertising or marketing."
-msgstr ""
-
-#, fuzzy
-#~ msgid "Cookies Policy"
-#~ msgstr "Cookies"
-
-#~ msgid "(\"us\", \"we\", or \"our\") operates"
-#~ msgstr "(\"nós\", \"nós\" ou \"nosso\") opera"
-
-#~ msgid "(\"us\", \"we\", or \"our\")."
-#~ msgstr "(\"nós\", \"nós\" ou \"nosso\")."
-
-#~ msgid ""
-#~ "(the \"Site\"). This page informs you of our policies regarding the\n"
-#~ "                                                collection, use and "
-#~ "disclosure\n"
-#~ "                                                of Personal Information "
-#~ "we receive from users of the Site."
-#~ msgstr ""
-#~ "(o site\"). Esta página informa sobre nossas políticas em relação ao\n"
-#~ "                                                 coleta, uso e "
-#~ "divulgação\n"
-#~ "                                                 das informações pessoais "
-#~ "que recebemos dos usuários do site."
-
-#~ msgid ""
-#~ ",\n"
-#~ "                                                without regard to its "
-#~ "conflict of law provisions."
-#~ msgstr ""
-#~ ",\n"
-#~ "                                                 sem levar em conta suas "
-#~ "disposições sobre conflitos de leis."
-
-#~ msgid ", and the"
-#~ msgstr ", e as"
-
-#~ msgid ", the"
-#~ msgstr ", a"
-
-#~ msgid ""
-#~ "All provisions of the Terms which by their nature should survive\n"
-#~ "                                                termination shall "
-#~ "survive\n"
-#~ "                                                termination, including, "
-#~ "without limitation, ownership provisions,\n"
-#~ "                                                warranty disclaimers, "
-#~ "indemnity\n"
-#~ "                                                and limitations of "
-#~ "liability."
-#~ msgstr ""
-#~ "Todas as disposições dos Termos que, por sua natureza, devem sobreviver\n"
-#~ "                                                 rescisão deve "
-#~ "sobreviver\n"
-#~ "                                                 rescisão, incluindo, sem "
-#~ "limitação, disposições de propriedade,\n"
-#~ "                                                 isenções de garantia, "
-#~ "indenização\n"
-#~ "                                                 e limitações de "
-#~ "responsabilidade."
-
-#~ msgid ""
-#~ "By accessing or using the Service you agree to be bound by these Terms.\n"
-#~ "                                                If you disagree with\n"
-#~ "                                                any part of the terms "
-#~ "then you may not access the Service."
-#~ msgstr ""
-#~ "Ao acessar ou usar o Serviço, você concorda em ficar vinculado a estes "
-#~ "Termos.\n"
-#~ "                                                 Se você não concorda "
-#~ "com\n"
-#~ "                                                 qualquer parte dos "
-#~ "termos, você poderá não acessar o Serviço."
-
-#~ msgid "Changes"
-#~ msgstr "Mudanças"
-
-#~ msgid "Changes To This Privacy Policy"
-#~ msgstr "Alterações nesta política de privacidade"
-
-#~ msgid "Contact Us"
-#~ msgstr "Contate-nos"
-
-#~ msgid ""
-#~ "Cookies are files with small amount of data, which may include an\n"
-#~ "                                                anonymous unique "
-#~ "identifier.\n"
-#~ "                                                Cookies are sent to your "
-#~ "browser from a web site and stored on your\n"
-#~ "                                                computer's hard drive."
-#~ msgstr ""
-#~ "Cookies são arquivos com pequena quantidade de dados, que podem incluir "
-#~ "uma\n"
-#~ "                                                 identificador exclusivo "
-#~ "anônimo.\n"
-#~ "                                                 Os cookies são enviados "
-#~ "para o seu navegador a partir de um site e armazenados no seu\n"
-#~ "                                                 disco rígido do "
-#~ "computador."
-
-#~ msgid "Email address:"
-#~ msgstr "Endereço de E-mail:"
-
-#~ msgid "Governing Law"
-#~ msgstr "Lei Governamental"
-
-#~ msgid "I accept the"
-#~ msgstr "Eu aceito o"
-
-#~ msgid "If you have any questions about these Terms, please contact us."
-#~ msgstr ""
-#~ "Se você tiver alguma dúvida sobre estes Termos, entre em contato conosco."
-
-#~ msgid "Information Collection And Use"
-#~ msgstr "Coleta e uso de informações"
-
-#~ msgid ""
-#~ "Like many site operators, we collect information that your browser sends\n"
-#~ "                                                whenever you visit our\n"
-#~ "                                                Site (\"Log Data\"). This "
-#~ "Log Data may include information such as your\n"
-#~ "                                                computer's Internet\n"
-#~ "                                                Protocol (\"IP\") "
-#~ "address, browser type, browser version, the pages of our\n"
-#~ "                                                Site that you visit, the\n"
-#~ "                                                time and date of your "
-#~ "visit, the time spent on those pages and other\n"
-#~ "                                                statistics."
-#~ msgstr ""
-#~ "Como muitos operadores de sites, coletamos informações que seu navegador "
-#~ "envia\n"
-#~ "                                                 sempre que você visitar "
-#~ "nosso\n"
-#~ "                                                 Site (\"Dados do Log\"). "
-#~ "Esses dados de log podem incluir informações como sua\n"
-#~ "                                                 Internet do computador\n"
-#~ "                                                 Endereço de protocolo "
-#~ "(\"IP\"), tipo de navegador, versão do navegador, as páginas de nossa\n"
-#~ "                                                 Site que você visita, o\n"
-#~ "                                                 hora e data da sua "
-#~ "visita, o tempo gasto nessas páginas e em outros\n"
-#~ "                                                 Estatísticas."
-
-#~ msgid ""
-#~ "Like many sites, we use \"cookies\" to collect information. You can\n"
-#~ "                                                instruct your browser to "
-#~ "refuse\n"
-#~ "                                                all cookies or to "
-#~ "indicate when a cookie is being sent. However, if you\n"
-#~ "                                                do not accept cookies, "
-#~ "you\n"
-#~ "                                                may not be able to use "
-#~ "some portions of our Site."
-#~ msgstr ""
-#~ "Como muitos sites, usamos \"cookies\" para coletar informações. Você "
-#~ "pode\n"
-#~ "                                                 instrua seu navegador a "
-#~ "recusar\n"
-#~ "                                                 todos os cookies ou para "
-#~ "indicar quando um cookie está sendo enviado. No entanto, se você\n"
-#~ "                                                 não aceita cookies, "
-#~ "você\n"
-#~ "                                                 talvez não seja possível "
-#~ "usar algumas partes do nosso site."
-
-#~ msgid "Links To Other Web Sites"
-#~ msgstr "Links para Outros Websites"
-
-#~ msgid "Log Data"
-#~ msgstr "Log de Dados"
-
-#~ msgid ""
-#~ "Our Service may contain links to third­party web sites or services that\n"
-#~ "                                                are not owned or "
-#~ "controlled\n"
-#~ "                                                by ​us. We has no control "
-#~ "over, and assumes no responsibility for, the\n"
-#~ "                                                content, privacy "
-#~ "policies, or practices of any third party web sites or\n"
-#~ "                                                services. You further\n"
-#~ "                                                acknowledge and agree "
-#~ "that ​we shall not be responsible or liable,\n"
-#~ "                                                directly or indirectly, "
-#~ "for any damage or loss caused or alleged to be\n"
-#~ "                                                caused by or in "
-#~ "connection\n"
-#~ "                                                with use of or reliance "
-#~ "on any such content, goods or services available\n"
-#~ "                                                on or through any such\n"
-#~ "                                                web sites or services."
-#~ msgstr ""
-#~ "Nosso Serviço pode conter links para sites de terceiros ou serviços que\n"
-#~ "                                                não pertencem ou são "
-#~ "controlados\n"
-#~ "                                                por nós. Não temos "
-#~ "controle e não assumimos nenhuma responsabilidade pelo\n"
-#~ "                                                conteúdo, políticas de "
-#~ "privacidade ou práticas de sites de terceiros ou\n"
-#~ "                                                Serviços. Você ainda\n"
-#~ "                                                pode reconhecer e "
-#~ "concordar que não devemos ser responsabilizados,\n"
-#~ "                                                direta ou indiretamente, "
-#~ "por qualquer dano ou perda causada ou supostamente\n"
-#~ "                                                causada por ou em "
-#~ "conexão\n"
-#~ "                                                com o uso ou confiança em "
-#~ "qualquer conteúdo, bens ou serviços disponíveis\n"
-#~ "                                                ou através de qualquer\n"
-#~ "                                                sites ou serviços."
-
-#~ msgid ""
-#~ "Our failure to enforce any right or provision of these Terms will not be\n"
-#~ "                                                considered a waiver of\n"
-#~ "                                                those rights. If any "
-#~ "provision of these Terms is held to be invalid or\n"
-#~ "                                                unenforceable by a court, "
-#~ "the\n"
-#~ "                                                remaining provisions of "
-#~ "these Terms will remain in effect. These Terms\n"
-#~ "                                                constitute the entire\n"
-#~ "                                                agreement between us "
-#~ "regarding our Service, and supersede and replace\n"
-#~ "                                                any prior agreements\n"
-#~ "                                                we might have between us "
-#~ "regarding the Service."
-#~ msgstr ""
-#~ "Nossa falha em fazer cumprir qualquer direito ou disposição destes Termos "
-#~ "não será\n"
-#~ "                                                 considerado uma renúncia "
-#~ "de\n"
-#~ "                                                 esses direitos. Se "
-#~ "qualquer disposição destes Termos for considerada inválida ou\n"
-#~ "                                                 inexequível por um "
-#~ "tribunal, a\n"
-#~ "                                                 as demais disposições "
-#~ "destes Termos permanecerão em vigor. Estes Termos\n"
-#~ "                                                 constituem o todo\n"
-#~ "                                                 acordo entre nós em "
-#~ "relação ao nosso Serviço e substitua e substitua\n"
-#~ "                                                 quaisquer acordos "
-#~ "anteriores\n"
-#~ "                                                 podemos ter entre nós em "
-#~ "relação ao serviço."
-
-#~ msgid "Phone number:"
-#~ msgstr "Número de Telefone:"
-
-#~ msgid ""
-#~ "Please read these Terms of Use (\"Terms\", \"Terms of Use\") carefully\n"
-#~ "                                                before using the"
-#~ msgstr ""
-#~ "Leia estes Termos de uso (\"Termos\", \"Termos de uso\") com atenção\n"
-#~ "                                                 antes de usar o"
-
-#~ msgid "Privacy Policy"
-#~ msgstr "Política de Privacidade"
-
-#~ msgid "Security"
-#~ msgstr "Segurança"
-
-#~ msgid "Terms of Use (\"Terms\")"
-#~ msgstr "Termos of Uso (\"Terms\")"
-
-#~ msgid "Terms of use"
-#~ msgstr "Termos de uso"
-
-#~ msgid "The owner of this website is"
-#~ msgstr "O proprietário deste site é"
-
-#~ msgid ""
-#~ "The security of your Personal Information is important to us, but\n"
-#~ "                                                remember that no method "
-#~ "of\n"
-#~ "                                                transmission over the "
-#~ "Internet, or method of electronic storage, is 100%\n"
-#~ "                                                secure. While we strive "
-#~ "to\n"
-#~ "                                                use commercially "
-#~ "acceptable means to protect your Personal Information,\n"
-#~ "                                                we cannot guarantee\n"
-#~ "                                                its absolute security."
-#~ msgstr ""
-#~ "A segurança de suas informações pessoais é importante para nós, mas\n"
-#~ "                                                 lembre-se que nenhum "
-#~ "método de\n"
-#~ "                                                 transmissão pela "
-#~ "Internet, ou método de armazenamento eletrônico, é 100%\n"
-#~ "                                                 seguro. Enquanto nos "
-#~ "esforçamos para\n"
-#~ "                                                 use meios comercialmente "
-#~ "aceitáveis para proteger suas informações pessoais,\n"
-#~ "                                                 não podemos garantir\n"
-#~ "                                                 sua segurança absoluta."
-
-#~ msgid ""
-#~ "These Terms shall be governed and construed in accordance with the laws\n"
-#~ "                                                of ​"
-#~ msgstr ""
-#~ "Estes Termos serão regidos e interpretados de acordo com as leis\n"
-#~ "                                                 de"
-
-#~ msgid "VAT number:"
-#~ msgstr "Número de IVA:"
-
-#~ msgid ""
-#~ "We may terminate or suspend access to our Service immediately, without\n"
-#~ "                                                prior notice or "
-#~ "liability,\n"
-#~ "                                                for any reason "
-#~ "whatsoever, including without limitation if you breach\n"
-#~ "                                                the Terms."
-#~ msgstr ""
-#~ "Podemos encerrar ou suspender o acesso ao nosso Serviço imediatamente, "
-#~ "sem\n"
-#~ "                                                 aviso prévio ou "
-#~ "responsabilidade,\n"
-#~ "                                                 por qualquer motivo, "
-#~ "incluindo, sem limitação, se você violar\n"
-#~ "                                                 os termos."
-
-#~ msgid ""
-#~ "We may update this Privacy Policy from time to time. We will notify\n"
-#~ "                                                you of any changes by "
-#~ "posting the new Privacy Policy on the Site. You\n"
-#~ "                                                are advised to review "
-#~ "this\n"
-#~ "                                                Privacy Policy "
-#~ "periodically for any changes."
-#~ msgstr ""
-#~ "Podemos atualizar esta Política de Privacidade periodicamente. Vamos "
-#~ "notificar\n"
-#~ "                                                 você de quaisquer "
-#~ "alterações, publicando a nova Política de Privacidade no Site. Você\n"
-#~ "                                                 é aconselhável revisar "
-#~ "este\n"
-#~ "                                                 Política de Privacidade "
-#~ "periodicamente para quaisquer alterações."
-
-#~ msgid ""
-#~ "We reserve the right, at our sole discretion, to modify or replace these\n"
-#~ "                                                Terms at any time. If a\n"
-#~ "                                                revision is material we "
-#~ "will try to provide at least ​30 days notice\n"
-#~ "                                                prior to any new\n"
-#~ "                                                terms taking effect. What "
-#~ "constitutes a material change will be\n"
-#~ "                                                determined at our sole "
-#~ "discretion.\n"
-#~ "                                                By continuing to access "
-#~ "or use our Service after those revisions become\n"
-#~ "                                                effective, you agree to\n"
-#~ "                                                be bound by the revised "
-#~ "terms. If you do not agree to the new terms,\n"
-#~ "                                                please stop using the\n"
-#~ "                                                Service."
-#~ msgstr ""
-#~ "Reservamo-nos o direito, a nosso critério, de modificar ou substituir "
-#~ "esses\n"
-#~ "                                                 Termos a qualquer "
-#~ "momento. Se uma\n"
-#~ "                                                 revisão é material, "
-#~ "tentaremos fornecer pelo menos 30 dias de antecedência\n"
-#~ "                                                 antes de qualquer novo\n"
-#~ "                                                 termo entrando em vigor. "
-#~ "O que constitui uma mudança material será\n"
-#~ "                                                 determinado a nosso "
-#~ "critério.\n"
-#~ "                                                 Continuando a acessar ou "
-#~ "usar nosso Serviço depois que essas revisões se tornarem\n"
-#~ "                                                 eficazes, você concorda "
-#~ "em\n"
-#~ "                                                 estar vinculado pelos "
-#~ "termos revisados. Se você não concorda com os novos termos,\n"
-#~ "                                                 por favor, pare de usar "
-#~ "o\n"
-#~ "                                                 Serviço."
-
-#~ msgid ""
-#~ "We strongly advise you to read the terms and conditions and privacy\n"
-#~ "                                                policies of any third­"
-#~ "party\n"
-#~ "                                                web sites or services "
-#~ "that you visit."
-#~ msgstr ""
-#~ "É altamente recomendável que você leia os termos e condições e a "
-#~ "privacidade\n"
-#~ "                                                 políticas de terceiros\n"
-#~ "                                                 sites ou serviços que "
-#~ "você visita."
-
-#~ msgid ""
-#~ "We use your Personal Information only for providing and improving the\n"
-#~ "                                                Site. By using the Site,\n"
-#~ "                                                you agree to the "
-#~ "collection and use of information in accordance with\n"
-#~ "                                                this policy."
-#~ msgstr ""
-#~ "Usamos suas informações pessoais apenas para fornecer e melhorar o\n"
-#~ "                                                 Local. Ao usar o site,\n"
-#~ "                                                 você concorda com a "
-#~ "coleta e o uso de informações de acordo com\n"
-#~ "                                                 esta política."
-
-#~ msgid ""
-#~ "While using our Site, we may ask you to provide us with certain\n"
-#~ "                                                personally identifiable "
-#~ "information\n"
-#~ "                                                that can be used to "
-#~ "contact or identify you. Personally identifiable\n"
-#~ "                                                information may include, "
-#~ "but is\n"
-#~ "                                                not limited to your name "
-#~ "(\"Personal Information\")."
-#~ msgstr ""
-#~ "Ao usar nosso Site, podemos solicitar que você nos forneça certas\n"
-#~ "                                                 informação pessoalmente "
-#~ "identificável\n"
-#~ "                                                 que pode ser usado para "
-#~ "entrar em contato ou identificar você. Identificável pessoalmente\n"
-#~ "                                                 informações podem "
-#~ "incluir, mas é\n"
-#~ "                                                 não limitado ao seu nome "
-#~ "(\"Informações pessoais\")."
-
-#~ msgid "You can contact us at:"
-#~ msgstr "Você pode entrar em contato conosco em:"
-
-#~ msgid ""
-#~ "Your access to and use of the Service is conditioned on your acceptance\n"
-#~ "                                                of and compliance with\n"
-#~ "                                                these Terms. These Terms "
-#~ "apply to all visitors, users and others who\n"
-#~ "                                                access or use the Service."
-#~ msgstr ""
-#~ "Seu acesso e uso do Serviço estão condicionados à sua aceitação\n"
-#~ "                                                 e conformidade com\n"
-#~ "                                                 estes Termos. Estes "
-#~ "Termos se aplicam a todos os visitantes, usuários e outras pessoas que\n"
-#~ "                                                 acessar ou usar o "
-#~ "Serviço."
-
-#~ msgid "legal advice"
-#~ msgstr "aviso legal"
-
-#~ msgid "of this website."
-#~ msgstr "deste site."
-
-#~ msgid "privacy policy"
-#~ msgstr "política de privacidade"
-
-#~ msgid "terms of use"
-#~ msgstr "Termos de uso"
-
-#~ msgid "website (the \"Service\") operated by ​"
-#~ msgstr "Site (o \"Serviço\") operado por"
+msgstr "usar este site para se envolver em qualquer publicidade ou marketing."

@@ -1,26 +1,24 @@
 [project]
 name = "odoo-addons-oca-website"
-version = "17.0.20251017.0"
+version = "18.0.20251215.0"
 dependencies = [
-    "odoo-addon-website_breadcrumb>=17.0dev,<17.1dev",
-    "odoo-addon-website_conditional_visibility_user_group>=17.0dev,<17.1dev",
-    "odoo-addon-website_cookiebot>=17.0dev,<17.1dev",
-    "odoo-addon-website_cookiefirst>=17.0dev,<17.1dev",
-    "odoo-addon-website_crm_quick_answer>=17.0dev,<17.1dev",
-    "odoo-addon-website_form_require_legal>=17.0dev,<17.1dev",
-    "odoo-addon-website_forum_subscription>=17.0dev,<17.1dev",
-    "odoo-addon-website_google_tag_manager>=17.0dev,<17.1dev",
-    "odoo-addon-website_legal_page>=17.0dev,<17.1dev",
-    "odoo-addon-website_local_font>=17.0dev,<17.1dev",
-    "odoo-addon-website_menu_by_user_status>=17.0dev,<17.1dev",
-    "odoo-addon-website_odoo_debranding>=17.0dev,<17.1dev",
-    "odoo-addon-website_require_login>=17.0dev,<17.1dev",
-    "odoo-addon-website_snippet_big_button>=17.0dev,<17.1dev",
-    "odoo-addon-website_snippet_marginless_gallery>=17.0dev,<17.1dev",
-    "odoo-addon-website_whatsapp>=17.0dev,<17.1dev",
+    "odoo-addon-website_cookiebot==18.0.*",
+    "odoo-addon-website_cookiefirst==18.0.*",
+    "odoo-addon-website_form_require_legal==18.0.*",
+    "odoo-addon-website_forum_subscription==18.0.*",
+    "odoo-addon-website_google_tag_manager==18.0.*",
+    "odoo-addon-website_legal_page==18.0.*",
+    "odoo-addon-website_menu_by_user_status==18.0.*",
+    "odoo-addon-website_odoo_debranding==18.0.*",
+    "odoo-addon-website_partner_form==18.0.*",
+    "odoo-addon-website_product_document_download_counter==18.0.*",
+    "odoo-addon-website_require_login==18.0.*",
+    "odoo-addon-website_search_header==18.0.*",
+    "odoo-addon-website_snippet_country_dropdown==18.0.*",
+    "odoo-addon-website_whatsapp==18.0.*",
 ]
 classifiers=[
     "Programming Language :: Python",
     "Framework :: Odoo",
-    "Framework :: Odoo :: 17.0",
+    "Framework :: Odoo :: 18.0",
 ]
