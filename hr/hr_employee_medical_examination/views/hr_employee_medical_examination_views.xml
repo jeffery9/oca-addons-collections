@@ -14,30 +14,30 @@
                         name="back_to_pending"
                         string="Back To Pending"
                         type="object"
-                        invisible="state not in ('done', 'cancelled', 'rejected')"
+                        invisible="state not in ('done','cancelled','rejected')"
                     />
                     <button
                         name="to_done"
                         string="Mark as Done"
                         type="object"
                         class="btn btn-primary"
-                        invisible="state != 'pending'"
+                        invisible="state not in ('pending')"
                     />
                     <button
                         name="to_cancelled"
                         string="Mark as Cancelled"
                         type="object"
                         class="btn btn-primary"
-                        invisible="state != 'pending'"
+                        invisible="state not in ('pending')"
                     />
                     <button
                         name="to_rejected"
                         string="Mark as Rejected"
                         type="object"
                         class="btn btn-primary"
-                        invisible="state != 'pending'"
+                        invisible="state not in ('pending')"
                     />
-                    <field name="state" widget="statusbar" readonly="1" />
+                    <field name="state" widget="statusbar" />
                 </header>
                 <sheet>
                     <div class="oe_title">
@@ -61,11 +61,7 @@
                         <field name="note" placeholder="Add note..." />
                     </div>
                 </sheet>
-                <div class="oe_chatter">
-                    <field name="message_follower_ids" widget="mail_followers" />
-                    <field name="activity_ids" widget="mail_activity" />
-                    <field name="message_ids" widget="mail_thread" />
-                </div>
+                <chatter />
             </form>
         </field>
     </record>
@@ -124,12 +120,12 @@
         >hr.employee.medical.examination.tree (in hr_employee_medical_examination)</field>
         <field name="model">hr.employee.medical.examination</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="name" />
                 <field name="employee_id" />
                 <field name="state" />
                 <field name="result" />
-            </tree>
+            </list>
         </field>
     </record>
     <record model="ir.ui.view" id="hr_employee_medical_examination_kanban_view">
@@ -137,45 +133,32 @@
         <field name="model">hr.employee.medical.examination</field>
         <field name="arch" type="xml">
             <kanban>
-                <field name="state" />
-                <field name="id" />
-                <field name="employee_id" />
-                <field name="date" />
-                <field name="activity_ids" />
                 <templates>
-                    <t t-name="kanban-box">
-                        <div class="oe_kanban_global_click o_hr_kanban_record">
-                            <div class="oe_kanban_details">
-                                <div class="o_kanban_record_top">
-                                    <div class="o_kanban_record_headings">
-                                        <strong class="o_kanban_record_title">
-                                            <field name="name" />
-                                        </strong>
-                                        <span class="o_kanban_record_subtitle"><field
-                                                name="employee_id"
-                                            /></span>
-                                    </div>
-                                </div>
-                                <div class="o_kanban_record_bottom">
-                                    <div class="oe_kanban_bottom_left text-muted">
-                                        <span>
-                                            <t t-out="record.date.value" />
-                                        </span>
-                                        <field
-                                            name="activity_ids"
-                                            widget="kanban_activity"
-                                        />
-                                    </div>
-                                    <div class="oe_kanban_bottom_right">
-                                        <field
-                                            name="state"
-                                            widget="label_selection"
-                                            options="{'classes': {'pending': 'default', 'cancelled': 'default', 'rejected': 'default', 'done': 'success'}}"
-                                        />
-                                    </div>
-                                </div>
+                    <t t-name="card">
+                        <main>
+                            <div>
+                                <field class="fw-bold fs-5" name="name" />
                             </div>
-                        </div>
+                            <field name="employee_id" />
+                            <footer class="align-items-end">
+                                <div
+                                    class="d-flex flex-wrap gap-1 text-muted text-nowrap"
+                                >
+                                    <field name="date" />
+                                    <field
+                                        name="activity_ids"
+                                        widget="kanban_activity"
+                                        class="m-1 ms-2"
+                                    />
+                                </div>
+                                <field
+                                    name="state"
+                                    widget="label_selection"
+                                    options="{'classes': {'pending': 'info', 'cancelled': 'default', 'rejected': 'default', 'done': 'success'}}"
+                                    class="ms-auto"
+                                />
+                            </footer>
+                        </main>
                     </t>
                 </templates>
             </kanban>
@@ -187,7 +170,7 @@
     >
         <field name="name">Employee Medical Examinations</field>
         <field name="res_model">hr.employee.medical.examination</field>
-        <field name="view_mode">tree,kanban,form</field>
+        <field name="view_mode">list,kanban,form</field>
     </record>
     <menuitem
         id="hr_employee_medical_examination_menu"

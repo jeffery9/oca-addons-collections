@@ -7,7 +7,8 @@ from odoo.exceptions import ValidationError
 class HrCourseSchedule(models.Model):
     _name = "hr.course.schedule"
     _description = "Course Schedule"
-    _inherit = ["mail.thread", "mail.activity.mixin"]
+    _inherit = "mail.thread"
+
     name = fields.Char(required=True, tracking=True)
     course_id = fields.Many2one("hr.course", string="Course", required=True)
 
@@ -84,7 +85,7 @@ class HrCourseSchedule(models.Model):
             lambda r: r.employee_id not in self.attendant_ids
         ):
             attendants += course_attendee._remove_from_course()
-            deleted_attendees += "- %s <br></br>" % course_attendee.employee_id.name
+            deleted_attendees += f"- {course_attendee.employee_id.name} <br></br>"
         if deleted_attendees != "":
             message = (
                 _("Employees removed from this course: <br></br>%s") % deleted_attendees
