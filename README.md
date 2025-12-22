@@ -1,15 +1,15 @@
 
-[![Runboat](https://img.shields.io/badge/runboat-Try%20me-875A7B.png)](https://runboat.odoo-community.org/builds?repo=OCA/iot&target_branch=17.0)
-[![Pre-commit Status](https://github.com/OCA/iot/actions/workflows/pre-commit.yml/badge.svg?branch=17.0)](https://github.com/OCA/iot/actions/workflows/pre-commit.yml?query=branch%3A17.0)
-[![Build Status](https://github.com/OCA/iot/actions/workflows/test.yml/badge.svg?branch=17.0)](https://github.com/OCA/iot/actions/workflows/test.yml?query=branch%3A17.0)
-[![codecov](https://codecov.io/gh/OCA/iot/branch/17.0/graph/badge.svg)](https://codecov.io/gh/OCA/iot)
-[![Translation Status](https://translation.odoo-community.org/widgets/iot-17-0/-/svg-badge.svg)](https://translation.odoo-community.org/engage/iot-17-0/?utm_source=widget)
+[![Runboat](https://img.shields.io/badge/runboat-Try%20me-875A7B.png)](https://runboat.odoo-community.org/builds?repo=OCA/iot&target_branch=18.0)
+[![Pre-commit Status](https://github.com/OCA/iot/actions/workflows/pre-commit.yml/badge.svg?branch=18.0)](https://github.com/OCA/iot/actions/workflows/pre-commit.yml?query=branch%3A18.0)
+[![Build Status](https://github.com/OCA/iot/actions/workflows/test.yml/badge.svg?branch=18.0)](https://github.com/OCA/iot/actions/workflows/test.yml?query=branch%3A18.0)
+[![codecov](https://codecov.io/gh/OCA/iot/branch/18.0/graph/badge.svg)](https://codecov.io/gh/OCA/iot)
+[![Translation Status](https://translation.odoo-community.org/widgets/iot-18-0/-/svg-badge.svg)](https://translation.odoo-community.org/engage/iot-18-0/?utm_source=widget)
 
 <!-- /!\ do not modify above this line -->
 
-# OCA IOT modules
+# iot
 
-This project aims to deal with modules related to IOT
+iot
 
 <!-- /!\ do not modify below this line -->
 
@@ -21,12 +21,7 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[iot_amqp_oca](iot_amqp_oca/) | 17.0.1.0.0 |  | Integrate Iot Outputs with AMQP
-[iot_input_oca](iot_input_oca/) | 17.0.1.0.0 | <a href='https://github.com/etobella'><img src='https://github.com/etobella.png' width='32' height='32' style='border-radius:50%;' alt='etobella'/></a> | IoT Input module
-[iot_oca](iot_oca/) | 17.0.1.0.1 |  | IoT base module
-[iot_output_oca](iot_output_oca/) | 17.0.1.0.0 |  | IoT allow multiple outputs
-[iot_rule](iot_rule/) | 17.0.1.0.0 |  | Define IoT Rules (Keys that control Inputs)
-[iot_template_oca](iot_template_oca/) | 17.0.1.0.0 |  | IoT module for managing templates
+[iot_oca](iot_oca/) | 18.0.1.0.1 |  | IoT base module
 
 [//]: # (end addons)
 
