@@ -1,4 +1,0 @@
-- Dave Lasley \<<dave@laslabs.com>\>
-- [Tecnativa](https://www.tecnativa.com):
-  - David Vidal
-  - Ernesto Tejeda

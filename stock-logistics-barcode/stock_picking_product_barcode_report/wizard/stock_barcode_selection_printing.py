@@ -121,7 +121,7 @@ class WizStockBarcodeSelectionPrinting(models.TransientModel):
                 self._prepare_data_from_move_line(move_line)
             )
             if product_print_moves_data:
-                product_print_moves.append((0, 0, product_print_moves_data))
+                product_print_moves.append(Command.create(product_print_moves_data))
         if self.stock_move_line_ids or self.picking_ids:
             self.product_print_moves = product_print_moves
 
@@ -130,9 +130,7 @@ class WizStockBarcodeSelectionPrinting(models.TransientModel):
         quants = self.env["stock.quant"].browse(self.env.context["active_ids"])
         for quant in quants:
             lines.append(
-                (
-                    0,
-                    0,
+                Command.create(
                     {
                         "product_id": quant.product_id.id,
                         "label_qty": 1,
@@ -150,9 +148,7 @@ class WizStockBarcodeSelectionPrinting(models.TransientModel):
         lots = self.env["stock.lot"].browse(self.env.context["active_ids"])
         for lot in lots:
             lines.append(
-                (
-                    0,
-                    0,
+                Command.create(
                     {
                         "product_id": lot.product_id.id,
                         "label_qty": 1,
@@ -215,9 +211,7 @@ class WizStockBarcodeSelectionPrinting(models.TransientModel):
             {
                 "barcode_report": report_id,
                 "product_print_moves": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "product_id": sml.product_id.id,
                             "quantity": self.env.context.get(
