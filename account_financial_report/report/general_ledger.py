@@ -1,4 +1,4 @@
-# ?? 2016 Julien Coux (Camptocamp)
+# © 2016 Julien Coux (Camptocamp)
 # Copyright 2020 ForgeFlow S.L. (https://www.forgeflow.com)
 # Copyright 2022 Tecnativa - V??ctor Mart??nez
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
@@ -17,7 +17,9 @@ class GeneralLedgerReport(models.AbstractModel):
     _inherit = "report.account_financial_report.abstract_report"
 
     def _get_analytic_data(self, account_ids):
-        analytic_accounts = self.env["account.analytic.account"].browse(account_ids)
+        analytic_accounts = self.env["account.analytic.account"].search_fetch(
+            [("id", "in", account_ids)], ["name", "code"]
+        )
         analytic_data = {}
         for account in analytic_accounts:
             name = f"[{account.code}] {account.name}" if account.code else account.name
@@ -25,7 +27,9 @@ class GeneralLedgerReport(models.AbstractModel):
         return analytic_data
 
     def _get_taxes_data(self, taxes_ids):
-        taxes = self.env["account.tax"].browse(taxes_ids)
+        taxes = self.env["account.tax"].search_fetch(
+            [("id", "in", taxes_ids)], ["amount", "amount_type", "display_name"]
+        )
         taxes_data = {}
         for tax in taxes:
             taxes_data.update(
@@ -62,7 +66,7 @@ class GeneralLedgerReport(models.AbstractModel):
 
     def _get_acc_prt_accounts_ids(self, company_id, grouped_by):
         accounts_domain = [
-            ("company_id", "=", company_id),
+            ("company_ids", "in", [company_id]),
         ] + self._get_account_type_domain(grouped_by)
         acc_prt_accounts = self.env["account.account"].search(accounts_domain)
         return acc_prt_accounts.ids
@@ -71,7 +75,7 @@ class GeneralLedgerReport(models.AbstractModel):
         self, account_ids, company_id, date_from, base_domain, grouped_by, acc_prt=False
     ):
         accounts_domain = [
-            ("company_id", "=", company_id),
+            ("company_ids", "in", [company_id]),
             ("include_initial_balance", "=", True),
         ]
         if account_ids:
@@ -89,7 +93,7 @@ class GeneralLedgerReport(models.AbstractModel):
         self, account_ids, company_id, date_from, fy_start_date, base_domain
     ):
         accounts_domain = [
-            ("company_id", "=", company_id),
+            ("company_ids", "in", [company_id]),
             ("include_initial_balance", "=", False),
         ]
         if account_ids:
@@ -119,7 +123,7 @@ class GeneralLedgerReport(models.AbstractModel):
         self, account_ids, company_id, fy_start_date, base_domain
     ):
         accounts_domain = [
-            ("company_id", "=", company_id),
+            ("company_ids", "in", [company_id]),
             ("include_initial_balance", "=", False),
         ]
         if account_ids:
@@ -156,7 +160,13 @@ class GeneralLedgerReport(models.AbstractModel):
         return pl_initial_balance
 
     def _get_gl_initial_acc(
-        self, account_ids, company_id, date_from, fy_start_date, base_domain, grouped_by
+        self,
+        account_ids,
+        company_id,
+        date_from,
+        fy_start_date,
+        base_domain,
+        grouped_by,
     ):
         initial_domain_bs = self._get_initial_balances_bs_ml_domain(
             account_ids, company_id, date_from, base_domain, grouped_by
@@ -182,7 +192,7 @@ class GeneralLedgerReport(models.AbstractModel):
             data[acc_id] = self._prepare_gen_ld_data_item(gl)
             data[acc_id]["id"] = acc_id
             data[acc_id][grouped_by] = False
-        method = "_prepare_gen_ld_data_group_%s" % grouped_by
+        method = f"_prepare_gen_ld_data_group_{grouped_by}"
         if not hasattr(self, method):
             return data
         return getattr(self, method)(data, domain, grouped_by)
@@ -265,7 +275,7 @@ class GeneralLedgerReport(models.AbstractModel):
             unaffected_earnings_account = False
         base_domain = []
         if company_id:
-            base_domain += [("company_id", "=", company_id)]
+            base_domain += [("company_id", "in", [company_id])]
         if partner_ids:
             base_domain += [("partner_id", "in", partner_ids)]
         if only_posted_moves:
@@ -422,7 +432,9 @@ class GeneralLedgerReport(models.AbstractModel):
                 res.append({"id": item_id, "name": item_name})
             elif move_line["tax_ids"]:
                 for tax_id in move_line["tax_ids"]:
-                    tax_item = self.env["account.tax"].browse(tax_id)
+                    tax_item = self.env["account.tax"].search_fetch(
+                        [("id", "=", tax_id)], ["name"]
+                    )
                     res.append({"id": tax_item.id, "name": tax_item.name})
             else:
                 res.append({"id": 0, "name": "Missing Tax"})
@@ -469,8 +481,9 @@ class GeneralLedgerReport(models.AbstractModel):
             journal_ids.add(move_line["journal_id"][0])
             for tax_id in move_line["tax_ids"]:
                 taxes_ids.add(tax_id)
-            for ids in (move_line["analytic_distribution"] or {}).keys():
-                analytic_ids.update(map(int, ids.split(",")))
+            for analytic_account in move_line["analytic_distribution"] or {}:
+                for analytic_account_id in analytic_account.split(","):
+                    analytic_ids.add(int(analytic_account_id))
             if move_line["full_reconcile_id"]:
                 rec_id = move_line["full_reconcile_id"][0]
                 if rec_id not in full_reconcile_ids:
@@ -514,9 +527,9 @@ class GeneralLedgerReport(models.AbstractModel):
                         "balance"
                     ]
                     if foreign_currency:
-                        gen_ld_data[acc_id][item_id]["fin_bal"][
-                            "bal_curr"
-                        ] += move_line["amount_currency"]
+                        gen_ld_data[acc_id][item_id]["fin_bal"]["bal_curr"] += (
+                            move_line["amount_currency"]
+                        )
             else:
                 gen_ld_data[acc_id][ml_id] = self._get_move_line_data(move_line)
             gen_ld_data[acc_id]["fin_bal"]["credit"] += move_line["credit"]

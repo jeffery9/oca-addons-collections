@@ -47,91 +47,90 @@
                                 <span t-esc="accounts_data[account_id]['name']" />
                             </div>
 
-                        <t t-if="Open_Items[account_id]">
-                            <t
+                            <t t-if="Open_Items[account_id]">
+                                <t
                                     t-set="partner_totals"
                                     t-value="o._calculate_amounts_by_partner(account_id,Open_Items[account_id][partner_id])"
                                 />
-                            <t
+                                <t
                                     t-foreach="partner_totals.get(account_id, {})"
                                     t-as="partner_id_key"
                                 >
-                                <t t-set="has_lines" t-value="False" />
-                                <div
+                                    <t t-set="has_lines" t-value="False" />
+                                    <div
                                         class="act_as_table data_table"
                                         style="width: 100%;"
                                     >
-
-                                    <t
+                                        <t
                                             t-foreach="Open_Items[account_id][partner_id]"
                                             t-as="line"
                                         >
-                                    <t t-if="line['partner_id'] == partner_id_key">
-                                            <t t-set="has_lines" t-value="True" />
-                                    </t>
-
-                                </t>
-                                <t t-if="has_lines">
-                                    <!-- Display partner header -->
-                                    <t
+                                            <t
+                                                t-if="line['partner_id'] == partner_id_key"
+                                            >
+                                                <t t-set="has_lines" t-value="True" />
+                                            </t>
+                                        </t>
+                                        <t t-if="has_lines">
+                                            <!-- Display partner header -->
+                                            <t
                                                 t-call="account_financial_report.report_open_items_lines_header"
                                             />
-                                </t>
-                                <t
+                                        </t>
+                                        <t
                                             t-foreach="Open_Items[account_id][partner_id]"
                                             t-as="line"
                                         >
-                                        <t t-if="line['partner_id'] == partner_id_key">
-                                            <!-- Display partner move lines -->
                                             <t
+                                                t-if="line['partner_id'] == partner_id_key"
+                                            >
+                                                <!-- Display partner move lines -->
+                                                <t
                                                     t-call="account_financial_report.report_open_items_lines"
                                                 />
+                                            </t>
                                         </t>
-
-                                        </t>
-                                </div>
-                                <!-- Check if there were any lines displayed for the partner -->
-                                <t t-if="has_lines">
-                                    <!-- Calculate and display subtotal for current partner_id -->
-                                    <t
+                                    </div>
+                                    <!-- Check if there were any lines displayed for the partner -->
+                                    <t t-if="has_lines">
+                                        <!-- Calculate and display subtotal for current partner_id -->
+                                        <t
                                             t-call="account_financial_report.report_open_items_ending_cumul"
                                         >
-                                        <t
+                                            <t
                                                 t-set="currency_id"
                                                 t-value="accounts_data[account_id]['currency_name']"
                                             />
-                                        <t
+                                            <t
                                                 t-set="type"
                                                 t-value="'partner_subtotal_type'"
                                             />
+                                        </t>
                                     </t>
                                 </t>
                             </t>
-
-                        </t>
-                        <!-- Display account footer -->
+                            <!-- Display account footer -->
                             <t
                                 t-call="account_financial_report.report_open_items_ending_cumul"
                             >
-                            <t
+                                <t
                                     t-set="account_or_partner_id"
                                     t-value="partners_data[partner_id]"
                                 />
-                            <t
+                                <t
                                     t-set="currency_id"
                                     t-value="accounts_data[account_id]['currency_name']"
                                 />
-                            <t t-set="type" t-value='"partner_type"' />
+                                <t t-set="type" t-value='"partner_type"' />
+                            </t>
                         </t>
                     </t>
-
+                    <div style="page-break-after: always;" />
                 </t>
-                <div style="page-break-after: always;" />
-            </t>
             </t>
             <t t-else="">
-            <!-- Display filters -->
-            <t t-call="account_financial_report.report_open_items_filters" />
+                <!-- Display filters -->
+                <t t-call="account_financial_report.report_open_items_filters" />
                 <t t-foreach="Open_Items.keys()" t-as="account_id">
                     <!-- Display account header -->
                     <div class="act_as_table list_table" style="margin-top: 10px;" />
@@ -206,7 +205,7 @@
                         />
                         <t t-set="type" t-value='"account_type"' />
                     </t>
-            </t>
+                </t>
             </t>
         </div>
     </template>

@@ -5,7 +5,8 @@
 from dateutil.relativedelta import relativedelta
 
 from odoo import fields
-from odoo.tests.common import Form, TransactionCase, new_test_user
+from odoo.tests import Form
+from odoo.tests.common import TransactionCase, new_test_user
 
 
 class TestOutstandingStatement(TransactionCase):
@@ -135,6 +136,7 @@ class TestOutstandingStatement(TransactionCase):
             [
                 ("id", "!=", copy_account.id),
                 ("account_type", "=", wizard.account_type),
+                ("company_ids", "in", self.env.company.ids),
             ],
         )
         wizard.excluded_accounts_selector = ", ".join(

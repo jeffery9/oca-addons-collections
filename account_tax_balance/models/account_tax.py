@@ -2,7 +2,7 @@
 # Copyright 2016 Antonio Espinosa <antonio.espinosa@tecnativa.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 
 
 class AccountTax(models.Model):
@@ -32,17 +32,10 @@ class AccountTax(models.Model):
             context.get("target_move", "posted"),
         )
 
-    def _account_tax_ids_with_moves(self):
-        """Return all account.tax ids for which there is at least
-        one account.move.line in the context period
-        for the user company.
-
-        Caveat: this ignores record rules and ACL but it is good
-        enough for filtering taxes with activity during the period.
-        """
+    def _account_tax_ids_with_moves_query(self):
         from_date, to_date, company_ids, _ = self.get_context_values()
         company_ids = tuple(company_ids)
-        req = """
+        query = """
             SELECT id
             FROM account_tax at
             WHERE
@@ -62,7 +55,19 @@ class AccountTax(models.Model):
                 )
             )
         """
-        self.env.cr.execute(req, (company_ids, from_date, to_date, company_ids))
+        params = (company_ids, from_date, to_date, company_ids)
+        return query, params
+
+    def _account_tax_ids_with_moves(self):
+        """Return all account.tax ids for which there is at least
+        one account.move.line in the context period
+        for the user company.
+
+        Caveat: this ignores record rules and ACL but it is good
+        enough for filtering taxes with activity during the period.
+        """
+        query, params = self._account_tax_ids_with_moves_query()
+        self.env.cr.execute(query, params)
         return [r[0] for r in self.env.cr.fetchall()]
 
     def _compute_has_moves(self):
@@ -77,7 +82,7 @@ class AccountTax(models.Model):
     @api.model
     def _search_has_moves(self, operator, value):
         if self._is_unsupported_search_operator(operator) or not value:
-            raise ValueError(_("Unsupported search operator"))
+            raise ValueError(self.env._("Unsupported search operator"))
         ids_with_moves = self._account_tax_ids_with_moves()
         return [("id", "in", ids_with_moves)]
 
