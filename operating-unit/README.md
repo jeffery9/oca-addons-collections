@@ -1,15 +1,15 @@
 
-[![Runboat](https://img.shields.io/badge/runboat-Try%20me-875A7B.png)](https://runboat.odoo-community.org/builds?repo=OCA/operating-unit&target_branch=17.0)
-[![Pre-commit Status](https://github.com/OCA/operating-unit/actions/workflows/pre-commit.yml/badge.svg?branch=17.0)](https://github.com/OCA/operating-unit/actions/workflows/pre-commit.yml?query=branch%3A17.0)
-[![Build Status](https://github.com/OCA/operating-unit/actions/workflows/test.yml/badge.svg?branch=17.0)](https://github.com/OCA/operating-unit/actions/workflows/test.yml?query=branch%3A17.0)
-[![codecov](https://codecov.io/gh/OCA/operating-unit/branch/17.0/graph/badge.svg)](https://codecov.io/gh/OCA/operating-unit)
-[![Translation Status](https://translation.odoo-community.org/widgets/operating-unit-17-0/-/svg-badge.svg)](https://translation.odoo-community.org/engage/operating-unit-17-0/?utm_source=widget)
+[![Runboat](https://img.shields.io/badge/runboat-Try%20me-875A7B.png)](https://runboat.odoo-community.org/builds?repo=OCA/operating-unit&target_branch=18.0)
+[![Pre-commit Status](https://github.com/OCA/operating-unit/actions/workflows/pre-commit.yml/badge.svg?branch=18.0)](https://github.com/OCA/operating-unit/actions/workflows/pre-commit.yml?query=branch%3A18.0)
+[![Build Status](https://github.com/OCA/operating-unit/actions/workflows/test.yml/badge.svg?branch=18.0)](https://github.com/OCA/operating-unit/actions/workflows/test.yml?query=branch%3A18.0)
+[![codecov](https://codecov.io/gh/OCA/operating-unit/branch/18.0/graph/badge.svg)](https://codecov.io/gh/OCA/operating-unit)
+[![Translation Status](https://translation.odoo-community.org/widgets/operating-unit-18-0/-/svg-badge.svg)](https://translation.odoo-community.org/engage/operating-unit-18-0/?utm_source=widget)
 
 <!-- /!\ do not modify above this line -->
 
 # operating-unit
 
-TODO: add repo description.
+operating-unit
 
 <!-- /!\ do not modify below this line -->
 
@@ -21,29 +21,18 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[account_financial_report_operating_unit](account_financial_report_operating_unit/) | 17.0.1.0.0 |  | Introduces Operating Unit (OU) in financial reports
-[account_operating_unit](account_operating_unit/) | 17.0.1.2.0 |  | Introduces Operating Unit (OU) in invoices and Accounting Entries with clearing account
-[account_operating_unit_access_all](account_operating_unit_access_all/) | 17.0.1.0.0 | <a href='https://github.com/kittiu'><img src='https://github.com/kittiu.png' width='32' height='32' style='border-radius:50%;' alt='kittiu'/></a> | Access all OUs' Accounting
-[analytic_operating_unit](analytic_operating_unit/) | 17.0.1.0.0 |  | Analytic Operating Unit
-[analytic_operating_unit_access_all](analytic_operating_unit_access_all/) | 17.0.1.0.0 | <a href='https://github.com/kittiu'><img src='https://github.com/kittiu.png' width='32' height='32' style='border-radius:50%;' alt='kittiu'/></a> | Access all OUs' Analytics
-[contract_operating_unit](contract_operating_unit/) | 17.0.1.1.0 |  | Contract Operating Unit
-[contract_operating_unit_access_all](contract_operating_unit_access_all/) | 17.0.1.0.0 | <a href='https://github.com/kittiu'><img src='https://github.com/kittiu.png' width='32' height='32' style='border-radius:50%;' alt='kittiu'/></a> | Access all OUs' Contracts
-[crm_operating_unit](crm_operating_unit/) | 17.0.1.1.0 |  | Operating Unit in CRM
-[hr_operating_unit](hr_operating_unit/) | 17.0.1.0.0 |  | HR Operating Unit
-[mail_operating_unit](mail_operating_unit/) | 17.0.1.0.0 |  | Mail Operating Unit
-[operating_unit](operating_unit/) | 17.0.1.1.1 |  | An operating unit (OU) is an organizational entity part of a company
-[operating_unit_access_all](operating_unit_access_all/) | 17.0.1.0.0 | <a href='https://github.com/kittiu'><img src='https://github.com/kittiu.png' width='32' height='32' style='border-radius:50%;' alt='kittiu'/></a> | Access all Operating Units
-[pos_operating_unit](pos_operating_unit/) | 17.0.1.0.0 |  | POS with Operating Units
-[product_operating_unit](product_operating_unit/) | 17.0.1.0.0 |  | Adds the concept of operating unit (OU) in products
-[project_operating_unit](project_operating_unit/) | 17.0.1.0.0 | <a href='https://github.com/max3903'><img src='https://github.com/max3903.png' width='32' height='32' style='border-radius:50%;' alt='max3903'/></a> | This module adds operating unit information to projects and tasks.
-[purchase_operating_unit](purchase_operating_unit/) | 17.0.1.0.0 |  | Adds the concecpt of operating unit (OU) in purchase order management
-[report_qweb_operating_unit](report_qweb_operating_unit/) | 17.0.1.0.0 |  | Qweb Report With Operating Unit
-[res_partner_operating_unit](res_partner_operating_unit/) | 17.0.1.1.0 |  | Introduces Operating Unit fields in Partner
-[sale_operating_unit](sale_operating_unit/) | 17.0.1.0.0 |  | An operating unit (OU) is an organizational entity part of a company
-[sale_stock_operating_unit](sale_stock_operating_unit/) | 17.0.1.0.0 |  | An operating unit (OU) is an organizational entity part of a company
-[sales_team_operating_unit](sales_team_operating_unit/) | 17.0.1.0.0 |  | Sales Team Operating Unit
-[stock_operating_unit](stock_operating_unit/) | 17.0.1.0.1 |  | Adds the concept of operating unit (OU) in stock management
-[stock_operating_unit_access_all](stock_operating_unit_access_all/) | 17.0.1.0.0 | <a href='https://github.com/kittiu'><img src='https://github.com/kittiu.png' width='32' height='32' style='border-radius:50%;' alt='kittiu'/></a> | Access all OUs' Stock
+[account_operating_unit](account_operating_unit/) | 18.0.1.0.1 |  | Introduces Operating Unit (OU) in invoices and Accounting Entries with clearing account
+[analytic_operating_unit](analytic_operating_unit/) | 18.0.1.0.0 |  | Analytic Operating Unit
+[crm_operating_unit](crm_operating_unit/) | 18.0.1.0.0 |  | Operating Unit in CRM
+[mrp_operating_unit](mrp_operating_unit/) | 18.0.1.0.0 |  | Operating Unit in MRP
+[operating_unit](operating_unit/) | 18.0.1.0.1 |  | An operating unit (OU) is an organizational entity part of a company
+[operating_unit_access_all](operating_unit_access_all/) | 18.0.1.0.0 | <a href='https://github.com/kittiu'><img src='https://github.com/kittiu.png' width='32' height='32' style='border-radius:50%;' alt='kittiu'/></a> | Access all Operating Units
+[purchase_operating_unit](purchase_operating_unit/) | 18.0.1.0.0 |  | Adds the concecpt of operating unit (OU) in purchase order management
+[report_qweb_operating_unit](report_qweb_operating_unit/) | 18.0.1.0.0 |  | Qweb Report With Operating Unit
+[sale_operating_unit](sale_operating_unit/) | 18.0.1.0.0 |  | An operating unit (OU) is an organizational entity part of a company
+[sales_team_operating_unit](sales_team_operating_unit/) | 18.0.1.0.0 |  | Sales Team Operating Unit
+[stock_operating_unit](stock_operating_unit/) | 18.0.1.0.0 |  | Adds the concept of operating unit (OU) in stock management
+[stock_operating_unit_access_all](stock_operating_unit_access_all/) | 18.0.1.0.0 | <a href='https://github.com/kittiu'><img src='https://github.com/kittiu.png' width='32' height='32' style='border-radius:50%;' alt='kittiu'/></a> | Access all OUs' Stock
 
 [//]: # (end addons)
 
