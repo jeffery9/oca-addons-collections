@@ -1,3 +1,0 @@
-- \`Tecnativa \<https://www.tecnativa.com\>\_\_\`:
-  - Pedro M. Baeza
-  - Carlos Roca

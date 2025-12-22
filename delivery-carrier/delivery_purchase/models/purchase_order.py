@@ -1,9 +1,9 @@
 # Copyright 2015 Serv. Tecnol. Avanzados - Pedro M. Baeza
 # Copyright 2016 Tecnativa - Pedro M. Baeza
-# Copyright 2023 Tecnativa - Víctor Martínez
+# Copyright 2023-2025 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.tools.float_utils import float_is_zero
 
 
@@ -13,20 +13,15 @@ class PurchaseOrder(models.Model):
     carrier_id = fields.Many2one(
         comodel_name="delivery.carrier",
         string="Delivery Method",
-        compute="_compute_carrier_id",
-        store=True,
-        readonly=False,
     )
     delivery_price = fields.Float(
         compute="_compute_delivery_price", store=True, readonly=False
     )
 
-    @api.depends("partner_id")
-    def _compute_carrier_id(self):
-        self.carrier_id = False
-        for record in self:
-            if record.partner_id.property_delivery_carrier_id:
-                record.carrier_id = record.partner_id.property_delivery_carrier_id
+    @api.onchange("partner_id")
+    def onchange_partner_id_delivery_purchase(self):
+        if self.partner_id.property_delivery_carrier_id:
+            self.carrier_id = self.partner_id.property_delivery_carrier_id.id
 
     @api.depends("order_line", "order_line.is_delivery", "amount_total", "carrier_id")
     def _compute_delivery_price(self):
@@ -34,7 +29,7 @@ class PurchaseOrder(models.Model):
             delivery_lines = item.order_line.filtered(lambda x: x.is_delivery)
             if delivery_lines:
                 item.delivery_price = sum(delivery_lines.mapped("price_unit"))
-            else:
+            elif item.state not in ("purchase", "done", "cancel"):
                 item.delivery_price = item.carrier_id.purchase_rate_shipment(item)[
                     "price"
                 ]
@@ -43,12 +38,8 @@ class PurchaseOrder(models.Model):
     def _prepare_picking(self):
         res = super()._prepare_picking()
         if self.carrier_id:
-            res.update(
-                {
-                    "carrier_id": self.carrier_id.id,
-                    "carrier_price": self.delivery_price,
-                }
-            )
+            res["carrier_id"] = self.carrier_id.id
+            res["carrier_price"] = self.delivery_price
         return res
 
     def _create_delivery_line(self, carrier, price_unit):
@@ -66,7 +57,7 @@ class PurchaseOrder(models.Model):
         # Override misc info: price_unit, name and sequence
         values.update(price_unit=price_unit)
         if carrier.free_over and self.currency_id.is_zero(price_unit):
-            values["name"] += "\n" + _("Free Shipping")
+            values["name"] += "\n" + self.env._("Free Shipping")
         if self.order_line:
             values.update(sequence=self.order_line[-1].sequence + 1)
         return pol_model.sudo().create(values)

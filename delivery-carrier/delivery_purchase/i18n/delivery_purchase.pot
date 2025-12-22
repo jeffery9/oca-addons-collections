@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 17.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -12,22 +12,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-
-#. module: delivery_purchase
-#: model:ir.model.fields,field_description:delivery_purchase.field_res_config_settings__no_create_delivery_line_on_po
-msgid "Avoid Creation Of Delivery Line On Purchase Order"
-msgstr ""
-
-#. module: delivery_purchase
-#: model_terms:ir.ui.view,arch_db:delivery_purchase.res_config_settings_view_form
-msgid ""
-"Avoid delivery line creation on purchase order when validating the picking."
-msgstr ""
-
-#. module: delivery_purchase
-#: model:ir.model,name:delivery_purchase.model_res_config_settings
-msgid "Config Settings"
-msgstr ""
 
 #. module: delivery_purchase
 #: model:ir.model.fields,field_description:delivery_purchase.field_purchase_order__carrier_id
@@ -42,21 +26,18 @@ msgstr ""
 #. module: delivery_purchase
 #. odoo-python
 #: code:addons/delivery_purchase/models/delivery_carrier.py:0
-#, python-format
 msgid "Error: no matching grid."
 msgstr ""
 
 #. module: delivery_purchase
 #. odoo-python
 #: code:addons/delivery_purchase/models/delivery_carrier.py:0
-#, python-format
 msgid "Error: this delivery method is not available for this address."
 msgstr ""
 
 #. module: delivery_purchase
 #. odoo-python
 #: code:addons/delivery_purchase/models/purchase_order.py:0
-#, python-format
 msgid "Free Shipping"
 msgstr ""
 
@@ -81,29 +62,11 @@ msgid "Purchase Order Line"
 msgstr ""
 
 #. module: delivery_purchase
-#: model:ir.model.fields,field_description:delivery_purchase.field_res_config_settings__recompute_delivery_price_on_picking
-msgid "Recompute Delivery Price When Validate Picking"
-msgstr ""
-
-#. module: delivery_purchase
-#: model_terms:ir.ui.view,arch_db:delivery_purchase.res_config_settings_view_form
-msgid ""
-"Recompute shipping costs when validating the picking with the quantity "
-"received."
-msgstr ""
-
-#. module: delivery_purchase
 #. odoo-python
 #: code:addons/delivery_purchase/models/stock_picking.py:0
-#, python-format
 msgid ""
 "Shipment sent to carrier %(carrier_name)s for shipping with tracking number "
 "%(tracking_ref)s<br/>Cost: %(carrier_price)s %(currency_name)s"
-msgstr ""
-
-#. module: delivery_purchase
-#: model_terms:ir.ui.view,arch_db:delivery_purchase.res_config_settings_view_form
-msgid "Shipping"
 msgstr ""
 
 #. module: delivery_purchase
@@ -114,14 +77,12 @@ msgstr ""
 #. module: delivery_purchase
 #. odoo-python
 #: code:addons/delivery_purchase/models/delivery_carrier.py:0
-#, python-format
 msgid "The shipping is free since the order amount exceeds %.2f."
 msgstr ""
 
 #. module: delivery_purchase
 #. odoo-python
 #: code:addons/delivery_purchase/models/delivery_carrier.py:0
-#, python-format
 msgid "There is no matching delivery rule."
 msgstr ""
 

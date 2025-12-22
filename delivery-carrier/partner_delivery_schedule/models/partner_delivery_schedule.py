@@ -1,6 +1,6 @@
 # Copyright 2018 Tecnativa - Sergio Teruel
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -28,7 +28,7 @@ class DeliverySchedule(models.Model):
             or self.hour_from >= self.hour_to
         ):
             raise ValidationError(
-                _(
+                self.env._(
                     "Error ! You can not set hour_from greater or equal "
                     "than hour_to ."
                 )
@@ -47,18 +47,20 @@ class DeliverySchedule(models.Model):
     )
     def _check_day_selected(self):
         if not any([self[x[0]] for x in self._days_of_week()]):
-            raise ValidationError(_("Error ! You must set one day to delivery."))
+            raise ValidationError(
+                self.env._("Error ! You must set one day to delivery.")
+            )
         return True
 
     def _days_of_week(self):
         return [
-            ("monday", _("Monday")),
-            ("tuesday", _("Tuesday")),
-            ("wednesday", _("Wednesday")),
-            ("thursday", _("Thursday")),
-            ("friday", _("Friday")),
-            ("saturday", _("Saturday")),
-            ("sunday", _("Sunday")),
+            ("monday", self.env._("Monday")),
+            ("tuesday", self.env._("Tuesday")),
+            ("wednesday", self.env._("Wednesday")),
+            ("thursday", self.env._("Thursday")),
+            ("friday", self.env._("Friday")),
+            ("saturday", self.env._("Saturday")),
+            ("sunday", self.env._("Sunday")),
         ]
 
     @api.depends(
@@ -82,6 +84,6 @@ class DeliverySchedule(models.Model):
             days = (
                 ", ".join(days_accepted)
                 if days_accepted and len(days_accepted) < 7
-                else _("All days")
+                else self.env._("All days")
             )
             schedule.display_name = f"{hour_from}-{hour_to} ({days})"
