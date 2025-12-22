@@ -33,13 +33,6 @@ msgid "# of Claims"
 msgstr "# de reclamacions"
 
 #. module: crm_claim
-#. odoo-python
-#: code:addons/crm_claim/models/crm_claim.py:0
-#, python-format
-msgid "%s (copy)"
-msgstr "%s (còpia)"
-
-#. module: crm_claim
 #: model_terms:ir.ui.view,arch_db:crm_claim.crm_case_claims_form_view
 msgid "Action Description..."
 msgstr "Descripció de l'acció..."
@@ -441,14 +434,6 @@ msgid "Is Follower"
 msgstr "És seguidor/a"
 
 #. module: crm_claim
-#: model:ir.model.fields,field_description:crm_claim.field_crm_claim____last_update
-#: model:ir.model.fields,field_description:crm_claim.field_crm_claim_category____last_update
-#: model:ir.model.fields,field_description:crm_claim.field_crm_claim_report____last_update
-#: model:ir.model.fields,field_description:crm_claim.field_crm_claim_stage____last_update
-msgid "Last Modified on"
-msgstr "Última modificació el"
-
-#. module: crm_claim
 #: model:ir.model.fields,field_description:crm_claim.field_crm_claim__write_uid
 #: model:ir.model.fields,field_description:crm_claim.field_crm_claim_category__write_uid
 #: model:ir.model.fields,field_description:crm_claim.field_crm_claim_stage__write_uid
@@ -475,11 +460,6 @@ msgstr ""
 #: model:ir.model.fields.selection,name:crm_claim.selection__crm_claim_report__priority__0
 msgid "Low"
 msgstr "Baixa"
-
-#. module: crm_claim
-#: model:ir.model.fields,field_description:crm_claim.field_crm_claim__message_main_attachment_id
-msgid "Main Attachment"
-msgstr "Annexe principal"
 
 #. module: crm_claim
 #: model:ir.model.fields,field_description:crm_claim.field_crm_claim__message_has_error
@@ -545,13 +525,6 @@ msgstr "Resum de la propera activitat"
 #: model:ir.model.fields,field_description:crm_claim.field_crm_claim__activity_type_id
 msgid "Next Activity Type"
 msgstr "Tipus de la propera activitat"
-
-#. module: crm_claim
-#. odoo-python
-#: code:addons/crm_claim/models/crm_claim.py:0
-#, python-format
-msgid "No Subject"
-msgstr "Sense assumpte"
 
 #. module: crm_claim
 #: model:ir.model.fields.selection,name:crm_claim.selection__crm_claim__priority__1
@@ -624,6 +597,11 @@ msgstr "Acció preventiva"
 #: model:ir.model.fields,field_description:crm_claim.field_crm_claim_report__priority
 msgid "Priority"
 msgstr "Prioritat"
+
+#. module: crm_claim
+#: model:ir.model.fields,field_description:crm_claim.field_crm_claim__rating_ids
+msgid "Ratings"
+msgstr ""
 
 #. module: crm_claim
 #: model_terms:ir.actions.act_window,help:crm_claim.crm_claim_category_claim0
@@ -846,20 +824,16 @@ msgstr ""
 "             al sistema. Les etapes defineixen tots els passos\n"
 "             necessaris per a la resolució d'una reclamació."
 
-#~ msgid "SMS Delivery error"
-#~ msgstr "Error d'entrega de SMS"
+#, python-format
+#~ msgid "%s (copy)"
+#~ msgstr "%s (còpia)"
 
-#~ msgid "Number of messages which requires an action"
-#~ msgstr "Número de missatges que requereixen una acció"
+#~ msgid "Last Modified on"
+#~ msgstr "Última modificació el"
 
-#~ msgid "Number of unread messages"
-#~ msgstr "Nombre de missatges no llegits"
+#~ msgid "Main Attachment"
+#~ msgstr "Annexe principal"
 
-#~ msgid "Unread Messages"
-#~ msgstr "Missatges no llegits"
-
-#~ msgid "Unread Messages Counter"
-#~ msgstr "Comptador de missatges no llegits"
-
-#~ msgid "Workload"
-#~ msgstr "Càrrega de treball"
+#, python-format
+#~ msgid "No Subject"
+#~ msgstr "Sense assumpte"

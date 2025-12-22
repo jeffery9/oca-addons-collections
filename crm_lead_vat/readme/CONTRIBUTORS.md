@@ -6,3 +6,4 @@
 - Emilio Pascual ([Moduon](https://www.moduon.team/))
 - [APSL](https://apsl.tech):
   - Antoni Marroig
+- Heliconia Solutions Pvt. Ltd. \<<https://www.heliconia.io>\>

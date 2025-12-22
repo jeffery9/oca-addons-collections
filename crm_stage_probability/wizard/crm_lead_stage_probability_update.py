@@ -1,6 +1,6 @@
 # Copyright 2020 Camptocamp SA
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError
 
 
@@ -25,7 +25,7 @@ class CrmLeadStageProbabilityUpdate(models.TransientModel):
             stages_missing_on_change = stages.filtered(lambda s: not s.on_change)
             if stages_missing_on_change:
                 raise UserError(
-                    _(
+                    self.env._(
                         "Following stages must be set as 'Change Probability "
                         "Automatically' in order to update their related leads:"
                         "\n\n"
@@ -51,7 +51,7 @@ class CrmLeadStageProbabilityUpdate(models.TransientModel):
             leads.write({"probability": stage_line.stage_id.probability})
             updated_leads_ids += leads.ids
         action = self.env.ref("crm.crm_lead_all_leads").read()[0]
-        action["domain"] = "[('id', 'in', %s)]" % updated_leads_ids
+        action["domain"] = f"[('id', 'in', {updated_leads_ids})]"
         action.pop("context")
         return action
 
