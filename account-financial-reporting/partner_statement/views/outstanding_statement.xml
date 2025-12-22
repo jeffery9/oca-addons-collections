@@ -21,11 +21,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr
-                    t-foreach="currency[line_type]"
-                    t-as="line"
-                    t-att-class="'statement-blocked' if line['blocked'] else ''"
-                >
+                <tr t-foreach="currency[line_type]" t-as="line" t-att-class="''">
                     <td>
                         <span t-out="line['move_id']" />
                     </td>
@@ -102,11 +98,11 @@
                     t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}'
                 />
                 <div t-if="o.vat" class="mt16"><t
-                        t-out="company.country_id.vat_label or 'Tax ID'"
-                    />: <span t-field="o.vat" /></div>
+                    t-out="company.country_id.vat_label or 'Tax ID'"
+                />: <span t-field="o.vat" /></div>
             </t>
             <div class="page">
-                <div class="oe_structure" />
+                <div id="oe_structure" class="oe_structure" />
                 <h2>Statement of Account</h2>
                 <div id="informations" class="row mt32 mb32">
                     <div class="col-3 bm-2">

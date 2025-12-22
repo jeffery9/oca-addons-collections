@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-10-30 10:42+0000\n"
+"PO-Revision-Date: 2025-10-27 10:42+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -275,16 +275,16 @@ msgid "Reconciled"
 msgstr "Riconciliato"
 
 #. module: mis_builder_cash_flow
-#. odoo-python
-#: code:addons/mis_builder_cash_flow/models/mis_cash_flow_forecast_line.py:0
-#, python-format
-msgid "The Company and the Company of the Account must be the same."
-msgstr "L'azienda e l'azienda del conto devono coincidere."
-
-#. module: mis_builder_cash_flow
 #: model:ir.model.fields,help:mis_builder_cash_flow.field_mis_cash_flow_forecast_line__account_id
 msgid "The account of the forecast line is only for informative purpose"
 msgstr "Il conto della riga previsione è solo a scopo informativo"
+
+#. module: mis_builder_cash_flow
+#. odoo-python
+#: code:addons/mis_builder_cash_flow/models/mis_cash_flow_forecast_line.py:0
+msgid "The forecast line company must be one of the account's companies."
+msgstr ""
+"L'azienda della linea di previsione deve essere una delle aziende del conto."
 
 #. module: mis_builder_cash_flow
 #: model_terms:ir.ui.view,arch_db:mis_builder_cash_flow.mis_cash_flow_form_view

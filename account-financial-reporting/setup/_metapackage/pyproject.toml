@@ -1,18 +1,16 @@
 [project]
 name = "odoo-addons-oca-account-financial-reporting"
-version = "17.0.20250513.0"
+version = "18.0.20251106.0"
 dependencies = [
-    "odoo-addon-account_financial_report>=17.0dev,<17.1dev",
-    "odoo-addon-account_move_line_report_xls>=17.0dev,<17.1dev",
-    "odoo-addon-account_purchase_stock_report_non_billed>=17.0dev,<17.1dev",
-    "odoo-addon-account_sale_stock_report_non_billed>=17.0dev,<17.1dev",
-    "odoo-addon-account_tax_balance>=17.0dev,<17.1dev",
-    "odoo-addon-mis_builder_cash_flow>=17.0dev,<17.1dev",
-    "odoo-addon-mis_template_financial_report>=17.0dev,<17.1dev",
-    "odoo-addon-partner_statement>=17.0dev,<17.1dev",
+    "odoo-addon-account_financial_report==18.0.*",
+    "odoo-addon-account_financial_report_sale==18.0.*",
+    "odoo-addon-account_tax_balance==18.0.*",
+    "odoo-addon-mis_builder_cash_flow==18.0.*",
+    "odoo-addon-mis_template_financial_report==18.0.*",
+    "odoo-addon-partner_statement==18.0.*",
 ]
 classifiers=[
     "Programming Language :: Python",
     "Framework :: Odoo",
-    "Framework :: Odoo :: 17.0",
+    "Framework :: Odoo :: 18.0",
 ]
