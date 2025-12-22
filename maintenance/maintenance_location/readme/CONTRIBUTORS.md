@@ -1,7 +1,0 @@
-- [Dixmit](https://www.dixmit.com/)
-  - Enric Tobella
-- CreuBlanca
-  - Kevin Luna
-  - Jaime Arroyo
-- [Heliconia Solutions Pvt. Ltd.](https://www.heliconia.io)
-  - Bhavesh Heliconia

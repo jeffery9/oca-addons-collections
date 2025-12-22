@@ -65,7 +65,19 @@ class MaintenancePlan(models.Model):
         default="year",
         help="Let the event automatically repeat at that interval",
     )
-    note = fields.Html()
+    instruction_type = fields.Selection(
+        [("pdf", "PDF"), ("google_slide", "Google Slide"), ("text", "Text")],
+        string="Instruction",
+        default="text",
+    )
+    instruction_pdf = fields.Binary("PDF")
+    instruction_google_slide = fields.Char(
+        "Google Slide",
+        help="Paste the url of your Google Slide. "
+        "Make sure the access to the document is public.",
+    )
+    instruction_text = fields.Html("Text")
+
     maintenance_ids = fields.One2many(
         "maintenance.request", "maintenance_plan_id", string="Maintenance requests"
     )
@@ -118,21 +130,14 @@ class MaintenancePlan(models.Model):
             "time": safe_eval.time,
         }
 
-    def name_get(self):
-        result = []
+    @api.depends("maintenance_kind_id.name", "equipment_id.name")
+    def _compute_display_name(self):
         for plan in self:
-            result.append(
-                (
-                    plan.id,
-                    plan.name
-                    or _(
-                        "Unnamed %(kind)s plan (%(eqpmt)s)",
-                        kind=plan.maintenance_kind_id.name or "",
-                        eqpmt=plan.equipment_id.name,
-                    ),
-                )
+            plan.display_name = plan.name or _(
+                "Unnamed %(kind)s plan (%(eqpmt)s)",
+                kind=plan.maintenance_kind_id.name or "",
+                eqpmt=plan.equipment_id.name,
             )
-        return result
 
     @api.depends("maintenance_ids.stage_id.done")
     def _compute_maintenance_count(self):
