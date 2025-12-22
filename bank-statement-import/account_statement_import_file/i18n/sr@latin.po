@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-23 13:42+0000\n"
+"POT-Creation-Date: 2022-01-26 09:11+0000\n"
 "PO-Revision-Date: 2017-11-30 13:11+0000\n"
 "Last-Translator: Bojan Vrućinić <bojan.vrucinic@gmail.com>, 2017\n"
 "Language-Team: Serbian (Latin) (https://www.transifex.com/odoo/teams/41243/"
@@ -27,14 +27,12 @@ msgstr ""
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid "%d transactions had already been imported and were ignored."
 msgstr ""
 
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid "1 transaction had already been imported and was ignored."
 msgstr ""
 
@@ -51,7 +49,6 @@ msgstr "Odustani"
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid ""
 "Could not find any bank account with number '%(account_number)s'  linked to "
 "partner '%(partner_name)s'. You should create the bank account and set it on "
@@ -83,6 +80,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__id
 msgid "ID"
 msgstr "ID"
+
+#. module: account_statement_import_file
+#. odoo-python
+#: code:addons/account_statement_import_file/models/account_journal.py:0
+msgid "Import (OCA) (%s)"
+msgstr ""
 
 #. module: account_statement_import_file
 #: model:ir.actions.act_window,name:account_statement_import_file.account_statement_import_action
@@ -129,23 +132,14 @@ msgstr "Vreme promene"
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid "Missing currency code in the bank statement file."
 msgstr ""
 
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid "Missing payment_ref on a transaction."
 msgstr ""
-
-#. module: account_statement_import_file
-#. odoo-python
-#: code:addons/account_statement_import_file/models/account_journal.py:0
-#, fuzzy, python-format
-msgid "OCA Import"
-msgstr "Uvoz"
 
 #. module: account_statement_import_file
 #: model:ir.model.fields,field_description:account_statement_import_file.field_account_statement_import__statement_file
@@ -167,14 +161,12 @@ msgstr ""
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid "The Bank Accounting Account is not set on the journal '%s'."
 msgstr ""
 
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid ""
 "The bank account with number '%(account_number)s' exists in Odoo but it is "
 "not set on any bank journal. You should set it on the related bank journal. "
@@ -184,7 +176,6 @@ msgstr ""
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid ""
 "The bank statement file uses currency '%s' but there is no such currency in "
 "Odoo."
@@ -193,7 +184,6 @@ msgstr ""
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid ""
 "The currency of the bank statement (%(currency_name)s) is not the same as "
 "the currency of the journal '%(journal_name)s' (%(journal_currency_name)s)."
@@ -202,7 +192,6 @@ msgstr ""
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid ""
 "The format of this bank statement file doesn't contain the bank account "
 "number, so you must start the wizard from the right bank journal in the "
@@ -212,7 +201,6 @@ msgstr ""
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid ""
 "The journal found for the file (%(journal_match)s) is different from the "
 "selected journal (%(journal_selected)s)."
@@ -221,14 +209,12 @@ msgstr ""
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid "The parsing of the statement file returned an invalid result."
 msgstr ""
 
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid ""
 "This bank statement file format is not supported.\n"
 "Did you install the Odoo module to support this format?"
@@ -249,100 +235,7 @@ msgstr "Stavka izvoda"
 #. module: account_statement_import_file
 #. odoo-python
 #: code:addons/account_statement_import_file/wizard/account_statement_import.py:0
-#, python-format
 msgid ""
 "You have already imported this file, or this file only contains already "
 "imported transactions."
 msgstr ""
-
-#~ msgid "Last Modified on"
-#~ msgstr "Zadnja promena"
-
-#~ msgid "Bank Statement Line"
-#~ msgstr "Stavka izvoda"
-
-#, fuzzy
-#~ msgid "Partner Bank Account"
-#~ msgstr "Bankovni račun"
-
-#~ msgid "Account Number"
-#~ msgstr "Broj bankovnog računa"
-
-#~ msgid "Account Types Allowed"
-#~ msgstr "Dozvoljeni tipovi konta"
-
-#~ msgid "Accounts Allowed"
-#~ msgstr "Dozvoljena konta"
-
-#~ msgid "Active"
-#~ msgstr "Aktivan"
-
-#~ msgid "Allow Cancelling Entries"
-#~ msgstr "Dozvoli poništavanje unosa"
-
-#~ msgid "Bank"
-#~ msgstr "Banka"
-
-#~ msgid "Color Index"
-#~ msgstr "Indeks boje"
-
-#~ msgid "Company"
-#~ msgstr "Preduzeće"
-
-#~ msgid "Company related to this journal"
-#~ msgstr "Preduzeće na koje se odnosi dnevnik"
-
-#~ msgid "Currency"
-#~ msgstr "Valuta"
-
-#~ msgid "Default Credit Account"
-#~ msgstr "Osnovni potražni konto"
-
-#~ msgid "Default Debit Account"
-#~ msgstr "Osnovni dugovni konto"
-
-#~ msgid "Entry Sequence"
-#~ msgstr "Redoslijed unosa"
-
-#~ msgid "Group Invoice Lines"
-#~ msgstr "Grupiši stavke fakture"
-
-#~ msgid ""
-#~ "If this box is checked, the system will try to group the accounting lines "
-#~ "when generating them from invoices."
-#~ msgstr ""
-#~ "Ako je cekirano, sistem ce probati da grupise konta prilikom generisanja "
-#~ "iz racuna."
-
-#~ msgid "Journal Name"
-#~ msgstr "Naziv dnevnika"
-
-#~ msgid "Loss Account"
-#~ msgstr "Konto gubitka"
-
-#~ msgid "OK"
-#~ msgstr "OK"
-
-#~ msgid "Payment Methods"
-#~ msgstr "Metodi plaćanja"
-
-#~ msgid "Profit Account"
-#~ msgstr "Profitni konto"
-
-#~ msgid "Sequence"
-#~ msgstr "Prioritet"
-
-#~ msgid "Short Code"
-#~ msgstr "Kratki kod"
-
-#~ msgid "Show journal on dashboard"
-#~ msgstr "Prikaži dnevnik na kontrolnoj ploči"
-
-#~ msgid "The currency used to enter statement"
-#~ msgstr "Korištena valuta"
-
-#~ msgid "Type"
-#~ msgstr "Tip"
-
-#~ msgid "_Import"
-#~ msgstr "_Uvoz"

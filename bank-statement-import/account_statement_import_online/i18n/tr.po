@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-05-06 13:23+0000\n"
-"Last-Translator: Ömer KÜLAK <omer.kulak@kitayazilim.com>\n"
+"PO-Revision-Date: 2025-06-10 12:26+0000\n"
+"Last-Translator: Betül Öğmen <betulo@eska.biz>\n"
 "Language-Team: none\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,7 @@ msgstr ""
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, fuzzy, python-format
+#, fuzzy
 msgid "%(number)s %(type)s"
 msgstr "%(number)s %(type)s"
 
@@ -36,7 +36,6 @@ msgstr "Aktif"
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid "All lines passed filtering"
 msgstr "Tüm satırlar filtrelemeyi geçti"
 
@@ -105,12 +104,12 @@ msgstr "Yapılandırma"
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__create_statement
 msgid "Create Statement"
-msgstr ""
+msgstr "Hesap Ekstresi Oluştur"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,help:account_statement_import_online.field_online_bank_statement_provider__create_statement
 msgid "Create statements for the downloaded transactions automatically or not."
-msgstr ""
+msgstr "İndirilen işlemler için hesap ekstresi oluşturun veya oluşturmayın."
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__create_uid
@@ -134,7 +133,7 @@ msgstr "Para Birimi"
 #. module: account_statement_import_online
 #: model:ir.model.fields.selection,name:account_statement_import_online.selection__online_bank_statement_provider__statement_creation_mode__daily
 msgid "Day"
-msgstr ""
+msgstr "Gün"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields.selection,name:account_statement_import_online.selection__online_bank_statement_provider__interval_type__days
@@ -151,7 +150,6 @@ msgstr "Görünen Ad"
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid ""
 "Failed to obtain statement data for period since {since} until {until}: "
 "{exception}. See server logs for more details."
@@ -214,7 +212,6 @@ msgstr "İşlemleri İçeri Aktar"
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid "Inactive"
 msgstr "İnaktif"
 
@@ -231,7 +228,6 @@ msgstr "Takipçi"
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid "Issue with Online Bank Statement self"
 msgstr "Online Banka Ekstresi ile ilgili sorun"
 
@@ -283,12 +279,11 @@ msgstr "Dakika"
 #. module: account_statement_import_online
 #: model:ir.model.fields.selection,name:account_statement_import_online.selection__online_bank_statement_provider__statement_creation_mode__monthly
 msgid "Month"
-msgstr ""
+msgstr "Ay"
 
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid "N/A"
 msgstr "N/A"
 
@@ -300,7 +295,6 @@ msgstr "Adı"
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/tests/test_account_bank_statement_import_online.py:0
-#, python-format
 msgid "Names and dates for statements found: {}"
 msgstr "Bulunan ekstrelerin Adları ve tarihleri: {}"
 
@@ -312,7 +306,6 @@ msgstr "Sonraki planlanan çekim"
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/tests/test_account_bank_statement_import_online.py:0
-#, python-format
 msgid "No statements found in journal"
 msgstr "Yevmiyede ekstre bulunamadı"
 
@@ -339,7 +332,6 @@ msgstr "Teslimat hatası bulunan iletiler"
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid ""
 "Of %(lines_provided)s lines provided, %(before)s where before %(since)s, "
 "%(after)s where on or after %(until)sand %(duplicate)s where not unique."
@@ -351,7 +343,6 @@ msgstr ""
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/account_journal.py:0
-#, python-format
 msgid "Online (OCA)"
 msgstr "Online (OCA)"
 
@@ -382,7 +373,6 @@ msgstr "Online Banka Ekstresi Alma Sihirbazı"
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid ""
 "Online Bank Statement provider \"%(name)s\" failed to obtain statement data "
 "since %(since)s until %(until)s"
@@ -445,7 +435,6 @@ msgstr "Online Banka Ekstreleri Al"
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid "Pulling online bank statements of: %(provider_names)s"
 msgstr "%(provider_names)s sağlayıcısından banka ekstreleri alınıyor"
 
@@ -467,14 +456,12 @@ msgstr "Planlanmış Çekim"
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid "Scheduled pull of online bank statements complete."
 msgstr "Çevrimiçi banka hesap özetlerinin planlı çekimi tamamlandı."
 
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid "Scheduled pull of online bank statements..."
 msgstr "Online banka hesap özetlerinin planlı olarak çekilmesi..."
 
@@ -512,7 +499,7 @@ msgstr "Ekstreyi girmek için kullanılan para birimi"
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__tz
 msgid "Timezone"
-msgstr "Saat Dilimi"
+msgstr "Saat dilimi"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,help:account_statement_import_online.field_online_bank_statement_provider__tz
@@ -531,7 +518,7 @@ msgstr "Bitiş"
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__statement_creation_mode
 msgid "Transactions interval to obtain"
-msgstr ""
+msgstr "Elde edilecek işlem aralığı"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__update_schedule
@@ -556,12 +543,15 @@ msgstr "Websitesi iletişim geçmişi"
 #. module: account_statement_import_online
 #: model:ir.model.fields.selection,name:account_statement_import_online.selection__online_bank_statement_provider__statement_creation_mode__weekly
 msgid "Week"
-msgstr ""
+msgstr "Hafta"
 
 #. module: account_statement_import_online
 #: model:ir.model.fields.selection,name:account_statement_import_online.selection__online_bank_statement_provider__interval_type__weeks
 msgid "Week(s)"
 msgstr "Hafta"
+
+#~ msgid "SMS Delivery error"
+#~ msgstr "SMS İletim Hatası"
 
 #~ msgid "Daily statements"
 #~ msgstr "Günlük ekstreler"

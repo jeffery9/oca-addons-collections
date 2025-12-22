@@ -19,7 +19,6 @@ msgstr ""
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid "%(number)s %(type)s"
 msgstr "%(number)s %(type)s"
 
@@ -36,7 +35,6 @@ msgstr "Actief"
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid "All lines passed filtering"
 msgstr ""
 
@@ -151,7 +149,6 @@ msgstr "Weergavenaam"
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid ""
 "Failed to obtain statement data for period since {since} until {until}: "
 "{exception}. See server logs for more details."
@@ -212,7 +209,6 @@ msgstr ""
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid "Inactive"
 msgstr "inactief"
 
@@ -229,7 +225,6 @@ msgstr "Is volger"
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid "Issue with Online Bank Statement self"
 msgstr ""
 
@@ -286,7 +281,6 @@ msgstr ""
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid "N/A"
 msgstr "N.V.T."
 
@@ -298,7 +292,6 @@ msgstr "Naam"
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/tests/test_account_bank_statement_import_online.py:0
-#, python-format
 msgid "Names and dates for statements found: {}"
 msgstr ""
 
@@ -310,7 +303,6 @@ msgstr "Volgende geplande opvraag"
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/tests/test_account_bank_statement_import_online.py:0
-#, python-format
 msgid "No statements found in journal"
 msgstr ""
 
@@ -337,7 +329,6 @@ msgstr "Aantal berichten met afleveringsfouten"
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid ""
 "Of %(lines_provided)s lines provided, %(before)s where before %(since)s, "
 "%(after)s where on or after %(until)sand %(duplicate)s where not unique."
@@ -346,7 +337,6 @@ msgstr ""
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/account_journal.py:0
-#, python-format
 msgid "Online (OCA)"
 msgstr "Online (OCA)"
 
@@ -377,7 +367,6 @@ msgstr ""
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid ""
 "Online Bank Statement provider \"%(name)s\" failed to obtain statement data "
 "since %(since)s until %(until)s"
@@ -438,7 +427,6 @@ msgstr "Online Bank afschrifte opvragen"
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid "Pulling online bank statements of: %(provider_names)s"
 msgstr ""
 
@@ -460,14 +448,12 @@ msgstr "Geplande opvraag"
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid "Scheduled pull of online bank statements complete."
 msgstr ""
 
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid "Scheduled pull of online bank statements..."
 msgstr ""
 

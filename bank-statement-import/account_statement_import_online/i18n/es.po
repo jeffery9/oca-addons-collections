@@ -19,7 +19,6 @@ msgstr ""
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid "%(number)s %(type)s"
 msgstr "%(number)s %(type)s"
 
@@ -36,7 +35,6 @@ msgstr "Activo"
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid "All lines passed filtering"
 msgstr "Todas las líneas han pasado el filtro"
 
@@ -151,7 +149,6 @@ msgstr "Mostrar Nombre"
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid ""
 "Failed to obtain statement data for period since {since} until {until}: "
 "{exception}. See server logs for more details."
@@ -216,7 +213,6 @@ msgstr "Importar Transacciones"
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid "Inactive"
 msgstr "Inactivo"
 
@@ -233,7 +229,6 @@ msgstr "Es Seguidor/a"
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid "Issue with Online Bank Statement self"
 msgstr "Problema con el auto Extracto Bancario en Línea"
 
@@ -290,7 +285,6 @@ msgstr ""
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid "N/A"
 msgstr "N/A"
 
@@ -302,7 +296,6 @@ msgstr "Nombre"
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/tests/test_account_bank_statement_import_online.py:0
-#, python-format
 msgid "Names and dates for statements found: {}"
 msgstr ""
 
@@ -314,7 +307,6 @@ msgstr "Próxima tirada programada"
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/tests/test_account_bank_statement_import_online.py:0
-#, python-format
 msgid "No statements found in journal"
 msgstr "No se han encontrado extractos en el diario"
 
@@ -341,7 +333,6 @@ msgstr "Número de mensajes con error de entrega"
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid ""
 "Of %(lines_provided)s lines provided, %(before)s where before %(since)s, "
 "%(after)s where on or after %(until)sand %(duplicate)s where not unique."
@@ -353,7 +344,6 @@ msgstr ""
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/account_journal.py:0
-#, python-format
 msgid "Online (OCA)"
 msgstr "En línea (OCA)"
 
@@ -384,7 +374,6 @@ msgstr "Asistente para Extraer Extractos Bancarios en Línea"
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid ""
 "Online Bank Statement provider \"%(name)s\" failed to obtain statement data "
 "since %(since)s until %(until)s"
@@ -446,7 +435,6 @@ msgstr "Extraer Extractos Bancarios En Línea"
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid "Pulling online bank statements of: %(provider_names)s"
 msgstr "Obteniendo extractos bancarios en línea de: %(provider_names)s"
 
@@ -468,14 +456,12 @@ msgstr "Tirada Programada"
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid "Scheduled pull of online bank statements complete."
 msgstr "Finalizada la extracción programada de extractos bancarios en línea."
 
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid "Scheduled pull of online bank statements..."
 msgstr "Extracción programada de extractos bancarios en línea..."
 

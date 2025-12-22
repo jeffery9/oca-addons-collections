@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-05-15 10:24+0000\n"
+"PO-Revision-Date: 2025-06-05 10:26+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -19,7 +19,6 @@ msgstr ""
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid "%(number)s %(type)s"
 msgstr "%(number)s %(type)s"
 
@@ -36,7 +35,6 @@ msgstr "Attivo"
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid "All lines passed filtering"
 msgstr "Tutte le righe cha hanno superato il filtro"
 
@@ -110,7 +108,8 @@ msgstr "Crea estratto conto"
 #. module: account_statement_import_online
 #: model:ir.model.fields,help:account_statement_import_online.field_online_bank_statement_provider__create_statement
 msgid "Create statements for the downloaded transactions automatically or not."
-msgstr "Crea estratto conto automaticamente o meno dalle transizioni scaricate."
+msgstr ""
+"Crea estratto conto automaticamente o meno dalle transizioni scaricate."
 
 #. module: account_statement_import_online
 #: model:ir.model.fields,field_description:account_statement_import_online.field_online_bank_statement_provider__create_uid
@@ -151,7 +150,6 @@ msgstr "Nome visualizzato"
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid ""
 "Failed to obtain statement data for period since {since} until {until}: "
 "{exception}. See server logs for more details."
@@ -214,7 +212,6 @@ msgstr "Importa transizioni"
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid "Inactive"
 msgstr "Inattivo"
 
@@ -231,7 +228,6 @@ msgstr "Segue"
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid "Issue with Online Bank Statement self"
 msgstr "Problema con estratto conto online stesso"
 
@@ -288,7 +284,6 @@ msgstr "Mese"
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid "N/A"
 msgstr "N/D"
 
@@ -300,7 +295,6 @@ msgstr "Nome"
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/tests/test_account_bank_statement_import_online.py:0
-#, python-format
 msgid "Names and dates for statements found: {}"
 msgstr "Nomi e date gli estratti conto trovati: {}"
 
@@ -312,7 +306,6 @@ msgstr "Prossima ricezione schedulata"
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/tests/test_account_bank_statement_import_online.py:0
-#, python-format
 msgid "No statements found in journal"
 msgstr "Nessun estratto conto trovato nel registro"
 
@@ -339,7 +332,6 @@ msgstr "Numero di messaggi con errore di consegna"
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid ""
 "Of %(lines_provided)s lines provided, %(before)s where before %(since)s, "
 "%(after)s where on or after %(until)sand %(duplicate)s where not unique."
@@ -351,7 +343,6 @@ msgstr ""
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/account_journal.py:0
-#, python-format
 msgid "Online (OCA)"
 msgstr "Online (OCA)"
 
@@ -382,7 +373,6 @@ msgstr "Procedura guidata ricezione estratto conto online"
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid ""
 "Online Bank Statement provider \"%(name)s\" failed to obtain statement data "
 "since %(since)s until %(until)s"
@@ -444,7 +434,6 @@ msgstr "Ricevi estratti conto online"
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid "Pulling online bank statements of: %(provider_names)s"
 msgstr "Ricezione estratti conto online di: %(provider_names)s"
 
@@ -466,14 +455,12 @@ msgstr "Ricezione schedulata"
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid "Scheduled pull of online bank statements complete."
 msgstr "Ricezione schedulata degli estratti conto online completa."
 
 #. module: account_statement_import_online
 #. odoo-python
 #: code:addons/account_statement_import_online/models/online_bank_statement_provider.py:0
-#, python-format
 msgid "Scheduled pull of online bank statements..."
 msgstr "Ricezione schedulata degli estratti conto online..."
 
@@ -561,6 +548,9 @@ msgstr "Settimana"
 #: model:ir.model.fields.selection,name:account_statement_import_online.selection__online_bank_statement_provider__interval_type__weeks
 msgid "Week(s)"
 msgstr "Settimana(e)"
+
+#~ msgid "SMS Delivery error"
+#~ msgstr "Errore consegna SMS"
 
 #~ msgid "Daily statements"
 #~ msgstr "Estratti conto giornalieri"
