@@ -4,12 +4,15 @@
 {
     "name": "Partner VAT Unique",
     "summary": "Module to make the VAT number unique for customers and suppliers.",
-    "version": "17.0.1.0.0",
+    "version": "18.0.1.0.0",
     "category": "Customer Relationship Management",
     "website": "https://github.com/OCA/partner-contact",
     "author": "Grant Thornton S.L.P, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "application": True,
     "installable": True,
-    "depends": ["base"],
+    "depends": ["base_setup"],
+    "data": [
+        "views/res_config_settings_views.xml",
+    ],
 }

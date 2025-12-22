@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-13 03:42+0000\n"
-"PO-Revision-Date: 2025-05-10 09:24+0000\n"
+"PO-Revision-Date: 2025-10-27 10:42+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
@@ -44,6 +44,7 @@ msgstr "Città"
 #: model:ir.model.fields,field_description:base_location.field_res_city_zip__city_id
 #: model:ir.model.fields,field_description:base_location.field_res_partner__city
 #: model:ir.model.fields,field_description:base_location.field_res_users__city
+#: model_terms:ir.ui.view,arch_db:base_location.view_company_form_city
 msgid "City"
 msgstr "Città"
 
@@ -164,7 +165,6 @@ msgstr "Provincia"
 #. module: base_location
 #. odoo-python
 #: code:addons/base_location/models/res_partner.py:0
-#, python-format
 msgid ""
 "The city of the partner %(partner)s differs from that in location "
 "%(location)s"
@@ -174,7 +174,6 @@ msgstr ""
 #. module: base_location
 #. odoo-python
 #: code:addons/base_location/models/res_partner.py:0
-#, python-format
 msgid ""
 "The country of the partner %(partner)s differs from that in location "
 "%(location)s"
@@ -185,7 +184,6 @@ msgstr ""
 #. module: base_location
 #. odoo-python
 #: code:addons/base_location/models/res_partner.py:0
-#, python-format
 msgid ""
 "The state of the partner %(partner)s differs from that in location "
 "%(location)s"
@@ -195,7 +193,6 @@ msgstr ""
 #. module: base_location
 #. odoo-python
 #: code:addons/base_location/models/res_partner.py:0
-#, python-format
 msgid ""
 "The zip of the partner %(partner)s differs from that in location %(location)s"
 msgstr ""

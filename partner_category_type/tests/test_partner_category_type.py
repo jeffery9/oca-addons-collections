@@ -25,7 +25,11 @@ class TestResPartnerCategory(BaseCommon):
 
     def test_01_default_category_type(self):
         """Test that new categories get the default generic type"""
-        new_category = self.env["res.partner.category"].create(
+        category_model = self.env["res.partner.category"]
+        default_type = category_model._get_default_category_type()
+        self.assertEqual(default_type, "generic")
+
+        new_category = category_model.create(
             {
                 "name": "Test Category",
             }
@@ -41,70 +45,42 @@ class TestResPartnerCategory(BaseCommon):
 
     def test_03_category_type_constraint(self):
         """Test constraint preventing different types between parent and child"""
-        # Try to create a child category with different type
         with self.assertRaises(ValidationError):
-            # First modify the selection function to add a new type for testing
-            def extended_selection(self):
-                return [("generic", "Generic"), ("test", "Test")]
-
-            # Temporarily patch the selection function
-            original_selection = type(self.category_parent)._get_category_type_selection
-            type(self.category_parent)._get_category_type_selection = extended_selection
-
-            try:
-                # Attempt to create category with different type
-                self.env["res.partner.category"].create(
-                    {
-                        "name": "Invalid Child Category",
-                        "parent_id": self.category_parent.id,
-                        "category_type": "test",
-                    }
-                )
-            finally:
-                # Restore original selection function
-                type(
-                    self.category_parent
-                )._get_category_type_selection = original_selection
+            self.category_parent.category_type = "generic"
+            self.env["res.partner.category"].create(
+                {
+                    "name": "Invalid Child Category",
+                    "parent_id": self.category_parent.id,
+                    "category_type": "test",  # Different from parent's 'generic' type
+                }
+            )
 
     def test_04_change_parent_category_type(self):
         """Test that changing parent category type updates all children"""
-        # Create a hierarchy of categories
-        parent = self.env["res.partner.category"].create(
-            {
-                "name": "Parent",
-            }
-        )
+        parent = self.env["res.partner.category"].create({"name": "Parent"})
         child1 = self.env["res.partner.category"].create(
-            {
-                "name": "Child 1",
-                "parent_id": parent.id,
-            }
+            {"name": "Child 1", "parent_id": parent.id}
         )
         child2 = self.env["res.partner.category"].create(
-            {
-                "name": "Child 2",
-                "parent_id": child1.id,
-            }
+            {"name": "Child 2", "parent_id": child1.id}
         )
 
-        # Define new selection function for testing
         def extended_selection(self):
             return [("generic", "Generic"), ("test", "Test")]
 
-        # Temporarily patch the selection function
         original_selection = type(parent)._get_category_type_selection
-        type(parent)._get_category_type_selection = extended_selection
 
         try:
-            # Change parent's type
+            type(parent)._get_category_type_selection = extended_selection
             parent.category_type = "test"
-
-            # Verify all children were updated
             self.assertEqual(child1.category_type, "test")
             self.assertEqual(child2.category_type, "test")
         finally:
-            # Restore original selection function
-            type(parent)._get_category_type_selection = original_selection
+            type(
+                parent
+            )._get_category_type_selection = (
+                original_selection  # Ensure this always runs
+            )
 
     def test_05_compute_category_type(self):
         """Test computation of category type based on parent"""
@@ -133,3 +109,9 @@ class TestResPartnerCategory(BaseCommon):
 
         # Verify it returns to default category type
         self.assertEqual(standalone.category_type, "generic")
+
+    def test_06_get_category_type_selection(self):
+        """Test _get_category_type_selection method"""
+        category_model = self.env["res.partner.category"]
+        selection = category_model._get_category_type_selection()
+        self.assertIn(("generic", "Generic"), selection)
