@@ -1,6 +1,7 @@
 # Copyright 2017 Camptocamp
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 
+import base64
 import json
 import uuid
 
@@ -28,9 +29,11 @@ class TestMultiToken(TransactionCase):
         )
 
     def _fake_params(self, **kw):
-        random = uuid.uuid4().hex
+        random = uuid.uuid4()
+        fake_token = b"\x01" + b"FAKE_TOKEN" + random.bytes
+        encoded_token = base64.urlsafe_b64encode(fake_token).rstrip(b"=").decode()
         params = {
-            "state": json.dumps({"t": f"FAKE_TOKEN_{random}"}),
+            "state": json.dumps({"t": encoded_token}),
             "access_token": f"FAKE_ACCESS_TOKEN_{random}",
         }
         params.update(kw)
@@ -103,9 +106,12 @@ class TestMultiToken(TransactionCase):
         self.assertEqual(login, "johndoe")
 
         # login is working
-        self.env["res.users"]._check_credentials(
-            params["access_token_multi"], {"interactive": False}
-        )
+        credential = {
+            "type": "oauth_token",
+            "password": "",
+            "token": params["access_token_multi"],
+        }
+        self.env["res.users"]._check_credentials(credential, {"interactive": True})
 
         # use as many token as max allowed
         for token_count in range(2, self.user.oauth_access_max_token + 1):
@@ -118,9 +124,7 @@ class TestMultiToken(TransactionCase):
         # exceed the number, token removed and login blocked
         self._test_one_token()
         with self.assertRaises(exceptions.AccessDenied):
-            self.env["res.users"]._check_credentials(
-                params["access_token_multi"], {"interactive": False}
-            )
+            self.env["res.users"]._check_credentials(credential, {"interactive": True})
 
         # token count does not exceed max number
         self.assertEqual(

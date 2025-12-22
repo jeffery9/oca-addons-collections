@@ -20,9 +20,6 @@
                 <field name="jwks_uri" />
                 <field name="end_session_endpoint" />
             </field>
-            <field name="auth_endpoint" position="after">
-                <field name="auth_link_params" />
-            </field>
         </field>
     </record>
 </odoo>

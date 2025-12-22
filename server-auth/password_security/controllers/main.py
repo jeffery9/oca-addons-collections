@@ -30,14 +30,15 @@ class PasswordSecurityHome(AuthSignupHome):
         if not request.env.user:
             return response
         # Now, I'm an authenticated user
-        if not request.env.user._password_has_expired():
+        # With 2FA there is a second step, and we would not be completely logged in
+        if not (request.session.uid and request.env.user._password_has_expired()):
             return response
         # My password is expired, kick me out
         request.env.user.action_expire_password()
         request.session.logout(keep_db=True)
         # I was kicked out, so set login_success in request params to False
         request.params["login_success"] = False
-        redirect = request.env.user.partner_id.signup_url
+        redirect = request.env.user.partner_id._get_signup_url()
         return request.redirect(redirect)
 
     @http.route()

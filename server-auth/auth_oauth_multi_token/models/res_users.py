@@ -74,22 +74,26 @@ class ResUsers(models.Model):
             res.oauth_access_token = self._generate_oauth_master_uuid()
 
     @api.model
-    def _check_credentials(self, password, env):
+    def _check_credentials(self, credential, env):
         """Override to check credentials against multi tokens."""
         try:
-            return super()._check_credentials(password, env)
+            return super()._check_credentials(credential, env)
         except exceptions.AccessDenied:
             passwd_allowed = (
                 env["interactive"] or not self.env.user._rpc_api_keys_only()
             )
-            if passwd_allowed and self.env.user.active:
+            if passwd_allowed and self.env.user.active and "token" in credential:
                 res = self.multi_token_model.sudo().search(
                     [
                         ("user_id", "=", self.env.uid),
-                        ("oauth_access_token", "=", password),
+                        ("oauth_access_token", "=", credential["token"]),
                     ]
                 )
                 if res:
-                    return
+                    return {
+                        "uid": self.env.user.id,
+                        "auth_method": "oauth",
+                        "mfa": "default",
+                    }
 
             raise

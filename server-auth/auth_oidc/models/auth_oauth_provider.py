@@ -46,10 +46,6 @@ class AuthOauthProvider(models.Model):
         string="Token URL", help="Required for OpenID Connect authorization code flow."
     )
     jwks_uri = fields.Char(string="JWKS URL", help="Required for OpenID Connect.")
-    auth_link_params = fields.Char(
-        help="Additional parameters for the auth link. "
-        "For example: {'prompt':'select_account'}"
-    )
     end_session_endpoint = fields.Char(string="End Session URL")
 
     @tools.ormcache("self.jwks_uri", "kid")
