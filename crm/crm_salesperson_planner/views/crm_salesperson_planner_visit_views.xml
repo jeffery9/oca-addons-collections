@@ -6,7 +6,7 @@
         <field name="name">CRM - Salesperson Planner Visit Tree</field>
         <field name="model">crm.salesperson.planner.visit</field>
         <field name="arch" type="xml">
-            <tree
+            <list
                 decoration-success="state == 'done'"
                 decoration-info="state == 'confirm'"
                 decoration-warning="state == 'incident'"
@@ -30,15 +30,15 @@
                     name="action_confirm"
                     type="object"
                     icon="fa-calendar text-success"
-                    title="Confirm"
                     invisible="state != 'draft'"
+                    title="Confirm"
                 />
                 <button
                     name="action_done"
                     type="object"
                     icon="fa-check"
-                    title="Done"
                     invisible="state != 'confirm'"
+                    title="Done"
                 />
                 <button
                     name="%(crm_salesperson_planner_visit_close_wiz_action)d"
@@ -56,7 +56,7 @@
                     context="{'att_close_type':'incident'}"
                     title="Close Reasons"
                 />
-            </tree>
+            </list>
         </field>
     </record>
     <record model="ir.ui.view" id="crm_salesperson_planner_visit_form_view">
@@ -112,8 +112,7 @@
                     />
                 </header>
                 <sheet string="Visit">
-                    <div class="oe_button_box" name="button_box">
-                    </div>
+                    <div class="oe_button_box" name="button_box" />
                     <div class="oe_title">
                         <h1>
                             <field name="name" readonly="1" />
@@ -176,7 +175,7 @@
                             />
                         </page>
                         <page string="Opportunities">
-                                <field
+                            <field
                                 name="opportunity_ids"
                                 nolabel="1"
                                 options="{'no_create': True}"
@@ -184,15 +183,8 @@
                         </page>
                     </notebook>
                 </sheet>
-                <div class="oe_chatter">
-                    <field
-                        name="message_follower_ids"
-                        widget="mail_followers"
-                        groups="base.group_user"
-                    />
-                    <field name="activity_ids" widget="mail_activity" />
-                    <field name="message_ids" widget="mail_thread" />
-                </div>
+                <!-- Chatter -->
+                <chatter />
             </form>
         </field>
     </record>
@@ -267,7 +259,7 @@
     <record model="ir.actions.act_window" id="my_crm_salesperson_planner_visit_action">
         <field name="name">Visits</field>
         <field name="res_model">crm.salesperson.planner.visit</field>
-        <field name="view_mode">tree,form,pivot</field>
+        <field name="view_mode">list,form,pivot</field>
         <field name="context">{
             'search_default_visits_today':1,
         }</field>
@@ -285,7 +277,7 @@
     <record model="ir.actions.act_window" id="all_crm_salesperson_planner_visit_action">
         <field name="name">Visits</field>
         <field name="res_model">crm.salesperson.planner.visit</field>
-        <field name="view_mode">tree,form,pivot</field>
+        <field name="view_mode">list,form,pivot</field>
         <field name="context">{
             'search_default_salesperson':1,
         }</field>

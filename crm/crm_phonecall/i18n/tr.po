@@ -10,15 +10,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-04 15:47+0000\n"
-"PO-Revision-Date: 2024-12-31 13:06+0000\n"
-"Last-Translator: Ömer KÜLAK <omer.kulak@kitayazilim.com>\n"
+"PO-Revision-Date: 2023-06-13 17:09+0000\n"
+"Last-Translator: Ediz Duman <neps1192@gmail.com>\n"
 "Language-Team: Turkish (https://www.transifex.com/oca/teams/23907/tr/)\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Weblate 5.6.2\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: crm_phonecall
 #: model:ir.model.fields,field_description:crm_phonecall.field_crm_phonecall_report__nbr_cases
@@ -28,7 +28,7 @@ msgstr "# Vaka Sayısı"
 #. module: crm_phonecall
 #: model_terms:ir.ui.view,arch_db:crm_phonecall.crm_case_phone_form_view
 msgid "<b>min(s)</b>"
-msgstr "<b> dk</b>"
+msgstr ""
 
 #. module: crm_phonecall
 #: model_terms:ir.ui.view,arch_db:crm_phonecall.crm_case_phone_form_view
@@ -39,11 +39,6 @@ msgid ""
 "                                To Opportunity\n"
 "                            </span>"
 msgstr ""
-"<span>\n"
-"                                Fırsata\n"
-"                                <br/>\n"
-"                                Dönüştür\n"
-"                            </span>"
 
 #. module: crm_phonecall
 #: model_terms:ir.ui.view,arch_db:crm_phonecall.crm_case_phone_form_view
@@ -54,11 +49,6 @@ msgid ""
 "                                A Meeting\n"
 "                            </span>"
 msgstr ""
-"<span>\n"
-"                                Toplantı\n"
-"                                <br/>\n"
-"                                Planla\n"
-"                            </span>"
 
 #. module: crm_phonecall
 #: model_terms:ir.ui.view,arch_db:crm_phonecall.crm_case_phone_form_view
@@ -69,11 +59,6 @@ msgid ""
 "                                Other Call\n"
 "                            </span>"
 msgstr ""
-"<span>\n"
-"                                Başka bir\n"
-"                                <br/>\n"
-"                                Arama Planlal\n"
-"                            </span>"
 
 #. module: crm_phonecall
 #: model:ir.model.fields,field_description:crm_phonecall.field_crm_phonecall2phonecall__action
@@ -109,8 +94,6 @@ msgstr "Ek Sayısı"
 #: model:ir.model.fields,help:crm_phonecall.field_res_config_settings__group_show_form_view
 msgid "By default form is disabled for calls, with this group it is enabled."
 msgstr ""
-"Varsayılan olarak formda aramalar aktif değil, bu grup ile "
-"etkinleşirilebilir."
 
 #. module: crm_phonecall
 #: model_terms:ir.ui.view,arch_db:crm_phonecall.res_config_settings_view_form
@@ -118,8 +101,6 @@ msgid ""
 "By default form view is disabled for calls, with this setting it is enabled "
 "for all users."
 msgstr ""
-"Varsayılan olarak form görünümü aramalar için devre dışıdır, bu ayarla tüm "
-"kullanıcılar için etkinleştirilir."
 
 #. module: crm_phonecall
 #: model:ir.model,name:crm_phonecall.model_calendar_event
@@ -145,7 +126,7 @@ msgstr "Çağrılar"
 #. module: crm_phonecall
 #: model_terms:ir.ui.view,arch_db:crm_phonecall.view_crm_case_phonecalls_filter
 msgid "Calls Date by Month"
-msgstr "Ay Bazında Çağrılar"
+msgstr "Aylar İtibarıyla Çağrılar"
 
 #. module: crm_phonecall
 #: model_terms:ir.ui.view,arch_db:crm_phonecall.view_crm_case_phonecalls_filter
@@ -161,7 +142,7 @@ msgstr "Kampanya"
 #: model:ir.model.fields.selection,name:crm_phonecall.selection__crm_phonecall__state__cancel
 #: model:ir.model.fields.selection,name:crm_phonecall.selection__crm_phonecall_report__state__cancel
 msgid "Cancelled"
-msgstr "İptal Edildi"
+msgstr "İptalEdildi"
 
 #. module: crm_phonecall
 #: model:ir.ui.menu,name:crm_phonecall.menu_crm_case_phonecall-act
@@ -207,7 +188,7 @@ msgstr "Yapılandırma Ayarları"
 #. module: crm_phonecall
 #: model:ir.model.fields.selection,name:crm_phonecall.selection__crm_phonecall__state__open
 msgid "Confirmed"
-msgstr "Aranacak"
+msgstr "Onaylanan"
 
 #. module: crm_phonecall
 #: model:ir.model,name:crm_phonecall.model_res_partner
@@ -238,8 +219,6 @@ msgid ""
 "Create specific phone call categories to better define the type of\n"
 "            calls tracked in the system."
 msgstr ""
-"Türünü daha iyi belirleyebilmek ve sistemde takibini\n"
-"            kolaylaştırmak için arama kategorileri oluşturun."
 
 #. module: crm_phonecall
 #: model:ir.model.fields,field_description:crm_phonecall.field_crm_phonecall2phonecall__create_uid
@@ -250,7 +229,7 @@ msgstr "Oluşturan"
 #. module: crm_phonecall
 #: model:ir.model.fields,field_description:crm_phonecall.field_crm_phonecall2phonecall__create_date
 msgid "Created on"
-msgstr "Oluşturulma"
+msgstr "Oluşturuldu"
 
 #. module: crm_phonecall
 #: model_terms:ir.ui.view,arch_db:crm_phonecall.view_crm_case_phonecalls_filter
@@ -283,12 +262,12 @@ msgstr "Tarih"
 #. module: crm_phonecall
 #: model:ir.model.fields,field_description:crm_phonecall.field_crm_phonecall_report__delay_close
 msgid "Delay to close"
-msgstr "Kapatma gecikmesi"
+msgstr "Kapatmak için gecikme"
 
 #. module: crm_phonecall
 #: model:ir.model.fields,field_description:crm_phonecall.field_crm_phonecall_report__delay_open
 msgid "Delay to open"
-msgstr "Açma gecikmesi"
+msgstr "Açma için gecikme"
 
 #. module: crm_phonecall
 #: model:ir.model.fields,field_description:crm_phonecall.field_crm_phonecall__description
@@ -303,14 +282,14 @@ msgstr "Açıklama..."
 #. module: crm_phonecall
 #: model:ir.model.fields,field_description:crm_phonecall.field_crm_phonecall__direction
 msgid "Direction"
-msgstr "Çağrı Yönü"
+msgstr "Yön"
 
 #. module: crm_phonecall
 #: model:ir.model.fields,field_description:crm_phonecall.field_crm_phonecall2phonecall__display_name
 #: model:ir.model.fields,field_description:crm_phonecall.field_crm_phonecall__display_name
 #: model:ir.model.fields,field_description:crm_phonecall.field_crm_phonecall_report__display_name
 msgid "Display Name"
-msgstr "Görünen Adı"
+msgstr "Ad Görünümü"
 
 #. module: crm_phonecall
 #: model:ir.model.fields.selection,name:crm_phonecall.selection__crm_phonecall_report__state__draft
@@ -337,7 +316,7 @@ msgstr "Email"
 #: model:ir.model.fields,field_description:crm_phonecall.field_res_config_settings__group_show_form_view
 #: model:res.groups,name:crm_phonecall.group_show_form_view
 msgid "Enable form view for phone calls"
-msgstr "Form gürünümünde aramaları etkinleştir"
+msgstr ""
 
 #. module: crm_phonecall
 #: model_terms:ir.ui.view,arch_db:crm_phonecall.view_report_crm_phonecall_filter
@@ -363,14 +342,14 @@ msgstr "Grupla"
 #. module: crm_phonecall
 #: model:ir.model.fields,field_description:crm_phonecall.field_crm_phonecall__has_message
 msgid "Has Message"
-msgstr "Mesaj var mı"
+msgstr ""
 
 #. module: crm_phonecall
 #: model:ir.model.fields.selection,name:crm_phonecall.selection__crm_phonecall__state__done
 #: model:ir.model.fields.selection,name:crm_phonecall.selection__crm_phonecall_report__state__done
 #: model_terms:ir.ui.view,arch_db:crm_phonecall.view_report_crm_phonecall_filter
 msgid "Held"
-msgstr "Tamamlandı"
+msgstr ""
 
 #. module: crm_phonecall
 #: model:ir.model.fields.selection,name:crm_phonecall.selection__crm_phonecall__priority__2
@@ -388,17 +367,17 @@ msgstr "ID"
 #. module: crm_phonecall
 #: model:ir.model.fields,help:crm_phonecall.field_crm_phonecall__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr "İşaretliyse, yeni mesajlarla ilgilenmeniz gerekiyor."
+msgstr ""
 
 #. module: crm_phonecall
 #: model:ir.model.fields,help:crm_phonecall.field_crm_phonecall__message_has_error
 msgid "If checked, some messages have a delivery error."
-msgstr "İşaretlendiğinde bazı mesajların iletim hatası olduğu görülür."
+msgstr ""
 
 #. module: crm_phonecall
 #: model:ir.model.fields.selection,name:crm_phonecall.selection__crm_phonecall__direction__in
 msgid "In"
-msgstr "Gelen"
+msgstr ""
 
 #. module: crm_phonecall
 #: model_terms:ir.actions.act_window,help:crm_phonecall.crm_case_categ_phone_incoming0
@@ -406,13 +385,11 @@ msgid ""
 "In order to follow up on the call, you can trigger a request for\n"
 "            another call, a meeting or an opportunity."
 msgstr ""
-"Aramayı takip etmek için bir istek tetikleyebilir başka bir arama,\n"
-"             bir toplantı veya bir fırsat talebinde bulunabilirsiniz."
 
 #. module: crm_phonecall
 #: model_terms:ir.ui.view,arch_db:crm_phonecall.view_crm_case_phonecalls_filter
 msgid "Incoming Calls"
-msgstr "Gelen Çağrılar"
+msgstr "Gelen Çağrıları"
 
 #. module: crm_phonecall
 #: model:ir.model.fields,field_description:crm_phonecall.field_crm_phonecall__message_is_follower
@@ -456,7 +433,7 @@ msgstr "Çağrı günlüğü"
 #: model:ir.actions.act_window,name:crm_phonecall.crm_case_categ_phone_incoming0
 #: model:ir.ui.menu,name:crm_phonecall.menu_crm_case_phone_inbound
 msgid "Logged Calls"
-msgstr "Arama Kayıtları"
+msgstr ""
 
 #. module: crm_phonecall
 #: model:ir.model.fields.selection,name:crm_phonecall.selection__crm_phonecall__priority__0
@@ -467,7 +444,7 @@ msgstr "Düşük"
 #. module: crm_phonecall
 #: model:ir.model.fields,field_description:crm_phonecall.field_crm_phonecall__medium_id
 msgid "Medium"
-msgstr "Ortam"
+msgstr ""
 
 #. module: crm_phonecall
 #: model_terms:ir.ui.view,arch_db:crm_phonecall.crm_case_inbound_phone_tree_view
@@ -478,7 +455,7 @@ msgstr "Toplantı"
 #. module: crm_phonecall
 #: model:ir.model.fields,field_description:crm_phonecall.field_crm_phonecall__message_has_error
 msgid "Message Delivery error"
-msgstr "Mesaj İletim hatası"
+msgstr ""
 
 #. module: crm_phonecall
 #: model:ir.model.fields,field_description:crm_phonecall.field_crm_phonecall__message_ids
@@ -513,12 +490,12 @@ msgstr "Telefon Çağrılarım"
 #. module: crm_phonecall
 #: model_terms:ir.ui.view,arch_db:crm_phonecall.view_report_crm_phonecall_filter
 msgid "My Sales Team(s)"
-msgstr "Satış Ekib(ler)im"
+msgstr "Satış Takımım"
 
 #. module: crm_phonecall
 #: model_terms:ir.ui.view,arch_db:crm_phonecall.view_crm_case_phonecalls_filter
 msgid "My Team"
-msgstr "Ekibim"
+msgstr "Benim Ekibim"
 
 #. module: crm_phonecall
 #: model:ir.model.fields,field_description:crm_phonecall.field_crm_phonecall__date_action_next
@@ -534,7 +511,7 @@ msgstr "Normal"
 #. module: crm_phonecall
 #: model_terms:ir.ui.view,arch_db:crm_phonecall.view_report_crm_phonecall_filter
 msgid "Not Held"
-msgstr "Tamamlanmadı"
+msgstr ""
 
 #. module: crm_phonecall
 #: model:ir.model.fields,field_description:crm_phonecall.field_crm_phonecall2phonecall__note
@@ -549,12 +526,12 @@ msgstr "Eylem Sayısı"
 #. module: crm_phonecall
 #: model:ir.model.fields,help:crm_phonecall.field_crm_phonecall_report__delay_close
 msgid "Number of Days to close the case"
-msgstr "İşlemin kapatılacağı gün sayısı"
+msgstr ""
 
 #. module: crm_phonecall
 #: model:ir.model.fields,help:crm_phonecall.field_crm_phonecall_report__delay_open
 msgid "Number of Days to open the case"
-msgstr "İşlemin açılacağı gün sayısı"
+msgstr ""
 
 #. module: crm_phonecall
 #: model:ir.model.fields,field_description:crm_phonecall.field_crm_phonecall__message_has_error_counter
@@ -564,12 +541,12 @@ msgstr "Hata sayısı"
 #. module: crm_phonecall
 #: model:ir.model.fields,help:crm_phonecall.field_crm_phonecall__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr "İşlem gerektiren mesajlar"
+msgstr ""
 
 #. module: crm_phonecall
 #: model:ir.model.fields,help:crm_phonecall.field_crm_phonecall__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr "Teslim hatası olan ileti sayısı"
+msgstr ""
 
 #. module: crm_phonecall
 #: model_terms:ir.actions.act_window,help:crm_phonecall.crm_case_categ_phone_outgoing0
@@ -577,9 +554,6 @@ msgid ""
 "Odoo allows you to easily define all the calls to be done\n"
 "            by your sales team and follow up based on their summary."
 msgstr ""
-"Odoo, satış ekibiniz tarafından yapılacak tüm çağrıları kolayca "
-"tanımlamanıza \n"
-"            ve özetlerine göre takip etmenize olanak tanır."
 
 #. module: crm_phonecall
 #: model_terms:ir.actions.act_window,help:crm_phonecall.crm_case_categ_phone_incoming0
@@ -589,9 +563,6 @@ msgid ""
 "another\n"
 "            team member."
 msgstr ""
-"Odoo, bir müşteriyle olan iletişimin geçmişini izlemek veya\n"
-"            başka bir ekip üyesini bilgilendirmek için\n"
-"            gelen aramaları anında kaydetmenize olanak tanır."
 
 #. module: crm_phonecall
 #: model:ir.model.fields,field_description:crm_phonecall.field_crm_phonecall__date_open
@@ -606,7 +577,7 @@ msgstr "Açılış Tarihi"
 #. module: crm_phonecall
 #: model:ir.model.fields.selection,name:crm_phonecall.selection__crm_phonecall__direction__out
 msgid "Out"
-msgstr "Giden"
+msgstr "Dışarı"
 
 #. module: crm_phonecall
 #: model_terms:ir.ui.view,arch_db:crm_phonecall.view_crm_case_phonecalls_filter
@@ -618,7 +589,7 @@ msgstr "Giden Çağrıları"
 #: model:ir.model.fields,field_description:crm_phonecall.field_crm_phonecall_report__partner_id
 #: model_terms:ir.ui.view,arch_db:crm_phonecall.view_crm_case_phonecalls_filter
 msgid "Partner"
-msgstr "İş Ortağı"
+msgstr "İş Ortakları"
 
 #. module: crm_phonecall
 #: model:ir.model.fields.selection,name:crm_phonecall.selection__crm_phonecall__state__pending
@@ -637,7 +608,6 @@ msgstr "Telefon"
 #. odoo-python
 #: code:addons/crm_phonecall/models/crm_phonecall.py:0
 #: model_terms:ir.ui.view,arch_db:crm_phonecall.crm_case_phone_form_view
-#, python-format
 msgid "Phone Call"
 msgstr "Telefon Çağrısı"
 
@@ -670,27 +640,27 @@ msgstr "Telefon Çağrıları"
 #. module: crm_phonecall
 #: model:ir.model,name:crm_phonecall.model_crm_phonecall_report
 msgid "Phone calls by user"
-msgstr "Kullanıcıya Göre Aramalar"
+msgstr ""
 
 #. module: crm_phonecall
 #: model_terms:ir.ui.view,arch_db:crm_phonecall.view_report_crm_phonecall_filter
 msgid "Phone calls that are assigned to one of the sale teams I manage"
-msgstr "Yönettiğim satış ekiplerinden birine atanan telefon görüşmeleri"
+msgstr ""
 
 #. module: crm_phonecall
 #: model_terms:ir.ui.view,arch_db:crm_phonecall.view_report_crm_phonecall_filter
 msgid "Phone calls which are in closed state"
-msgstr "Kapalı durumda olan telefon görüşmeleri"
+msgstr ""
 
 #. module: crm_phonecall
 #: model_terms:ir.ui.view,arch_db:crm_phonecall.view_report_crm_phonecall_filter
 msgid "Phone calls which are in draft and open state"
-msgstr "Taslak ve açık durumda olan telefon görüşmeleri"
+msgstr ""
 
 #. module: crm_phonecall
 #: model_terms:ir.ui.view,arch_db:crm_phonecall.view_report_crm_phonecall_filter
 msgid "Phone calls which are in pending state"
-msgstr "Bekleyen durumda olan telefon görüşmeleri"
+msgstr ""
 
 #. module: crm_phonecall
 #: model:ir.model,name:crm_phonecall.model_crm_phonecall
@@ -713,7 +683,7 @@ msgstr "Çağrısı Sayısı"
 #. module: crm_phonecall
 #: model:ir.model,name:crm_phonecall.model_crm_phonecall2phonecall
 msgid "Phonecall To Phonecall"
-msgstr "Aramadan Aramaya"
+msgstr ""
 
 #. module: crm_phonecall
 #: model:ir.model.fields,field_description:crm_phonecall.field_crm_lead__phonecall_ids
@@ -733,12 +703,12 @@ msgstr "Planlanan Tarih"
 #: model:ir.model.fields,field_description:crm_phonecall.field_crm_phonecall__priority
 #: model:ir.model.fields,field_description:crm_phonecall.field_crm_phonecall_report__priority
 msgid "Priority"
-msgstr "Öncelik"
+msgstr ""
 
 #. module: crm_phonecall
 #: model:ir.model.fields,field_description:crm_phonecall.field_crm_phonecall__rating_ids
 msgid "Ratings"
-msgstr "Oranlar"
+msgstr ""
 
 #. module: crm_phonecall
 #: model:ir.model.fields,field_description:crm_phonecall.field_crm_phonecall__user_id
@@ -757,7 +727,7 @@ msgstr "Satış Ekibi"
 #. module: crm_phonecall
 #: model:ir.model.fields,help:crm_phonecall.field_crm_phonecall__team_id
 msgid "Sales team to which Case belongs to."
-msgstr "İşlemin ait olduğu satış ekibi."
+msgstr ""
 
 #. module: crm_phonecall
 #: model_terms:ir.ui.view,arch_db:crm_phonecall.view_report_crm_phonecall_filter
@@ -773,23 +743,23 @@ msgstr "Çağrı Programlama"
 #: model:ir.actions.act_window,name:crm_phonecall.phonecall_to_phonecall_act
 #: model_terms:ir.ui.view,arch_db:crm_phonecall.crm_case_inbound_phone_tree_view
 msgid "Schedule Other Call"
-msgstr "Arama Planla"
+msgstr ""
 
 #. module: crm_phonecall
 #: model:ir.model.fields.selection,name:crm_phonecall.selection__crm_phonecall2phonecall__action__schedule
 msgid "Schedule a call"
-msgstr "Arama Planla"
+msgstr ""
 
 #. module: crm_phonecall
 #: model_terms:ir.ui.view,arch_db:crm_phonecall.phonecall_to_phonecall_view
 msgid "Schedule/Log a Call"
-msgstr "Planla/Günlüğe Kaydet"
+msgstr ""
 
 #. module: crm_phonecall
 #: model:ir.actions.act_window,name:crm_phonecall.crm_case_categ_phone_outgoing0
 #: model:ir.ui.menu,name:crm_phonecall.menu_crm_case_phone_outbound
 msgid "Scheduled Calls"
-msgstr "Planlanmış Çağrılar"
+msgstr ""
 
 #. module: crm_phonecall
 #: model_terms:ir.ui.view,arch_db:crm_phonecall.view_report_crm_phonecall_filter
@@ -799,12 +769,12 @@ msgstr "Arama"
 #. module: crm_phonecall
 #: model_terms:ir.ui.view,arch_db:crm_phonecall.view_crm_case_phonecalls_filter
 msgid "Search Phonecalls"
-msgstr "Çağrılarda Ara"
+msgstr ""
 
 #. module: crm_phonecall
 #: model:res.groups,name:crm_phonecall.group_scheduled_calls
 msgid "Show Scheduled Calls Menu"
-msgstr "Planlanmış Aramalar Menüsünü Göster"
+msgstr ""
 
 #. module: crm_phonecall
 #: model:ir.model.fields,field_description:crm_phonecall.field_crm_phonecall__source_id
@@ -841,15 +811,11 @@ msgid ""
 "When the call is over, the status is set to Held.\n"
 "If the callis not applicable anymore, the status can be set to Cancelled."
 msgstr ""
-"Bir çağrı kaydı oluşturulduğunda durum Aranacak olarak ayarlanır.\n"
-"Çağrı bittiğinde, durum Tamamlandı olarak ayarlanır.\n"
-"Çağrı artık geçerli gerçekleştirilebilir değilse, durum İptal Edildi olarak "
-"ayarlanabilir."
 
 #. module: crm_phonecall
 #: model:ir.model.fields,help:crm_phonecall.field_crm_phonecall__email_from
 msgid "These people will receive email."
-msgstr "Bu kişiler e-posta alacak."
+msgstr ""
 
 #. module: crm_phonecall
 #: model:ir.model.fields,help:crm_phonecall.field_crm_phonecall__campaign_id
@@ -857,13 +823,11 @@ msgid ""
 "This is a name that helps you keep track of your different campaign efforts, "
 "e.g. Fall_Drive, Christmas_Special"
 msgstr ""
-"Bu, farklı kampanya çalışmalarınızı takip etmenize yardımcı olan bir "
-"isimdir, ör. Ramazan_Bayramı, Cocuk_Bayrami"
 
 #. module: crm_phonecall
 #: model:ir.model.fields,help:crm_phonecall.field_crm_phonecall__medium_id
 msgid "This is the method of delivery, e.g. Postcard, Email, or Banner Ad"
-msgstr "Bu teslimat yöntemidir, örn. Kartpostal, E-posta veya Başlık Reklamı"
+msgstr ""
 
 #. module: crm_phonecall
 #: model:ir.model.fields,help:crm_phonecall.field_crm_phonecall__source_id
@@ -871,8 +835,6 @@ msgid ""
 "This is the source of the link, e.g. Search Engine, another domain, or name "
 "of email list"
 msgstr ""
-"Bu, bağlantının kaynağıdır, ör. Arama Motoru, başka bir alan adı veya e-"
-"posta listesinin adı"
 
 #. module: crm_phonecall
 #: model_terms:ir.ui.view,arch_db:crm_phonecall.view_crm_case_phonecalls_filter
@@ -888,7 +850,7 @@ msgstr "Yapılacak"
 #. module: crm_phonecall
 #: model_terms:ir.ui.view,arch_db:crm_phonecall.crm_case_phone_form_view
 msgid "Tracking"
-msgstr "İzleme"
+msgstr ""
 
 #. module: crm_phonecall
 #: model_terms:ir.ui.view,arch_db:crm_phonecall.view_crm_case_phonecalls_filter
@@ -903,12 +865,12 @@ msgstr "Kullanıcı"
 #. module: crm_phonecall
 #: model:ir.model.fields,field_description:crm_phonecall.field_crm_phonecall__website_message_ids
 msgid "Website Messages"
-msgstr "Website Mesajları"
+msgstr ""
 
 #. module: crm_phonecall
 #: model:ir.model.fields,help:crm_phonecall.field_crm_phonecall__website_message_ids
 msgid "Website communication history"
-msgstr "Websitesi iletişim geçmişi"
+msgstr ""
 
 #. module: crm_phonecall
 #: model_terms:ir.actions.act_window,help:crm_phonecall.crm_case_categ_phone_outgoing0
@@ -916,8 +878,6 @@ msgid ""
 "You can use the import feature to massively import a new list of\n"
 "            prospects to qualify."
 msgstr ""
-"Yeni bir potansiyel müşteri listesini toplu olarak içe aktarmak için\n"
-"               içe aktarma özelliğini kullanabilirsiniz."
 
 #~ msgid "Last Modified on"
 #~ msgstr "Son Değişiklik"

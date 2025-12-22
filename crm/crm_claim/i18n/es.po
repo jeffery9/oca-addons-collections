@@ -37,13 +37,6 @@ msgid "# of Claims"
 msgstr "Nº de reclamaciones"
 
 #. module: crm_claim
-#. odoo-python
-#: code:addons/crm_claim/models/crm_claim.py:0
-#, python-format
-msgid "%s (copy)"
-msgstr "%s (copia)"
-
-#. module: crm_claim
 #: model_terms:ir.ui.view,arch_db:crm_claim.crm_case_claims_form_view
 msgid "Action Description..."
 msgstr "Descripción de la acción..."
@@ -445,14 +438,6 @@ msgid "Is Follower"
 msgstr "Es seguidor"
 
 #. module: crm_claim
-#: model:ir.model.fields,field_description:crm_claim.field_crm_claim____last_update
-#: model:ir.model.fields,field_description:crm_claim.field_crm_claim_category____last_update
-#: model:ir.model.fields,field_description:crm_claim.field_crm_claim_report____last_update
-#: model:ir.model.fields,field_description:crm_claim.field_crm_claim_stage____last_update
-msgid "Last Modified on"
-msgstr "Última modificación el"
-
-#. module: crm_claim
 #: model:ir.model.fields,field_description:crm_claim.field_crm_claim__write_uid
 #: model:ir.model.fields,field_description:crm_claim.field_crm_claim_category__write_uid
 #: model:ir.model.fields,field_description:crm_claim.field_crm_claim_stage__write_uid
@@ -479,11 +464,6 @@ msgstr ""
 #: model:ir.model.fields.selection,name:crm_claim.selection__crm_claim_report__priority__0
 msgid "Low"
 msgstr "Baja"
-
-#. module: crm_claim
-#: model:ir.model.fields,field_description:crm_claim.field_crm_claim__message_main_attachment_id
-msgid "Main Attachment"
-msgstr "Adjunto principal"
 
 #. module: crm_claim
 #: model:ir.model.fields,field_description:crm_claim.field_crm_claim__message_has_error
@@ -549,13 +529,6 @@ msgstr "Summary"
 #: model:ir.model.fields,field_description:crm_claim.field_crm_claim__activity_type_id
 msgid "Next Activity Type"
 msgstr "Siguiente →"
-
-#. module: crm_claim
-#. odoo-python
-#: code:addons/crm_claim/models/crm_claim.py:0
-#, python-format
-msgid "No Subject"
-msgstr "Sin asunto"
 
 #. module: crm_claim
 #: model:ir.model.fields.selection,name:crm_claim.selection__crm_claim__priority__1
@@ -628,6 +601,11 @@ msgstr "Acción preventiva"
 #: model:ir.model.fields,field_description:crm_claim.field_crm_claim_report__priority
 msgid "Priority"
 msgstr "Prioridad"
+
+#. module: crm_claim
+#: model:ir.model.fields,field_description:crm_claim.field_crm_claim__rating_ids
+msgid "Ratings"
+msgstr ""
 
 #. module: crm_claim
 #: model_terms:ir.actions.act_window,help:crm_claim.crm_claim_category_claim0
@@ -851,32 +829,16 @@ msgstr ""
 "los pasos\n"
 "            necesarios para la resolución de una reclamación."
 
-#~ msgid "SMS Delivery error"
-#~ msgstr "Error de entrega de SMS"
+#, python-format
+#~ msgid "%s (copy)"
+#~ msgstr "%s (copia)"
 
-#~ msgid "Number of messages which requires an action"
-#~ msgstr "Número de mensajes que requieren una acción"
+#~ msgid "Last Modified on"
+#~ msgstr "Última modificación el"
 
-#~ msgid "Number of unread messages"
-#~ msgstr "Número de mensajes no leídos"
+#~ msgid "Main Attachment"
+#~ msgstr "Adjunto principal"
 
-#~ msgid "Unread Messages"
-#~ msgstr "Mensajes no leídos"
-
-#~ msgid "Unread Messages Counter"
-#~ msgstr "Contador de mensajes no leídos"
-
-#~ msgid "Workload"
-#~ msgstr "Carga de trabajo"
-
-#~ msgid ""
-#~ "Create claim categories to better manage and classify your\n"
-#~ "            claims. Some example of claims can be: preventive action,\n"
-#~ "            corrective action."
-#~ msgstr ""
-#~ "Cree categorías de reclamaciones para gestionar y clasificar mejor sus "
-#~ "reclamaciones. Algunos ejemplos de reclamaciones pueden ser: acción "
-#~ "preventiva, acción correctiva."
-
-#~ msgid "Followers (Channels)"
-#~ msgstr "Seguidores (Canales)"
+#, python-format
+#~ msgid "No Subject"
+#~ msgstr "Sin asunto"
