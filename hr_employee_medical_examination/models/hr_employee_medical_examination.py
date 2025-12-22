@@ -24,6 +24,7 @@ class HrEmployeeMedicalExamination(models.Model):
             ("rejected", "Rejected"),
         ],
         default="pending",
+        readonly=True,
         tracking=True,
     )
 

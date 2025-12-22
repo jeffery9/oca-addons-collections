@@ -34,7 +34,7 @@ class HRCourseAttendee(models.Model):
 class HrCourse(models.Model):
     _name = "hr.course"
     _description = "Course"
-    _inherit = ["mail.thread", "mail.activity.mixin"]
+    _inherit = "mail.thread"
 
     name = fields.Char(required=True, tracking=True)
     category_id = fields.Many2one(

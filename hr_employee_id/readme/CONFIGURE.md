@@ -5,4 +5,4 @@ formats.
 
 To configure the 'ID Generation Method', the '# of Digits' and the
 'Sequence', activate the developer mode and go to Employees -\>
-Configuration -\> Settings -\> Employee Identifier
+Configuration -\> Settings -> Employee Identifier

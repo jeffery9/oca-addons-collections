@@ -6,4 +6,3 @@
 - Serpent Consulting Services Pvt. Ltd. \<<support@serpentcs.com>\>
 - [CorporateHub](https://corporatehub.eu/)
   - Alexey Pelykh \<<alexey.pelykh@corphub.eu>\>
-- Chris Bergman \<<chris.bergman@codeforward.nl>\>

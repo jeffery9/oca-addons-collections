@@ -20,7 +20,6 @@ msgstr ""
 #. module: hr_employee_medical_examination
 #. odoo-python
 #: code:addons/hr_employee_medical_examination/wizards/wizard_generate_medical_examination.py:0
-#, python-format
 msgid "%(name)s on %(employee)s"
 msgstr ""
 
@@ -190,7 +189,6 @@ msgstr "Generiraj medicinski pregled"
 #: code:addons/hr_employee_medical_examination/wizards/wizard_generate_medical_examination.py:0
 #: model:ir.actions.act_window,name:hr_employee_medical_examination.wizard_generate_medical_examination_act_window
 #: model:ir.ui.menu,name:hr_employee_medical_examination.hr_employee_medical_examination_generate_wizard
-#, python-format
 msgid "Generate Medical Examinations"
 msgstr "Generiraj medicinske preglede"
 
@@ -409,6 +407,16 @@ msgstr ""
 #. module: hr_employee_medical_examination
 #: model:ir.ui.menu,name:hr_employee_medical_examination.hr_employee_medical_examination_all
 msgid "View Medical Examinations"
+msgstr ""
+
+#. module: hr_employee_medical_examination
+#: model:ir.model.fields,field_description:hr_employee_medical_examination.field_hr_employee_medical_examination__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: hr_employee_medical_examination
+#: model:ir.model.fields,help:hr_employee_medical_examination.field_hr_employee_medical_examination__website_message_ids
+msgid "Website communication history"
 msgstr ""
 
 #. module: hr_employee_medical_examination
