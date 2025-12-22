@@ -8,32 +8,25 @@ from datetime import date, timedelta
 from freezegun import freeze_time
 
 from odoo.exceptions import UserError, ValidationError
-from odoo.tests import tagged
-from odoo.tests.common import Form
+from odoo.tests import Form, tagged
 
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
-from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
 
 
 @tagged("-at_install", "post_install")
 class TestPaymentOrderInboundBase(AccountTestInvoicingCommon):
     @classmethod
-    def setUpClass(cls, chart_template_ref=None):
-        super().setUpClass(chart_template_ref=chart_template_ref)
-        cls.env = cls.env(context=dict(cls.env.context, **DISABLED_MAIL_CONTEXT))
+    def setUpClass(cls):
+        super().setUpClass()
         cls.company = cls.company_data["company"]
         cls.env.user.company_id = cls.company.id
+        cls.env.user.groups_id |= cls.env.ref(
+            "account_payment_order.group_account_payment"
+        )
         cls.product = cls.env["product.product"].create(
-            {
-                "name": "Test product",
-                "type": "service",
-            }
+            {"name": "Test product", "type": "service"}
         )
-        cls.partner = cls.env["res.partner"].create(
-            {
-                "name": "Test Partner",
-            }
-        )
+        cls.partner = cls.env["res.partner"].create({"name": "Test Partner"})
         cls.inbound_mode = cls.env["account.payment.mode"].create(
             {
                 "name": "Test Direct Debit of customers",
@@ -51,7 +44,7 @@ class TestPaymentOrderInboundBase(AccountTestInvoicingCommon):
         cls.domain = [
             ("state", "=", "draft"),
             ("payment_type", "=", "inbound"),
-            ("company_id", "=", cls.env.user.company_id.id),
+            ("company_id", "=", cls.env.company.id),
         ]
         cls.payment_order_obj = cls.env["account.payment.order"]
         cls.payment_order_obj.search(cls.domain).unlink()
@@ -66,14 +59,17 @@ class TestPaymentOrderInboundBase(AccountTestInvoicingCommon):
         # Open invoice
         cls.invoice = cls._create_customer_invoice(cls)
         cls.invoice.action_post()
+        # Open receipt
+        cls.receipt = cls._create_customer_invoice(cls, move_type="out_receipt")
+        cls.receipt.action_post()
         # Add to payment order using the wizard
         cls.env["account.invoice.payment.line.multi"].with_context(
             active_model="account.move", active_ids=cls.invoice.ids
         ).create({}).run()
 
-    def _create_customer_invoice(self):
+    def _create_customer_invoice(self, move_type="out_invoice"):
         with Form(
-            self.env["account.move"].with_context(default_move_type="out_invoice")
+            self.env["account.move"].with_context(default_move_type=move_type)
         ) as invoice_form:
             invoice_form.partner_id = self.partner
             with invoice_form.invoice_line_ids.new() as invoice_line_form:
@@ -141,6 +137,35 @@ class TestPaymentOrderInbound(TestPaymentOrderInboundBase):
         payment_order.unlink()
         self.assertEqual(len(self.payment_order_obj.search(self.domain)), 0)
 
+    def test_creation_out_receipt(self):
+        # Make sure no others orders are present
+        self.payment_order_obj.search(self.domain).unlink()
+        # Add to payment order using the wizard
+        self.env["account.invoice.payment.line.multi"].with_context(
+            active_model="account.move", active_ids=self.receipt.ids
+        ).create({}).run()
+        payment_order = self.payment_order_obj.search(self.domain)
+        self.assertEqual(len(payment_order.ids), 1)
+        payment_order.write({"journal_id": self.journal.id})
+        self.assertEqual(len(payment_order.payment_line_ids), 1)
+        self.assertFalse(payment_order.payment_ids)
+        # Open payment order
+        payment_order.draft2open()
+        self.assertEqual(payment_order.payment_count, 1)
+        # Generate and upload
+        payment_order.open2generated()
+        payment_order.generated2uploaded()
+        self.assertEqual(payment_order.state, "uploaded")
+        self.assertEqual(self.receipt.payment_state, "in_payment")
+        with self.assertRaises(UserError):
+            payment_order.unlink()
+        # Cancel order
+        payment_order.action_uploaded_cancel()
+        self.assertEqual(payment_order.state, "cancel")
+        payment_order.cancel2draft()
+        payment_order.unlink()
+        self.assertEqual(len(self.payment_order_obj.search(self.domain)), 0)
+
     @freeze_time("2024-04-01")
     def test_creation_transfer_move_date_01(self):
         self.inbound_order.date_prefered = "fixed"
@@ -148,12 +173,6 @@ class TestPaymentOrderInbound(TestPaymentOrderInboundBase):
         self.inbound_order.draft2open()
         payment = self.inbound_order.payment_ids
         self.assertEqual(payment.payment_line_date, date(2024, 6, 1))
-        payment_move = payment.move_id
-        self.assertEqual(payment_move.date, date(2024, 4, 1))  # now
-        self.assertEqual(
-            payment_move.line_ids.mapped("date_maturity"),
-            [date(2024, 6, 1), date(2024, 6, 1)],
-        )
         self.assertEqual(self.inbound_order.payment_count, 1)
         self.inbound_order.open2generated()
         self.inbound_order.generated2uploaded()
@@ -174,12 +193,6 @@ class TestPaymentOrderInbound(TestPaymentOrderInboundBase):
         self.inbound_order.draft2open()
         payment = self.inbound_order.payment_ids
         self.assertEqual(payment.payment_line_date, date(2024, 6, 1))
-        payment_move = payment.move_id
-        self.assertEqual(payment_move.date, date(2024, 4, 1))  # now
-        self.assertEqual(
-            payment_move.line_ids.mapped("date_maturity"),
-            [date(2024, 6, 1), date(2024, 6, 1)],
-        )
         self.assertEqual(self.inbound_order.payment_count, 1)
         self.inbound_order.open2generated()
         self.inbound_order.generated2uploaded()

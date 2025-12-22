@@ -19,8 +19,8 @@
 "
             >
                 <p>Hello <t
-                        t-out="object.partner_id.name or ''"
-                    >Brandon Freeman</t>,</p>
+                    t-out="object.partner_id.name or ''"
+                >Brandon Freeman</t>,</p>
                 <t t-if="object.order_id.payment_type == 'inbound'">
                     <p
                     >A debit order including at least one of your invoices has been processed and

@@ -23,10 +23,7 @@
                         </page>
                     </notebook>
                 </sheet>
-                <div class="oe_chatter">
-                    <field name="message_follower_ids" widget="mail_followers" />
-                    <field name="message_ids" widget="mail_thread" />
-                </div>
+                <chatter />
             </form>
         </field>
     </record>
@@ -34,11 +31,11 @@
         <field name="name">account.payment.order.notification.tree</field>
         <field name="model">account.payment.order.notification</field>
         <field name="arch" type="xml">
-            <tree create="0">
+            <list create="0">
                 <field name="order_id" />
                 <field name="partner_id" />
                 <field name="create_date" />
-            </tree>
+            </list>
         </field>
     </record>
     <record id="account_payment_order_notification_search" model="ir.ui.view">
@@ -64,6 +61,6 @@
     >
         <field name="name">Payment Order Notifications</field>
         <field name="res_model">account.payment.order.notification</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
 </odoo>

@@ -4,7 +4,8 @@
 from unittest.mock import patch
 
 from odoo import fields
-from odoo.tests.common import Form, TransactionCase
+from odoo.tests import Form
+from odoo.tests.common import TransactionCase
 
 from odoo.addons.account.models.account_payment_method import AccountPaymentMethod
 

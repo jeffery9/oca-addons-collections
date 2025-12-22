@@ -21,17 +21,12 @@ class AccountMove(models.Model):
         store=True,
         ondelete="restrict",
         readonly=False,
+        precompute=True,
         check_company=True,
         tracking=True,
     )
     bank_account_required = fields.Boolean(
         related="payment_mode_id.payment_method_id.bank_account_required", readonly=True
-    )
-    partner_bank_id = fields.Many2one(
-        compute="_compute_partner_bank_id",
-        store=True,
-        ondelete="restrict",
-        readonly=False,
     )
     has_reconciled_items = fields.Boolean(
         help="Technical field for supporting the editability of the payment mode",
@@ -41,9 +36,9 @@ class AccountMove(models.Model):
     @api.depends("move_type")
     def _compute_payment_mode_filter_type_domain(self):
         for move in self:
-            if move.move_type in ("out_invoice", "in_refund"):
+            if move.move_type in ("out_invoice", "out_receipt", "in_refund"):
                 move.payment_mode_filter_type_domain = "inbound"
-            elif move.move_type in ("in_invoice", "out_refund"):
+            elif move.move_type in ("in_invoice", "in_receipt", "out_refund"):
                 move.payment_mode_filter_type_domain = "outbound"
             else:
                 move.payment_mode_filter_type_domain = False
@@ -51,9 +46,9 @@ class AccountMove(models.Model):
     @api.depends("partner_id", "move_type")
     def _compute_partner_bank_filter_type_domain(self):
         for move in self:
-            if move.move_type in ("out_invoice", "in_refund"):
+            if move.move_type in ("out_invoice", "out_receipt", "in_refund"):
                 move.partner_bank_filter_type_domain = move.bank_partner_id
-            elif move.move_type in ("in_invoice", "out_refund"):
+            elif move.move_type in ("in_invoice", "in_receipt", "out_refund"):
                 move.partner_bank_filter_type_domain = move.commercial_partner_id
             else:
                 move.partner_bank_filter_type_domain = False
@@ -65,10 +60,14 @@ class AccountMove(models.Model):
                 move.payment_mode_id = False
             if move.partner_id:
                 partner = move.with_company(move.company_id.id).partner_id
-                if move.move_type == "in_invoice" and partner.supplier_payment_mode_id:
+                if (
+                    move.move_type in ["in_invoice", "in_receipt"]
+                    and partner.supplier_payment_mode_id
+                ):
                     move.payment_mode_id = partner.supplier_payment_mode_id
                 elif (
-                    move.move_type == "out_invoice" and partner.customer_payment_mode_id
+                    move.move_type in ["out_invoice", "out_receipt"]
+                    and partner.customer_payment_mode_id
                 ):
                     move.payment_mode_id = partner.customer_payment_mode_id
                 elif (
@@ -102,13 +101,13 @@ class AccountMove(models.Model):
             payment_mode = move.payment_mode_id
             if payment_mode:
                 if (
-                    move.move_type == "in_invoice"
+                    move.move_type in ["in_invoice", "in_receipt"]
                     and payment_mode.payment_type == "outbound"
                     and not payment_mode.payment_method_id.bank_account_required
                 ):
                     move.partner_bank_id = False
                     continue
-                elif move.move_type == "out_invoice":
+                elif move.move_type in ["out_invoice", "out_receipt"]:
                     if payment_mode.payment_method_id.bank_account_required:
                         if (
                             payment_mode.bank_account_link == "fixed"
@@ -140,9 +139,9 @@ class AccountMove(models.Model):
         if not default_values_list:
             default_values_list = [{} for _ in self]
         for move, default_values in zip(self, default_values_list, strict=True):
-            default_values[
-                "payment_mode_id"
-            ] = move.payment_mode_id.refund_payment_mode_id.id
+            default_values["payment_mode_id"] = (
+                move.payment_mode_id.refund_payment_mode_id.id
+            )
             if move.move_type == "in_invoice":
                 default_values["partner_bank_id"] = move.partner_bank_id.id
         return super()._reverse_moves(
@@ -160,13 +159,6 @@ class AccountMove(models.Model):
                 return self.payment_mode_id.variable_journal_ids.mapped(
                     "bank_account_id"
                 )
-        if (
-            self.payment_mode_id.payment_method_id.code == "sepa_direct_debit"
-        ):  # pragma: no cover
-            return (
-                self.mandate_id.partner_bank_id
-                or self.partner_id.valid_mandate_id.partner_bank_id
-            )
         # Return this as empty recordset
         return self.partner_bank_id
 

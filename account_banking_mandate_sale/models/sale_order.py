@@ -20,6 +20,7 @@ class SaleOrder(models.Model):
         check_company=True,
         readonly=False,
         store=True,
+        tracking=True,
         domain="[('partner_id', '=', commercial_invoice_partner_id), "
         "('state', 'in', ('draft', 'valid')), "
         "('company_id', '=', company_id)]",
@@ -37,15 +38,13 @@ class SaleOrder(models.Model):
 
     @api.depends("partner_invoice_id", "payment_mode_id")
     def _compute_mandate_id(self):
-        """Select by default the first valid mandate of the invoicing partner"""
-        abm_obj = self.env["account.banking.mandate"]
         for order in self:
             if (
                 order.partner_invoice_id
                 and order.payment_mode_id
                 and order.payment_mode_id.payment_method_id.mandate_required
             ):
-                mandate = abm_obj.search(
+                mandate = self.env["account.banking.mandate"].search(
                     [
                         ("state", "=", "valid"),
                         (

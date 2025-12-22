@@ -1,7 +1,7 @@
 # Copyright 2022 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import api, fields, models
+from odoo import Command, api, fields, models
 
 
 class WizardAccountPaymentOrderNotification(models.TransientModel):
@@ -37,14 +37,12 @@ class WizardAccountPaymentOrderNotification(models.TransientModel):
                 lambda x: x.move_line_id.move_id.partner_id or x.partner_id
             ):
                 line_ids += [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "partner_id": partner.id,
                             "email": partner.email,
                             "to_send": True if partner.email else False,
-                        },
+                        }
                     )
                 ]
             template_xml_id = "{}.{}".format(
@@ -71,7 +69,7 @@ class WizardAccountPaymentOrderNotification(models.TransientModel):
                 "partner_id": item.partner_id.id,
                 "payment_line_ids": payment_line_ids,
             }
-            notifications.append((0, 0, data))
+            notifications.append(Command.create(data))
         self.order_id.notification_ids = notifications
         self.order_id._action_send_mail_notifications(self.mail_template_id)
         self.order_id._action_create_note_from_notifications()

@@ -19,6 +19,7 @@ class AccountBankingMandate(models.Model):
     _inherit = ["mail.thread", "mail.activity.mixin"]
     _order = "signature_date desc"
     _check_company_auto = True
+    _rec_names_search = ["unique_mandate_reference", "partner_bank_id.acc_number"]
 
     format = fields.Selection(
         [("basic", "Basic Mandate")],
@@ -125,9 +126,9 @@ class AccountBankingMandate(models.Model):
     def show_payment_lines(self):
         self.ensure_one()
         return {
-            "name": _("Payment lines"),
+            "name": self.env._("Payment lines"),
             "type": "ir.actions.act_window",
-            "view_mode": "tree,form",
+            "view_mode": "list,form",
             "res_model": "account.payment.line",
             "domain": [("mandate_id", "=", self.id)],
         }
@@ -138,7 +139,9 @@ class AccountBankingMandate(models.Model):
         for mandate in self:
             if mandate.signature_date and mandate.signature_date > today:
                 raise ValidationError(
-                    _("The date of signature of mandate '%s' " "is in the future!")
+                    self.env._(
+                        "The date of signature of mandate '%s' " "is in the future!"
+                    )
                     % mandate.unique_mandate_reference
                 )
             if (
@@ -193,13 +196,15 @@ class AccountBankingMandate(models.Model):
     def validate(self):
         for mandate in self:
             if mandate.state != "draft":
-                raise UserError(_("Mandate should be in draft state."))
+                raise UserError(self.env._("Mandate should be in draft state."))
         self.write({"state": "valid"})
 
     def cancel(self):
         for mandate in self:
             if mandate.state not in ("draft", "valid"):
-                raise UserError(_("Mandate should be in draft or valid state."))
+                raise UserError(
+                    self.env._("Mandate should be in draft or valid state.")
+                )
         self.write({"state": "cancel"})
 
     def back2draft(self):
@@ -208,5 +213,5 @@ class AccountBankingMandate(models.Model):
         """
         for mandate in self:
             if mandate.state != "cancel":
-                raise UserError(_("Mandate should be in cancel state."))
+                raise UserError(self.env._("Mandate should be in cancel state."))
         self.write({"state": "draft"})

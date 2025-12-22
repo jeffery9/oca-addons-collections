@@ -10,15 +10,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-10 02:10+0000\n"
-"PO-Revision-Date: 2023-06-29 12:08+0000\n"
-"Last-Translator: Rémi <remi@le-filament.com>\n"
+"PO-Revision-Date: 2025-06-02 15:26+0000\n"
+"Last-Translator: EvaS595 <eva.saintier@horanet.com>\n"
 "Language-Team: French (https://www.transifex.com/oca/teams/23907/fr/)\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: account_banking_pain_base
 #: model:ir.model.constraint,message:account_banking_pain_base.constraint_account_payment_method_code_payment_type_unique
@@ -47,7 +47,7 @@ msgstr "Transfert agricole"
 #. module: account_banking_pain_base
 #: model:ir.model.fields.selection,name:account_banking_pain_base.selection__account_payment_line__purpose__airb
 msgid "Air"
-msgstr "Air"
+msgstr "Transport aérien"
 
 #. module: account_banking_pain_base
 #: model:ir.model.fields.selection,name:account_banking_pain_base.selection__account_payment_line__purpose__almy
@@ -97,7 +97,7 @@ msgstr "A la charge du débiteur"
 #. module: account_banking_pain_base
 #: model:ir.model.fields.selection,name:account_banking_pain_base.selection__account_payment_line__purpose__busb
 msgid "Bus"
-msgstr "Bus"
+msgstr "Transport en bus"
 
 #. module: account_banking_pain_base
 #: model:ir.model.fields.selection,name:account_banking_pain_base.selection__account_payment_line__purpose__bexp
@@ -117,7 +117,6 @@ msgstr "Frais d'annulation"
 #. module: account_banking_pain_base
 #. odoo-python
 #: code:addons/account_banking_pain_base/models/account_payment_order.py:0
-#, python-format
 msgid "Cannot compute the field '{field_name}'."
 msgstr "Impossible de calculer le champ '{field_name}'."
 
@@ -235,14 +234,12 @@ msgstr "Paiement CB "
 #. module: account_banking_pain_base
 #. odoo-python
 #: code:addons/account_banking_pain_base/models/account_payment_order.py:0
-#, python-format
 msgid "Creditor name"
 msgstr "Nom du créancier"
 
 #. module: account_banking_pain_base
 #. odoo-python
 #: code:addons/account_banking_pain_base/models/account_payment_order.py:0
-#, python-format
 msgid ""
 "Data for evaluation:\n"
 "\tcontext: {eval_ctx}\n"
@@ -265,9 +262,19 @@ msgstr "Paiement par carte de débit"
 #. module: account_banking_pain_base
 #. odoo-python
 #: code:addons/account_banking_pain_base/models/account_payment_order.py:0
-#, python-format
 msgid "Debtor name"
 msgstr "Nom du débiteur"
+
+#. module: account_banking_pain_base
+#: model:ir.model.fields,field_description:account_banking_pain_base.field_account_payment_mode__default_batch_booking
+msgid "Default Batch Booking"
+msgstr ""
+
+#. module: account_banking_pain_base
+#: model:ir.model.fields,help:account_banking_pain_base.field_account_payment_mode__default_batch_booking
+msgid ""
+"Default value for payment order batch booking related to this payment mode"
+msgstr ""
 
 #. module: account_banking_pain_base
 #: model:ir.model.fields.selection,name:account_banking_pain_base.selection__account_payment_line__category_purpose__dvpm
@@ -574,7 +581,6 @@ msgstr "Services médicaux"
 #. module: account_banking_pain_base
 #. odoo-python
 #: code:addons/account_banking_pain_base/models/account_payment_order.py:0
-#, python-format
 msgid ""
 "Missing 'Initiating Party Issuer' and/or 'Initiating Party Identifier' for "
 "the company '%s'. Both fields must have a value."
@@ -611,7 +617,6 @@ msgstr "Communication réseau"
 #. module: account_banking_pain_base
 #. odoo-python
 #: code:addons/account_banking_pain_base/models/account_payment_method.py:0
-#, python-format
 msgid "No XSD file path found for payment method '%s'"
 msgstr ""
 "Aucun chemin de fichier XSD n'a été trouvé pour le mode de paiement '%s'"
@@ -654,21 +659,18 @@ msgstr "Version PAIN"
 #. module: account_banking_pain_base
 #. odoo-python
 #: code:addons/account_banking_pain_base/models/account_payment_order.py:0
-#, python-format
 msgid "Partner name"
 msgstr "Nom du partenaire"
 
 #. module: account_banking_pain_base
 #. odoo-python
 #: code:addons/account_banking_pain_base/models/account_payment_order.py:0
-#, python-format
 msgid "Partner's bank account is '%s'."
 msgstr "Le compte bancaire du partenaire est '%s'."
 
 #. module: account_banking_pain_base
 #. odoo-python
 #: code:addons/account_banking_pain_base/models/account_payment_order.py:0
-#, python-format
 msgid "Payment Line has reference '%s'."
 msgstr "La ligne de paiement a la référence '%s'."
 
@@ -781,12 +783,12 @@ msgstr "Paiement SEPA"
 #. module: account_banking_pain_base
 #: model:ir.model.fields,field_description:account_banking_pain_base.field_account_payment_order__sepa_payment_method
 msgid "SEPA Payment Method"
-msgstr ""
+msgstr "Méthode de paiement SEPA"
 
 #. module: account_banking_pain_base
 #: model_terms:ir.ui.view,arch_db:account_banking_pain_base.account_payment_order_form
 msgid "SEPA zone"
-msgstr ""
+msgstr "Zone SEPA"
 
 #. module: account_banking_pain_base
 #: model_terms:ir.ui.view,arch_db:account_banking_pain_base.view_account_config_settings
@@ -861,14 +863,12 @@ msgstr "Facture de téléphone"
 #. module: account_banking_pain_base
 #. odoo-python
 #: code:addons/account_banking_pain_base/models/account_payment_order.py:0
-#, python-format
 msgid "The '%s' is empty or 0. It should have a non-null value."
 msgstr "Le '%s' est vide ou égal à 0. Il devrait avoir une valeur non-nulle."
 
 #. module: account_banking_pain_base
 #. odoo-python
 #: code:addons/account_banking_pain_base/models/res_bank.py:0
-#, python-format
 msgid ""
 "The following Bank Identifier Codes (BIC) do not respect the SEPA pattern:\n"
 "{bic_list}\n"
@@ -883,7 +883,6 @@ msgstr ""
 #. module: account_banking_pain_base
 #. odoo-python
 #: code:addons/account_banking_pain_base/models/account_payment_order.py:0
-#, python-format
 msgid ""
 "The generated XML file is not valid against the official XML Schema "
 "Definition. The generated XML file and the full error have been written in "
@@ -898,7 +897,6 @@ msgstr ""
 #. module: account_banking_pain_base
 #. odoo-python
 #: code:addons/account_banking_pain_base/models/account_payment_order.py:0
-#, python-format
 msgid ""
 "The type of the field '%(field)s' is %(value)s. It should be a string or "
 "unicode."

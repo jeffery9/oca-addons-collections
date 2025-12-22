@@ -2,16 +2,15 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl
 
 from odoo import fields
-from odoo.tests.common import Form, TransactionCase
+from odoo.tests import Form
 
-from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestAccountPaymentOrder(TransactionCase):
+class TestAccountPaymentOrder(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.env = cls.env(context=dict(cls.env.context, **DISABLED_MAIL_CONTEXT))
         cls.partner = cls.env["res.partner"].create({"name": "Test Partner"})
         cls.product = cls.env["product.product"].create({"name": "Test product"})
         cls.partner_bank_core = cls._create_res_partner_bank("N-CORE")
@@ -89,7 +88,9 @@ class TestAccountPaymentOrder(TransactionCase):
     def test_invoice_payment_mode(self):
         self.assertEqual(self.invoice.state, "posted")
         self.assertEqual(self.invoice.payment_mode_id, self.payment_core)
-        self.assertEqual(self.invoice.invoice_date_due, fields.Date.today())
+        self.assertEqual(
+            self.invoice.invoice_date_due, fields.Date.context_today(self.env.user)
+        )
 
     def test_account_payment_order_core(self):
         line_create_form = Form(
@@ -98,7 +99,7 @@ class TestAccountPaymentOrder(TransactionCase):
             )
         )
         line_create_form.date_type = "due"
-        line_create_form.due_date = fields.Date.today()
+        line_create_form.filter_date = fields.Date.context_today(self.env.user)
         line_create = line_create_form.save()
         line_create.populate()
         line_create.create_payment_lines()
@@ -116,7 +117,7 @@ class TestAccountPaymentOrder(TransactionCase):
             )
         )
         line_create_form.date_type = "due"
-        line_create_form.due_date = fields.Date.today()
+        line_create_form.filter_date = fields.Date.context_today(self.env.user)
         line_create = line_create_form.save()
         line_create.populate()
         line_create.create_payment_lines()
