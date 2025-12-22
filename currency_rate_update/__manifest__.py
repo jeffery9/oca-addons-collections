@@ -5,7 +5,7 @@
 
 {
     "name": "Currency Rate Update",
-    "version": "17.0.1.0.1",
+    "version": "18.0.1.0.1",
     "author": "Camptocamp, CorporateHub, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/currency",
     "license": "AGPL-3",
@@ -16,10 +16,10 @@
         "data/cron.xml",
         "security/ir.model.access.csv",
         "security/res_currency_rate_provider.xml",
+        "wizards/res_currency_rate_update_wizard.xml",
         "views/res_currency_rate.xml",
         "views/res_currency_rate_provider.xml",
         "views/res_config_settings.xml",
-        "wizards/res_currency_rate_update_wizard.xml",
     ],
     "installable": True,
 }
