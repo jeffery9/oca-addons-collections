@@ -37,21 +37,18 @@ msgstr ""
 #. module: dms
 #. odoo-python
 #: code:addons/dms/models/access_groups.py:0
-#, python-format
 msgid "%s (copy)"
 msgstr ""
 
 #. module: dms
 #. odoo-python
 #: code:addons/dms/models/directory.py:0
-#, python-format
 msgid "%s Files"
 msgstr "%s קבצים"
 
 #. module: dms
 #. odoo-python
 #: code:addons/dms/models/directory.py:0
-#, python-format
 msgid "%s Subdirectories"
 msgstr ""
 
@@ -145,6 +142,30 @@ msgid ""
 msgstr ""
 
 #. module: dms
+#: model_terms:ir.ui.view,arch_db:dms.view_dms_directory_kanban
+msgid ""
+"<i class=\"fa fa-xs fa-file\"/>\n"
+"                                            <span>&amp;nbsp;</span>"
+msgstr ""
+
+#. module: dms
+#: model_terms:ir.ui.view,arch_db:dms.view_dms_directory_kanban
+msgid ""
+"<i class=\"fa fa-xs fa-folder\"/>\n"
+"                                            <span>&amp;nbsp;</span>"
+msgstr ""
+
+#. module: dms
+#: model_terms:ir.ui.view,arch_db:dms.view_dms_directory_kanban
+msgid "<span class=\"ms-1\">Directories</span>"
+msgstr ""
+
+#. module: dms
+#: model_terms:ir.ui.view,arch_db:dms.view_dms_directory_kanban
+msgid "<span class=\"ms-1\">Files</span>"
+msgstr ""
+
+#. module: dms
 #: model_terms:ir.ui.view,arch_db:dms.view_dms_directory_form
 msgid ""
 "<span class=\"oe_read_only\">@</span>\n"
@@ -153,8 +174,8 @@ msgid ""
 msgstr ""
 
 #. module: dms
+#: model_terms:ir.ui.view,arch_db:dms.view_dms_directory_kanban
 #: model_terms:ir.ui.view,arch_db:dms.view_dms_file_kanban
-#: model_terms:ir.ui.view,arch_db:dms.view_dms_tag_kanban
 msgid "<span>Actions</span>"
 msgstr ""
 
@@ -169,6 +190,11 @@ msgid "<span>Operations</span>"
 msgstr ""
 
 #. module: dms
+#: model_terms:ir.ui.view,arch_db:dms.view_dms_directory_kanban
+msgid "<span>Views</span>"
+msgstr ""
+
+#. module: dms
 #: model:ir.model.fields,help:dms.field_dms_directory__alias_defaults
 msgid ""
 "A Python dictionary that will be evaluated to provide default values when "
@@ -180,49 +206,42 @@ msgstr ""
 #. module: dms
 #. odoo-python
 #: code:addons/dms/models/directory.py:0
-#, python-format
 msgid "A directory can't be a root and have a parent directory."
 msgstr "ספריה לא יכולה להיות ראשית אם יש לה ספריית אב."
 
 #. module: dms
 #. odoo-python
 #: code:addons/dms/models/directory.py:0
-#, python-format
 msgid "A directory has to have a parent directory."
 msgstr "לספרייה צריכה להיות ספריה אב."
 
 #. module: dms
 #. odoo-python
 #: code:addons/dms/models/directory.py:0
-#, python-format
 msgid "A directory has to have model in attachment storage."
 msgstr ""
 
 #. module: dms
 #. odoo-python
 #: code:addons/dms/models/directory.py:0
-#, python-format
 msgid "A directory with the same name already exists."
 msgstr "כבר קיימת ספרייה עם אותו שם."
 
 #. module: dms
 #. odoo-python
 #: code:addons/dms/models/dms_file.py:0
-#, python-format
 msgid "A file must have model and resource ID in attachment storage."
 msgstr ""
 
 #. module: dms
 #. odoo-python
 #: code:addons/dms/models/dms_file.py:0
-#, python-format
 msgid "A file with the same name already exists in this directory."
 msgstr ""
 
 #. module: dms
 #. odoo-python
 #: code:addons/dms/models/directory.py:0
-#, python-format
 msgid "A root directory has to have a storage."
 msgstr ""
 
@@ -265,11 +284,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:dms.field_dms_file__message_needaction
 msgid "Action Needed"
 msgstr "נדרשת פעולה"
-
-#. module: dms
-#: model_terms:ir.ui.view,arch_db:dms.view_dms_directory_kanban
-msgid "Actions"
-msgstr "פעולות"
 
 #. module: dms
 #: model:ir.model.fields,field_description:dms.field_dms_category__active
@@ -371,7 +385,6 @@ msgstr ""
 #. module: dms
 #. odoo-python
 #: code:addons/dms/models/directory.py:0
-#, python-format
 msgid "Alias-Mail-Extraction"
 msgstr "כינוי דואר-חילוץ"
 
@@ -394,7 +407,6 @@ msgstr "כל הקבצים"
 #. module: dms
 #. odoo-javascript
 #: code:addons/dms/static/src/js/views/dms_file_upload.esm.js:0
-#, python-format
 msgid "An error occurred during the upload"
 msgstr ""
 
@@ -422,11 +434,8 @@ msgid "Are you sure? All files will be moved."
 msgstr ""
 
 #. module: dms
-#. odoo-python
-#: code:addons/dms/models/storage.py:0
 #: model:ir.model,name:dms.model_ir_attachment
 #: model:ir.model.fields.selection,name:dms.selection__dms_storage__save_type__attachment
-#, python-format
 msgid "Attachment"
 msgstr ""
 
@@ -782,10 +791,7 @@ msgid "DMS thumbnail and icon mixin"
 msgstr ""
 
 #. module: dms
-#. odoo-python
-#: code:addons/dms/models/storage.py:0
 #: model:ir.model.fields.selection,name:dms.selection__dms_storage__save_type__database
-#, python-format
 msgid "Database"
 msgstr "מסד נתונים"
 
@@ -870,6 +876,12 @@ msgid "Display Name"
 msgstr "שם תצוגה"
 
 #. module: dms
+#. odoo-javascript
+#: code:addons/dms/static/src/js/fields/path_json/path_owl.esm.js:0
+msgid "Dms Path Field"
+msgstr ""
+
+#. module: dms
 #: model:ir.model,name:dms.model_dms_category
 msgid "Document Category"
 msgstr "קטגוריית מסמכים"
@@ -950,14 +962,12 @@ msgstr ""
 #. module: dms
 #. odoo-python
 #: code:addons/dms/models/dms_category.py:0
-#, python-format
 msgid "Error! You cannot create recursive categories."
 msgstr "שְׁגִיאָה! אינך יכול ליצור קטגוריות רקורסיביות."
 
 #. module: dms
 #. odoo-python
 #: code:addons/dms/models/directory.py:0
-#, python-format
 msgid "Error! You cannot create recursive directories."
 msgstr "שְׁגִיאָה! אינך יכול ליצור ספריות רקורסיביות."
 
@@ -1046,10 +1056,7 @@ msgid "Files are used to save content directly in Odoo."
 msgstr "קבצים משמשים לשמירת תוכן ישירות בOdoo."
 
 #. module: dms
-#. odoo-python
-#: code:addons/dms/models/storage.py:0
 #: model:ir.model.fields.selection,name:dms.selection__dms_storage__save_type__file
-#, python-format
 msgid "Filestore"
 msgstr "מאגר"
 
@@ -1308,7 +1315,6 @@ msgstr "משאבים פנימיים / אנושיים"
 #. module: dms
 #. odoo-python
 #: code:addons/dms/models/dms_file.py:0
-#, python-format
 msgid "Invalid attachments!"
 msgstr ""
 
@@ -1331,14 +1337,12 @@ msgstr "ספרייה ראשית"
 #. module: dms
 #. odoo-python
 #: code:addons/dms/models/directory.py:0
-#, python-format
 msgid "It is not possible to change the storage."
 msgstr ""
 
 #. module: dms
 #. odoo-python
 #: code:addons/dms/models/directory.py:0
-#, python-format
 msgid "It is not possible to change to a parent with other storage."
 msgstr ""
 
@@ -1461,7 +1465,6 @@ msgstr ""
 #. module: dms
 #. odoo-python
 #: code:addons/dms/models/dms_file.py:0
-#, python-format
 msgid "Migrate File %(index)s of %(record_count)s [ %(dms_file_migration)s ]"
 msgstr ""
 
@@ -1534,7 +1537,6 @@ msgstr "הקבצים שלי"
 #: model:ir.model.fields,field_description:dms.field_dms_storage__name
 #: model:ir.model.fields,field_description:dms.field_dms_tag__name
 #: model_terms:ir.ui.view,arch_db:dms.portal_my_dms
-#, python-format
 msgid "Name"
 msgstr "שם"
 
@@ -1575,7 +1577,6 @@ msgstr "סוג הפעילות הבאה"
 #. module: dms
 #. odoo-python
 #: code:addons/dms/models/dms_file.py:0
-#, python-format
 msgid "No attachment was provided"
 msgstr ""
 
@@ -1649,14 +1650,12 @@ msgstr ""
 #. module: dms
 #. odoo-python
 #: code:addons/dms/models/dms_file.py:0
-#, python-format
 msgid "Only files in the same root directory can be moved."
 msgstr ""
 
 #. module: dms
 #. odoo-python
 #: code:addons/dms/models/storage.py:0
-#, python-format
 msgid "Only managers can execute this action."
 msgstr "רק מנהלים יכולים לבצע פעולה זו."
 
@@ -1710,7 +1709,6 @@ msgstr "מזהה רשומת אשכול אב"
 #. module: dms
 #. odoo-python
 #: code:addons/dms/models/access_groups.py:0
-#, python-format
 msgid "Parent group '%(parent)s' is child of '%(current)s'."
 msgstr ""
 
@@ -1768,8 +1766,13 @@ msgstr "כתובת גישה לפורטל"
 #. module: dms
 #. odoo-javascript
 #: code:addons/dms/static/src/js/fields/preview_binary/preview_record.xml:0
-#, python-format
 msgid "Preview"
+msgstr ""
+
+#. module: dms
+#. odoo-javascript
+#: code:addons/dms/static/src/js/fields/preview_binary/preview_record.esm.js:0
+msgid "Preview Record"
 msgstr ""
 
 #. module: dms
@@ -1873,7 +1876,6 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/dms/static/src/js/views/file_kanban_renderer.xml:0
 #: code:addons/dms/static/src/js/views/file_list_renderer.xml:0
-#, python-format
 msgid "Scan"
 msgstr ""
 
@@ -2057,28 +2059,24 @@ msgstr "השדה הפעיל מאפשר להסתיר את התגית מבלי ל�
 #. module: dms
 #. odoo-python
 #: code:addons/dms/models/directory.py:0
-#, python-format
 msgid "The directory name is invalid."
 msgstr "שם הספרייה אינו חוקי."
 
 #. module: dms
 #. odoo-python
 #: code:addons/dms/models/dms_file.py:0
-#, python-format
 msgid "The file has a forbidden file extension."
 msgstr "לקובץ סיומת קבצים אסורה."
 
 #. module: dms
 #. odoo-python
 #: code:addons/dms/models/dms_file.py:0
-#, python-format
 msgid "The file name is invalid."
 msgstr "שם הקובץ אינו חוקי."
 
 #. module: dms
 #. odoo-python
 #: code:addons/dms/models/dms_file.py:0
-#, python-format
 msgid "The maximum upload size is %s MB."
 msgstr "גודל ההעלאה המקסימלי הוא %s MB."
 
@@ -2120,7 +2118,6 @@ msgstr ""
 #. module: dms
 #. odoo-python
 #: code:addons/dms/models/directory.py:0
-#, python-format
 msgid "This directory needs to be associated to a record."
 msgstr ""
 
@@ -2180,7 +2177,6 @@ msgstr "חלק הודעות דוא\"ל כ-"
 #: code:addons/dms/static/src/js/views/file_kanban_controller.xml:0
 #: code:addons/dms/static/src/js/views/file_kanban_renderer.xml:0
 #: code:addons/dms/static/src/js/views/file_list_renderer.xml:0
-#, python-format
 msgid "Upload"
 msgstr ""
 
@@ -2209,11 +2205,6 @@ msgstr "משתמשים"
 #: model:dms.tag,name:dms.tag_09_demo
 msgid "Vendor Bill"
 msgstr ""
-
-#. module: dms
-#: model_terms:ir.ui.view,arch_db:dms.view_dms_directory_kanban
-msgid "Views"
-msgstr "תצוגות"
 
 #. module: dms
 #: model:ir.model.fields,field_description:dms.field_dms_directory__website_message_ids
@@ -2248,7 +2239,6 @@ msgstr "גישה לכתיבה"
 #. module: dms
 #. odoo-javascript
 #: code:addons/dms/static/src/js/views/dms_file_upload.esm.js:0
-#, python-format
 msgid "You must select a directory first"
 msgstr "תחילה עליך לבחור ספריה"
 
@@ -2267,141 +2257,8 @@ msgstr ""
 msgid "mail.catchall.domain"
 msgstr ""
 
-#~ msgid ""
-#~ "<span class=\"o_form_label\">\n"
-#~ "                                        Storages\n"
-#~ "                                    </span>"
-#~ msgstr ""
-#~ "<span class=\"o_form_label\">\n"
-#~ "                                        מאגרים\n"
-#~ "                                    </span>"
-
-#~ msgid "<span class=\"o_form_label\">File Size</span>"
-#~ msgstr "<span class=\"o_form_label\">גודל הקובץ </span>"
-
-#, python-format
-#~ msgid "A file with the same name already exists."
-#~ msgstr "כבר קיים קובץ עם אותו שם."
-
-#~ msgid "Alias domain"
-#~ msgstr "כינוי דומיין"
-
-#~ msgid ""
-#~ "Define the maximum upload size of a\n"
-#~ "                                        file in MB"
-#~ msgstr ""
-#~ "הגדר את גודל ההעלאה המקסימלי של\n"
-#~ "                                        קובץ ב- MB"
-
-#~ msgid "Dropdown menu"
-#~ msgstr "תפריט נפתח"
-
-#~ msgid "Last Modified on"
-#~ msgstr "שינוי אחרון ב"
-
-#, python-format
-#~ msgid "Loading"
-#~ msgstr "טוען"
-
-#~ msgid "Main Attachment"
-#~ msgstr "קובץ ראשי מצורף"
-
-#~ msgid "Operations"
+#~ msgid "Actions"
 #~ msgstr "פעולות"
 
-#~ msgid "Owner"
-#~ msgstr "בעלים"
-
-#~ msgid "The configuration is done!"
-#~ msgstr "התצורה נעשית!"
-
-#~ msgid ""
-#~ "The owner of records created upon receiving emails on this alias. If this "
-#~ "field is not set the system will attempt to find the right owner based on "
-#~ "the sender (From) address, or will use the Administrator account if no "
-#~ "system user is found for that address."
-#~ msgstr ""
-#~ "הבעלים של רשומות שנוצרו עם קבלת דוא\"ל בכינוי זה. אם שדה זה לא מוגדר, "
-#~ "המערכת תנסה למצוא את הבעלים הנכון על סמך כתובת השולח (מאת), או שתשתמש "
-#~ "בחשבון מנהל המערכת אם לא נמצא משתמש מערכת עבור אותה כתובת."
-
-#~ msgid ""
-#~ "The save type is used to determine how a file is saved by the\n"
-#~ "        system. If you change this setting, you can migrate existing "
-#~ "files\n"
-#~ "        manually by triggering the action."
-#~ msgstr ""
-#~ "סוג השמירה משמש לקביעת אופן שמירת הקובץ על ידי ה-\n"
-#~ "         מערכת. אם תשנה הגדרה זו, תוכל להעביר קבצים קיימים\n"
-#~ "         באופן ידני על ידי הפעלת הפעולה."
-
-#, python-format
-#~ msgid "Viewer"
-#~ msgstr "צופה"
-
-#, python-format
-#~ msgid "Error has not been raised"
-#~ msgstr "שגיאה לא הועלתה"
-
-#~ msgid "Number of messages which requires an action"
-#~ msgstr "מספר ההודעות המחייבות פעולה"
-
-#~ msgid "Number of unread messages"
-#~ msgstr "מספר ההודעות שלא נקראו"
-
-#~ msgid "SMS Delivery error"
-#~ msgstr "שגיאת שליחת SMS"
-
-#~ msgid "Unread Messages"
-#~ msgstr "הודעות שלא נקראו"
-
-#~ msgid "Unread Messages Counter"
-#~ msgstr "מספר הודעות שלא נקראו"
-
-#~ msgid "Path"
-#~ msgstr "נתיב"
-
-#~ msgid "Followers (Channels)"
-#~ msgstr "עוקבים (ערוצים)"
-
-#~ msgid "Locked by"
-#~ msgstr "נעול ע\"י"
-
-#~ msgid "Drop your files here"
-#~ msgstr "לגרור קבצים לכאן"
-
-#~ msgid "A file is locked, the folder cannot be deleted."
-#~ msgstr "קובץ נעול, לא ניתן למחוק את התיקיה."
-
-#~ msgid "The directory has to have the permission to create files."
-#~ msgstr "על הספריה לקבל הרשאה ליצור קבצים."
-
-#~ msgid ""
-#~ "The parent directory has to have the permission to create directories."
-#~ msgstr "לספריית האב צריך להיות הרשאה ליצור ספריות."
-
-#~ msgid "The record (%s [%s]) is locked, by an other user."
-#~ msgstr "הרשומה (%s [%s]) נעולה על ידי משתמש אחר."
-
-#~ msgid ""
-#~ "The requested operation cannot be completed due to group security "
-#~ "restrictions. Please contact your system administrator.\n"
-#~ "\n"
-#~ "(Document type: %s, Operation: %s)"
-#~ msgstr ""
-#~ "לא ניתן להשלים את הפעולה המבוקשת בגלל מגבלות אבטחה קבוצתיות. אנא פנה "
-#~ "למנהל המערכת שלך.\n"
-#~ "\n"
-#~ "(סוג מסמך: %s, Operation: %s)"
-
-#~ msgid "Folder"
-#~ msgstr "תיקייה"
-
-#~ msgid "A root directory has to have a root storage."
-#~ msgstr "לספרייה ראשית צריכה להיות מאגר ראשי."
-
-#~ msgid "Root Storage"
-#~ msgstr "שורש שטח האיחסון"
-
-#~ msgid "Filename"
-#~ msgstr "שם קובץ"
+#~ msgid "Views"
+#~ msgstr "תצוגות"

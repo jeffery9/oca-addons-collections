@@ -1,15 +1,15 @@
 
-[![Runboat](https://img.shields.io/badge/runboat-Try%20me-875A7B.png)](https://runboat.odoo-community.org/builds?repo=OCA/dms&target_branch=17.0)
-[![Pre-commit Status](https://github.com/OCA/dms/actions/workflows/pre-commit.yml/badge.svg?branch=17.0)](https://github.com/OCA/dms/actions/workflows/pre-commit.yml?query=branch%3A17.0)
-[![Build Status](https://github.com/OCA/dms/actions/workflows/test.yml/badge.svg?branch=17.0)](https://github.com/OCA/dms/actions/workflows/test.yml?query=branch%3A17.0)
-[![codecov](https://codecov.io/gh/OCA/dms/branch/17.0/graph/badge.svg)](https://codecov.io/gh/OCA/dms)
-[![Translation Status](https://translation.odoo-community.org/widgets/dms-17-0/-/svg-badge.svg)](https://translation.odoo-community.org/engage/dms-17-0/?utm_source=widget)
+[![Runboat](https://img.shields.io/badge/runboat-Try%20me-875A7B.png)](https://runboat.odoo-community.org/builds?repo=OCA/dms&target_branch=18.0)
+[![Pre-commit Status](https://github.com/OCA/dms/actions/workflows/pre-commit.yml/badge.svg?branch=18.0)](https://github.com/OCA/dms/actions/workflows/pre-commit.yml?query=branch%3A18.0)
+[![Build Status](https://github.com/OCA/dms/actions/workflows/test.yml/badge.svg?branch=18.0)](https://github.com/OCA/dms/actions/workflows/test.yml?query=branch%3A18.0)
+[![codecov](https://codecov.io/gh/OCA/dms/branch/18.0/graph/badge.svg)](https://codecov.io/gh/OCA/dms)
+[![Translation Status](https://translation.odoo-community.org/widgets/dms-18-0/-/svg-badge.svg)](https://translation.odoo-community.org/engage/dms-18-0/?utm_source=widget)
 
 <!-- /!\ do not modify above this line -->
 
 # dms
 
-TODO: add repo description.
+dms
 
 <!-- /!\ do not modify below this line -->
 
@@ -21,9 +21,13 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[dms](dms/) | 17.0.1.2.5 |  | Document Management System for Odoo
-[dms_attachment_link](dms_attachment_link/) | 17.0.1.0.1 | <a href='https://github.com/victoralmau'><img src='https://github.com/victoralmau.png' width='32' height='32' style='border-radius:50%;' alt='victoralmau'/></a> | Dms Attachment Link
-[dms_storage](dms_storage/) | 17.0.1.0.0 |  | Integrate DMS with external Storages
+[dms](dms/) | 18.0.1.0.6 |  | Document Management System for Odoo
+[dms_auto_classification](dms_auto_classification/) | 18.0.1.0.0 | <a href='https://github.com/victoralmau'><img src='https://github.com/victoralmau.png' width='32' height='32' style='border-radius:50%;' alt='victoralmau'/></a> | Auto classify documents into DMS
+[dms_field](dms_field/) | 18.0.1.0.4 | <a href='https://github.com/CarlosRoca13'><img src='https://github.com/CarlosRoca13.png' width='32' height='32' style='border-radius:50%;' alt='CarlosRoca13'/></a> | Create DMS View and allow to use them inside a record
+[dms_field_auto_classification](dms_field_auto_classification/) | 18.0.1.0.0 | <a href='https://github.com/victoralmau'><img src='https://github.com/victoralmau.png' width='32' height='32' style='border-radius:50%;' alt='victoralmau'/></a> | Auto classify files into embedded DMS
+[dms_user_role](dms_user_role/) | 18.0.1.0.0 | <a href='https://github.com/victoralmau'><img src='https://github.com/victoralmau.png' width='32' height='32' style='border-radius:50%;' alt='victoralmau'/></a> | DMS User Role
+[hr_dms_field](hr_dms_field/) | 18.0.1.0.0 | <a href='https://github.com/victoralmau'><img src='https://github.com/victoralmau.png' width='32' height='32' style='border-radius:50%;' alt='victoralmau'/></a> | Add dms field for employees
+[web_editor_media_dialog_dms](web_editor_media_dialog_dms/) | 18.0.1.0.1 |  | Integrate DMS with media dialog of web editor
 
 [//]: # (end addons)
 
