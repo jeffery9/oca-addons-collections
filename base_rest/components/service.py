@@ -7,6 +7,7 @@ import logging
 from werkzeug.exceptions import NotFound
 
 from odoo.http import request
+from odoo.tools import str2bool
 
 from odoo.addons.component.core import AbstractComponent
 
@@ -28,7 +29,8 @@ def to_int(val):
 
 
 def to_bool(val):
-    return val in ("true", "True", "1", True)
+    _logger.warning("to_bool is deprecated, use odoo.tools.str2bool instead")
+    return str2bool(val)
 
 
 def skip_secure_params(func):

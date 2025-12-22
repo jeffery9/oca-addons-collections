@@ -2,7 +2,6 @@
 <!-- Copyright 2018 ACSONE SA/NV
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <odoo>
-
     <record id="menu_rest_api_root" model="ir.ui.menu">
         <field name="name">REST API</field>
         <field name="sequence" eval="400" />

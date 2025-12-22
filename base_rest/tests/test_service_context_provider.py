@@ -46,9 +46,11 @@ class TestServiceContextProvider(TransactionRestServiceRegistryCase):
 
         self._build_services(self, TestServiceNewApi)
         controller = self._get_controller_for(TestServiceNewApi)
-        with MockRequest(self.env), controller().service_component(
-            "partner"
-        ) as service:
+        service_component = controller().service_component
+        with (
+            MockRequest(self.env),
+            service_component(service_name="partner") as service,
+        ):
             self.assertFalse(service.work.authenticated_partner_id)
 
     def test_02(self):
@@ -91,9 +93,11 @@ class TestServiceContextProvider(TransactionRestServiceRegistryCase):
         self._build_components(TestComponentContextprovider)
         self._build_services(self, TestServiceNewApi)
         controller = self._get_controller_for(TestServiceNewApi)
-        with MockRequest(self.env), controller().service_component(
-            "partner"
-        ) as service:
+        service_component = controller().service_component
+        with (
+            MockRequest(self.env),
+            service_component(service_name="partner") as service,
+        ):
             self.assertEqual(
                 service.work.authenticated_partner_id, self.env.user.partner_id.id
             )
@@ -137,14 +141,15 @@ class TestServiceContextProvider(TransactionRestServiceRegistryCase):
         self._build_components(TestComponentContextprovider)
         self._build_services(self, TestServiceNewApi)
         controller = self._get_controller_for(TestServiceNewApi)
-        with MockRequest(self.env), controller().service_component(
-            "partner"
-        ) as service:
+        service_component = controller().service_component
+        with (
+            MockRequest(self.env),
+            service_component(service_name="partner") as service,
+        ):
             self.assertEqual(service.work.authenticated_partner_id, 9999)
 
 
 class CommonCase(BaseRestCase):
-
     # dummy test method to pass codecov
     def test_04(self):
         self.assertEqual(self.registry.test_cr, self.cr)
