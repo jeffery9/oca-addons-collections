@@ -5,7 +5,7 @@ from datetime import datetime
 
 from dateutil.relativedelta import relativedelta
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools.misc import str2bool
 
@@ -199,20 +199,19 @@ class ResPartner(models.Model):
 
     @api.depends("credit_limit")
     def _compute_date_credit_limit(self):
-        self.filtered(lambda x: x.credit_limit == 0.00).date_credit_limit = False
+        self.filtered(lambda x: x.sudo().credit_limit == 0.00).date_credit_limit = False
         self.filtered(
-            lambda x: x.credit_limit != 0.00
+            lambda x: x.sudo().credit_limit != 0.00
         ).date_credit_limit = datetime.today()
 
     @api.depends("credit_limit", "risk_total")
     def _compute_risk_remaining(self):
         for record in self:
-            record.risk_remaining_value = record.credit_limit - record.risk_total
-            if record.credit_limit:
+            credit_limit = record.sudo().credit_limit
+            record.risk_remaining_value = credit_limit - record.risk_total
+            if credit_limit:
                 record.risk_remaining_percentage = round(
-                    100
-                    * (record.credit_limit - record.risk_total)
-                    / record.credit_limit,
+                    100 * (credit_limit - record.risk_total) / credit_limit,
                     2,
                 )
             else:
@@ -244,6 +243,18 @@ class ResPartner(models.Model):
             else:
                 partner.risk_currency_id = partner.currency_id
 
+    @api.model
+    def _setup_complete(self):
+        # Change when we find a better way to add a group while maintaining inheritance.
+        res = super()._setup_complete()
+        field = self._fields["credit_limit"]
+        new_group = "account_financial_risk.group_account_financial_risk_user"
+        group_list = field.groups.split(",") if field.groups else []
+        if new_group not in group_list:
+            group_list.append(new_group)
+            field.groups = ",".join(group_list)
+        return res
+
     @api.onchange("credit_currency")
     def _onchange_credit_currency(self):
         for partner in self:
@@ -263,7 +274,7 @@ class ResPartner(models.Model):
                 partner.credit_currency == "manual"
                 and not partner.manual_credit_currency_id
             ):
-                raise ValidationError(_("Choose Manual Credit Currency."))
+                raise ValidationError(self.env._("Choose Manual Credit Currency."))
 
     def _compute_risk_allow_edit(self):
         self.update(
@@ -313,7 +324,7 @@ class ResPartner(models.Model):
                 + [
                     ("move_id.move_type", "in", ["out_invoice", "out_refund"]),
                     ("account_type", "=", "asset_receivable"),
-                    ("parent_state", "in", ["draft", "proforma", "proforma2"]),
+                    ("parent_state", "in", ["draft"]),
                 ],
                 "fields": fields,
                 "group_by": groupby,
@@ -396,17 +407,17 @@ class ResPartner(models.Model):
         # Partner receivable account determines if amount is in invoice field
         for (
             partner,
-            account,
+            _account,
             currency,  # noqa: B007
             amount_residual,
             amount_residual_currency,  # noqa: B007
         ) in groups["draft"]["read_group"]:
             if partner.id not in self.ids:
                 continue  # pragma: no cover
-            vals["risk_invoice_draft"] += account.company_id.currency_id._convert(
+            vals["risk_invoice_draft"] += currency._convert(
                 amount_residual,
                 self.risk_currency_id,
-                account.company_id,
+                self.env.company,
                 fields.Date.context_today(self),
                 round=False,
             )
@@ -449,16 +460,16 @@ class ResPartner(models.Model):
     def _get_amount_in_risk_currency(
         self, currency, amount_residual_currency, amount_residual, account
     ):
-        acc_currency_id = account.company_id.currency_id.id
+        acc_currency_id = currency.id
         risk_currency_id = self.risk_currency_id.id
         if currency.id == risk_currency_id:
             return amount_residual_currency
         elif acc_currency_id == risk_currency_id:
             return amount_residual
-        return account.company_id.currency_id._convert(
+        return currency._convert(
             amount_residual,
             self.risk_currency_id,
-            account.company_id,
+            self.env.company,
             fields.Date.context_today(self),
             round=False,
         )
@@ -479,9 +490,10 @@ class ResPartner(models.Model):
                     amount_exceeded += field_value - max_value
                 if include:
                     amount += field_value
-            if partner.credit_limit and amount > partner.credit_limit:
+            credit_limit = partner.sudo().credit_limit
+            if credit_limit and amount > credit_limit:
                 risk_exception = True
-                amount_exceeded = amount - partner.credit_limit
+                amount_exceeded = amount - credit_limit
             partner.risk_total = amount
             partner.risk_amount_exceeded = amount_exceeded
             partner.risk_exception = risk_exception
@@ -515,7 +527,7 @@ class ResPartner(models.Model):
     @api.model
     def _max_risk_date_due(self):
         return fields.Date.to_string(
-            fields.Date.today()
+            fields.Date.context_today(self)
             - relativedelta(days=self.env.company.invoice_unpaid_margin)
         )
 
@@ -558,9 +570,9 @@ class ResPartner(models.Model):
                     x[0],
                     x[1],
                     x[2],
-                    "child_ids.%s" % x[0],
-                    "child_ids.%s" % x[1],
-                    "child_ids.%s" % x[2],
+                    f"child_ids.{x[0]}",
+                    f"child_ids.{x[1]}",
+                    f"child_ids.{x[2]}",
                 )
             )
         res.extend(("credit_limit", "child_ids.credit_limit"))
@@ -582,7 +594,7 @@ class ResPartner(models.Model):
             .res_id
         )
         return {
-            "name": _("Financial risk information"),
+            "name": self.env._("Financial risk information"),
             "view_mode": "pivot",
             "res_model": model_name,
             "view_id": view_id,
