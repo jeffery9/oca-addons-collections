@@ -1,5 +1,0 @@
-- [Tecnativa](https://www.tecnativa.com):
-  - Jairo Llopis
-  - Cristina Martin R.
-  - Víctor Martínez
-  - David Bañón Gil
