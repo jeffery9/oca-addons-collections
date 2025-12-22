@@ -1,7 +1,5 @@
-/** @odoo-module **/
-
-import {SaleOrderLineProductField} from "@sale/js/sale_product_field";
 import {patch} from "@web/core/utils/patch";
+import {SaleOrderLineProductField} from "@sale/js/sale_product_field";
 
 patch(SaleOrderLineProductField.prototype, {
     setup() {
@@ -53,9 +51,15 @@ patch(SaleOrderLineProductField.prototype, {
 
     get contractContext() {
         return {
+            active_model: this.props.record.resModel,
+            active_id: this.props.record.resId,
             default_product_id: this.props.record.data.product_id[0],
             default_partner_id: this.props.record.model.root.data.partner_id[0],
             default_company_id: this.props.record.model.root.data.company_id[0],
+            default_recurrence_number: this.props.record.data.recurrence_number,
+            default_recurring_rule_type: this.props.record.data.recurring_rule_type,
+            default_recurring_invoicing_type:
+                this.props.record.data.recurring_invoicing_type,
             default_product_uom_qty: this.props.record.data.product_uom_qty,
             default_contract_id: this.props.record.data.contract_id[0],
             default_recurring_interval: this.props.record.data.recurring_interval,
@@ -64,6 +68,8 @@ patch(SaleOrderLineProductField.prototype, {
             default_is_auto_renew: this.props.record.data.is_auto_renew,
             default_auto_renew_interval: this.props.record.data.auto_renew_interval,
             default_auto_renew_rule_type: this.props.record.data.auto_renew_rule_type,
+            default_contract_start_date_method:
+                this.props.record.data.contract_start_date_method,
         };
     },
 

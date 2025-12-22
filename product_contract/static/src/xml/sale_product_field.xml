@@ -2,7 +2,7 @@
 <templates xml:space="preserve">
 
     <t t-inherit="sale.SaleProductField" t-inherit-mode="extension">
-        <xpath expr="//t[@t-if='hasExternalButton']" position="before">
+        <xpath expr="//button[@t-if='hasExternalButton']" position="before">
             <t t-if="isConfigurableContract">
                 <button
                     type="button"

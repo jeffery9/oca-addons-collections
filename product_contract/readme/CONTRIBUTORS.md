@@ -4,5 +4,4 @@
   - Ernesto Tejeda
   - Pedro M. Baeza
   - Carlos Roca
-  - Sergio Teruel
 - David Jaen \<<david.jaen.revert@gmail.com>\>
