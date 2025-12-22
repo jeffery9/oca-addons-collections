@@ -3,9 +3,8 @@
 
 from lxml import etree
 
-from odoo import _, api, fields, models
-from odoo.exceptions import UserError, ValidationError
-from odoo.tools import float_is_zero
+from odoo import api, fields, models
+from odoo.exceptions import ValidationError
 
 
 class AccountMove(models.Model):
@@ -70,11 +69,15 @@ class AccountMove(models.Model):
         return [
             [
                 "company_rate",
-                _("%(rate_currency_name)s per 1 %(company_currency_name)s", **names),
+                self.env._(
+                    "%(rate_currency_name)s per 1 %(company_currency_name)s", **names
+                ),
             ],
             [
                 "inverse_company_rate",
-                _("%(company_currency_name)s per 1 %(rate_currency_name)s", **names),
+                self.env._(
+                    "%(company_currency_name)s per 1 %(rate_currency_name)s", **names
+                ),
             ],
         ]
 
@@ -100,9 +103,32 @@ class AccountMove(models.Model):
     def action_refresh_currency(self):
         self.ensure_one()
         if self.state != "draft":
-            raise ValidationError(_("Rate currency can refresh state draft only."))
+            raise ValidationError(
+                self.env._("Rate currency can refresh state draft only.")
+            )
         self.with_context(check_move_validity=False)._onchange_currency_change_rate()
         return True
+
+    @api.depends(
+        "currency_id",
+        "company_currency_id",
+        "company_id",
+        "invoice_date",
+        "manual_currency_rate",
+    )
+    def _compute_invoice_currency_rate(self):
+        res = super()._compute_invoice_currency_rate()
+        for move in self:
+            if not move.manual_currency:
+                continue
+            # Currency Rate on move use 'company_rate'
+            rate = (
+                move.manual_currency_rate
+                if move.type_currency == "company_rate"
+                else (1.0 / move.manual_currency_rate)
+            )
+            move.invoice_currency_rate = rate
+        return res
 
     @api.model
     def get_view(self, view_id=None, view_type="form", **options):
@@ -123,34 +149,21 @@ class AccountMove(models.Model):
 
     @api.onchange("manual_currency_rate")
     def _onchange_manual_currency_rate(self):
-        last_rate = self.env["res.currency.rate"]._get_last_rates_for_companies(
-            self.company_id | self.env.company
-        )
+        """Refresh currency rate if manual currency rate is 0"""
         for move in self:
             if move.manual_currency and not move.manual_currency_rate:
-                move.manual_currency_rate = (
-                    last_rate[self.company_id]
-                    if move.type_currency == "inverse_company_rate"
-                    else (1.0 / last_rate[self.company_id])
-                )
-
-    def _check_manual_currency_rate(self):
-        for rec in self:
-            if not rec.manual_currency:
-                continue
-            if float_is_zero(rec.manual_currency_rate, precision_digits=12):
-                raise UserError(_("The Manual Currency Rate must not be zero."))
-
-    def _post(self, soft=True):
-        self._check_manual_currency_rate()
-        return super()._post(soft=soft)
+                move.action_refresh_currency()
 
 
 class AccountMoveLine(models.Model):
     _inherit = "account.move.line"
 
     @api.depends(
-        "currency_id", "company_id", "move_id.date", "move_id.manual_currency_rate"
+        "currency_id",
+        "company_id",
+        "move_id.invoice_currency_rate",
+        "move_id.date",
+        "move_id.manual_currency_rate",
     )
     def _compute_currency_rate(self):
         res = super()._compute_currency_rate()

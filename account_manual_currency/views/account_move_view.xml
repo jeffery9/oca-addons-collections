@@ -6,7 +6,7 @@
         <field name="inherit_id" ref="account.view_move_form" />
         <field name="arch" type="xml">
             <xpath
-                expr="//group[@id='header_right_group']/field[@name='currency_id']"
+                expr="//group[@id='header_right_group']/div[@name='journal_div']"
                 position="after"
             >
                 <field name="is_manual" invisible="1" />
@@ -45,7 +45,7 @@
                 <field name="company_currency_id" invisible="1" />
                 <field name="currency_diff" invisible="1" />
             </xpath>
-            <xpath expr="//field[@name='invoice_line_ids']/tree" position="inside">
+            <xpath expr="//field[@name='invoice_line_ids']/list" position="inside">
                 <field name="currency_rate" optional="show" />
             </xpath>
         </field>

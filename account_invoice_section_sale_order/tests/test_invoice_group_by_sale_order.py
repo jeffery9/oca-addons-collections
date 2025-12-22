@@ -20,11 +20,11 @@ class TestInvoiceGroupBySaleOrder(Common):
                 "".join([self.order1_p1.name, " - ", self.order1_p1.client_order_ref]),
                 "line_section",
             ),
-            20: ("order 1 line 1", "product"),
-            30: ("order 1 line 2", "product"),
+            20: (f"{self.product_1.name}\norder 1 line 1", "product"),
+            30: (f"{self.product_2.name}\norder 1 line 2", "product"),
             40: (self.order2_p1.name, "line_section"),
-            50: ("order 2 line 1", "product"),
-            60: ("order 2 line 2", "product"),
+            50: (f"{self.product_1.name}\norder 2 line 1", "product"),
+            60: (f"{self.product_2.name}\norder 2 line 2", "product"),
         }
         invoice_ids = (self.order1_p1 + self.order2_p1)._create_invoices()
         lines = invoice_ids[0].invoice_line_ids.sorted("sequence")
@@ -88,23 +88,24 @@ class TestInvoiceGroupBySaleOrder(Common):
         sale_order_3.order_line[1].name = "order 3 line 2"
         sale_order_3.action_confirm()
 
-        with mock.patch(
-            SECTION_GROUPING_FUNCTION
-        ) as mocked_get_section_grouping, mock.patch(
-            SECTION_NAME_FUNCTION, create=True
-        ) as mocked_get_invoice_section_name:
+        with (
+            mock.patch(SECTION_GROUPING_FUNCTION) as mocked_get_section_grouping,
+            mock.patch(
+                SECTION_NAME_FUNCTION, create=True
+            ) as mocked_get_invoice_section_name,
+        ):
             mocked_get_section_grouping.return_value = "sale_line_ids.order_id.user_id"
             mocked_get_invoice_section_name.return_value = "Mocked value from ResUsers"
             invoice = (orders + sale_order_3)._create_invoices()
             result = {
                 10: ("Mocked value from ResUsers", "line_section"),
-                20: ("order 1 line 1", "product"),
-                30: ("order 1 line 2", "product"),
-                40: ("order 2 line 1", "product"),
-                50: ("order 2 line 2", "product"),
+                20: (f"{self.product_1.name}\norder 1 line 1", "product"),
+                30: (f"{self.product_2.name}\norder 1 line 2", "product"),
+                40: (f"{self.product_1.name}\norder 2 line 1", "product"),
+                50: (f"{self.product_2.name}\norder 2 line 2", "product"),
                 60: ("Mocked value from ResUsers", "line_section"),
-                70: ("order 3 line 1", "product"),
-                80: ("order 3 line 2", "product"),
+                70: (f"{self.product_1.name}\norder 3 line 1", "product"),
+                80: (f"{self.product_2.name}\norder 3 line 2", "product"),
             }
             for line in invoice.invoice_line_ids.sorted("sequence"):
                 if line.sequence not in result:

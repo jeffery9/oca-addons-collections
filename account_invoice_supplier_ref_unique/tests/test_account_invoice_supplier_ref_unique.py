@@ -12,8 +12,8 @@ from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 @tagged("post_install", "-at_install")
 class TestAccountInvoiceSupplierRefUnique(AccountTestInvoicingCommon):
     @classmethod
-    def setUpClass(cls, chart_template_ref=None):
-        super().setUpClass(chart_template_ref=chart_template_ref)
+    def setUpClass(cls):
+        super().setUpClass()
 
         # ENVIRONMENTS
         cls.account_account = cls.env["account.account"]
@@ -22,7 +22,7 @@ class TestAccountInvoiceSupplierRefUnique(AccountTestInvoicingCommon):
         )
 
         # INSTANCES
-        cls.partner = cls.env.ref("base.res_partner_2")
+        cls.partner = cls.env["res.partner"].create({"name": "Test Partner"})
         # Account for invoice
         cls.account = cls.account_account.search(
             [
@@ -104,7 +104,7 @@ class TestAccountInvoiceSupplierRefUnique(AccountTestInvoicingCommon):
                 }
             )
         )
-        reversal = move_reversal.refund_moves()
+        reversal = move_reversal.reverse_moves()
         refund = self.env["account.move"].browse(reversal["res_id"])
         self.assertNotEqual(self.invoice.ref, "")
         self.assertEqual(refund.ref, "")

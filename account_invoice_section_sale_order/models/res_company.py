@@ -21,8 +21,3 @@ class ResCompany(models.Model):
         default="sale_order",
         required=True,
     )
-
-    always_create_invoice_section = fields.Boolean(
-        help="Defines when to create sections",
-        default=False,
-    )

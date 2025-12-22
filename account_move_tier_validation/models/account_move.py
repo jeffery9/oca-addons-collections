@@ -1,7 +1,7 @@
 # Copyright <2020> PESOL <info@pesol.es>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
 
-from odoo import _, api, models
+from odoo import api, models
 
 
 class AccountMove(models.Model):
@@ -28,18 +28,29 @@ class AccountMove(models.Model):
         # otherwise editing manually the values on lines dirties the field at onchange
         # since it's not in readonly because readonly="not(review_ids)", it's then
         # sent at save, and will override the values set by the user
-        return res + ["amount_total"]
+        # The other exclusions are needed to be able to generate the pdf
+        # and send the invoice by email
+        am_exceptions = [
+            "amount_total",
+            "needed_terms_dirty",
+            "is_manually_modified",
+            "is_move_sent",
+            "sending_data",
+            "matched_payment_ids",
+            "payment_state",
+        ]
+        return res + am_exceptions
 
     def _get_to_validate_message_name(self):
         name = super()._get_to_validate_message_name()
         if self.move_type == "in_invoice":
-            name = _("Bill")
+            name = self.env._("Bill")
         elif self.move_type == "in_refund":
-            name = _("Refund")
+            name = self.env._("Refund")
         elif self.move_type == "out_invoice":
-            name = _("Invoice")
+            name = self.env._("Invoice")
         elif self.move_type == "out_refund":
-            name = _("Credit Note")
+            name = self.env._("Credit Note")
         return name
 
     def action_post(self):

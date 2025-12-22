@@ -1,13 +1,13 @@
 from odoo.tests import tagged
-
-from odoo.addons.base.tests.common import BaseCommon
+from odoo.tests.common import TransactionCase
 
 
 @tagged("-at_install", "post_install")
-class Common(BaseCommon):
+class Common(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         cls.setUpClassOrder()
 
     @classmethod
@@ -17,12 +17,16 @@ class Common(BaseCommon):
         cls.product_2 = cls.env.ref("product.product_product_2")
         cls.product_1.invoice_policy = "order"
         cls.product_2.invoice_policy = "order"
+        cls.pricelist = cls.env["product.pricelist"].create(
+            {"name": "Europe pricelist", "currency_id": cls.env.ref("base.EUR").id}
+        )
         cls.order1_p1 = cls.env["sale.order"].create(
             {
                 "partner_id": cls.partner_1.id,
                 "partner_shipping_id": cls.partner_1.id,
                 "partner_invoice_id": cls.partner_1.id,
                 "client_order_ref": "ref123",
+                "pricelist_id": cls.pricelist.id,
                 "order_line": [
                     (
                         0,
@@ -55,6 +59,7 @@ class Common(BaseCommon):
                 "partner_id": cls.partner_1.id,
                 "partner_shipping_id": cls.partner_1.id,
                 "partner_invoice_id": cls.partner_1.id,
+                "pricelist_id": cls.pricelist.id,
                 "order_line": [
                     (
                         0,

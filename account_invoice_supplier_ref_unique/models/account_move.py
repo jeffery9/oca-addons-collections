@@ -1,7 +1,7 @@
 # Copyright 2016 Acsone
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -41,10 +41,11 @@ class AccountMove(models.Model):
                 )
                 if same_supplier_inv_num:
                     raise ValidationError(
-                        _(
-                            "The invoice/refund with supplier invoice number"
-                            " %(number)s already exists in Odoo under the number "
-                            "%(same)s for supplier %(supplier)s.",
+                        self.env._(
+                            "The invoice/refund with supplier "
+                            "invoice number %(number)s "
+                            "already exists in Odoo under the number %(same)s "
+                            "for supplier %(supplier)s.",
                             number=same_supplier_inv_num.supplier_invoice_number,
                             same=same_supplier_inv_num.name or "-",
                             supplier=same_supplier_inv_num.partner_id.display_name,
