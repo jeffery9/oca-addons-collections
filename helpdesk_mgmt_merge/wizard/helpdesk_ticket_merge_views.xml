@@ -61,5 +61,4 @@
         <field name="binding_model_id" ref="helpdesk_mgmt.model_helpdesk_ticket" />
         <field name="target">new</field>
     </record>
-
 </odoo>

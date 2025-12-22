@@ -3,7 +3,7 @@
 from collections import OrderedDict
 from operator import itemgetter
 
-from odoo import _, http
+from odoo import http
 from odoo.exceptions import AccessError, MissingError
 from odoo.http import request
 from odoo.osv.expression import AND, OR
@@ -24,7 +24,7 @@ class CustomerPortalHelpdesk(CustomerPortal):
             helpdesk_model = request.env["helpdesk.ticket"]
             ticket_count = (
                 helpdesk_model.search_count([])
-                if helpdesk_model.check_access_rights("read", raise_exception=False)
+                if helpdesk_model.has_access("read")
                 else 0
             )
             values["ticket_count"] = ticket_count
@@ -50,7 +50,7 @@ class CustomerPortalHelpdesk(CustomerPortal):
     ):
         HelpdeskTicket = request.env["helpdesk.ticket"]
         # Avoid error if the user does not have access.
-        if not HelpdeskTicket.check_access_rights("read", raise_exception=False):
+        if not HelpdeskTicket.has_access("read"):
             return request.redirect("/my")
 
         values = self._prepare_portal_layout_values()
@@ -64,7 +64,7 @@ class CustomerPortalHelpdesk(CustomerPortal):
         )
 
         searchbar_filters = {
-            "all": {"label": _("All"), "domain": []},
+            "all": {"label": request.env._("All"), "domain": []},
         }
         for stage in request.env["helpdesk.ticket.stage"].search([]):
             searchbar_filters[str(stage.id)] = {
@@ -186,22 +186,11 @@ class CustomerPortalHelpdesk(CustomerPortal):
         closed_stages = ticket.team_id._get_applicable_stages().filtered(
             lambda s: s.close_from_portal
         )
-        files = (
-            request.env["ir.attachment"]
-            .sudo()
-            .search(
-                [
-                    ("res_model", "=", "helpdesk.ticket"),
-                    ("res_id", "=", ticket.id),
-                ]
-            )
-        )
         values = {
             "closed_stages": closed_stages,  # used to display close buttons
             "page_name": "ticket",
             "ticket": ticket,
             "user": request.env.user,
-            "files": files,
         }
         return self._get_page_view_values(
             ticket, access_token, values, "my_tickets_history", False, **kwargs
@@ -210,14 +199,18 @@ class CustomerPortalHelpdesk(CustomerPortal):
     def _ticket_get_searchbar_sortings(self):
         return {
             "date": {
-                "label": _("Newest"),
+                "label": request.env._("Newest"),
                 "order": "create_date desc",
                 "sequence": 1,
             },
-            "name": {"label": _("Title"), "order": "name", "sequence": 2},
-            "stage": {"label": _("Stage"), "order": "stage_id", "sequence": 3},
+            "name": {"label": request.env._("Title"), "order": "name", "sequence": 2},
+            "stage": {
+                "label": request.env._("Stage"),
+                "order": "stage_id",
+                "sequence": 3,
+            },
             "update": {
-                "label": _("Last Stage Update"),
+                "label": request.env._("Last Stage Update"),
                 "order": "last_stage_update desc",
                 "sequence": 4,
             },
@@ -225,27 +218,31 @@ class CustomerPortalHelpdesk(CustomerPortal):
 
     def _ticket_get_searchbar_groupby(self):
         values = {
-            "none": {"input": "none", "label": _("None"), "order": 1},
+            "none": {"input": "none", "label": request.env._("None"), "order": 1},
             "category": {
                 "input": "category",
-                "label": _("Category"),
+                "label": request.env._("Category"),
                 "order": 2,
             },
-            "stage": {"input": "stage", "label": _("Stage"), "order": 3},
+            "stage": {"input": "stage", "label": request.env._("Stage"), "order": 3},
         }
         return dict(sorted(values.items(), key=lambda item: item[1]["order"]))
 
     def _ticket_get_searchbar_inputs(self):
         values = {
-            "all": {"input": "all", "label": _("Search in All"), "order": 1},
+            "all": {
+                "input": "all",
+                "label": request.env._("Search in All"),
+                "order": 1,
+            },
             "number": {
                 "input": "number",
-                "label": _("Search in Number"),
+                "label": request.env._("Search in Number"),
                 "order": 2,
             },
             "name": {
                 "input": "name",
-                "label": _("Search in Title"),
+                "label": request.env._("Search in Title"),
                 "order": 3,
             },
         }

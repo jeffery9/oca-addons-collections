@@ -40,33 +40,33 @@ class HelpdeskTicketController(http.Controller):
             else False
         )
 
-    @http.route("/new/ticket", type="http", auth="user", website=True)
-    def create_new_ticket(self, **kw):
-        session_info = http.request.env["ir.http"].session_info()
+    def _get_categories(self, **kw):
         company = request.env.company
         category_model = http.request.env["helpdesk.ticket.category"]
-        categories = category_model.with_company(company.id).search(
-            [("active", "=", True), ("show_in_portal", "=", True)]
-        )
+        return category_model.with_company(company.id).search([("active", "=", True)])
+
+    @http.route("/new/ticket", type="http", auth="user", website=True)
+    def create_new_ticket(self, **kw):
+        values = self._get_create_new_ticket_values(**kw)
+        return http.request.render("helpdesk_mgmt.portal_create_ticket", values)
+
+    def _get_create_new_ticket_values(self, **kw):
+        session_info = http.request.env["ir.http"].session_info()
+        company = request.env.company
         email = http.request.env.user.email
         name = http.request.env.user.name
         company = request.env.company
-        return http.request.render(
-            "helpdesk_mgmt.portal_create_ticket",
-            {
-                "categories": categories,
-                "teams": self._get_teams(),
-                "email": email,
-                "name": name,
-                "ticket_team_id_required": (
-                    company.helpdesk_mgmt_portal_team_id_required
-                ),
-                "ticket_category_id_required": (
-                    company.helpdesk_mgmt_portal_category_id_required
-                ),
-                "max_upload_size": session_info["max_file_upload_size"],
-            },
-        )
+        return {
+            "categories": self._get_categories(**kw),
+            "teams": self._get_teams(),
+            "email": email,
+            "name": name,
+            "ticket_team_id_required": (company.helpdesk_mgmt_portal_team_id_required),
+            "ticket_category_id_required": (
+                company.helpdesk_mgmt_portal_category_id_required
+            ),
+            "max_upload_size": session_info["max_file_upload_size"],
+        }
 
     def _prepare_submit_ticket_vals(self, **kw):
         category = http.request.env["helpdesk.ticket.category"].browse(
@@ -85,6 +85,7 @@ class HelpdeskTicketController(http.Controller):
             "partner_id": request.env.user.partner_id.id,
             "partner_name": request.env.user.partner_id.name,
             "partner_email": request.env.user.partner_id.email,
+            "user_id": False,
         }
         team = http.request.env["helpdesk.ticket.team"]
         if company.helpdesk_mgmt_portal_select_team and kw.get("team"):
@@ -107,12 +108,10 @@ class HelpdeskTicketController(http.Controller):
         new_ticket = request.env["helpdesk.ticket"].sudo().create(vals)
         new_ticket.message_subscribe(partner_ids=request.env.user.partner_id.ids)
         if kw.get("attachment"):
-            IrAttachment = request.env["ir.attachment"]
-            attachment_ids = IrAttachment
             for c_file in request.httprequest.files.getlist("attachment"):
                 data = c_file.read()
                 if c_file.filename:
-                    attachment_ids += IrAttachment.sudo().create(
+                    request.env["ir.attachment"].sudo().create(
                         {
                             "name": c_file.filename,
                             "datas": base64.b64encode(data),
@@ -120,5 +119,4 @@ class HelpdeskTicketController(http.Controller):
                             "res_id": new_ticket.id,
                         }
                     )
-            attachment_ids.sudo().generate_access_token()
-        return werkzeug.utils.redirect("/my/ticket/%s" % new_ticket.id)
+        return werkzeug.utils.redirect(f"/my/ticket/{new_ticket.id}")

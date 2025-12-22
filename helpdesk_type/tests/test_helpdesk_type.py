@@ -1,4 +1,4 @@
-from odoo.tests.common import Form
+from odoo.tests import Form
 
 from odoo.addons.helpdesk_mgmt.tests import test_helpdesk_ticket
 
