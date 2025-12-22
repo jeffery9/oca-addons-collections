@@ -1,15 +1,15 @@
 
-[![Runboat](https://img.shields.io/badge/runboat-Try%20me-875A7B.png)](https://runboat.odoo-community.org/builds?repo=OCA/fleet&target_branch=17.0)
-[![Pre-commit Status](https://github.com/OCA/fleet/actions/workflows/pre-commit.yml/badge.svg?branch=17.0)](https://github.com/OCA/fleet/actions/workflows/pre-commit.yml?query=branch%3A17.0)
-[![Build Status](https://github.com/OCA/fleet/actions/workflows/test.yml/badge.svg?branch=17.0)](https://github.com/OCA/fleet/actions/workflows/test.yml?query=branch%3A17.0)
-[![codecov](https://codecov.io/gh/OCA/fleet/branch/17.0/graph/badge.svg)](https://codecov.io/gh/OCA/fleet)
-[![Translation Status](https://translation.odoo-community.org/widgets/fleet-17-0/-/svg-badge.svg)](https://translation.odoo-community.org/engage/fleet-17-0/?utm_source=widget)
+[![Runboat](https://img.shields.io/badge/runboat-Try%20me-875A7B.png)](https://runboat.odoo-community.org/builds?repo=OCA/fleet&target_branch=18.0)
+[![Pre-commit Status](https://github.com/OCA/fleet/actions/workflows/pre-commit.yml/badge.svg?branch=18.0)](https://github.com/OCA/fleet/actions/workflows/pre-commit.yml?query=branch%3A18.0)
+[![Build Status](https://github.com/OCA/fleet/actions/workflows/test.yml/badge.svg?branch=18.0)](https://github.com/OCA/fleet/actions/workflows/test.yml?query=branch%3A18.0)
+[![codecov](https://codecov.io/gh/OCA/fleet/branch/18.0/graph/badge.svg)](https://codecov.io/gh/OCA/fleet)
+[![Translation Status](https://translation.odoo-community.org/widgets/fleet-18-0/-/svg-badge.svg)](https://translation.odoo-community.org/engage/fleet-18-0/?utm_source=widget)
 
 <!-- /!\ do not modify above this line -->
 
 # fleet
 
-TODO: add repo description.
+fleet
 
 <!-- /!\ do not modify below this line -->
 
@@ -21,11 +21,19 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[fleet_vehicle_category](fleet_vehicle_category/) | 17.0.1.0.0 |  | Add category definition for vehicles.
-[fleet_vehicle_fuel_capacity](fleet_vehicle_fuel_capacity/) | 17.0.1.0.0 | <a href='https://github.com/marcelsavegnago'><img src='https://github.com/marcelsavegnago.png' width='32' height='32' style='border-radius:50%;' alt='marcelsavegnago'/></a> | This module extends the functionality of fleet management. It allows the registration of a vehicle's fuel capacity.
-[fleet_vehicle_history_date_end](fleet_vehicle_history_date_end/) | 17.0.1.0.0 | <a href='https://github.com/mamcode'><img src='https://github.com/mamcode.png' width='32' height='32' style='border-radius:50%;' alt='mamcode'/></a> <a href='https://github.com/ivantodorovich'><img src='https://github.com/ivantodorovich.png' width='32' height='32' style='border-radius:50%;' alt='ivantodorovich'/></a> | Automatically assign date end in vehicle history when a new driver is assigned.
-[fleet_vehicle_service_services](fleet_vehicle_service_services/) | 17.0.1.0.0 |  | Add subservices in Services.
-[fleet_vehicle_usage](fleet_vehicle_usage/) | 17.0.1.0.0 | <a href='https://github.com/victoralmau'><img src='https://github.com/victoralmau.png' width='32' height='32' style='border-radius:50%;' alt='victoralmau'/></a> | Fleet Vehicle Usage
+[fleet_vehicle_calendar_year](fleet_vehicle_calendar_year/) | 18.0.1.0.0 | <a href='https://github.com/marcelsavegnago'><img src='https://github.com/marcelsavegnago.png' width='32' height='32' style='border-radius:50%;' alt='marcelsavegnago'/></a> | This module extends the fleet management functionality. Allows the registration of the vehicle's calendar year.
+[fleet_vehicle_category](fleet_vehicle_category/) | 18.0.1.0.0 |  | Add category definition for vehicles.
+[fleet_vehicle_configuration](fleet_vehicle_configuration/) | 18.0.1.0.0 |  | add vehicle configuration capacity
+[fleet_vehicle_fuel_capacity](fleet_vehicle_fuel_capacity/) | 18.0.1.0.0 | <a href='https://github.com/marcelsavegnago'><img src='https://github.com/marcelsavegnago.png' width='32' height='32' style='border-radius:50%;' alt='marcelsavegnago'/></a> | This module extends the functionality of fleet management. It allows the registration of a vehicle's fuel capacity.
+[fleet_vehicle_fuel_type_ethanol](fleet_vehicle_fuel_type_ethanol/) | 18.0.1.0.0 | <a href='https://github.com/marcelsavegnago'><img src='https://github.com/marcelsavegnago.png' width='32' height='32' style='border-radius:50%;' alt='marcelsavegnago'/></a> | This module extends the fleet management functionality. This adds ethanol as another type of fuel to be used by a vehicle in the fleet.
+[fleet_vehicle_history_date_end](fleet_vehicle_history_date_end/) | 18.0.1.0.0 | <a href='https://github.com/mamcode'><img src='https://github.com/mamcode.png' width='32' height='32' style='border-radius:50%;' alt='mamcode'/></a> <a href='https://github.com/ivantodorovich'><img src='https://github.com/ivantodorovich.png' width='32' height='32' style='border-radius:50%;' alt='ivantodorovich'/></a> | Automatically assign date end in vehicle history when a new driver is assigned.
+[fleet_vehicle_inspection](fleet_vehicle_inspection/) | 18.0.1.0.0 | <a href='https://github.com/marcelsavegnago'><img src='https://github.com/marcelsavegnago.png' width='32' height='32' style='border-radius:50%;' alt='marcelsavegnago'/></a> | This module extends the Fleet module allowing the registration of vehicle entry and exit inspections.
+[fleet_vehicle_log_fuel](fleet_vehicle_log_fuel/) | 18.0.1.0.0 |  | Add Log Fuels for your vehicles.
+[fleet_vehicle_ownership](fleet_vehicle_ownership/) | 18.0.1.0.0 | <a href='https://github.com/cubells'><img src='https://github.com/cubells.png' width='32' height='32' style='border-radius:50%;' alt='cubells'/></a> | Add vehicle ownership, linking partners to vehicles
+[fleet_vehicle_purchase](fleet_vehicle_purchase/) | 18.0.1.0.0 |  | Allow to integrate Purcase with Fleet Vehicles
+[fleet_vehicle_service_activity](fleet_vehicle_service_activity/) | 18.0.1.0.0 | <a href='https://github.com/victoralmau'><img src='https://github.com/victoralmau.png' width='32' height='32' style='border-radius:50%;' alt='victoralmau'/></a> | Activity alerts for fleet services
+[fleet_vehicle_service_kanban](fleet_vehicle_service_kanban/) | 18.0.1.0.0 | <a href='https://github.com/mamcode'><img src='https://github.com/mamcode.png' width='32' height='32' style='border-radius:50%;' alt='mamcode'/></a> <a href='https://github.com/ivantodorovich'><img src='https://github.com/ivantodorovich.png' width='32' height='32' style='border-radius:50%;' alt='ivantodorovich'/></a> | Add features of kanban to logs of vehicle services.
+[fleet_vehicle_service_services](fleet_vehicle_service_services/) | 18.0.1.0.0 |  | Add subservices in Services.
 
 [//]: # (end addons)
 
