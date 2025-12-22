@@ -1,5 +1,5 @@
 # Copyright 2020 Camptocamp (https://www.camptocamp.com)
-# Copyright 2020-2021 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
+# Copyright 2020 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from itertools import groupby
@@ -85,12 +85,19 @@ class StockPicking(models.Model):
         else:
             return super().action_cancel()
 
-    def _create_backorder(self):
+    def _create_backorder(self, backorder_moves=None):
         backorders = self.browse()
         for picking in self:
             if not picking._is_grouping_disabled():
                 picking = picking.with_context(picking_no_copy_if_can_group=1)
-            backorder = super(StockPicking, picking)._create_backorder()
+            picking_backorder_moves = None
+            if backorder_moves:
+                picking_backorder_moves = backorder_moves.filtered(
+                    lambda x, picking=picking: x.picking_id == picking
+                )
+            backorder = super(StockPicking, picking)._create_backorder(
+                backorder_moves=picking_backorder_moves
+            )
             if backorder and not picking._is_grouping_disabled():
                 backorder._merge_procurement_groups()
                 backorder._update_merged_origin()
@@ -111,7 +118,7 @@ class StockPicking(models.Model):
     def _prepare_merge_procurement_group_values(self, move_groups):
         """Build a new procurement group that is the merge of given procurement
         group."""
-        sales = move_groups.sale_id
+        sales = move_groups.sale_id + move_groups.sale_ids
         partners = move_groups.sale_id.partner_id
         name = _("Merged procurement")
         if partners:
@@ -125,7 +132,7 @@ class StockPicking(models.Model):
         self.ensure_one()
         if self._is_grouping_disabled():
             return False
-        if self.picking_type_id.code != "outgoing":
+        if not self.picking_type_id.group_pickings:
             return False
         group_pickings = self.move_ids.group_id.picking_ids.filtered(
             # Do no longer modify a printed or done transfer: they are

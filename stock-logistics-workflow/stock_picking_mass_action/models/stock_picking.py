@@ -2,11 +2,10 @@
 # Copyright 2018 Tecnativa - Vicent Cubells
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import api
-from odoo.models import Model
+from odoo import api, models
 
 
-class StockPicking(Model):
+class StockPicking(models.Model):
     _inherit = "stock.picking"
 
     @api.model

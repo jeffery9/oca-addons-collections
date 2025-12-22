@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <template id="report_delivery_document" inherit_id="stock.report_delivery_document">
+    <template
+        id="report_delivery_document"
+        inherit_id="sale_stock.report_delivery_document_inherit_sale_stock"
+    >
         <div class="page" position="before">
             <t t-set="report_lines" t-value="o.get_delivery_report_lines()" />
         </div>
@@ -73,22 +76,25 @@
             <attribute name="t-if">False</attribute>
         </xpath>
 
-        <!-- Remove "All items could not be shipped.." sentence
-            Substitute it by a message indicating if all goods have been delivered. -->
-        <xpath expr='//div[@t-else=""]' position="attributes">
+        <xpath expr="//p[hasclass('mt-5')]/.." position="attributes">
             <attribute name="t-if">False</attribute>
             <attribute name="name">stock_backorder_block</attribute>
         </xpath>
         <xpath expr='//div[@name="stock_backorder_block"]' position="after">
             <t t-if="o.picking_type_id.code == 'outgoing' and get_remaining_to_deliver">
                 <t t-set="remainings" t-value="get_remaining_to_deliver(o)" />
-                <t t-if="not remainings">
+                <t
+                    t-if="not remainings and all(q.product_uom_qty == q.quantity for q in o.move_ids)"
+                >
                     <p
                         class="remaining-to-deliver-separator"
                     >All ordered items have been delivered.</p>
                 </t>
                 <t t-else="">
-                    <p class="remaining-to-deliver-separator">Remaining to deliver:</p>
+                    <p
+                        t-if="o.state == 'done'"
+                        class="remaining-to-deliver-separator"
+                    >Remaining to deliver:</p>
                     <table class="table table-sm" name="remaining_to_deliver_table">
                         <tbody>
                             <tr t-foreach="remainings" t-as="remaining">
@@ -102,8 +108,7 @@
                                     <t t-if="not remaining['is_header']">
                                         <span
                                             t-esc="remaining['qty']"
-                                            t-options="{'widget': 'float',
-                                                          'precision': rounding_to_precision(remaining['uom'].rounding)}"
+                                            t-options="{'widget': 'float',                                                           'precision': rounding_to_precision(remaining['uom'].rounding)}"
                                         />
                                         <span
                                             class="remaining_uom_name"
@@ -117,7 +122,6 @@
                 </t>
             </t>
         </xpath>
-
     </template>
 
     <template
@@ -168,13 +172,13 @@
 
         <!-- Replace the customer refs with the one based on the move line displayed -->
         <xpath
-            expr='//p[@t-field="o.sudo().sale_id.client_order_ref"]'
+            expr='//div[@t-field="o.sudo().sale_id.client_order_ref"]'
             position="attributes"
         >
             <attribute name="t-if">False</attribute>
         </xpath>
         <xpath
-            expr='//p[@t-field="o.sudo().sale_id.client_order_ref"]'
+            expr='//div[@t-field="o.sudo().sale_id.client_order_ref"]'
             position="after"
         >
             <p class="m-0">

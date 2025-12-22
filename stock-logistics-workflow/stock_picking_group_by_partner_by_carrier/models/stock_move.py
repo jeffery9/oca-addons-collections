@@ -1,11 +1,12 @@
 # Copyright 2020 Camptocamp (https://www.camptocamp.com)
-# Copyright 2020-2021 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
+# Copyright 2020 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from collections import namedtuple
-from itertools import groupby
 
 from odoo import api, fields, models
+from odoo.osv import expression
+from odoo.tools import groupby
 
 
 class StockMove(models.Model):
@@ -49,15 +50,20 @@ class StockMove(models.Model):
         return result
 
     def _assign_picking_post_process(self, new=False):
-        moves_by_picking = groupby(
-            sorted(self, key=lambda m: m.picking_id.id), key=lambda m: m.picking_id
-        )
+        moves_by_picking = groupby(self, key=lambda m: m.picking_id)
         for picking, imoves in moves_by_picking:
             merged = picking._merge_procurement_groups()
             if merged:
                 moves = self.browse(m.id for m in imoves)
                 moves.picking_id._update_merged_origin()
                 moves._on_assign_picking_message_link()
+        # Ensure sale.order.picking_ids is properly read to ensure
+        # action_confirm is called.
+        # The m2m relation from stock.picking to sale.order is changed to a
+        # stored computed field with depends but the reverse relation is not
+        # defined as computed, so we need to flush the stored computed field so
+        # that any read from sale.order will fetch the right value.
+        self.picking_id.flush_recordset(["sale_ids"])
         res = super()._assign_picking_post_process(new=new)
         return res
 
@@ -67,7 +73,7 @@ class StockMove(models.Model):
             self.picking_id.message_post_with_source(
                 "mail.message_origin_link",
                 render_values={"self": self.picking_id, "origin": sales, "edit": True},
-                subtype_id=self.env.ref("mail.mt_note").id,
+                subtype_xmlid="mail.mt_note",
             )
 
     def _search_picking_for_assignation_domain(self):
@@ -75,16 +81,24 @@ class StockMove(models.Model):
         if (
             not self.picking_type_id.group_pickings
             or self.partner_id.disable_picking_grouping
-            or self.group_id.sale_id.picking_policy == "one"
+            or (
+                not self.picking_type_id.group_pickings_one
+                and self.group_id.move_type == "one"
+            )
         ):
             return domain
 
         # remove group
-        domain = [x for x in domain if x[0] != "group_id"]
+        tree_domain = expression._tree_from_domain(domain)
+        tree_domain = [
+            x for x in tree_domain if expression.is_operator(x) or x[1] != "group_id"
+        ]
+        domain = expression._tree_as_domain(tree_domain)
 
         grouping_domain = self._assign_picking_group_domain()
 
-        return domain + grouping_domain
+        res = domain + grouping_domain
+        return res
 
     # TODO: this part and everything related to generic grouping
     # should be split into `stock_picking_group_by` module.
@@ -100,8 +114,6 @@ class StockMove(models.Model):
             domain += [
                 ("carrier_id", "=", self.group_id.carrier_id.id),
             ]
-        else:
-            domain += [("carrier_id", "=", False)]
         if self.env.context.get("picking_no_copy_if_can_group"):
             # we are in the context of the creation of a backorder:
             # don't consider the current move's picking
@@ -114,13 +126,15 @@ class StockMove(models.Model):
         By default the move type is taken from the procurement group.
         Override to customize this behavior.
         """
-        # avoid mixing picking policies
-        return [("move_type", "=", self.group_id.move_type)]
+        move_type = (
+            self.group_id.move_type or self.picking_type_id.move_type or "direct"
+        )
+        return [("move_type", "=", move_type)]
 
     def _key_assign_picking(self):
         return (
-            self.sale_line_id.order_id.partner_shipping_id,
-            PickingPolicy(id=self.sale_line_id.order_id.picking_policy),
+            self.group_id.partner_id,
+            PickingPolicy(id=self.group_id.move_type),
         ) + super()._key_assign_picking()
 
 

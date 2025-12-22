@@ -17,14 +17,16 @@ class TestBatchPrintPickings(BaseCommon):
         cls.productA = cls.env["product.product"].create(
             {
                 "name": "Product A",
-                "type": "product",
+                "type": "consu",
+                "tracking": "none",
                 "categ_id": cls.env.ref("product.product_category_all").id,
             }
         )
         cls.productB = cls.env["product.product"].create(
             {
                 "name": "Product B",
-                "type": "product",
+                "type": "consu",
+                "tracking": "none",
                 "categ_id": cls.env.ref("product.product_category_all").id,
             }
         )
@@ -93,8 +95,8 @@ class TestBatchPrintPickings(BaseCommon):
             self.batch.action_print_pickings()
 
     def test_stock_picking_batch_print_pickings_02(self):
-        """Picking type with checked print pickings
-        from batch but with 0 copies to print."""
+        """Picking type with checked print pickings from batch
+        but with 0 copies to print."""
         self.picking_type.print_documents_from_batch = "pickings"
         self.picking_type.number_copies_pickings = 0
         self.batch.update(

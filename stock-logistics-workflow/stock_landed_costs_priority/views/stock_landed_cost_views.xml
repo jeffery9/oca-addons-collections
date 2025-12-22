@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <record id="view_stock_landed_cost_form" model="ir.ui.view">
         <field name="model">stock.landed.cost</field>
         <field name="inherit_id" ref="stock_landed_costs.view_stock_landed_cost_form" />
@@ -44,8 +43,14 @@
             ref="stock_landed_costs.stock_landed_cost_view_kanban"
         />
         <field name="arch" type="xml">
-            <xpath expr="//span[@t-esc='record.name.value']" position="before">
-                <field name="priority" widget="priority" class="mr4" />
+            <xpath expr="//field[@name='name']" position="attributes">
+                <attribute name="class">col-5 fw-bolder</attribute>
+            </xpath>
+            <xpath expr="//field[@name='state']/.." position="attributes">
+                <attribute name="class">col-5 p-0</attribute>
+            </xpath>
+            <xpath expr="//field[@name='name']" position="before">
+                <field name="priority" widget="priority" class="col-1" />
             </xpath>
         </field>
     </record>
@@ -79,5 +84,4 @@
             </xpath>
         </field>
     </record>
-
 </odoo>

@@ -1,11 +1,14 @@
-from odoo import _, api, exceptions, fields, models
-from odoo.exceptions import UserError
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+
+from odoo import api, exceptions, fields, models
+from odoo.exceptions import UserError, ValidationError
+from odoo.tools.misc import OrderedSet
 
 
 class StockMove(models.Model):
     _inherit = "stock.move"
 
-    # seems better to not copy this field except when a move is splitted, because a move
+    # seems better to not copy this field except when a move is split, because a move
     # can be copied in multiple different occasions and could even be copied with a
     # different product...
     restrict_lot_id = fields.Many2one(
@@ -34,7 +37,7 @@ class StockMove(models.Model):
                 and vals["lot_id"] != self.restrict_lot_id.id
             ):
                 raise exceptions.UserError(
-                    _(
+                    self.env._(
                         "Inconsistencies between reserved quant and lot restriction on "
                         "stock move"
                     )
@@ -67,7 +70,6 @@ class StockMove(models.Model):
         self,
         need,
         location_id,
-        quant_ids=None,
         lot_id=None,
         package_id=None,
         owner_id=None,
@@ -79,7 +81,6 @@ class StockMove(models.Model):
         return super()._update_reserved_quantity(
             need,
             location_id,
-            quant_ids=quant_ids,
             lot_id=lot_id,
             package_id=package_id,
             owner_id=owner_id,
@@ -108,7 +109,7 @@ class StockMove(models.Model):
             move_line_lot = move.mapped("move_line_ids.lot_id")
             if move.restrict_lot_id != move_line_lot:
                 raise UserError(
-                    _(
+                    self.env._(
                         "The lot(s) %(move_line_lot)s being moved is "
                         "inconsistent with the restriction on "
                         "lot %(move_restrict_lot)s set on the move",
@@ -116,3 +117,44 @@ class StockMove(models.Model):
                         move_restrict_lot=move.restrict_lot_id.display_name,
                     )
                 )
+
+    # Same as _rollup_move_origs but also for "done" moves.
+    def _rollup_not_cancelled_move_origs(self, seen=False):
+        if not seen:
+            seen = OrderedSet()
+        unseen = OrderedSet(self.ids) - seen
+        if not unseen:
+            return seen
+        seen.update(unseen)
+        self.filtered(lambda m: m.id in unseen).move_orig_ids.filtered(
+            lambda sm: sm.state != "cancel"
+        )._rollup_not_cancelled_move_origs(seen)
+        return seen
+
+    def write(self, vals):
+        if "restrict_lot_id" not in vals:
+            return super().write(vals)
+        else:
+            restrict_lot_id = vals.pop("restrict_lot_id")
+            restrict_lot = self.env["stock.lot"].browse(restrict_lot_id)
+            chained_move_ids = self._rollup_move_dests()
+            chained_move_ids = self._rollup_not_cancelled_move_origs(
+                chained_move_ids - self.ids
+            )
+            chained_moves = self.env["stock.move"].browse(chained_move_ids)
+            if any(
+                [
+                    sm.state == "done" and sm.lot_ids and sm.lot_ids != restrict_lot
+                    for sm in chained_moves
+                ]
+            ):
+                raise ValidationError(
+                    self.env._(
+                        "You can't modify the Lot/Serial number "
+                        "because at least one move in the chain has "
+                        "already been done with another Lot/Serial number."
+                    )
+                )
+            for move in chained_moves:
+                super(StockMove, move).write({"restrict_lot_id": restrict_lot_id})
+        return super().write(vals)

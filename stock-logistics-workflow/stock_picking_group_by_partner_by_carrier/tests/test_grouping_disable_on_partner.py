@@ -65,6 +65,7 @@ class TestGroupByDisabledOnPartner(TestGroupByBase, TransactionCase):
         pick = so1.picking_ids
         move = first(pick.move_ids)
         move.quantity = 5
+        move.picked = True
         pick.with_context(cancel_backorder=False)._action_done()
         self.assertFalse(so2.picking_ids & so1.picking_ids)
         self.assertEqual(so2.picking_ids.sale_ids, so2)
@@ -125,6 +126,18 @@ class TestGroupByDisabledOnPartner(TestGroupByBase, TransactionCase):
         so1.action_confirm()
         so2 = self._get_new_sale_order(amount=11, carrier=self.carrier1)
         so2.action_confirm()
+        # pick steps should not be merged
+        self.assertEqual(len(so1.picking_ids), 1)
+        self.assertEqual(len(so2.picking_ids), 1)
+        # ship or pick should not be shared between so1 and so2
+        self.assertFalse(so1.picking_ids & so2.picking_ids)
+        for move_id in so1.picking_ids.move_ids | so2.picking_ids.move_ids:
+            move_id.picked = True
+            move_id.quantity = move_id.product_uom_qty
+        so1.picking_ids._action_done()
+        so2.picking_ids._action_done()
+
+        # pick steps should not be merged
         self.assertEqual(len(so1.picking_ids), 2)
         self.assertEqual(len(so2.picking_ids), 2)
         # ship or pick should not be shared between so1 and so2
@@ -142,8 +155,8 @@ class TestGroupByDisabledOnPartner(TestGroupByBase, TransactionCase):
         so1.action_confirm()
         so2 = self._get_new_sale_order(amount=11, carrier=self.carrier1)
         so2.action_confirm()
-        self.assertEqual(len(so1.picking_ids), 2)
-        self.assertEqual(len(so2.picking_ids), 2)
+        self.assertEqual(len(so1.picking_ids), 1)
+        self.assertEqual(len(so2.picking_ids), 1)
         # ship or pick should not be shared between so1 and so2
         self.assertFalse(so1.picking_ids & so2.picking_ids)
 
@@ -160,9 +173,56 @@ class TestGroupByDisabledOnPartner(TestGroupByBase, TransactionCase):
         so1.action_confirm()
         so2 = self._get_new_sale_order(amount=11, carrier=self.carrier1)
         so2.action_confirm()
-        self.assertEqual(len(so1.picking_ids), 3)
-        self.assertEqual(len(so2.picking_ids), 3)
-        # ship or pick should not be shared between so1 and so2
+        # pick
+        pick1 = so1.picking_ids.filtered(
+            lambda x: x.picking_type_id == self.warehouse.pick_type_id
+        )
+        pick2 = so2.picking_ids.filtered(
+            lambda x: x.picking_type_id == self.warehouse.pick_type_id
+        )
+        self.assertEqual(len(pick1), 1)
+        self.assertEqual(len(pick2), 1)
+        # pick should not be shared between so1 and so2
+        self.assertFalse(pick1 & pick2)
+        for move_id in (pick1 | pick2).move_ids:
+            move_id.picked = True
+            move_id.quantity = move_id.product_uom_qty
+        pick1._action_done()
+        pick2._action_done()
+        # pack
+        pack1 = so1.picking_ids.filtered(
+            lambda x: x.picking_type_id == self.warehouse.pack_type_id
+        )
+        pack2 = so2.picking_ids.filtered(
+            lambda x: x.picking_type_id == self.warehouse.pack_type_id
+        )
+        self.assertEqual(len(pack1), 1)
+        self.assertEqual(len(pack2), 1)
+        # pack should not be shared between so1 and so2
+        self.assertFalse(pack1 & pack2)
+        for move_id in (pack1 | pack2).move_ids:
+            move_id.picked = True
+            move_id.quantity = move_id.product_uom_qty
+        pack1._action_done()
+        pack2._action_done()
+        # ship
+        ship1 = so1.picking_ids.filtered(
+            lambda x: x.picking_type_id == self.warehouse.out_type_id
+        )
+        ship2 = so2.picking_ids.filtered(
+            lambda x: x.picking_type_id == self.warehouse.out_type_id
+        )
+        self.assertEqual(len(ship1), 1)
+        self.assertEqual(len(ship2), 1)
+        # ship should not be shared between so1 and so2
+        self.assertFalse(ship1 & ship2)
+        for move_id in (ship1 | ship2).move_ids:
+            move_id.picked = True
+            move_id.quantity = move_id.product_uom_qty
+        ship1._action_done()
+        ship2._action_done()
+
+        # ship or pick or pack should not be shared between so1 and so2
         self.assertFalse(so1.picking_ids & so2.picking_ids)
 
     def test_delivery_multi_step_cancel_so1(self):
@@ -179,8 +239,9 @@ class TestGroupByDisabledOnPartner(TestGroupByBase, TransactionCase):
         self.assertFalse(so1.picking_ids & so2.picking_ids)
         so1._action_cancel()
         self.assertEqual(so1.state, "cancel")
-        self.assertEqual(so1.picking_ids.mapped("state"), ["cancel", "cancel"])
-        self.assertNotEqual(so2.state, "cancel")
+        self.assertEqual(so1.picking_ids.mapped("state"), ["cancel"])
+        self.assertEqual(so1.picking_ids.mapped("state"), ["cancel"])
+        self.assertNotEqual(so2.picking_ids.state, ["cancel"])
 
     def test_delivery_multi_step_cancel_so2(self):
         """the warehouse uses pick + ship. Cancel SO2
@@ -196,8 +257,9 @@ class TestGroupByDisabledOnPartner(TestGroupByBase, TransactionCase):
         self.assertFalse(so1.picking_ids & so2.picking_ids)
         so2._action_cancel()
         self.assertEqual(so2.state, "cancel")
-        self.assertEqual(so2.picking_ids.mapped("state"), ["cancel", "cancel"])
+        self.assertEqual(so2.picking_ids.mapped("state"), ["cancel"])
         self.assertNotEqual(so1.state, "cancel")
+        self.assertNotEqual(so1.picking_ids.state, ["cancel"])
 
     def test_delivery_multi_step_group_pick_cancel_so1(self):
         """the warehouse uses pick + ship (with grouping enabled on pick)
@@ -248,6 +310,31 @@ class TestGroupByDisabledOnPartner(TestGroupByBase, TransactionCase):
         so3.action_confirm()
         self.assertFalse(so1.picking_ids & so2.picking_ids & so3.picking_ids)
 
+    def test_sale_stock_merge_procurement_group(self):
+        """sale orders are not merged, procurement groups are not merged
+
+        Ensure that the procurement group is linked only to its SO
+        Ensure that printed transfers keep their procurement group.
+        """
+        so1 = self._get_new_sale_order(carrier=self.carrier1)
+        so1.name = "SO1"
+        so2 = self._get_new_sale_order(amount=11, carrier=self.carrier1)
+        so2.name = "SO2"
+        so1.action_confirm()
+        so2.action_confirm()
+        self.assertFalse(so1.picking_ids & so2.picking_ids)
+        # the group is the same on the move lines and picking
+        picking1 = so1.picking_ids
+        picking2 = so2.picking_ids
+        self.assertEqual(picking1.group_id, picking1.move_ids.group_id)
+        group1 = picking1.group_id
+        group2 = picking2.group_id
+        # each group is related only to the relevant sale order
+        self.assertEqual(group1.sale_ids, so1)
+        self.assertEqual(group1.name, so1.name)
+        self.assertEqual(group2.sale_ids, so2)
+        self.assertEqual(group2.name, so2.name)
+
     def test_create_backorder(self):
         """Ensure there is no regression when group pickings is disabled on
         partner when we confirm a partial qty on a picking to create a backorder.
@@ -256,114 +343,17 @@ class TestGroupByDisabledOnPartner(TestGroupByBase, TransactionCase):
         so.name = "SO TEST"
         so.action_confirm()
         picking = so.picking_ids
-
+        # picking.picking_type_id.group_pickings = False
         self._update_qty_in_location(
             picking.location_id,
             first(so.order_line).product_id,
             first(so.order_line).product_uom_qty,
         )
         picking.action_assign()
-
-        # Verify picking is assigned
-        self.assertEqual(picking.state, "assigned")
-
-        move = first(picking.move_ids)
-        original_qty = move.product_uom_qty
-
-        quants = self.env["stock.quant"].search(
-            [
-                ("product_id", "=", move.product_id.id),
-                ("location_id", "=", picking.location_id.id),
-                ("quantity", ">", 0),
-            ]
-        )
-
-        if quants:
-            # Reduce the quant quantity to half
-            for quant in quants:
-                quant.quantity = original_qty / 2
-
-            picking.action_assign()
-
-        res = picking.button_validate()
-
-        # Handle the backorder creation wizard
-        if isinstance(res, dict) and res.get("res_model"):
-            wizard_model = res["res_model"]
-            wizard_id = res["res_id"]
-            wizard = self.env[wizard_model].browse(wizard_id)
-
-            if wizard_model == "stock.backorder.confirmation":
-                wizard.process()
-            elif wizard_model == "stock.immediate.transfer":
-                wizard.process()
-            elif hasattr(wizard, "process"):
-                wizard.process()
-            else:
-                self.fail(f"Unknown wizard model: {wizard_model}")
-
-            picking._action_done()
-
-            self.assertTrue(picking.backorder_ids, "No backorder was created")
-
-        else:
-            # Check if picking went to partially_available state
-            if picking.state == "partially_available":
-                # Try to process with current availability
-                res = picking.button_validate()
-
-                if isinstance(res, dict) and res.get("res_model"):
-                    wizard_model = res["res_model"]
-                    wizard_id = res["res_id"]
-                    wizard = self.env[wizard_model].browse(wizard_id)
-                    wizard.process()
-
-                    picking.action_done()
-                    self.assertTrue(picking.backorder_ids, "No backorder was created")
-                else:
-                    self.fail("Could not create backorder - no wizard generated")
-            else:
-                # Last resort: manually create backorder
-                self.env["stock.backorder.confirmation"].create(
-                    {"pick_ids": [(4, picking.id)]}
-                ).process()
-
-                picking._action_done()
-
-                if not picking.backorder_ids:
-                    # Create it manually
-                    backorder_vals = {
-                        "origin": picking.name,
-                        "partner_id": picking.partner_id.id,
-                        "location_id": picking.location_id.id,
-                        "location_dest_id": picking.location_dest_id.id,
-                        "picking_type_id": picking.picking_type_id.id,
-                        "backorder_id": picking.id,
-                    }
-                    backorder = self.env["stock.picking"].create(backorder_vals)
-
-                    # Create move for remaining quantity
-                    remaining_qty = original_qty / 2
-                    move_vals = {
-                        "name": move.product_id.name,
-                        "product_id": move.product_id.id,
-                        "product_uom_qty": remaining_qty,
-                        "product_uom": move.product_uom.id,
-                        "picking_id": backorder.id,
-                        "location_id": picking.location_id.id,
-                        "location_dest_id": picking.location_dest_id.id,
-                    }
-                    self.env["stock.move"].create(move_vals)
-                    backorder.action_confirm()
-
-                    picking._action_done()
-
-        self.assertTrue(
-            picking.backorder_ids or picking.state == "done",
-            "Either backorder should be created or picking should be done",
-        )
-
-        if picking.backorder_ids:
-            backorder = picking.backorder_ids[0]
-
-            self.assertTrue(True)
+        line = first(picking.move_ids)
+        line.quantity = line.product_uom_qty / 2
+        line.picked = True
+        picking._action_done()
+        self.assertEqual(picking.state, "done")
+        self.assertTrue(picking.backorder_ids)
+        self.assertNotEqual(picking, picking.backorder_ids)

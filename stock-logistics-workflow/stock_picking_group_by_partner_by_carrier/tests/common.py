@@ -1,8 +1,7 @@
 # Copyright 2020 Camptocamp (https://www.camptocamp.com)
 # Copyright 2020 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
-from odoo.tests.common import Form
-from odoo.tools.float_utils import float_compare
+from odoo.tests import Form
 
 
 class TestGroupByBase:
@@ -29,17 +28,13 @@ class TestGroupByBase:
 
     def _update_qty_in_location(self, location, product, quantity):
         quants = self.env["stock.quant"]._gather(product, location, strict=True)
-        current_qty = sum(quants.mapped("quantity"))
-        quantity_to_update = quantity - current_qty
-        rounding = product.uom_id.rounding
-        if float_compare(quantity_to_update, 0.0, precision_rounding=rounding) != 0:
+        # this method adds the quantity to the current quantity, so remove it
+        quantity -= sum(quants.mapped("quantity"))
+        if quantity <= 0:
+            quants.unlink()
+        else:
             self.env["stock.quant"]._update_available_quantity(
-                product,
-                location,
-                quantity=quantity_to_update,
-                lot_id=None,
-                package_id=None,
-                owner_id=None,
+                product, location, quantity
             )
 
     def _set_line(self, sale_form, amount=10.0):
@@ -71,9 +66,10 @@ class TestGroupByBase:
                 .create({"carrier_id": carrier_id.id, "order_id": sale.id})
             )
             choose_delivery_carrier.button_confirm()
+            sale.invalidate_recordset(fnames=["carrier_id"])
         return sale
 
     def _validate_transfer(self, picking):
-        for move_line in picking.move_line_ids:
+        for move_line in picking.move_ids:
             move_line.picked = True
         picking._action_done()

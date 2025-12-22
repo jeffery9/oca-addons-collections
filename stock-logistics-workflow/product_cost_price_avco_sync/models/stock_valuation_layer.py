@@ -5,7 +5,7 @@
 import re
 from collections import OrderedDict, defaultdict
 
-from odoo import _, api, exceptions, models
+from odoo import api, exceptions, models
 from odoo.exceptions import ValidationError
 from odoo.tools import float_compare, float_is_zero, float_round, groupby
 
@@ -90,7 +90,7 @@ class StockValuationLayer(models.Model):
         ):
             if len(move.move_line_ids) > 1:
                 raise ValidationError(
-                    _(
+                    self.env._(
                         "More than one stock move line to assign the new "
                         "stock valuation layer quantity"
                     )
@@ -256,9 +256,9 @@ class StockValuationLayer(models.Model):
         if self.product_id.cost_method != "average" or self.stock_valuation_layer_id:
             return
         svls_dic = OrderedDict()
-        svls_dic[
-            (self.product_id, self.company_id)
-        ] = self._initialize_avco_sync_struct(svl_prev_vals)
+        svls_dic[(self.product_id, self.company_id)] = (
+            self._initialize_avco_sync_struct(svl_prev_vals)
+        )
         # Main loop: iterate while there's something to do
         index = 0  # which (product, company) to process
         reloop = False  # activated when something is blocking
@@ -278,7 +278,7 @@ class StockValuationLayer(models.Model):
             if index >= len(svls_dic) and reloop:
                 if not any_processed:
                     raise exceptions.UserError(
-                        _(
+                        self.env._(
                             "The AVCO sync can't be completed, as there's some endless "
                             "dependency in the data needed to process it."
                         )
