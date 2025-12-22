@@ -16,7 +16,7 @@ class TestStockMoveVolume(TransactionCase):
                 "product_width": 5.0,
                 "product_height": 3.0,
                 "uom_id": cls.env.ref("uom.product_uom_unit").id,
-                "type": "product",
+                "type": "consu",
             }
         )
         cls.pkg_box = cls.env["product.packaging"].create(

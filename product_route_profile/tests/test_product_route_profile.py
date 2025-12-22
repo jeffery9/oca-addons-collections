@@ -2,9 +2,11 @@
 # @author Kévin Roche <kevin.roche@akretion.com>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo.tests.common import TransactionCase
+from odoo.fields import Command
+from odoo.tests.common import TransactionCase, tagged
 
 
+@tagged("-at_install", "post_install")
 class TestProductRouteProfile(TransactionCase):
     @classmethod
     def setUpClass(cls):
@@ -24,13 +26,13 @@ class TestProductRouteProfile(TransactionCase):
         cls.route_profile_1 = cls.env["route.profile"].create(
             {
                 "name": "profile 1",
-                "route_ids": [(6, 0, [cls.route_1.id])],
+                "route_ids": [Command.set(cls.route_1.ids)],
             }
         )
         cls.route_profile_2 = cls.env["route.profile"].create(
             {
                 "name": "profile 2",
-                "route_ids": [(6, 0, [cls.route_2.id])],
+                "route_ids": [Command.set(cls.route_2.ids)],
             }
         )
 
@@ -82,3 +84,80 @@ class TestProductRouteProfile(TransactionCase):
         )
 
         self.assertEqual(product.route_profile_id.id, self.route_profile_1.id)
+
+    def test_set_product_route_ids(self):
+        """Test backwards compatibility setting routes on products"""
+        product = self.env["product.template"].create(
+            {
+                "name": __name__,
+                "company_id": False,
+            }
+        )
+        product.route_ids = self.route_1 + self.route_2
+        self.assertEqual(
+            product.route_ids,
+            self.route_1 + self.route_2,
+        )
+        self.assertEqual(
+            product.route_profile_id.route_ids,
+            self.route_1 + self.route_2,
+        )
+        self.assertIn(
+            product,
+            self.env["product.template"].search(
+                [("route_ids", "=", self.route_1.id)],
+            ),
+        )
+        self.assertIn(
+            product,
+            self.env["product.template"].search(
+                [("route_ids", "=", self.route_2.id)],
+            ),
+        )
+
+        # Product is reflected on the routes
+        self.assertIn(product, self.route_1.product_ids)
+        self.assertIn(product, self.route_2.product_ids)
+        self.assertIn(
+            self.route_1,
+            self.env["stock.route"].search([("product_ids", "=", product.id)]),
+        )
+        self.assertIn(
+            self.route_2,
+            self.env["stock.route"].search([("product_ids", "=", product.id)]),
+        )
+
+        # Now modify the product on one of the routes
+        self.route_2.product_ids -= product
+
+        self.assertEqual(
+            product.route_ids,
+            self.route_1,
+        )
+        self.assertEqual(
+            product.route_profile_id.route_ids,
+            self.route_1,
+        )
+        self.assertIn(
+            product,
+            self.env["product.template"].search(
+                [("route_ids", "=", self.route_1.id)],
+            ),
+        )
+        self.assertNotIn(
+            product,
+            self.env["product.template"].search(
+                [("route_ids", "=", self.route_2.id)],
+            ),
+        )
+
+        self.assertIn(product, self.route_1.product_ids)
+        self.assertNotIn(product, self.route_2.product_ids)
+        self.assertIn(
+            self.route_1,
+            self.env["stock.route"].search([("product_ids", "=", product.id)]),
+        )
+        self.assertNotIn(
+            self.route_2,
+            self.env["stock.route"].search([("product_ids", "=", product.id)]),
+        )

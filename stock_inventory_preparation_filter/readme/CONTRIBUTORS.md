@@ -6,3 +6,4 @@
   - Carlos Roca
 - Xavier Jimenez \<<xavier.jimenez@qubiq.es>\>
 - Iván Todorovich \<<ivan.todorovich@gmail.com>\>
+- Chau Le \<<chaulb@trobz.com>\>

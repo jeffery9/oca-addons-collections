@@ -10,19 +10,24 @@
             <form>
                 <sheet>
                     <div class="oe_button_box" name="button_box" />
-                    <group name="options">
+                    <div>
+                        <label for="edit_locations">
+                            Edit Locations
+                        </label>
                         <field name="edit_locations" widget="boolean_toggle" />
-                        <field
-                            name="exclude_reserved_qty"
-                            widget="boolean_toggle"
-                            string="Exclude Reserved Quantities"
-                        />
-                        <field
-                            name="apply_putaway_strategy"
-                            widget="boolean_toggle"
-                            help="Apply putaway strategy for moving products"
-                        />
-                    </group>
+                    </div>
+                    <div>
+                        <label for="exclude_reserved_qty">
+                            Exclude Reserved Quantities
+                        </label>
+                        <field name="exclude_reserved_qty" widget="boolean_toggle" />
+                    </div>
+                    <div groups="stock.group_stock_multi_locations">
+                        <label for="apply_putaway_strategy">
+                Apply putaway strategy for moving products
+            </label>
+                        <field name="apply_putaway_strategy" widget="boolean_toggle" />
+                    </div>
                     <group name="picking_type">
                         <field name="picking_type_id" />
                     </group>
@@ -39,16 +44,14 @@
                         />
                         <field name="company_id" invisible="1" />
                     </group>
-                    <group name="filters">
-                    </group>
                     <group name="lines">
                         <field
                             name="stock_move_location_line_ids"
                             nolabel="1"
-                            mode="tree,kanban"
+                            mode="list,kanban"
                             colspan="2"
                         >
-                            <tree
+                            <list
                                 editable="bottom"
                                 decoration-info="move_quantity != max_quantity"
                                 decoration-danger="(move_quantity &lt; 0) or (move_quantity > max_quantity)"
@@ -108,27 +111,37 @@
                                     readonly="1"
                                     force_save="1"
                                 />
-                            </tree>
+                            </list>
                             <kanban class="o_kanban_mobile">
                                 <templates>
-                                    <t t-name="kanban-box">
-                                        <div t-attf-class="oe_kanban_global_click">
-                                            <div class="o_kanban_record_body">
-                                                <field name="product_id" />
-                                                <field name="product_uom_id" />
+                                    <t t-name="card">
+                                        <field name="product_id" class="fw-bolder" />
+                                        <div
+                                            groups="stock.group_production_lot"
+                                            invisible="not lot_id"
+                                        >
+                                            Lot/SN:
+                                            <field
+                                            name="lot_id"
+                                            invisible="not lot_id"
+                                        />
+                                        </div>
+                                        <div groups="stock.group_stock_multi_locations">
+                                            <field name="origin_location_id" />
+                                            →
+                                            <field name="destination_location_id" />
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
                                                 <field
-                                                    name="lot_id"
-                                                    groups="stock.group_production_lot"
+                                                    name="move_quantity"
+                                                    string="Quantity"
                                                 />
-                                                <field name="origin_location_id" />
-                                                <field name="destination_location_id" />
-                                            </div>
-                                            <div class="o_kanban_record_bottom">
-                                                <div class="oe_kanban_bottom_right">
-                                                    <span>
-                                                        <field name="move_quantity" />
-                                                    </span>
-                                                </div>
+                                                <field
+                                                    name="product_uom_id"
+                                                    string="Unit of Measure"
+                                                    groups="uom.group_uom"
+                                                />
                                             </div>
                                         </div>
                                     </t>

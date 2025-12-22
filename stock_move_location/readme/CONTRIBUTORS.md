@@ -8,7 +8,6 @@
   - Sergio Teruel
   - João Marques
   - Carlos Roca
-  - David Bañón
 - Jacques-Etienne Baudoux \<<je@bcim.be>\>
 - Iryna Vyshnevska \<<i.vyshnevska@mobilunity.com>\>
 - Alexei Rivera \<<arivera@archeti.com>\>
@@ -16,3 +15,4 @@
 - Quartile \<<https://www.quartile.co>\>
   - Aung Ko Ko Lin
 - Laurent Mignon \<<laurent.mignon@acsone.eu>\>
+- Maksym Yankin \<<maksym.yankin@camptocamp.com>\>

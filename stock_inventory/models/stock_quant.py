@@ -1,4 +1,4 @@
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 
 
 class StockQuant(models.Model):
@@ -21,8 +21,9 @@ class StockQuant(models.Model):
     def _apply_inventory(self):
         res = super()._apply_inventory()
         record_moves = self.env["stock.move.line"]
-        adjustment = self.env["stock.inventory"].browse()
-        for rec in self:
+        adjustments_to_process = self.env["stock.inventory"]
+
+        for rec in self.filtered("current_inventory_id"):
             adjustment = rec.current_inventory_id
             moves = record_moves.search(
                 [
@@ -39,7 +40,7 @@ class StockQuant(models.Model):
                 or rec.company_id.id == x.company_id.id
             )
             if len(moves) == 0:
-                raise ValueError(_("No move lines have been created"))
+                raise ValueError(self.env._("No move lines have been created"))
             move = moves[len(moves) - 1]
             adjustment.stock_move_ids |= move
             reference = move.reference
@@ -55,8 +56,11 @@ class StockQuant(models.Model):
             )
             rec.to_do = False
             rec.current_inventory_id = False
-        if adjustment and self.env.company.stock_inventory_auto_complete:
-            adjustment.action_auto_state_to_done()
+            adjustments_to_process |= adjustment
+
+        if adjustments_to_process and self.env.company.stock_inventory_auto_complete:
+            for inventory in adjustments_to_process:
+                inventory.action_auto_state_to_done()
         return res
 
     def _get_inventory_fields_write(self):

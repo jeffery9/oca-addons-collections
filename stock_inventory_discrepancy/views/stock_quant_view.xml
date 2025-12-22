@@ -24,12 +24,12 @@
                     name="discrepancy_percent"
                     invisible="not inventory_quantity_set or not quantity"
                     decoration-bf="inventory_quantity_set and has_over_discrepancy"
-                    optional="show"
+                    optional="hide"
                 />
-                <field name="discrepancy_threshold" optional="show" />
-                <field name="has_over_discrepancy" column_invisible="True" />
+                <field name="discrepancy_threshold" optional="hide" />
+                <field name="has_over_discrepancy" invisible="1" />
             </field>
-            <xpath expr="//tree" position="attributes">
+            <xpath expr="//list" position="attributes">
                 <attribute
                     name="decoration-danger"
                 >inventory_quantity_set and (inventory_quantity &lt; 0 or has_over_discrepancy)</attribute>
@@ -43,10 +43,7 @@
         <field name="inherit_id" ref="stock.quant_search_view" />
         <field eval="10" name="priority" />
         <field name="arch" type="xml">
-            <field name="owner_id" position="after">
-                <field name="has_over_discrepancy" />
-            </field>
-            <filter name="internal_loc" position="after">
+            <filter name="reserved" position="after">
                 <filter
                     name='has_over_discrepancy'
                     string="Over Discrepancy"

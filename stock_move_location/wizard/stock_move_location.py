@@ -111,7 +111,9 @@ class StockMoveLocationWizard(models.TransientModel):
         res = []
         if not self.exclude_reserved_qty:
             res = [
-                Command.create(
+                (
+                    0,
+                    0,
                     {
                         "product_id": quant.product_id.id,
                         "move_quantity": quant.quantity,
@@ -140,7 +142,9 @@ class StockMoveLocationWizard(models.TransientModel):
                 )
                 if qty:
                     res.append(
-                        Command.create(
+                        (
+                            0,
+                            0,
                             {
                                 "product_id": quant.product_id.id,
                                 "move_quantity": qty,
@@ -157,11 +161,6 @@ class StockMoveLocationWizard(models.TransientModel):
                         )
                     )
         return res
-
-    @api.onchange("destination_location_id")
-    def _onchange_destination_location_id(self):
-        for line in self.stock_move_location_line_ids:
-            line.destination_location_id = self.destination_location_id
 
     def _clear_lines(self):
         self.stock_move_location_line_ids = False
