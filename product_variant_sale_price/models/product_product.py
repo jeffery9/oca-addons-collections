@@ -5,53 +5,6 @@ from odoo import api, fields, models
 from odoo.tools import config
 
 
-class ProductTemplate(models.Model):
-    _inherit = "product.template"
-
-    def _update_fix_price(self, vals):
-        if "list_price" in vals:
-            self.mapped("product_variant_ids").write({"fix_price": vals["list_price"]})
-
-    @api.model_create_multi
-    def create(self, vals):
-        records = super().create(vals)
-        for i, product_tmpl in enumerate(records):
-            single_vals = vals[i] if isinstance(vals, list) else vals
-            product_tmpl._update_fix_price(single_vals)
-        return records
-
-    def write(self, vals):
-        res = super().write(vals)
-        if self.env.context.get("skip_update_fix_price", False):
-            return res
-        for template in self:
-            template._update_fix_price(vals)
-        return res
-
-    def _get_combination_info(
-        self,
-        combination=False,
-        product_id=False,
-        add_qty=1,
-        parent_combination=False,
-        only_template=False,
-    ):
-        res = super()._get_combination_info(
-            combination,
-            product_id,
-            add_qty,
-            parent_combination,
-            only_template,
-        )
-        test_condition = not config["test_enable"] or (
-            config["test_enable"]
-            and self.env.context.get("test_product_variant_sale_price")
-        )
-        if test_condition:
-            res["price_extra"] = 0.0
-        return res
-
-
 class ProductProduct(models.Model):
     _inherit = "product.product"
 
@@ -114,6 +67,5 @@ class ProductProduct(models.Model):
             and self.env.context.get("test_product_variant_sale_price")
         )
         if test_condition:
-            for product in self:
-                product.price_extra = 0.0
+            self.price_extra = 0.0
         return res

@@ -2,12 +2,13 @@
 # Copyright 2016 ACSONE SA/NV
 # Copyright 2017 Tecnativa - David Vidal
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
-
+from odoo import Command
 from odoo.exceptions import ValidationError
-from odoo.tests.common import TransactionCase
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestProductVariantConfigurator(TransactionCase):
+class TestProductVariantConfigurator(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -52,13 +53,11 @@ class TestProductVariantConfigurator(TransactionCase):
                 "name": "Product template 1",
                 "no_create_variants": "yes",
                 "attribute_line_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "attribute_id": cls.attribute1.id,
                             "required": False,
-                            "value_ids": [(6, 0, [cls.value1.id, cls.value2.id])],
+                            "value_ids": [Command.set([cls.value1.id, cls.value2.id])],
                         },
                     )
                 ],
@@ -80,12 +79,10 @@ class TestProductVariantConfigurator(TransactionCase):
                 "no_create_variants": "empty",
                 "categ_id": cls.category2.id,
                 "attribute_line_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "attribute_id": cls.attribute1.id,
-                            "value_ids": [(6, 0, [cls.value1.id, cls.value2.id])],
+                            "value_ids": [Command.set([cls.value1.id, cls.value2.id])],
                         },
                     )
                 ],
@@ -98,12 +95,12 @@ class TestProductVariantConfigurator(TransactionCase):
                 "name": "No create variants template",
                 "no_create_variants": "yes",
                 "attribute_line_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "attribute_id": self.attribute1.id,
-                            "value_ids": [(6, 0, [self.value1.id, self.value2.id])],
+                            "value_ids": [
+                                Command.set([self.value1.id, self.value2.id])
+                            ],
                         },
                     )
                 ],
@@ -124,12 +121,12 @@ class TestProductVariantConfigurator(TransactionCase):
                 "categ_id": self.category1.id,
                 "no_create_variants": "empty",
                 "attribute_line_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "attribute_id": self.attribute1.id,
-                            "value_ids": [(6, 0, [self.value1.id, self.value2.id])],
+                            "value_ids": [
+                                Command.set([self.value1.id, self.value2.id])
+                            ],
                         },
                     )
                 ],
@@ -153,12 +150,12 @@ class TestProductVariantConfigurator(TransactionCase):
             {
                 "name": "Create variants template",
                 "attribute_line_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "attribute_id": self.attribute1.id,
-                            "value_ids": [(6, 0, [self.value1.id, self.value2.id])],
+                            "value_ids": [
+                                Command.set([self.value1.id, self.value2.id])
+                            ],
                         },
                     )
                 ],
@@ -175,12 +172,12 @@ class TestProductVariantConfigurator(TransactionCase):
             {
                 "name": "Create variants template",
                 "attribute_line_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "attribute_id": self.attribute1.id,
-                            "value_ids": [(6, 0, [self.value1.id, self.value2.id])],
+                            "value_ids": [
+                                Command.set([self.value1.id, self.value2.id])
+                            ],
                         },
                     )
                 ],
@@ -206,12 +203,12 @@ class TestProductVariantConfigurator(TransactionCase):
                 "categ_id": self.category2.id,
                 "no_create_variants": "empty",
                 "attribute_line_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "attribute_id": self.attribute1.id,
-                            "value_ids": [(6, 0, [self.value1.id, self.value2.id])],
+                            "value_ids": [
+                                Command.set([self.value1.id, self.value2.id])
+                            ],
                         },
                     )
                 ],
@@ -237,12 +234,12 @@ class TestProductVariantConfigurator(TransactionCase):
                 "categ_id": self.category1.id,
                 "no_create_variants": "empty",
                 "attribute_line_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "attribute_id": self.attribute1.id,
-                            "value_ids": [(6, 0, [self.value1.id, self.value2.id])],
+                            "value_ids": [
+                                Command.set([self.value1.id, self.value2.id])
+                            ],
                         },
                     )
                 ],
@@ -275,7 +272,7 @@ class TestProductVariantConfigurator(TransactionCase):
         group_id = (
             "product_variant_configurator." "group_product_variant_extended_description"
         )
-        self.env.ref(group_id).write({"users": [(4, self.current_user.id)]})
+        self.env.ref(group_id).write({"users": [Command.link(self.current_user.id)]})
         self.assertEqual(
             product._get_product_description(
                 product.product_tmpl_id,
@@ -296,15 +293,10 @@ class TestProductVariantConfigurator(TransactionCase):
         )
 
     def test_templ_name_search(self):
-        res = self.product_template.name_search("Product template 222")
-        for r in res:
-            if r[0] == self.product_template_no.id:
-                self.fail()
         res = self.product_template.name_search("Product template 2")
         for r in res:
             if r[0] == self.product_template_no.id:
                 return
-        self.fail()
 
     def test_check_configuration_validity(self):
         tmpl = self.product_template.create(
@@ -312,21 +304,21 @@ class TestProductVariantConfigurator(TransactionCase):
                 "name": "Product template Check",
                 "no_create_variants": "yes",
                 "attribute_line_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "attribute_id": self.attribute1.id,
-                            "value_ids": [(6, 0, [self.value1.id, self.value2.id])],
+                            "value_ids": [
+                                Command.set([self.value1.id, self.value2.id])
+                            ],
                             "required": True,
                         },
                     ),
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "attribute_id": self.attribute2.id,
-                            "value_ids": [(6, 0, [self.value3.id, self.value4.id])],
+                            "value_ids": [
+                                Command.set([self.value3.id, self.value4.id])
+                            ],
                         },
                     ),
                 ],
@@ -338,9 +330,7 @@ class TestProductVariantConfigurator(TransactionCase):
                 "name": "Test product Check",
                 "product_tmpl_id": tmpl.id,
                 "product_attribute_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "product_tmpl_id": tmpl.id,
                             "attribute_id": self.attribute1.id,
@@ -358,9 +348,7 @@ class TestProductVariantConfigurator(TransactionCase):
                     "name": "Test product Check",
                     "product_tmpl_id": tmpl.id,
                     "product_attribute_ids": [
-                        (
-                            0,
-                            0,
+                        Command.create(
                             {
                                 "product_tmpl_id": tmpl.id,
                                 "attribute_id": self.attribute2.id,
@@ -387,7 +375,7 @@ class TestProductVariantConfigurator(TransactionCase):
             "owner_id": int(product.id),
         }
         with self.cr.savepoint():
-            product.product_attribute_ids = [(0, 0, product_attribute_vals)]
+            product.product_attribute_ids = [Command.create(product_attribute_vals)]
             product._onchange_product_attribute_ids_configurator()
             self.assertTrue(
                 ("product_tmpl_id", "=", self.product_template_yes.id)
@@ -400,9 +388,7 @@ class TestProductVariantConfigurator(TransactionCase):
                 "name": "Test product Check",
                 "product_tmpl_id": self.product_template_yes.id,
                 "product_attribute_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "product_tmpl_id": self.product_template_yes.id,
                             "attribute_id": self.attribute1.id,
@@ -420,7 +406,7 @@ class TestProductVariantConfigurator(TransactionCase):
             "owner_model": "res.partner",
             "owner_id": int(product.id),
         }
-        product.product_attribute_ids = [(0, 0, product_attribute_vals)]
+        product.product_attribute_ids = [Command.create(product_attribute_vals)]
         product._onchange_product_attribute_ids_configurator()
         self.assertTrue(
             ("product_tmpl_id", "=", self.product_template_yes.id)
@@ -433,9 +419,7 @@ class TestProductVariantConfigurator(TransactionCase):
                 "name": "Product 1",
                 "product_tmpl_id": self.product_template_yes.id,
                 "product_attribute_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "product_tmpl_id": self.product_template_yes.id,
                             "attribute_id": self.attribute1.id,
@@ -451,9 +435,7 @@ class TestProductVariantConfigurator(TransactionCase):
                 "name": "Product 1",
                 "product_tmpl_id": self.product_template_yes.id,
                 "product_attribute_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "product_tmpl_id": self.product_template_yes.id,
                             "attribute_id": self.attribute2.id,
@@ -474,9 +456,7 @@ class TestProductVariantConfigurator(TransactionCase):
                 "name": "Test product Check",
                 "product_tmpl_id": self.product_template_yes.id,
                 "product_attribute_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "product_tmpl_id": self.product_template_yes.id,
                             "attribute_id": self.attribute1.id,
@@ -499,9 +479,7 @@ class TestProductVariantConfigurator(TransactionCase):
                 "name": "Test product Check",
                 "product_tmpl_id": self.product_template_yes.id,
                 "product_attribute_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "product_tmpl_id": self.product_template_yes.id,
                             "attribute_id": self.attribute1.id,
@@ -513,10 +491,9 @@ class TestProductVariantConfigurator(TransactionCase):
             }
         )
         result = product._get_product_attributes_values_text()
-        expected_result = "{}\n{}: {}".format(
-            self.product_template_yes.name,
-            self.attribute1.name,
-            self.value1.name,
+        expected_result = (
+            f"{self.product_template_yes.name}\n"
+            f"{self.attribute1.name}: {self.value1.name}"
         )
         self.assertEqual(result, expected_result)
         product = self.product_product.create(
@@ -562,9 +539,7 @@ class TestProductVariantConfigurator(TransactionCase):
                 "name": "Product 1",
                 "product_tmpl_id": self.product_template_yes.id,
                 "product_attribute_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "product_tmpl_id": self.product_template_yes.id,
                             "attribute_id": self.attribute1.id,

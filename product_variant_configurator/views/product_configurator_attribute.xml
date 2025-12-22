@@ -3,7 +3,7 @@
     <record model="ir.ui.view" id="view_product_configurator_tree">
         <field name="model">product.configurator.attribute</field>
         <field name="arch" type="xml">
-            <tree create="0" delete="0" editable="bottom">
+            <list create="0" delete="0" editable="bottom">
                 <field name="owner_id" column_invisible="1" />
                 <field name="owner_model" column_invisible="1" />
                 <field name="attribute_id" />
@@ -21,7 +21,7 @@
                     name="price_extra"
                     column_invisible="not context.get('show_price_extra', False)"
                 />
-            </tree>
+            </list>
         </field>
     </record>
 </odoo>

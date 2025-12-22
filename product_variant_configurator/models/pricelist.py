@@ -22,32 +22,29 @@ class ProductPricelist(models.Model):
     ):
         """Overwrite for covering the case where templates are passed and a
         different uom is used."""
-        if products[0]._name != "product.template":
+        if products._name != "product.template":
             # Standard use case - Nothing to do
             return super()._compute_price_rule(
-                products,
-                quantity,
-                currency,
-                uom,
-                date,
-                compute_price,
+                products=products,
+                quantity=quantity,
+                currency=currency,
+                uom=uom,
+                date=date,
+                compute_price=compute_price,
                 **kwargs,
             )
-        # Isolate object
-        pricelist_obj = self
 
-        if not uom and pricelist_obj.env.context.get("uom"):
-            ctx = dict(pricelist_obj.env.context)
+        if not uom and self.env.context.get("uom"):
+            ctx = dict(self.env.context)
             # Remove uom context for avoiding the re-processing
-            pricelist_obj = pricelist_obj.with_context(**ctx)
-
-        return super(ProductPricelist, pricelist_obj)._compute_price_rule(
-            products,
-            quantity,
-            currency,
-            uom,
-            date,
-            compute_price,
+            self = self.with_context(**ctx)
+        return super()._compute_price_rule(
+            products=products,
+            quantity=quantity,
+            currency=currency,
+            uom=uom,
+            date=date,
+            compute_price=compute_price,
             **kwargs,
         )
 

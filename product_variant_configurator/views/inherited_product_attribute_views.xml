@@ -8,7 +8,7 @@
             <field name="value_ids" position="after">
                 <p class="oe_grey">
                 <strong
-                    >Info:</strong> You can now manage the variant creation from the Product Template level
+                >Info:</strong> You can now manage the variant creation from the Product Template level
                 </p>
             </field>
         </field>

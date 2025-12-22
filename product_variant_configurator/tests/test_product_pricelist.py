@@ -1,11 +1,12 @@
 # Copyright 2016 ACSONE SA/NV
 # Copyright 2017 David Vidal <david.vidal@tecnativa.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+from odoo import Command
 
-from odoo.tests.common import TransactionCase
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestProductPriceList(TransactionCase):
+class TestProductPriceList(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -40,20 +41,16 @@ class TestProductPriceList(TransactionCase):
                 "uom_id": cls.uom_unit.id,
                 "uom_po_id": cls.uom_unit.id,
                 "attribute_line_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "attribute_id": cls.attribute1.id,
-                            "value_ids": [(6, 0, [cls.value1.id, cls.value2.id])],
+                            "value_ids": [Command.set([cls.value1.id, cls.value2.id])],
                         },
                     ),
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "attribute_id": cls.attribute2.id,
-                            "value_ids": [(6, 0, [cls.value3.id, cls.value4.id])],
+                            "value_ids": [Command.set([cls.value3.id, cls.value4.id])],
                         },
                     ),
                 ],
@@ -73,27 +70,21 @@ class TestProductPriceList(TransactionCase):
                 "uom_id": cls.uom_unit.id,
                 "uom_po_id": cls.uom_unit.id,
                 "attribute_line_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "attribute_id": cls.attribute1.id,
-                            "value_ids": [(6, 0, [cls.value1.id, cls.value2.id])],
+                            "value_ids": [Command.set([cls.value1.id, cls.value2.id])],
                         },
                     ),
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "attribute_id": cls.attribute2.id,
-                            "value_ids": [(6, 0, [cls.value3.id, cls.value4.id])],
+                            "value_ids": [Command.set([cls.value3.id, cls.value4.id])],
                         },
                     ),
                 ],
                 "seller_ids": [
-                    (
-                        0,
-                        False,
+                    Command.create(
                         {
                             "partner_id": cls.env.ref("base.res_partner_1").id,
                             "delay": 3,
@@ -101,9 +92,7 @@ class TestProductPriceList(TransactionCase):
                             "price": 300,
                         },
                     ),
-                    (
-                        0,
-                        False,
+                    Command.create(
                         {
                             "partner_id": cls.env.ref("base.res_partner_1").id,
                             "delay": 3,
@@ -120,9 +109,7 @@ class TestProductPriceList(TransactionCase):
                 "name": "Pricelist 1",
                 "company_id": False,
                 "item_ids": [
-                    (
-                        0,
-                        False,
+                    Command.create(
                         {
                             "name": "Rule 20% on ipad product",
                             "product_id": cls.ipad_product.id,
@@ -134,9 +121,7 @@ class TestProductPriceList(TransactionCase):
                             "price_discount": 20,
                         },
                     ),
-                    (
-                        0,
-                        False,
+                    Command.create(
                         {
                             "name": "Rule 10% on ipad template ",
                             "product_tmpl_id": cls.ipad_template.id,
@@ -147,9 +132,7 @@ class TestProductPriceList(TransactionCase):
                             "price_discount": 10,
                         },
                     ),
-                    (
-                        0,
-                        False,
+                    Command.create(
                         {
                             "name": "Rule Min qty 4 10% discount iphone template",
                             "product_tmpl_id": cls.iphone_template.id,

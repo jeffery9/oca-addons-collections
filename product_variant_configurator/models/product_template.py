@@ -3,7 +3,7 @@
 # Copyright 2016 ACSONE SA/NV
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.tools import config
 
 
@@ -36,8 +36,8 @@ class ProductTemplate(models.Model):
             # the default value)
             return {
                 "warning": {
-                    "title": _("Change warning!"),
-                    "message": _(
+                    "title": self.env._("Change warning!"),
+                    "message": self.env._(
                         "Changing this parameter may cause"
                         " automatic variants creation"
                     ),
