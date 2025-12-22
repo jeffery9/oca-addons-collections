@@ -1,15 +1,15 @@
 
-[![Runboat](https://img.shields.io/badge/runboat-Try%20me-875A7B.png)](https://runboat.odoo-community.org/builds?repo=OCA/hr-holidays&target_branch=17.0)
-[![Pre-commit Status](https://github.com/OCA/hr-holidays/actions/workflows/pre-commit.yml/badge.svg?branch=17.0)](https://github.com/OCA/hr-holidays/actions/workflows/pre-commit.yml?query=branch%3A17.0)
-[![Build Status](https://github.com/OCA/hr-holidays/actions/workflows/test.yml/badge.svg?branch=17.0)](https://github.com/OCA/hr-holidays/actions/workflows/test.yml?query=branch%3A17.0)
-[![codecov](https://codecov.io/gh/OCA/hr-holidays/branch/17.0/graph/badge.svg)](https://codecov.io/gh/OCA/hr-holidays)
-[![Translation Status](https://translation.odoo-community.org/widgets/hr-holidays-17-0/-/svg-badge.svg)](https://translation.odoo-community.org/engage/hr-holidays-17-0/?utm_source=widget)
+[![Runboat](https://img.shields.io/badge/runboat-Try%20me-875A7B.png)](https://runboat.odoo-community.org/builds?repo=OCA/hr-holidays&target_branch=18.0)
+[![Pre-commit Status](https://github.com/OCA/hr-holidays/actions/workflows/pre-commit.yml/badge.svg?branch=18.0)](https://github.com/OCA/hr-holidays/actions/workflows/pre-commit.yml?query=branch%3A18.0)
+[![Build Status](https://github.com/OCA/hr-holidays/actions/workflows/test.yml/badge.svg?branch=18.0)](https://github.com/OCA/hr-holidays/actions/workflows/test.yml?query=branch%3A18.0)
+[![codecov](https://codecov.io/gh/OCA/hr-holidays/branch/18.0/graph/badge.svg)](https://codecov.io/gh/OCA/hr-holidays)
+[![Translation Status](https://translation.odoo-community.org/widgets/hr-holidays-18-0/-/svg-badge.svg)](https://translation.odoo-community.org/engage/hr-holidays-18-0/?utm_source=widget)
 
 <!-- /!\ do not modify above this line -->
 
 # hr-holidays
 
-TODO: add repo description.
+hr-holidays
 
 <!-- /!\ do not modify below this line -->
 
@@ -21,11 +21,11 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[hr_holidays_natural_period](hr_holidays_natural_period/) | 17.0.1.0.4 | <a href='https://github.com/victoralmau'><img src='https://github.com/victoralmau.png' width='32' height='32' style='border-radius:50%;' alt='victoralmau'/></a> | Apply natural days in holidays
-[hr_holidays_public](hr_holidays_public/) | 17.0.1.0.9 |  | Manage Public Holidays
-[hr_holidays_public_city](hr_holidays_public_city/) | 17.0.1.0.1 | <a href='https://github.com/victoralmau'><img src='https://github.com/victoralmau.png' width='32' height='32' style='border-radius:50%;' alt='victoralmau'/></a> | HR Holidays Public City
-[hr_holidays_settings](hr_holidays_settings/) | 17.0.1.0.0 |  | Enables Settings Form for HR Holidays.
-[hr_leave_custom_hour_interval](hr_leave_custom_hour_interval/) | 17.0.1.0.1 |  | Edit start and end of leaves using time intervals
+[hr_holidays_leave_repeated](hr_holidays_leave_repeated/) | 18.0.1.0.0 |  | Define periodical leaves
+[hr_holidays_natural_period](hr_holidays_natural_period/) | 18.0.1.0.3 | <a href='https://github.com/victoralmau'><img src='https://github.com/victoralmau.png' width='32' height='32' style='border-radius:50%;' alt='victoralmau'/></a> | Apply natural days in holidays
+[hr_holidays_public](hr_holidays_public/) | 18.0.1.0.4 |  | Manage Public Holidays
+[hr_holidays_public_city](hr_holidays_public_city/) | 18.0.1.0.0 | <a href='https://github.com/victoralmau'><img src='https://github.com/victoralmau.png' width='32' height='32' style='border-radius:50%;' alt='victoralmau'/></a> | HR Holidays Public City
+[hr_holidays_settings](hr_holidays_settings/) | 18.0.1.0.0 |  | Enables Settings Form for HR Holidays.
 
 [//]: # (end addons)
 
