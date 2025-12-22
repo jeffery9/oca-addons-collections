@@ -4,8 +4,9 @@
 from datetime import datetime, timedelta
 from unittest import mock
 
-from odoo import http, registry
+from odoo import http
 from odoo.exceptions import UserError, ValidationError
+from odoo.modules.registry import Registry
 from odoo.tests.common import HOST, HttpCase, Opener, get_db_name, new_test_user, tagged
 
 
@@ -58,7 +59,7 @@ class TestPasswordSecurityLogin(HttpCase):
         response = self.login(self.username, self.passwd)
 
         # Ensure we end up on the right page
-        self.assertEqual(response.request.path_url, "/web")
+        self.assertEqual(response.request.path_url, "/odoo")
         self.assertEqual(response.status_code, 200)
 
     def test_04_web_login_fail(self):
@@ -81,7 +82,7 @@ class TestPasswordSecurityLogin(HttpCase):
         # Make password expired
         three_days_ago = datetime.now() - timedelta(days=3)
 
-        with registry(get_db_name()).cursor() as cr:
+        with Registry(get_db_name()).cursor() as cr:
             env = self.env(cr)
             user = env["res.users"].search([("login", "=", self.username)])
             user.password_write_date = three_days_ago
@@ -102,13 +103,13 @@ class TestPasswordSecurityLogin(HttpCase):
         response = self.login(self.username, self.passwd)
 
         # Ensure we end up on the right page
-        self.assertEqual(response.request.path_url, "/web")
+        self.assertEqual(response.request.path_url, "/odoo")
         self.assertEqual(response.status_code, 200)
 
         # Make password expired while still logged in
         three_days_ago = datetime.now() - timedelta(days=3)
 
-        with registry(get_db_name()).cursor() as cr:
+        with Registry(get_db_name()).cursor() as cr:
             env = self.env(cr)
             user = env["res.users"].search([("login", "=", self.username)])
             user.password_write_date = three_days_ago
@@ -129,7 +130,7 @@ class TestPasswordSecurityLogin(HttpCase):
 
         # Try to access just a page: user kicked out
         req_page2 = self.url_open("/web")
-        self.assertEqual("/web/login", req_page2.request.path_url)
+        self.assertTrue(req_page2.request.path_url.startswith("/web/login"))
         self.assertEqual(req_page2.status_code, 200)
 
     def test_07_web_login_redirect(self):
@@ -149,5 +150,5 @@ class TestPasswordSecurityLogin(HttpCase):
 
         # Try to access just a page: user kicked out
         req_page = self.url_open("/web")
-        self.assertEqual("/web/login", req_page.request.path_url)
+        self.assertTrue(req_page.request.path_url.startswith("/web/login"))
         self.assertEqual(req_page.status_code, 200)
