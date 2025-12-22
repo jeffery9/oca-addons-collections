@@ -1,3 +1,0 @@
-- [PyTech](https://pytech.it):
-  - Sebastiano Picchi \<<sebastiano.picchi@pytech.it>\>
-  - Alessandro Uffreduzzi \<<alessandro.uffreduzzi@pytech.it>\>
