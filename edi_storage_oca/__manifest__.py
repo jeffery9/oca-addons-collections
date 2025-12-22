@@ -7,16 +7,14 @@
     "summary": """
     Base module to allow exchanging files via storage backend (eg: SFTP).
     """,
-    "version": "17.0.1.0.0",
+    "version": "18.0.1.0.2",
     "development_status": "Beta",
     "license": "LGPL-3",
     "website": "https://github.com/OCA/edi-framework",
     "author": "ACSONE,Odoo Community Association (OCA)",
-    "depends": ["edi_oca", "fs_storage", "component"],
+    "depends": ["edi_core_oca", "fs_storage"],
     "data": [
         "data/cron.xml",
-        "data/job_channel_data.xml",
-        "data/queue_job_function_data.xml",
         "security/ir_model_access.xml",
         "views/edi_backend_views.xml",
     ],

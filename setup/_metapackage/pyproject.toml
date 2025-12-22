@@ -1,18 +1,34 @@
 [project]
 name = "odoo-addons-oca-edi-framework"
-version = "17.0.20250415.0"
+version = "18.0.20251201.0"
 dependencies = [
-    "odoo-addon-edi_account_oca>=17.0dev,<17.1dev",
-    "odoo-addon-edi_endpoint_oca>=17.0dev,<17.1dev",
-    "odoo-addon-edi_exchange_template_oca>=17.0dev,<17.1dev",
-    "odoo-addon-edi_oca>=17.0dev,<17.1dev",
-    "odoo-addon-edi_project_oca>=17.0dev,<17.1dev",
-    "odoo-addon-edi_record_metadata_oca>=17.0dev,<17.1dev",
-    "odoo-addon-edi_storage_oca>=17.0dev,<17.1dev",
-    "odoo-addon-edi_webservice_oca>=17.0dev,<17.1dev",
+    "odoo-addon-edi_account_core_oca==18.0.*",
+    "odoo-addon-edi_account_oca==18.0.*",
+    "odoo-addon-edi_component_oca==18.0.*",
+    "odoo-addon-edi_core_oca==18.0.*",
+    "odoo-addon-edi_endpoint_oca==18.0.*",
+    "odoo-addon-edi_exchange_template_oca==18.0.*",
+    "odoo-addon-edi_exchange_template_party_data==18.0.*",
+    "odoo-addon-edi_oca==18.0.*",
+    "odoo-addon-edi_party_data_oca==18.0.*",
+    "odoo-addon-edi_queue_oca==18.0.*",
+    "odoo-addon-edi_record_metadata_oca==18.0.*",
+    "odoo-addon-edi_sale_endpoint==18.0.*",
+    "odoo-addon-edi_sale_input_oca==18.0.*",
+    "odoo-addon-edi_sale_oca==18.0.*",
+    "odoo-addon-edi_sale_stock_oca==18.0.*",
+    "odoo-addon-edi_sale_ubl_oca==18.0.*",
+    "odoo-addon-edi_sale_ubl_output_oca==18.0.*",
+    "odoo-addon-edi_state_oca==18.0.*",
+    "odoo-addon-edi_stock_oca==18.0.*",
+    "odoo-addon-edi_storage_oca==18.0.*",
+    "odoo-addon-edi_storage_queue_oca==18.0.*",
+    "odoo-addon-edi_ubl_oca==18.0.*",
+    "odoo-addon-edi_webservice_oca==18.0.*",
+    "odoo-addon-edi_xml_oca==18.0.*",
 ]
 classifiers=[
     "Programming Language :: Python",
     "Framework :: Odoo",
-    "Framework :: Odoo :: 17.0",
+    "Framework :: Odoo :: 18.0",
 ]

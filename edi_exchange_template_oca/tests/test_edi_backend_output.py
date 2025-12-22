@@ -1,22 +1,52 @@
 # Copyright 2020 ACSONE SA/NV (<http://acsone.eu>)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 import datetime
+import json
 
 from freezegun import freeze_time
 from lxml import etree
+from odoo_test_helper import FakeModelLoader
 
-from odoo.addons.edi_oca.tests.common import EDIBackendCommonComponentTestCase
+from odoo.addons.edi_core_oca.tests.common import EDIBackendCommonTestCase
 
 
-class TestEDIBackendOutputBase(EDIBackendCommonComponentTestCase):
+class TestEDIBackendOutputBase(EDIBackendCommonTestCase):
+    @classmethod
+    def tearDownClass(cls):
+        cls.loader.restore_registry()
+        super().tearDownClass()
+
     @classmethod
     def _setup_records(cls):
         res = super()._setup_records()
+        # Load fake models ->/
+        cls.loader = FakeModelLoader(cls.env, cls.__module__)
+        cls.loader.backup_registry()
+        from odoo.addons.edi_core_oca.tests.fake_models import EdiTestExecution
+
+        cls.loader.update_registry((EdiTestExecution,))
+        cls.ExecutionAbstractModel = cls.env["edi.framework.test.execution"]
+        cls.model = cls.env["ir.model"].search(
+            [("model", "=", "edi.framework.test.execution")]
+        )
+        cls.exchange_type_out.generate_model_id = cls.env.ref(
+            "edi_exchange_template_oca.model_edi_oca_template_handler"
+        )
+        cls.exchange_type_out.send_model_id = cls.model
+        cls.exchange_type_out.output_validate_model_id = cls.model
+        cls.exchange_type_out.check_model_id = cls.model
+        # We do that in order to ensure that the tests work properly with edi_connector
         cls.type_out1 = cls._create_exchange_type(
             name="Template output 1",
             direction="output",
             code="test_type_out1",
             exchange_file_ext="txt",
+            generate_model_id=cls.env.ref(
+                "edi_exchange_template_oca.model_edi_oca_template_handler"
+            ).id,
+            send_model_id=cls.model.id,
+            output_validate_model_id=cls.model.id,
+            check_model_id=cls.model.id,
             exchange_filename_pattern="{record.ref}-{type.code}-{dt}",
         )
         model = cls.env["edi.exchange.template.output"]
@@ -36,16 +66,16 @@ class TestEDIBackendOutputBase(EDIBackendCommonComponentTestCase):
                 "code": "edi.output.generate.demo_backend.test_type_out1",
                 "name": "Out 1",
                 "backend_type_id": cls.backend.backend_type_id.id,
-                "type_id": cls.type_out1.id,
                 "generator": "qweb",
                 "template_id": qweb_tmpl.id,
                 "output_type": "txt",
             }
         )
+        cls.type_out1.output_template_id = cls.tmpl_out1
+        cls.tmpl_out1.allowed_type_ids = cls.type_out1
         vals = {
             "model": cls.partner._name,
             "res_id": cls.partner.id,
-            "type_id": cls.type_out1.id,
         }
         cls.record1 = cls.backend.create_record("test_type_out1", vals)
 
@@ -54,6 +84,12 @@ class TestEDIBackendOutputBase(EDIBackendCommonComponentTestCase):
             direction="output",
             code="test_type_out2",
             exchange_file_ext="xml",
+            generate_model_id=cls.env.ref(
+                "edi_exchange_template_oca.model_edi_oca_template_handler"
+            ).id,
+            send_model_id=cls.model.id,
+            output_validate_model_id=cls.model.id,
+            check_model_id=cls.model.id,
             exchange_filename_pattern="{record.ref}-{type.code}-{dt}",
         )
         qweb_tmpl = cls.env["ir.ui.view"].create(
@@ -77,7 +113,6 @@ class TestEDIBackendOutputBase(EDIBackendCommonComponentTestCase):
                 "code": "edi.output.generate.demo_backend.test_type_out2",
                 "name": "Out 2",
                 "backend_type_id": cls.backend.backend_type_id.id,
-                "type_id": cls.type_out2.id,
                 "generator": "qweb",
                 "template_id": qweb_tmpl.id,
                 "output_type": "xml",
@@ -88,6 +123,8 @@ result = {"custom_bit": foo, "baz": baz}
                 """,
             }
         )
+        cls.type_out2.output_template_id = cls.tmpl_out2
+        cls.tmpl_out2.allowed_type_ids = cls.type_out2
         vals = {
             "model": cls.partner._name,
             "res_id": cls.partner.id,
@@ -99,6 +136,12 @@ result = {"custom_bit": foo, "baz": baz}
             direction="output",
             code="test_type_out3",
             exchange_file_ext="xml",
+            generate_model_id=cls.env.ref(
+                "edi_exchange_template_oca.model_edi_oca_template_handler"
+            ).id,
+            send_model_id=cls.model.id,
+            output_validate_model_id=cls.model.id,
+            check_model_id=cls.model.id,
             exchange_filename_pattern="{record.id}-{type.code}-{dt}",
         )
         cls.report = cls.env.ref("web.action_report_externalpreview")
@@ -107,7 +150,6 @@ result = {"custom_bit": foo, "baz": baz}
                 "code": "edi.output.generate.demo_backend.test_type_out3",
                 "name": "Out 3",
                 "backend_type_id": cls.backend.backend_type_id.id,
-                "type_id": cls.type_out3.id,
                 "generator": "report",
                 "report_id": cls.report.id,
                 "output_type": "pdf",
@@ -116,6 +158,8 @@ result = {"res_ids": record.ids}
                         """,
             }
         )
+        cls.type_out3.output_template_id = cls.tmpl_out3
+        cls.tmpl_out3.allowed_type_ids = cls.type_out3
         company = cls.env.ref("base.main_company")
         vals = {
             "model": company._name,
@@ -123,6 +167,44 @@ result = {"res_ids": record.ids}
             "type_id": cls.type_out2.id,
         }
         cls.record3 = cls.backend.create_record("test_type_out3", vals)
+
+        cls.type_out_json = cls._create_exchange_type(
+            name="Template output JSON",
+            direction="output",
+            code="test_type_out_json",
+            generate_model_id=cls.env.ref(
+                "edi_exchange_template_oca.model_edi_oca_template_handler"
+            ).id,
+            send_model_id=cls.model.id,
+            output_validate_model_id=cls.model.id,
+            check_model_id=cls.model.id,
+            exchange_file_ext="txt",
+            exchange_filename_pattern="{record.ref}-{type.code}-{dt}",
+        )
+        model = cls.env["edi.exchange.template.output"]
+        cls.tmpl_out_json = model.create(
+            {
+                "generator": "json",
+                "name": "Out JSON",
+                "backend_type_id": cls.backend.backend_type_id.id,
+                "code": "test_type_out_json",
+                "output_type": "json",
+                "code_snippet": """
+result = {
+    'payload': {
+            "name": record.name,
+            "ref": record.ref
+    }
+}
+                """,
+            }
+        )
+        vals = {
+            "model": cls.partner._name,
+            "res_id": cls.partner.id,
+            "type_id": cls.tmpl_out_json.id,
+        }
+        cls.record_json = cls.backend.create_record("test_type_out_json", vals)
         return res
 
 
@@ -136,8 +218,7 @@ class TestEDIBackendOutput(TestEDIBackendOutputBase):
             self.backend._get_output_template(self.record2), self.tmpl_out2
         )
         self.assertEqual(
-            self.backend._get_output_template(self.record2, code=self.tmpl_out1.code),
-            self.tmpl_out1,
+            self.backend._get_output_template(self.record_json), self.tmpl_out_json
         )
 
     def test_generate_file(self):
@@ -155,6 +236,10 @@ class TestEDIBackendOutput(TestEDIBackendOutputBase):
         self.assertEqual(doc.getchildren()[1].tag, "Custom")
         self.assertEqual(doc.getchildren()[1].text, "2")
         self.assertEqual(doc.getchildren()[1].attrib, {"bit": "custom_var"})
+        self.backend.exchange_generate(self.record_json)
+        expected = json.dumps({"name": self.partner.name, "ref": self.partner.ref})
+        file_content = self.record_json._get_file_content()
+        self.assertEqual(file_content.strip(), expected)
 
     def test_prettify(self):
         self.tmpl_out2.template_id.arch = (

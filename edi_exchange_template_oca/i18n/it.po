@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-07-30 08:58+0000\n"
+"PO-Revision-Date: 2025-10-02 21:43+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,7 +14,18 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.6.2\n"
+"X-Generator: Weblate 5.10.4\n"
+
+#. module: edi_exchange_template_oca
+#: model:ir.model.fields,field_description:edi_exchange_template_oca.field_edi_exchange_template_mixin__allowed_type_ids
+#: model:ir.model.fields,field_description:edi_exchange_template_oca.field_edi_exchange_template_output__allowed_type_ids
+msgid "Allowed Exchange Types"
+msgstr "Tipi di scambio consentiti"
+
+#. module: edi_exchange_template_oca
+#: model:ir.model.fields,field_description:edi_exchange_template_oca.field_edi_exchange_type__output_template_allowed_ids
+msgid "Allowed Templates"
+msgstr "Modelli consentiti"
 
 #. module: edi_exchange_template_oca
 #: model:ir.model.fields,field_description:edi_exchange_template_oca.field_edi_exchange_template_mixin__backend_id
@@ -105,10 +116,19 @@ msgid "EDI Exchange Templates"
 msgstr "Modelli scambio EDI"
 
 #. module: edi_exchange_template_oca
-#: model:ir.model.fields,field_description:edi_exchange_template_oca.field_edi_exchange_template_mixin__type_id
-#: model:ir.model.fields,field_description:edi_exchange_template_oca.field_edi_exchange_template_output__type_id
-msgid "EDI Exchange type"
+#: model:ir.model,name:edi_exchange_template_oca.model_edi_exchange_type
+msgid "EDI Exchange Type"
 msgstr "Tipo scambio EDI"
+
+#. module: edi_exchange_template_oca
+#: model:ir.model.fields,field_description:edi_exchange_template_oca.field_edi_exchange_type__output_template_id
+msgid "Exchange Template"
+msgstr "Modello scambio"
+
+#. module: edi_exchange_template_oca
+#: model:ir.model,name:edi_exchange_template_oca.model_edi_oca_template_handler
+msgid "Exchange Template Handler for EDI"
+msgstr "Gestore modello scambio per EDI"
 
 #. module: edi_exchange_template_oca
 #: model:ir.model.fields,field_description:edi_exchange_template_oca.field_edi_exchange_template_output__generator
@@ -129,6 +149,11 @@ msgstr "ID"
 #: model:ir.model.fields,help:edi_exchange_template_oca.field_edi_exchange_template_output__template_key
 msgid "ID of the view defined in xml file"
 msgstr "ID della vista definita nel file XML"
+
+#. module: edi_exchange_template_oca
+#: model:ir.model.fields.selection,name:edi_exchange_template_oca.selection__edi_exchange_template_output__generator__json
+msgid "JSON"
+msgstr "JSON"
 
 #. module: edi_exchange_template_oca
 #: model:ir.model.fields,field_description:edi_exchange_template_oca.field_edi_exchange_template_output__write_uid
@@ -189,11 +214,34 @@ msgid "Template key"
 msgstr "Chiave modello"
 
 #. module: edi_exchange_template_oca
+#. odoo-python
+#: code:addons/edi_exchange_template_oca/models/edi_exchange_type.py:0
+msgid "Template not allowed for this type."
+msgstr "Modello non consentito per questo tipo."
+
+#. module: edi_exchange_template_oca
+#: model:ir.model.fields,help:edi_exchange_template_oca.field_edi_exchange_type__output_template_id
+msgid "Template used to generate or process this type."
+msgstr "Modello usato per generare o elaborare questo tipo."
+
+#. module: edi_exchange_template_oca
+#: model:ir.model.fields,help:edi_exchange_template_oca.field_edi_exchange_type__output_template_allowed_ids
+msgid "Templates allowed to be used with this type."
+msgstr "Modelli consentiti per l'utilizzo con questo tipo."
+
+#. module: edi_exchange_template_oca
 #: model:ir.model.fields,help:edi_exchange_template_oca.field_edi_exchange_template_output__template_arch
 msgid "This field stores the view arch."
 msgstr "Questo file contiene l'architettura della vista."
 
 #. module: edi_exchange_template_oca
-#: model_terms:ir.ui.view,arch_db:edi_exchange_template_oca.edi_exchange_template_output_view_search
-msgid "Type"
-msgstr "Tipo"
+#: model:ir.model.fields,help:edi_exchange_template_oca.field_edi_exchange_template_mixin__allowed_type_ids
+#: model:ir.model.fields,help:edi_exchange_template_oca.field_edi_exchange_template_output__allowed_type_ids
+msgid "Types allowed to use this template."
+msgstr "Tipi abilitati all'utilizzo di questo tipo."
+
+#~ msgid "EDI Exchange type"
+#~ msgstr "Tipo scambio EDI"
+
+#~ msgid "Type"
+#~ msgstr "Tipo"

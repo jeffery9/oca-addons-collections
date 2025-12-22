@@ -2,7 +2,6 @@
 <!-- Copyright 2021 Camptocamp SA
      License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). -->
 <odoo>
-
     <record model="ir.ui.view" id="edi_endpoint_form_view">
         <field name="model">edi.endpoint</field>
         <field name="inherit_id" ref="endpoint.endpoint_mixin_form_view" />
@@ -42,7 +41,7 @@
 
     <record model="ir.ui.view" id="edi_endpoint_search_view">
         <field name="model">edi.endpoint</field>
-        <field name="inherit_id" ref="endpoint.endpoint_endpoint_search_view" />
+        <field name="inherit_id" ref="endpoint.endpoint_mixin_search_view" />
         <field name="mode">primary</field>
         <field name="arch" type="xml">
             <field name="exec_mode" position="after">
@@ -72,7 +71,7 @@
 
     <record model="ir.ui.view" id="edi_endpoint_tree_view">
         <field name="model">edi.endpoint</field>
-        <field name="inherit_id" ref="endpoint.endpoint_endpoint_tree_view" />
+        <field name="inherit_id" ref="endpoint.endpoint_mixin_list_view" />
         <field name="mode">primary</field>
         <field name="arch" type="xml">
             <field name="exec_mode" position="after">
@@ -86,16 +85,15 @@
     <record model="ir.actions.act_window" id="edi_endpoint_act_window">
         <field name="name">EDI Endpoints</field>
         <field name="res_model">edi.endpoint</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="domain">[]</field>
         <field name="context">{"search_default_all": 1}</field>
     </record>
 
     <record model="ir.ui.menu" id="edi_endpoint_menu">
         <field name="name">EDI Endpoints</field>
-        <field name="parent_id" ref="edi_oca.menu_edi_config" />
+        <field name="parent_id" ref="edi_core_oca.menu_edi_config" />
         <field name="action" ref="edi_endpoint_act_window" />
         <field name="sequence" eval="100" />
     </record>
-
 </odoo>

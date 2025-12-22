@@ -1,2 +1,2 @@
 odoo-test-helper
-responses
+xmlunittest

@@ -1,11 +1,3 @@
-Base EDI backend.
+Minimal module used only to avoid issues on the migration to the new splitted model of edi_oca.
 
-Provides following models:
-
-1.  EDI Backend, to centralize configuration
-2.  EDI Backend Type, to classify EDI backends (eg: UBL, GS1, e-invoice,
-    pick-yours)
-3.  EDI Exchange Type, to define file types of exchange
-4.  EDI Exchange Record, to define a record exchanged between systems
-
-Also define a mixin to be inherited by records that will generate EDIs
+Might be removed on 19 but we keep it as part of the transition after the split between EDI and components.
