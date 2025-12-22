@@ -1,5 +1,5 @@
 - [CorporateHub](https://corporatehub.eu/)
   - Alexey Pelykh \<<alexey.pelykh@corphub.eu>\>
   - Freni Patel \<<fpatel@opensourceintegrators.com>\>
-- [APSL-Nagarro](https://apsl.tech)
-  - Miquel Pascual \<<mpascual@apsl.net>\>
+- [Heliconia Solutions Pvt. Ltd.](https://www.heliconia.io)
+  - Bhavesh Heliconia

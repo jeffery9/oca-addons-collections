@@ -6,3 +6,6 @@
 - Saran Lim. \<<saranl@ecosoft.co.th>\>
 - Foram Shah \<<foram.shah@initos.com>\>
 - Houssine Bakkali \<<houssine.bakkali@eezee-it.com>\>
+- [Heliconia Solutions Pvt. Ltd.](https://www.heliconia.io)
+  - Bhavesh Heliconia
+

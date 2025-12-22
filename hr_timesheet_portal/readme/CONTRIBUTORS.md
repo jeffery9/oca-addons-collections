@@ -1,6 +1,0 @@
-- [Hunki Enterprises BV](https://hunki-enterprises.com)
-  - Holger Brunn \<mail@hunki-enterprises.com\>
-- [Innovara](https://innovara.tech)
-  - Manuel Fombuena \<mfombuena@innovara.tech\>
-- [SISINFO](https://sisinfo.com.uy)
-  - Miguel Gómez León \<mgomezleon@sisinfo.com.uy\>

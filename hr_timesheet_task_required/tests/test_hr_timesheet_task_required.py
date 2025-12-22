@@ -50,7 +50,11 @@ class TestHrTimesheetTaskRequired(TransactionCase):
         )
 
     def test_timesheet_line_task_not_required(self):
-        self.AnalyticLine.create(
+        # Project with task not required
+        self.assertFalse(self.project_2.is_timesheet_task_required)
+
+        # Create a timesheet line without a task
+        timesheet_line = self.AnalyticLine.create(
             {
                 "name": "test",
                 "project_id": self.project_2.id,
@@ -58,8 +62,10 @@ class TestHrTimesheetTaskRequired(TransactionCase):
                 "employee_id": self.employee.id,
             }
         )
+        self.assertTrue(timesheet_line)
 
-        self.AnalyticLine.create(
+        # Create a timesheet line with a task
+        timesheet_line_with_task = self.AnalyticLine.create(
             {
                 "name": "test",
                 "project_id": self.project_2.id,
@@ -68,3 +74,4 @@ class TestHrTimesheetTaskRequired(TransactionCase):
                 "employee_id": self.employee.id,
             }
         )
+        self.assertTrue(timesheet_line_with_task)

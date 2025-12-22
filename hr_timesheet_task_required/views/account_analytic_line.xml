@@ -10,9 +10,6 @@ License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
         <field name="model">account.analytic.line</field>
         <field name="inherit_id" ref="hr_timesheet.hr_timesheet_line_form" />
         <field name="arch" type="xml">
-            <field name="task_id" position="before">
-                <field name="is_task_required" invisible="1" />
-            </field>
             <field name="task_id" position="attributes">
                 <attribute name="required">is_task_required</attribute>
             </field>
@@ -23,9 +20,6 @@ License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
         <field name="model">account.analytic.line</field>
         <field name="inherit_id" ref="hr_timesheet.hr_timesheet_line_tree" />
         <field name="arch" type="xml">
-            <field name="task_id" position="before">
-                <field name="is_task_required" column_invisible="1" />
-            </field>
             <field name="task_id" position="attributes">
                 <attribute name="required">is_task_required</attribute>
             </field>

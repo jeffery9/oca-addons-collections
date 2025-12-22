@@ -18,7 +18,7 @@ class TestSaleTimesheetTimeline(BaseCommon):
         cls.product_task = cls.env["product.product"].create(
             {
                 "name": "Test task product",
-                "detailed_type": "service",
+                "type": "service",
                 "service_tracking": "task_global_project",
                 "service_policy": "ordered_prepaid",
                 "project_id": cls.project.id,
