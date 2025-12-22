@@ -1,18 +1,18 @@
-## 17.0.2.1.0 (2025-10-22)
+## 18.0.2.1.0 (2025-10-20)
 
 ### Features
 
 - Replace {db_name} by the database name in directory_path ([#db_name](https://github.com/OCA/storage/issues/db_name))
 
 
-## 17.0.2.0.4 (2025-08-19)
+## 18.0.2.0.1 (2025-07-23)
 
 ### Features
 
 - Allow setting check_connection_method in configuration file.
 
 
-## 17.0.2.0.0 (2024-10-07)
+## 18.0.1.0.1 (2024-11-10)
 
 ### Features
 

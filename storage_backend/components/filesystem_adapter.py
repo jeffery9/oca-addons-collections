@@ -6,7 +6,6 @@ import logging
 import os
 import shutil
 
-from odoo import _
 from odoo.exceptions import AccessError
 
 from odoo.addons.component.core import Component
@@ -35,7 +34,7 @@ class FileSystemStorageBackend(Component):
         base_dir = self._basedir()
         full_path = os.path.join(base_dir, full_path)
         if not is_safe_path(base_dir, full_path):
-            raise AccessError(_("Access to %s is forbidden") % full_path)
+            raise AccessError(self.env._("Access to %s is forbidden") % full_path)
         return full_path
 
     def add(self, relative_path, data, **kwargs):
