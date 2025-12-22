@@ -4,13 +4,14 @@
         <field name="name">hr.salary.rule.list</field>
         <field name="model">hr.salary.rule</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
+                <field name="sequence" optional="hide" />
                 <field name="name" />
                 <field name="code" decoration-bf="1" />
                 <field name="category_id" widget="badge" />
                 <field name="sequence" column_invisible="1" />
                 <field name="register_id" />
-            </tree>
+            </list>
         </field>
     </record>
     <record id="hr_salary_rule_view_kanban" model="ir.ui.view">
@@ -19,7 +20,7 @@
         <field name="arch" type="xml">
             <kanban class="o_kanban_mobile">
                 <templates>
-                    <t t-name="kanban-box">
+                    <t t-name="card">
                         <div t-attf-class="oe_kanban_content oe_kanban_global_click">
                             <div class="row">
                                 <div class="col-8">
@@ -48,11 +49,11 @@
         </field>
     </record>
     <record id="hr_salary_rule_view_tree" model="ir.ui.view">
-        <field name="name">hr.salary.rule.tree</field>
+        <field name="name">hr.salary.rule.list</field>
         <field name="model">hr.salary.rule</field>
         <field eval="20" name="priority" />
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="name" />
                 <field name="code" />
                 <field name="category_id" column_invisible="True" />
@@ -61,7 +62,7 @@
                     groups="base.group_multi_company"
                     options="{'no_create': True}"
                 />
-            </tree>
+            </list>
         </field>
     </record>
     <record id="hr_salary_rule_view_form" model="ir.ui.view">
@@ -75,10 +76,10 @@
                     role="alert"
                     invisible="amount_select != 'code'"
                 >
-            <p>
+                    <p>
                 If you have doubts about coding salary rules, check the "Help" tab in this form.
             </p>
-        </div>
+                </div>
                 <sheet>
                     <label for="name" class="oe_edit_only" />
                     <h1>
@@ -181,8 +182,8 @@
                                     />
                                     <field
                                         name="quantity"
-                                        invisible="amount_select != 'code'"
-                                        required="amount_select == 'code'"
+                                        invisible="amount_select == 'code'"
+                                        required="amount_select != 'code'"
                                     />
                                     <field
                                         name="amount_fix"
@@ -211,7 +212,7 @@
                             <div class="alert alert-info" role="alert">
                                 <p>
                                     Child rule functionality is useful when you need other rules to be computed before the parent one. <br
-                                    />
+                                />
                                     This means that all salary rules declared as childs (parent of one rule) will be added to the computation
                                     if its parent rule is included in the salary structure. So child rules will only be computed if it's parent is
                                     computed. <br />
@@ -224,11 +225,11 @@
                             <field name="child_ids" />
                         </page>
                         <page name="inputs" string="Inputs">
-                            <field name="input_ids" mode="tree">
-                                <tree editable="bottom">
+                            <field name="input_ids" mode="list">
+                                <list editable="bottom">
                                     <field name="code" />
                                     <field name="name" />
-                                </tree>
+                                </list>
                             </field>
                         </page>
                         <page name="help" string="Help">
@@ -244,51 +245,51 @@
                                 <ul>
                                     <li>
                                         <code
-                                        >payslip:</code> contains current payslip object data (hr.payslip)
+                                    >payslip:</code> contains current payslip object data (hr.payslip)
                                     </li>
                                     <li>
                                         <code
-                                        >payslips:</code> contains payslips data (Payslips - Browsable Object)
+                                    >payslips:</code> contains payslips data (Payslips - Browsable Object)
                                     </li>
                                     <li>
                                         <code
-                                        >employee:</code> contains current employee object data (hr.employee)
+                                    >employee:</code> contains current employee object data (hr.employee)
                                     </li>
                                     <li>
                                         <code
-                                        >contract:</code> contains current contract object data (hr.contract)
+                                    >contract:</code> contains current contract object data (hr.contract)
                                     </li>
                                     <li>
                                         <code
-                                        >rules:</code> contains the rules code (previusly computed)
+                                    >rules:</code> contains the rules code (previusly computed)
                                     </li>
                                     <li>
                                         <code
-                                        >categories:</code> contains the sum of amount of all rules belonging to that category
+                                    >categories:</code> contains the sum of amount of all rules belonging to that category
                                     </li>
                                     <li>
                                         <code
-                                        >worked_days:</code> contains the computed worked days data
+                                    >worked_days:</code> contains the computed worked days data
                                     </li>
                                     <li>
                                         <code
-                                        >inputs:</code> contains the computed input data
+                                    >inputs:</code> contains the computed input data
                                     </li>
                                     <li>
                                         <code
-                                        >payroll:</code> contains miscellaneous values related to payroll
+                                    >payroll:</code> contains miscellaneous values related to payroll
                                     </li>
                                     <li>
                                         <code
-                                        >current_contract:</code> contains values related/calculated for current contract
+                                    >current_contract:</code> contains values related/calculated for current contract
                                     </li>
                                     <li>
                                         <code
-                                        >result_rules:</code> contains the values of previusly computed lines (qty, rate, amount, total)
+                                    >result_rules:</code> contains the values of previusly computed lines (qty, rate, amount, total)
                                     </li>
                                     <li>
                                         <code
-                                        >tools:</code> contains tools and libraries which help with mathematical operations
+                                    >tools:</code> contains tools and libraries which help with mathematical operations
                                     </li>
                                 </ul>
                                 <p>
@@ -299,19 +300,19 @@
                                 <ul>
                                     <li>
                                         <code
-                                        >result:</code> the returned value should be in this variable. It matches with "amount" column.
+                                    >result:</code> the returned value should be in this variable. It matches with "amount" column.
                                     </li>
                                     <li>
                                         <code
-                                        >result_rate:</code> the rate that should be applied to "result"
+                                    >result_rate:</code> the rate that should be applied to "result"
                                     </li>
                                     <li>
                                         <code
-                                        >result_qty:</code> the quantity of units that will be multiplied to "result"
+                                    >result_qty:</code> the quantity of units that will be multiplied to "result"
                                     </li>
                                     <li>
                                         <code
-                                        >result_name:</code> overrides the current name of the rule and allows to make dynamic names
+                                    >result_name:</code> overrides the current name of the rule and allows to make dynamic names
                                     </li>
                                 </ul>
                                 <h3>Examples</h3>
@@ -364,7 +365,7 @@
     <record id="action_salary_rule_form" model="ir.actions.act_window">
         <field name="name">Salary Rules</field>
         <field name="res_model">hr.salary.rule</field>
-        <field name="view_mode">tree,kanban,form</field>
+        <field name="view_mode">list,kanban,form</field>
         <field name="domain">[('parent_rule_id','=',False)]</field>
         <field name="search_view_id" ref="hr_salary_rule_view_search" />
     </record>

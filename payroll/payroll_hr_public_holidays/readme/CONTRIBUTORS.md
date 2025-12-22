@@ -1,2 +1,0 @@
-- Nimarosa (Nicolas Rodriguez) \<<nicolarsande@gmail.com>\>
-- `Heliconia Solutions Pvt. Ltd. <https://www.heliconia.io>`_

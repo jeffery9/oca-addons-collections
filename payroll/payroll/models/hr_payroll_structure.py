@@ -59,7 +59,7 @@ class HrPayrollStructure(models.Model):
 
     @api.constrains("parent_id")
     def _check_parent_id(self):
-        if not self._check_recursion():
+        if self._has_cycle():
             raise ValidationError(_("You cannot create a recursive salary structure."))
 
     @api.returns("self", lambda value: value.id)
@@ -70,16 +70,12 @@ class HrPayrollStructure(models.Model):
 
     def get_all_rules(self):
         """
-        @return: returns a list of tuple (id, sequence) of rules that are maybe
-                 to apply
+        @return: recordset with all struct rules, ordered by sequence
         """
-        all_rules = []
-        for struct in self:
-            all_rules += struct.rule_ids._recursive_search_of_rules()
-        return all_rules
+        return self.rule_ids._recursive_search_of_rules().sorted("sequence")
 
-    def _get_parent_structure(self):
-        parent = self.mapped("parent_id")
-        if parent:
-            parent = parent._get_parent_structure()
-        return parent + self
+    def get_structure_with_parents(self):
+        if not self:
+            return self.env["hr.payroll.structure"]
+        else:
+            return self.parent_id.get_structure_with_parents() + self

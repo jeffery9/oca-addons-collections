@@ -35,11 +35,10 @@ class HrPayslipLine(models.Model):
     currency_id = fields.Many2one(
         related="contract_id.currency_id", store=True, readonly=True
     )
-    amount = fields.Monetary(digits="Payroll", currency_field="currency_id")
+    amount = fields.Monetary(currency_field="currency_id")
     quantity = fields.Float(digits="Payroll", default=1.0)
     total = fields.Monetary(
         compute="_compute_total",
-        digits="Payroll",
         store=True,
         currency_field="currency_id",
     )

@@ -161,6 +161,7 @@ class TestPayslipFlow(TestPayslipBase):
         context = {
             "model": "hr.contribution.register",
             "active_ids": [self.register_hra.id],
+            "discard_logo_check": True,
         }
         test_reports.try_report_action(
             self.env.cr,
@@ -169,6 +170,7 @@ class TestPayslipFlow(TestPayslipBase):
             context=context,
             our_module="payroll",
         )
+        # FIXME: try_report_action is not used anymore in the Odoo codebase
 
     def test_contract_qty(self):
         # I set the test rule to detect contract count
@@ -241,15 +243,13 @@ class TestPayslipFlow(TestPayslipBase):
         )
 
     def test_get_contracts_multiple(self):
-        self.sally.contract_ids[0].date_end = (
-            Date.today() - timedelta(days=1)
-        ).strftime("%Y-%m-%d")
+        self.sally.contract_ids[0].date_end = Date.today().strftime("%Y-%m-01")
 
         self.Contract.create(
             {
                 "name": "Second contract for Sally",
                 "employee_id": self.sally.id,
-                "date_start": Date.today().strftime("%Y-%m-%d"),
+                "date_start": Date.today().strftime("%Y-%m-02"),
                 "struct_id": self.sales_pay_structure.id,
                 "wage": 6500.00,
                 "state": "open",

@@ -2,7 +2,7 @@
 
 {
     "name": "Payroll",
-    "version": "17.0.1.2.0",
+    "version": "18.0.1.2.0",
     "category": "Payroll",
     "website": "https://github.com/OCA/payroll",
     "sequence": 38,
@@ -38,7 +38,6 @@
         "views/res_config_settings_views.xml",
         "wizard/hr_payroll_send_email.xml",
         "wizard/hr_payslip_change_state_view.xml",
-        "views/hr_leave_type.xml",
     ],
     "demo": ["demo/hr_payroll_demo.xml"],
     "application": True,

@@ -1,4 +1,4 @@
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
+# Part of Odoo.  LICENSE file for full copyright and licensing details.
 
 import logging
 import math
@@ -8,9 +8,8 @@ import babel
 from dateutil.relativedelta import relativedelta
 from pytz import timezone
 
-from odoo import _, api, fields, models, tools
+from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
-from odoo.tools.safe_eval import safe_eval
 
 from .base_browsable import (
     BaseBrowsableObject,
@@ -228,34 +227,44 @@ class HrPayslip(models.Model):
         return self.write({"state": "cancel"})
 
     def refund_sheet(self):
+        copied_payslips = self.env["hr.payslip"]
         for payslip in self:
+            # Create a refund slip
             copied_payslip = payslip.copy(
                 {"credit_note": True, "name": _("Refund: %s") % payslip.name}
             )
+            # Assign a number
             number = copied_payslip.number or self.env["ir.sequence"].next_by_code(
                 "salary.slip"
             )
             copied_payslip.write({"number": number})
+            # Validated refund slip
             copied_payslip.with_context(
                 without_compute_sheet=True
             ).action_payslip_done()
+            # Write refund reference on payslip
+            payslip.write(
+                {"refunded_id": copied_payslip.id if copied_payslip else False}
+            )
+            # Add to list of refund slips
+            copied_payslips |= copied_payslip
+        # Action to open list view of refund slips
         formview_ref = self.env.ref("payroll.hr_payslip_view_form", False)
         treeview_ref = self.env.ref("payroll.hr_payslip_view_tree", False)
         res = {
             "name": _("Refund Payslip"),
-            "view_mode": "tree, form",
+            "view_mode": "list, form",
             "view_id": False,
             "res_model": "hr.payslip",
             "type": "ir.actions.act_window",
             "target": "current",
-            "domain": "[('id', 'in', %s)]" % copied_payslip.ids,
+            "domain": [("id", "in", copied_payslips.ids)],
             "views": [
-                (treeview_ref and treeview_ref.id or False, "tree"),
+                (treeview_ref and treeview_ref.id or False, "list"),
                 (formview_ref and formview_ref.id or False, "form"),
             ],
             "context": {},
         }
-        payslip.write({"refunded_id": safe_eval(res["domain"])[0][2][0] or False})
         return res
 
     def unlink(self):
@@ -334,8 +343,16 @@ class HrPayslip(models.Model):
                 holiday.holiday_status_id,
                 {
                     "name": holiday.holiday_status_id.name or _("Global Leaves"),
-                    "sequence": 5,
-                    "code": holiday.holiday_status_id.code or "GLOBAL",
+                    "sequence": getattr(
+                        getattr(holiday.holiday_status_id, "work_entry_type_id", None),
+                        "sequence",
+                        5,
+                    ),
+                    "code": getattr(
+                        getattr(holiday.holiday_status_id, "work_entry_type_id", None),
+                        "code",
+                        "GLOBAL",
+                    ),
                     "number_of_days": 0.0,
                     "number_of_hours": 0.0,
                     "contract_id": contract.id,
@@ -391,17 +408,7 @@ class HrPayslip(models.Model):
         associated rules for the given contracts.
         """  # noqa: E501
         res = []
-        current_structure = self.struct_id
-        structure_ids = contracts.get_all_structures()
-        if current_structure:
-            structure_ids = list(set(current_structure._get_parent_structure().ids))
-        rule_ids = (
-            self.env["hr.payroll.structure"].browse(structure_ids).get_all_rules()
-        )
-        sorted_rule_ids = [id for id, sequence in sorted(rule_ids, key=lambda x: x[1])]
-        payslip_inputs = (
-            self.env["hr.salary.rule"].browse(sorted_rule_ids).mapped("input_ids")
-        )
+        payslip_inputs = self._get_salary_rules().input_ids
         for contract in contracts:
             for payslip_input in payslip_inputs:
                 res.append(
@@ -471,10 +478,7 @@ class HrPayslip(models.Model):
     def _get_tools_dict(self):
         # _get_tools_dict() is intended to be inherited by other private modules
         # to add tools or python libraries available in localdict
-        return {
-            "math": math,
-            "datetime": datetime,
-        }  # "math" object is useful for doing calculations
+        return {"math": math}  # "math" object is useful for doing calculations
 
     def _get_baselocaldict(self, contracts):
         self.ensure_one()
@@ -502,22 +506,14 @@ class HrPayslip(models.Model):
         return localdict
 
     def _get_salary_rules(self):
-        rule_obj = self.env["hr.salary.rule"]
-        sorted_rules = rule_obj
-        for payslip in self:
-            contracts = payslip._get_employee_contracts()
-            if len(contracts) == 1 and payslip.struct_id:
-                structure_ids = list(set(payslip.struct_id._get_parent_structure().ids))
-            else:
-                structure_ids = contracts.get_all_structures()
-            rule_ids = (
-                self.env["hr.payroll.structure"].browse(structure_ids).get_all_rules()
-            )
-            sorted_rule_ids = [
-                id for id, sequence in sorted(rule_ids, key=lambda x: x[1])
-            ]
-            sorted_rules |= rule_obj.browse(sorted_rule_ids)
-        return sorted_rules
+        "Return rules for the Paylips, sorted by sequence"
+        current_structure = self.struct_id
+        if current_structure:
+            structures = current_structure.get_structure_with_parents()
+        else:
+            contracts = self._get_employee_contracts()
+            structures = contracts.struct_id.get_structure_with_parents()
+        return structures.get_all_rules()
 
     def _compute_payslip_line(self, rule, localdict, lines_dict):
         self.ensure_one()
@@ -536,10 +532,10 @@ class HrPayslip(models.Model):
         total = values["quantity"] * values["rate"] * values["amount"] / 100.0
         values["total"] = total
         # set/overwrite the amount computed for this rule in the localdict
-        code = rule.code or rule.id
-        localdict[code] = total
-        localdict["rules"].dict[code] = rule
-        localdict["result_rules"].dict[code] = BaseBrowsableObject(values)
+        if rule.code:
+            localdict[rule.code] = total
+            localdict["rules"].dict[rule.code] = rule
+            localdict["result_rules"].dict[rule.code] = BaseBrowsableObject(values)
         # sum the amount for its salary category
         localdict = self._sum_salary_rule_category(
             localdict, rule.category_id, total - previous_amount
@@ -580,7 +576,7 @@ class HrPayslip(models.Model):
 
     def get_lines_dict(self):
         lines_dict = {}
-        blacklist = []
+        blacklist = self.env["hr.salary.rule"]
         for payslip in self:
             contracts = payslip._get_employee_contracts()
             baselocaldict = payslip._get_baselocaldict(contracts)
@@ -601,16 +597,14 @@ class HrPayslip(models.Model):
                 for rule in payslip._get_salary_rules():
                     localdict = rule._reset_localdict_values(localdict)
                     # check if the rule can be applied
-                    if rule._satisfy_condition(localdict) and rule.id not in blacklist:
+                    if rule._satisfy_condition(localdict) and rule not in blacklist:
                         localdict, _dict = payslip._compute_payslip_line(
                             rule, localdict, lines_dict
                         )
                         lines_dict.update(_dict)
                     else:
                         # blacklist this rule and its children
-                        blacklist += [
-                            id for id, seq in rule._recursive_search_of_rules()
-                        ]
+                        blacklist += rule._recursive_search_of_rules()
                 # call localdict_hook
                 localdict = payslip.localdict_hook(localdict)
                 # reset "current_contract" dict
@@ -759,15 +753,14 @@ class HrPayslip(models.Model):
 
     def _compute_name(self):
         for record in self:
+            date_formatted = babel.dates.format_date(
+                date=datetime.combine(record.date_from, time.min),
+                format="MMMM-y",
+                locale=record.env.context.get("lang") or "en_US",
+            )
             record.name = _("Salary Slip of %(name)s for %(dt)s") % {
                 "name": record.employee_id.name,
-                "dt": tools.ustr(
-                    babel.dates.format_date(
-                        date=datetime.combine(record.date_from, time.min),
-                        format="MMMM-y",
-                        locale=record.env.context.get("lang") or "en_US",
-                    )
-                ),
+                "dt": str(date_formatted),
             }
 
     @api.onchange("contract_id")
@@ -784,18 +777,3 @@ class HrPayslip(models.Model):
             return line[0].total
         else:
             return 0.0
-
-    def line_sum_where(self, field_name, value, rules, result_rules):
-        """
-        The method may be used in salary rule code.
-        It will sum the total of the previously computed rules
-        where the given field has the given value.
-        E.g.: total_seq_10 = payslip.line_sum_where("sequence", 10, rules, result_rules)
-        """
-        return sum(
-            [
-                result_rules.dict[code].dict["total"]
-                for code, rule in rules.dict.items()
-                if getattr(rule, field_name) == value
-            ]
-        )
