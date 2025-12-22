@@ -8,6 +8,7 @@
   - Luis M. Ontalba
   - Ernesto Tejeda
   - Sergio Teruel
+  - Carlos Roca
 - [GreenIce](https://www.greenice.com):
   - Fernando La Chica \<<fernandolachica@gmail.com>\>
 - [Landoo](https://www.landoo.es):
@@ -16,5 +17,3 @@
   - Miguel Gandia \<<miguel@studio73.es>\>
 - [Trobz](https://trobz.com):
   - Nguyen Minh Chien \<<chien@trobz.com>\>
-- [Binhex](https://binhex.cloud)
-  - Antonio Ruban \<<antoniodavid8@gmail.com>\>

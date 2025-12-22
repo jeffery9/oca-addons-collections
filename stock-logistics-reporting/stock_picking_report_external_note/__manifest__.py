@@ -3,9 +3,9 @@
 
 {
     "name": "Stock Picking Report External Note",
-    "summary": """Adds a note in Stock Picking shown on external reports like
-    Delivery Slip""",
-    "version": "17.0.1.0.0",
+    "summary": "Adds a note in Stock Picking shown on external reports like "
+    "Delivery Slip",
+    "version": "18.0.1.0.1",
     "development_status": "Beta",
     "category": "Inventory/Delivery",
     "website": "https://github.com/OCA/stock-logistics-reporting",
@@ -14,6 +14,11 @@
     "license": "AGPL-3",
     "application": False,
     "installable": True,
-    "depends": ["stock"],
-    "data": ["report/report_deliveryslip.xml", "views/stock_picking_views.xml"],
+    "depends": [
+        "stock",
+    ],
+    "data": [
+        "report/report_deliveryslip.xml",
+        "views/stock_picking_views.xml",
+    ],
 }
