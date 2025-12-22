@@ -8,19 +8,17 @@ class AccountSpreadInvoiceLineLinkWizard(models.TransientModel):
     _name = "account.spread.invoice.line.link.wizard"
     _description = "Account Spread Invoice Line Link Wizard"
 
+    @api.model
     def _selection_spread_action_type(self):
         base_selection = [
             ("template", _("Create from spread template")),
             ("new", _("Create new spread board")),
         ]
-        if not self.env.context.get("allow_spread_planning"):
-            return base_selection
+        if self.env.context.get("allow_spread_planning"):
+            base_selection.append(("link", _("Link to existing spread board")))
+        return base_selection
 
-        link_selection = [
-            ("link", _("Link to existing spread board")),
-        ]
-        return link_selection + base_selection
-
+    @api.model
     def _selection_default_spread_action_type(self):
         if not self.env.context.get("allow_spread_planning"):
             return "template"
@@ -56,8 +54,8 @@ class AccountSpreadInvoiceLineLinkWizard(models.TransientModel):
     )
     company_id = fields.Many2one("res.company", required=True)
     spread_action_type = fields.Selection(
-        selection=_selection_spread_action_type,
-        default=_selection_default_spread_action_type,
+        selection=lambda self: self._selection_spread_action_type(),
+        default=lambda self: self._selection_default_spread_action_type(),
     )
     template_id = fields.Many2one("account.spread.template", string="Spread Template")
     use_invoice_line_account = fields.Boolean(
@@ -202,9 +200,9 @@ class AccountSpreadInvoiceLineLinkWizard(models.TransientModel):
                 date_invoice = date_invoice or fields.Date.today()
                 spread_vals["spread_date"] = date_invoice
 
-                spread_vals[
-                    "name"
-                ] = f"({spread_vals['name']} { self.invoice_line_id.name})"
+                spread_vals["name"] = (
+                    f"({spread_vals['name']} { self.invoice_line_id.name})"
+                )
 
                 if spread_vals["invoice_type"] == "out_invoice":
                     spread_vals["credit_account_id"] = account.id

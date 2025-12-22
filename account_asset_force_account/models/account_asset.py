@@ -17,7 +17,7 @@ class AccountAsset(models.Model):
     account_depreciation_id = fields.Many2one(
         comodel_name="account.account",
         string="Depreciation Account",
-        domain="[('deprecated', '=', False), ('company_id', '=', company_id)]",
+        domain="[('deprecated', '=', False), ('company_ids', '=', company_id)]",
         help="The account used to record depreciation for the asset.",
         required=True,
     )
@@ -25,7 +25,7 @@ class AccountAsset(models.Model):
     account_expense_depreciation_id = fields.Many2one(
         comodel_name="account.account",
         string="Depreciation Expense Account",
-        domain="[('deprecated', '=', False), ('company_id', '=', company_id)]",
+        domain="[('deprecated', '=', False), ('company_ids', '=', company_id)]",
         help="The account used to record the expense of the depreciation.",
         required=True,
     )
@@ -48,9 +48,9 @@ class AccountAsset(models.Model):
                 if not vals.get("account_depreciation_id"):
                     vals["account_depreciation_id"] = profile.account_depreciation_id.id
                 if not vals.get("account_expense_depreciation_id"):
-                    vals[
-                        "account_expense_depreciation_id"
-                    ] = profile.account_expense_depreciation_id.id
+                    vals["account_expense_depreciation_id"] = (
+                        profile.account_expense_depreciation_id.id
+                    )
         return super().create(vals_list)
 
     @api.depends("account_move_line_ids", "profile_id")
@@ -59,7 +59,8 @@ class AccountAsset(models.Model):
             # Cannot update the account_asset_id if the asset is not in draft state
             if record.state != "draft":
                 continue
-            # Looks if the asset comes from an invoice, if so, takes the account from the invoice
+            # Looks if the asset comes from an invoice, if so, takes the account
+            # from the invoice
             if len(record.account_move_line_ids.account_id) != 0:
                 invoice_line = record.account_move_line_ids.filtered(
                     lambda line: line.move_id.move_type == "in_invoice"

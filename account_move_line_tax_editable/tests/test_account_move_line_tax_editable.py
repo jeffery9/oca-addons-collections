@@ -9,8 +9,8 @@ from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 @tagged("post_install", "-at_install")
 class TestAccountMoveLineTaxEditable(AccountTestInvoicingCommon):
     @classmethod
-    def setUpClass(cls, chart_template_ref=None):
-        super().setUpClass(chart_template_ref=chart_template_ref)
+    def setUpClass(cls):
+        super().setUpClass()
         cls.env = cls.env(
             context=dict(
                 cls.env.context,
@@ -102,8 +102,10 @@ class TestAccountMoveLineTaxEditable(AccountTestInvoicingCommon):
         )
 
     def test_tax_not_edited(self):
-        """In this case we set the tax_repartition_line_id field, simulating that the
-        move came from an invoice with tax applied. Thus, tax_line_id should be computed"""
+        """
+        In this case we set the tax_repartition_line_id field, simulating that the
+        move came from an invoice with tax applied. Thus, tax_line_id should be computed
+        """
         tax_line = self.test_move.line_ids.filtered(
             lambda x: x.account_id == self.account_tax_sale
         )

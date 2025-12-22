@@ -3,11 +3,11 @@ name: tests
 on:
   pull_request:
     branches:
-      - "17.0*"
+      - "18.0*"
   push:
     branches:
-      - "17.0"
-      - "17.0-ocabot-*"
+      - "18.0"
+      - "18.0-ocabot-*"
 
 jobs:
   unreleased-deps:
@@ -35,25 +35,25 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - container: ghcr.io/oca/oca-ci/py3.10-odoo17.0:latest
-            include: "account_move_name_sequence"
+          - container: ghcr.io/oca/oca-ci/py3.10-odoo18.0:latest
+            include: "account_move_name_sequence,account_journal_restrict_mode"
             name: test with Odoo
-          - container: ghcr.io/oca/oca-ci/py3.10-odoo17.0:latest
-            include: "account_journal_restrict_mode"
+            makepot: "true"
+          - container: ghcr.io/oca/oca-ci/py3.10-ocb18.0:latest
+            include: "account_move_name_sequence,account_journal_restrict_mode"
+            name: test with OCB
+          - container: ghcr.io/oca/oca-ci/py3.10-odoo18.0:latest
+            include: "account_journal_general_sequence"
             name: test with Odoo
-          - container: ghcr.io/oca/oca-ci/py3.10-ocb17.0:latest
-            include: "account_move_name_sequence"
+          - container: ghcr.io/oca/oca-ci/py3.10-ocb18.0:latest
+            include: "account_journal_general_sequence"
             name: test with OCB
             makepot: "true"
-          - container: ghcr.io/oca/oca-ci/py3.10-ocb17.0:latest
-            include: "account_journal_restrict_mode"
-            name: test with OCB
-            makepot: "true"
-          - container: ghcr.io/oca/oca-ci/py3.10-odoo17.0:latest
-            exclude: "account_move_name_sequence,account_journal_restrict_mode"
+          - container: ghcr.io/oca/oca-ci/py3.10-odoo18.0:latest
+            exclude: "account_move_name_sequence,account_journal_restrict_mode,account_journal_general_sequence"
             name: test with Odoo
-          - container: ghcr.io/oca/oca-ci/py3.10-ocb17.0:latest
-            exclude: "account_move_name_sequence,account_journal_restrict_mode"
+          - container: ghcr.io/oca/oca-ci/py3.10-ocb18.0:latest
+            exclude: "account_move_name_sequence,account_journal_restrict_mode,account_journal_general_sequence"
             name: test with OCB
             makepot: "true"
     services:
@@ -68,6 +68,7 @@ jobs:
     env:
       INCLUDE: "${{ matrix.include }}"
       EXCLUDE: "${{ matrix.exclude }}"
+      OCA_ENABLE_CHECKLOG_ODOO: "1"
     steps:
       - uses: actions/checkout@v4
         with:

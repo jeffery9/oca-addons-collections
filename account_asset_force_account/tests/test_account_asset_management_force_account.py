@@ -27,7 +27,7 @@ class TestAssetManagement(AccountTestInvoicingCommon):
         cls.account_expense_laptop = cls.env["account.account"].create(
             {
                 "name": "Depreciation Expense Account - Laptop",
-                "code": "600001",
+                "code": "600011",
                 "account_type": "expense",
             }
         )
@@ -94,7 +94,7 @@ class TestAssetManagement(AccountTestInvoicingCommon):
         self.assertEqual(
             ict0.account_expense_depreciation_id.id, self.account_expense_laptop.id
         )
-
+        aed_id = self.car5y.account_expense_depreciation_id.id
         vehicle0 = self.asset_model.create(
             {
                 "state": "draft",
@@ -107,7 +107,7 @@ class TestAssetManagement(AccountTestInvoicingCommon):
                 "profile_id": self.car5y.id,
                 "date_start": time.strftime("%Y-01-01"),
                 "account_depreciation_id": self.account_depreciation_car.id,
-                "account_expense_depreciation_id": self.car5y.account_expense_depreciation_id.id,
+                "account_expense_depreciation_id": aed_id,
             }
         )
         self.assertEqual(vehicle0.state, "draft")
@@ -186,3 +186,55 @@ class TestAssetManagement(AccountTestInvoicingCommon):
         self.assertEqual(vehicle0.value_residual, 8000)
 
         vehicle0.invalidate_recordset()
+
+    def test_profile_onchange_and_compute_account_asset_id_from_invoice(self):
+        # Create asset with non-draft state → onchange should do nothing
+        aed_id = self.ict3Y.account_expense_depreciation_id.id
+        asset = self.asset_model.create(
+            {
+                "name": "Non-Draft Asset",
+                "profile_id": self.ict3Y.id,
+                "purchase_value": 1000,
+                "date_start": "2025-01-01",
+                "method_time": "year",
+                "method_number": 1,
+                "method_period": "year",
+                "account_depreciation_id": self.ict3Y.account_depreciation_id.id,
+                "account_expense_depreciation_id": aed_id,
+                "state": "open",
+            }
+        )
+        # Trigger onchange and ensure fields remain unchanged
+        asset._onchange_profile_id()
+        self.assertEqual(
+            asset.account_depreciation_id.id, self.ict3Y.account_depreciation_id.id
+        )
+
+    def test_create_fallback_to_profile_accounts(self):
+        asset = self.asset_model.create(
+            {
+                "name": "Profile Only Asset",
+                "profile_id": self.ict3Y.id,
+                "purchase_value": 500,
+                "date_start": "2025-01-01",
+                "method_time": "year",
+                "method_number": 1,
+                "method_period": "year",
+            }
+        )
+        self.assertEqual(
+            asset.account_depreciation_id.id, self.ict3Y.account_depreciation_id.id
+        )
+        self.assertEqual(
+            asset.account_expense_depreciation_id.id,
+            self.ict3Y.account_expense_depreciation_id.id,
+        )
+
+    def test_onchange_asset_profile_id_no_super_called_if_asset_fixed(self):
+        move_line = self.env["account.move.line"].new(
+            {
+                "account_id": self.account_depreciation_car.id,
+            }
+        )
+        move_line._onchange_asset_profile_id()
+        self.assertEqual(move_line.account_id.account_type, "asset_fixed")

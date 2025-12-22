@@ -28,7 +28,7 @@
                     </h3>
                 </div>
                 <group string="Chart of Accounts" invisible="state!='init'">
-                    <field name="company_id" />
+                    <field name="company_id" domain="[('parent_id', '=', False)]" />
                     <field name="code_digits" invisible="1" />
                     <field name="chart_template" required="1" />
                 </group>
@@ -138,10 +138,10 @@
                                 invisible="not update_account_group"
                             >
                                 <field name="account_group_matching_ids">
-                                    <tree create="false" edit="false">
+                                    <list create="false" edit="false">
                                         <field name="sequence" widget="handle" />
                                         <field name="matching_value" />
-                                    </tree>
+                                    </list>
                                     <form>
                                         <field name="matching_value" readonly="1" />
                                     </form>
@@ -153,10 +153,10 @@
                                 invisible="not update_account"
                             >
                                 <field name="account_matching_ids">
-                                    <tree create="false" edit="false">
+                                    <list create="false" edit="false">
                                         <field name="sequence" widget="handle" />
                                         <field name="matching_value" />
-                                    </tree>
+                                    </list>
                                     <form>
                                         <field name="matching_value" readonly="1" />
                                     </form>
@@ -168,10 +168,10 @@
                                 invisible="not update_tax_group"
                             >
                                 <field name="tax_group_matching_ids">
-                                    <tree create="false" edit="false">
+                                    <list create="false" edit="false">
                                         <field name="sequence" widget="handle" />
                                         <field name="matching_value" />
-                                    </tree>
+                                    </list>
                                     <form>
                                         <field name="matching_value" readonly="1" />
                                     </form>
@@ -183,10 +183,10 @@
                                 invisible="not update_tax"
                             >
                                 <field name="tax_matching_ids">
-                                    <tree create="false" edit="false">
+                                    <list create="false" edit="false">
                                         <field name="sequence" widget="handle" />
                                         <field name="matching_value" />
-                                    </tree>
+                                    </list>
                                     <form>
                                         <field name="matching_value" readonly="1" />
                                     </form>
@@ -198,10 +198,10 @@
                                 invisible="not update_fiscal_position"
                             >
                                 <field name="fp_matching_ids">
-                                    <tree create="false" edit="false">
+                                    <list create="false" edit="false">
                                         <field name="sequence" widget="handle" />
                                         <field name="matching_value" />
-                                    </tree>
+                                    </list>
                                     <form>
                                         <field name="matching_value" readonly="1" />
                                     </form>
@@ -218,19 +218,19 @@
                             invisible="not update_account_group"
                         >
                             <field name="account_group_ids" nolabel="1">
-                                <tree decoration-danger="type=='updated'">
+                                <list create="false" edit="false" decoration-danger="type=='updated'">
                                     <field
                                         name="update_account_group_id"
                                         invisible="not update_account_group_id"
                                     />
                                     <field
                                         name="xml_id"
-                                        invisible="update_account_group_id"
+                                        optional="hide"
                                     />
                                     <field name="notes" />
                                     <field name="type" />
-                                </tree>
-                                <form>
+                                </list>
+                                <form edit="false">
                                     <group col="2">
                                         <group>
                                             <field name="xml_id" />
@@ -247,19 +247,19 @@
                         </page>
                         <page string="Accounts" invisible="not update_account">
                             <field name="account_ids" nolabel="1">
-                                <tree decoration-danger="type=='updated'">
+                                <list create="false" edit="false" decoration-danger="type=='updated'">
                                     <field
                                         name="update_account_id"
                                         invisible="not update_account_id"
                                     />
                                     <field
                                         name="xml_id"
-                                        invisible="update_account_id"
+                                        optional="hide"
                                     />
                                     <field name="notes" />
                                     <field name="type" />
-                                </tree>
-                                <form>
+                                </list>
+                                <form edit="false">
                                     <group col="2">
                                         <group>
                                             <field name="xml_id" />
@@ -276,19 +276,16 @@
                         </page>
                         <page string="Tax groups" invisible="not update_tax_group">
                             <field name="tax_group_ids" nolabel="1">
-                                <tree decoration-danger="type=='updated'">
+                                <list create="false" edit="false" decoration-danger="type=='updated'">
                                     <field
                                         name="update_tax_group_id"
                                         invisible="not update_tax_group_id"
                                     />
-                                    <field
-                                        name="xml_id"
-                                        invisible="update_tax_group_id"
-                                    />
+                                    <field name="xml_id" optional="hide" />
                                     <field name="notes" />
                                     <field name="type" />
-                                </tree>
-                                <form>
+                                </list>
+                                <form edit="false">
                                     <group col="2">
                                         <group>
                                             <field name="xml_id" />
@@ -305,17 +302,17 @@
                         </page>
                         <page string="Taxes" invisible="not update_tax">
                             <field name="tax_ids" nolabel="1">
-                                <tree decoration-danger="type=='updated'">
+                                <list create="false" edit="false" decoration-danger="type=='updated'">
                                     <field
                                         name="update_tax_id"
                                         invisible="not update_tax_id"
                                     />
-                                    <field name="xml_id" invisible="update_tax_id" />
+                                    <field name="xml_id" optional="hide" />
                                     <field name="type_tax_use" />
                                     <field name="notes" />
                                     <field name="type" />
-                                </tree>
-                                <form>
+                                </list>
+                                <form edit="false">
                                     <group col="2">
                                         <group>
                                             <field name="xml_id" />
@@ -336,8 +333,9 @@
                             invisible="not update_fiscal_position"
                         >
                             <field name="fiscal_position_ids" nolabel="1">
-                                <tree
+                                <list
                                     name="fiscal_positions"
+                                    create="false" edit="false"
                                     decoration-danger="type=='updated'"
                                 >
                                     <field
@@ -346,12 +344,12 @@
                                     />
                                     <field
                                         name="xml_id"
-                                        invisible="update_fiscal_position_id"
+                                        optional="hide"
                                     />
                                     <field name="notes" />
                                     <field name="type" />
-                                </tree>
-                                <form>
+                                </list>
+                                <form edit="false">
                                     <group col="2">
                                         <group>
                                             <field name="xml_id" />

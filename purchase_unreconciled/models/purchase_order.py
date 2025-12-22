@@ -177,7 +177,7 @@ class PurchaseOrder(models.Model):
                 "name": _("Reconciled journal items"),
                 "type": "ir.actions.act_window",
                 "view_type": "form",
-                "view_mode": "tree,form",
+                "view_mode": "list,form",
                 "res_model": "account.move.line",
                 "domain": [("id", "in", reconciled_ids.ids)],
             }

@@ -4,7 +4,7 @@
 from datetime import datetime
 
 from odoo import exceptions, fields
-from odoo.tests.common import Form, SingleTransactionCase
+from odoo.tests import Form, SingleTransactionCase
 
 
 class TestPurchaseUnreconciled(SingleTransactionCase):
@@ -32,7 +32,7 @@ class TestPurchaseUnreconciled(SingleTransactionCase):
                 "code": 9999,
                 "account_type": asset_type,
                 "reconcile": True,
-                "company_id": cls.company.id,
+                "company_ids": [(6, 0, [cls.company.id])],
             }
         )
         cls.writeoff_acc = cls.acc_obj.create(
@@ -41,7 +41,7 @@ class TestPurchaseUnreconciled(SingleTransactionCase):
                 "code": 8888,
                 "account_type": expense_type,
                 "reconcile": True,
-                "company_id": cls.company.id,
+                "company_ids": [(6, 0, [cls.company.id])],
             }
         )
         cls.stock_journal = cls.env["account.journal"].create(
@@ -86,7 +86,8 @@ class TestPurchaseUnreconciled(SingleTransactionCase):
         cls.product_to_reconcile = cls.product_obj.create(
             {
                 "name": "Purchased Product (To reconcile)",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
                 "standard_price": 100.0,
                 "categ_id": cls.product_categ.id,
             }
@@ -94,7 +95,8 @@ class TestPurchaseUnreconciled(SingleTransactionCase):
         cls.product_to_reconcile2 = cls.product_obj.create(
             {
                 "name": "Purchased Product 2 (To reconcile)",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
                 "standard_price": 100.0,
                 "categ_id": cls.product_categ.id,
             }
@@ -151,7 +153,7 @@ class TestPurchaseUnreconciled(SingleTransactionCase):
                 "name": name,
                 "code": code,
                 "account_type": acc_type,
-                "company_id": company.id,
+                "company_ids": [(6, 0, [company.id])],
                 "reconcile": reconcile,
             }
         )

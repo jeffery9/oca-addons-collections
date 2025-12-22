@@ -84,7 +84,7 @@ class TestAccountMoveLinePurchaseInfo(common.TransactionCase):
                 "name": name,
                 "code": code,
                 "account_type": acc_type,
-                "company_id": company.id,
+                "company_ids": [(6, 0, [company.id])],
                 "reconcile": True,
             }
         )
@@ -106,9 +106,9 @@ class TestAccountMoveLinePurchaseInfo(common.TransactionCase):
             {
                 "name": "test_product",
                 "categ_id": product_ctg.id,
-                "type": "product",
                 "standard_price": 1.0,
                 "list_price": 1.0,
+                "is_storable": True,
             }
         )
         return product
@@ -160,9 +160,8 @@ class TestAccountMoveLinePurchaseInfo(common.TransactionCase):
             self.assertEqual(
                 balance,
                 expected_balance,
-                "Balance is not {} for Purchase Line {}.".format(
-                    str(expected_balance), purchase_line.name
-                ),
+                f"Balance is not {str(expected_balance)} for Purchase "
+                f"Line {purchase_line.name}.",
             )
 
     def test_purchase_invoice(self):
@@ -214,9 +213,8 @@ class TestAccountMoveLinePurchaseInfo(common.TransactionCase):
             [
                 (
                     po_line.id,
-                    "[{}] {} ({})".format(
-                        po_line.order_id.name, po_line.name, po_line.order_id.state
-                    ),
+                    f"[{po_line.order_id.name}] {po_line.name} "
+                    f"({po_line.order_id.state})",
                 )
             ],
         )
