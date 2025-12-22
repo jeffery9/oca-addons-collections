@@ -6,14 +6,14 @@ import unittest
 from cerberus import Validator
 
 from odoo.exceptions import UserError
-from odoo.tests.common import BaseCase, MetaCase
+from odoo.tests.common import TransactionCase
 
 from ..components.cerberus_validator import BaseRestCerberusValidator
 from ..restapi import CerberusValidator
 from ..tools import cerberus_to_json
 
 
-class TestCerberusValidator(BaseCase, MetaCase("DummyCase", (object,), {})):
+class TestCerberusValidator(TransactionCase):
     """Test all the methods that must be implemented by CerberusValidator to
     be a valid RestMethodParam"""
 
@@ -49,6 +49,8 @@ class TestCerberusValidator(BaseCase, MetaCase("DummyCase", (object,), {})):
         cls.nested_schema_cerberus_validator = CerberusValidator(
             schema=cls.nested_schema
         )
+        cls.mock_service = unittest.mock.Mock()
+        cls.mock_service.env = cls.env
 
     def test_to_openapi_responses(self):
         res = self.simple_schema_cerberus_validator.to_openapi_responses(None, None)
@@ -254,7 +256,9 @@ class TestCerberusValidator(BaseCase, MetaCase("DummyCase", (object,), {})):
     def test_from_params_validation(self):
         # name is required
         with self.assertRaises(UserError):
-            self.simple_schema_cerberus_validator.from_params(None, params={})
+            self.simple_schema_cerberus_validator.from_params(
+                self.mock_service, params={}
+            )
 
     def test_to_response_add_default(self):
         result = {"name": "test"}
@@ -271,10 +275,12 @@ class TestCerberusValidator(BaseCase, MetaCase("DummyCase", (object,), {})):
         # If a response is not conform to the expected schema it's considered
         # as a programmatic error not a user error
         with self.assertRaises(SystemError):
-            self.simple_schema_cerberus_validator.to_response(None, result={})
+            self.simple_schema_cerberus_validator.to_response(
+                self.mock_service, result={}
+            )
 
     def test_schema_lookup_from_string(self):
-        class MyService(object):
+        class MyService:
             def _get_simple_schema(self):
                 return {"name": {"type": "string", "required": True, "nullable": True}}
 
@@ -290,7 +296,7 @@ class TestCerberusValidator(BaseCase, MetaCase("DummyCase", (object,), {})):
         )
 
     def test_schema_lookup_from_string_custom_validator(self):
-        class MyService(object):
+        class MyService:
             def _get_simple_schema(self):
                 return Validator(
                     {"name": {"type": "string", "required": False}}, require_all=True
@@ -322,7 +328,7 @@ class TestCerberusValidator(BaseCase, MetaCase("DummyCase", (object,), {})):
             def has_validator_handler(self, service, method_name, direction):
                 return True
 
-        class MyService(object):
+        class MyService:
             def component(self, *args, **kwargs):
                 return CustomBaseRestCerberusValidator(unittest.mock.Mock())
 

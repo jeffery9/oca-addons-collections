@@ -2,10 +2,10 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 # from urllib.parse import urlparse
 import json
-
-import mock
+from unittest import mock
 
 from odoo import exceptions
+from odoo.http import Response
 from odoo.tools import mute_logger
 
 from odoo.addons.base_rest.controllers.main import _PseudoCollection
@@ -13,7 +13,7 @@ from odoo.addons.base_rest.tests.common import TransactionRestServiceRegistryCas
 from odoo.addons.component.tests.common import new_rollbacked_env
 from odoo.addons.rest_log import exceptions as log_exceptions  # pylint: disable=W7950
 
-from .common import TestDBLoggingMixin
+from .common import FakeConcurrentUpdateError, TestDBLoggingMixin
 
 
 class TestDBLogging(TransactionRestServiceRegistryCase, TestDBLoggingMixin):
@@ -40,8 +40,8 @@ class TestDBLogging(TransactionRestServiceRegistryCase, TestDBLoggingMixin):
         expected = {
             # fmt:off
             "coll1.service1.endpoint": ("success", "failed"),
-            "coll1.service2.endpoint": ("failed", ),
-            "coll2.service1.endpoint": ("success", ),
+            "coll1.service2.endpoint": ("failed",),
+            "coll2.service1.endpoint": ("success",),
             # fmt: on
         }
         self.assertEqual(self.env["rest.log"]._get_log_active_conf(), expected)
@@ -230,6 +230,54 @@ class TestDBLogging(TransactionRestServiceRegistryCase, TestDBLoggingMixin):
         expected["ValueError"] = "warning"
         self.assertEqual(mapping, expected)
 
+    def test_log_entry_values_success_with_response(self):
+        with self._get_mocked_request() as mocked_request:
+            res = Response(
+                b"A test .pdf file to download",
+                headers=[
+                    ("Content-Type", "application/pdf"),
+                    ("X-Content-Type-Options", "nosniff"),
+                    ("Content-Disposition", "attachment; filename*=UTF-8''test.pdf"),
+                    ("Content-Length", 28),
+                ],
+            )
+            res.status_code = 200
+            entry = self.service._log_call_in_db(
+                self.env, mocked_request, "method", result=res
+            )
+        self.assertEqual(entry.state, "success")
+        self.assertEqual(
+            json.loads(entry.result),
+            {
+                "headers": {
+                    "Content-Disposition": "attachment; filename*=UTF-8''test.pdf",
+                    "Content-Length": "28",
+                    "Content-Type": "application/pdf",
+                    "X-Content-Type-Options": "nosniff",
+                },
+                "status": 200,
+            },
+        )
+
+    def test_log_entry_values_failure_with_response(self):
+        with self._get_mocked_request() as mocked_request:
+            res = Response(b"", headers=[])
+            res.status_code = 418
+            entry = self.service._log_call_in_db(
+                self.env, mocked_request, "method", result=res
+            )
+        self.assertEqual(entry.state, "failed")
+        self.assertEqual(
+            json.loads(entry.result),
+            {
+                "headers": {
+                    "Content-Length": "0",
+                    "Content-Type": "text/html; charset=utf-8",
+                },
+                "status": 418,
+            },
+        )
+
 
 class TestDBLoggingExceptionBase(
     TransactionRestServiceRegistryCase, TestDBLoggingMixin
@@ -325,4 +373,67 @@ class TestDBLoggingExceptionValueError(TestDBLoggingExceptionBase):
     def test_log_exception_value(self):
         self._test_exception(
             "value", log_exceptions.RESTServiceDispatchException, "ValueError", "severe"
+        )
+
+
+class TestDBLoggingRetryableError(
+    TransactionRestServiceRegistryCase, TestDBLoggingMixin
+):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls._setup_registry(cls)
+
+    @classmethod
+    def tearDownClass(cls):
+        # pylint: disable=W8110
+        cls._teardown_registry(cls)
+        super().tearDownClass()
+
+    def _test_exception(self, test_type, wrapping_exc, exc_name, severity):
+        log_model = self.env["rest.log"].sudo()
+        initial_entries = log_model.search([])
+        # Context: we are running in a transaction case which uses savepoints.
+        # The log machinery is going to rollback the transation when catching errors.
+        # Hence we need a completely separated env for the service.
+        with new_rollbacked_env() as new_env:
+            # Init fake collection w/ new env
+            collection = _PseudoCollection(self._collection_name, new_env)
+            service = self._get_service(self, collection=collection)
+            with self._get_mocked_request(env=new_env):
+                try:
+                    service.dispatch("fail", test_type)
+                except Exception as err:
+                    # Not using `assertRaises` to inspect the exception directly
+                    self.assertTrue(isinstance(err, wrapping_exc))
+                    self.assertEqual(
+                        service._get_exception_message(err), "Failed as you wanted!"
+                    )
+
+        with new_rollbacked_env() as new_env:
+            log_model = new_env["rest.log"].sudo()
+            entry = log_model.search([]) - initial_entries
+            expected = {
+                "collection": service._collection,
+                "state": "failed",
+                "result": "null",
+                "exception_name": exc_name,
+                "exception_message": "Failed as you wanted!",
+                "severity": severity,
+            }
+            self.assertRecordValues(entry, [expected])
+
+    @staticmethod
+    def _get_test_controller(class_or_instance, root_path=None):
+        return super()._get_test_controller(
+            class_or_instance, root_path="/test_log_exception_retryable/"
+        )
+
+    def test_log_exception_retryable(self):
+        # retryable error must bubble up to the retrying mechanism
+        self._test_exception(
+            "retryable",
+            FakeConcurrentUpdateError,
+            "odoo.addons.rest_log.tests.common.FakeConcurrentUpdateError",
+            "warning",
         )

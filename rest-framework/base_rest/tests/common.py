@@ -29,7 +29,7 @@ from ..core import (
 from ..tools import ROUTING_DECORATOR_ATTR, _inspect_methods
 
 
-class RegistryMixin(object):
+class RegistryMixin:
     @classmethod
     def setUpRegistry(cls):
         with new_rollbacked_env() as env:
@@ -53,7 +53,6 @@ class RegistryMixin(object):
 
 
 class RestServiceRegistryCase(ComponentRegistryCase):
-
     # pylint: disable=W8106
     @staticmethod
     def _setup_registry(class_or_instance):
@@ -146,13 +145,13 @@ class RestServiceRegistryCase(ComponentRegistryCase):
         )
         db_name = get_db_name()
         _component_databases[db_name] = class_or_instance._original_components
-        _rest_services_databases[
-            db_name
-        ] = class_or_instance._original_services_registry
+        _rest_services_databases[db_name] = (
+            class_or_instance._original_services_registry
+        )
         class_or_instance._service_registry = {}
-        _rest_controllers_per_module[
-            _get_addon_name(class_or_instance.__module__)
-        ] = class_or_instance._original_addon_rest_controllers_per_module
+        _rest_controllers_per_module[_get_addon_name(class_or_instance.__module__)] = (
+            class_or_instance._original_addon_rest_controllers_per_module
+        )
 
     @staticmethod
     def _build_services(class_or_instance, *classes):
@@ -204,7 +203,7 @@ class RestServiceRegistryCase(ComponentRegistryCase):
         return work.component(usage=usage)
 
 
-class TransactionRestServiceRegistryCase(TransactionCase, RestServiceRegistryCase):
+class TransactionRestServiceRegistryCase(RestServiceRegistryCase, TransactionCase):
     """Adds Odoo Transaction to inherited from ComponentRegistryCase.
 
     This class doesn't set up the registry for you.
@@ -235,14 +234,8 @@ class TransactionRestServiceRegistryCase(TransactionCase, RestServiceRegistryCas
     # pylint: disable=W8106
     @classmethod
     def setUpClass(cls):
-        # resolve an inheritance issue (common.TransactionCase does not use
-        # super)
-        TransactionCase.setUpClass()
+        super().setUpClass()
         cls.base_url = cls.env["ir.config_parameter"].get_param("web.base.url")
-
-    @classmethod
-    def tearDownClass(cls):
-        TransactionCase.tearDownClass()
 
 
 class BaseRestCase(TransactionComponentCase, RegistryMixin):

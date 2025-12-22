@@ -1,7 +1,7 @@
 # Copyright 2022 ACSONE SA/NV
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/LGPL).
 
-from typing import TYPE_CHECKING, Annotated
+from typing import Annotated
 
 from odoo.api import Environment
 from odoo.exceptions import AccessDenied
@@ -13,10 +13,8 @@ from fastapi import Depends, Header, HTTPException, Query, status
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 
 from .context import odoo_env_ctx
+from .models.fastapi_endpoint import FastapiEndpoint
 from .schemas import Paging
-
-if TYPE_CHECKING:
-    from .models.fastapi_endpoint import FastapiEndpoint
 
 
 def company_id() -> int | None:
@@ -50,7 +48,7 @@ def optionally_authenticated_partner_impl() -> Partner | None:
 
 
 def authenticated_partner_env(
-    partner: Annotated[Partner, Depends(authenticated_partner_impl)]
+    partner: Annotated[Partner, Depends(authenticated_partner_impl)],
 ) -> Environment:
     """Return an environment with the authenticated partner id in the context"""
     return partner.with_context(authenticated_partner_id=partner.id).env
@@ -114,14 +112,20 @@ def basic_auth_user(
     username = credential.username
     password = credential.password
     try:
-        uid = (
+        response = (
             env["res.users"]
             .sudo()
             .authenticate(
-                db=env.cr.dbname, login=username, password=password, user_agent_env=None
+                db=env.cr.dbname,
+                credential={
+                    "type": "password",
+                    "login": username,
+                    "password": password,
+                },
+                user_agent_env=None,
             )
         )
-        return env["res.users"].browse(uid)
+        return env["res.users"].browse(response.get("uid"))
     except AccessDenied as ad:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,

@@ -6,6 +6,8 @@ import textwrap
 
 from apispec import APISpec
 
+from odoo.http import request
+
 from ..core import _rest_services_databases
 from ..tools import ROUTING_DECORATOR_ATTR
 from .rest_method_param_plugin import RestMethodParamPlugin
@@ -20,8 +22,8 @@ class BaseRestServiceAPISpec(APISpec):
 
     def __init__(self, service_component, **params):
         self._service = service_component
-        super(BaseRestServiceAPISpec, self).__init__(
-            title="%s REST services" % self._service._usage,
+        super().__init__(
+            title=f"{self._service._usage} REST services",
             version="",
             openapi_version="3.0.0",
             info={
@@ -42,17 +44,24 @@ class BaseRestServiceAPISpec(APISpec):
             if spec["collection_name"] == self._service._collection:
                 collection_path = path
                 break
-        base_url = env["ir.config_parameter"].sudo().get_param("web.base.url")
-        return [
-            {
-                "url": "%s/%s/%s"
-                % (
-                    base_url.strip("/"),
-                    collection_path.strip("/"),
-                    self._service._usage,
-                )
-            }
-        ]
+        base_domain = (
+            env["ir.config_parameter"].sudo().get_param("web.base.url").strip("/")
+        )
+        current_domain = request.httprequest.url_root.strip("/")
+        domains = [base_domain]
+        if base_domain != current_domain:
+            domains.append(current_domain)
+        res = []
+        for domain in domains:
+            res.append(
+                {
+                    "url": "/".join(
+                        [domain, collection_path.strip("/"), self._service._usage]
+                    )
+                }
+            )
+
+        return res
 
     def _get_plugins(self):
         return [

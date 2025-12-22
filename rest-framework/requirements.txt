@@ -1,11 +1,13 @@
 # generated from manifests external_dependencies
 a2wsgi>=1.10.6
+apispec
+cerberus
 contextvars
+extendable>=0.0.4
 fastapi>=0.110.0
-graphene
-graphql_server==3.0.0b7
 parse-accept-language
-pydantic>=2.0
+pydantic>=2.0.0
+pyquerystring
 python-multipart
 typing-extensions
 ujson

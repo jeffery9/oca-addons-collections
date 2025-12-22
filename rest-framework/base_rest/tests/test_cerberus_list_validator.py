@@ -6,13 +6,13 @@ import unittest
 from cerberus import Validator
 
 from odoo.exceptions import UserError
-from odoo.tests.common import BaseCase, MetaCase
+from odoo.tests.common import TransactionCase
 
 from ..components.cerberus_validator import BaseRestCerberusValidator
 from ..restapi import CerberusListValidator
 
 
-class TestCerberusListValidator(BaseCase, MetaCase("DummyCase", (object,), {})):
+class TestCerberusListValidator(TransactionCase):
     """Test all the methods that must be implemented by CerberusListValidator to
     be a valid RestMethodParam"""
 
@@ -46,6 +46,12 @@ class TestCerberusListValidator(BaseCase, MetaCase("DummyCase", (object,), {})):
             schema=cls.nested_schema
         )
         cls.maxDiff = None
+        cls.mock_service = unittest.mock.Mock()
+        cls.mock_service.env = cls.env
+
+    def filter(self, record):
+        # required to mute logger
+        return 0
 
     def test_to_openapi_responses(self):
         res = self.simple_schema_list_validator.to_openapi_responses(None, None)
@@ -186,15 +192,18 @@ class TestCerberusListValidator(BaseCase, MetaCase("DummyCase", (object,), {})):
         # minItems / maxItems
         with self.assertRaises(UserError):
             # minItems = 1
-            self.simple_schema_list_validator.from_params(None, params=[])
+            self.simple_schema_list_validator.from_params(self.mock_service, params=[])
         with self.assertRaises(UserError):
             # maxItems = 2
             self.simple_schema_list_validator.from_params(
-                None, params=[{"name": "test"}, {"name": "test"}, {"name": "test"}]
+                self.mock_service,
+                params=[{"name": "test"}, {"name": "test"}, {"name": "test"}],
             )
         with self.assertRaises(UserError):
             # name required
-            self.simple_schema_list_validator.from_params(None, params=[{}])
+            self.simple_schema_list_validator.from_params(
+                self.mock_service, params=[{}]
+            )
 
     def test_to_response_ignore_unknown(self):
         result = [{"name": "test", "unknown": True}]
@@ -206,18 +215,21 @@ class TestCerberusListValidator(BaseCase, MetaCase("DummyCase", (object,), {})):
         # as a programmatic error not a user error
         with self.assertRaises(SystemError):
             # minItems = 1
-            self.simple_schema_list_validator.to_response(None, result=[])
+            self.simple_schema_list_validator.to_response(self.mock_service, result=[])
         with self.assertRaises(SystemError):
             # maxItems = 2
             self.simple_schema_list_validator.to_response(
-                None, result=[{"name": "test"}, {"name": "test"}, {"name": "test"}]
+                self.mock_service,
+                result=[{"name": "test"}, {"name": "test"}, {"name": "test"}],
             )
         with self.assertRaises(SystemError):
             # name required
-            self.simple_schema_list_validator.to_response(None, result=[{}])
+            self.simple_schema_list_validator.to_response(
+                self.mock_service, result=[{}]
+            )
 
     def test_schema_lookup_from_string(self):
-        class MyService(object):
+        class MyService:
             def _get_simple_schema(self):
                 return {"name": {"type": "string", "required": True, "nullable": True}}
 
@@ -233,7 +245,7 @@ class TestCerberusListValidator(BaseCase, MetaCase("DummyCase", (object,), {})):
         )
 
     def test_schema_lookup_from_string_custom_validator(self):
-        class MyService(object):
+        class MyService:
             def _get_simple_schema(self):
                 return Validator(
                     {"name": {"type": "string", "required": False}}, require_all=True

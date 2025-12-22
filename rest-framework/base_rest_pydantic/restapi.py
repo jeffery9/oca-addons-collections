@@ -2,7 +2,6 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 import json
 
-from odoo import _
 from odoo.exceptions import UserError
 
 from odoo.addons.base_rest import restapi
@@ -41,7 +40,7 @@ class PydanticModel(restapi.RestMethodParam):
         try:
             return self._model_cls(**params)
         except ValidationError as ve:
-            raise UserError(_("BadRequest %s") % ve.json(indent=0)) from ve
+            raise UserError(service.env._("BadRequest %s") % ve.json(indent=0)) from ve
 
     def to_response(self, service, result):
         # do we really need to validate the instance????
@@ -58,7 +57,7 @@ class PydanticModel(restapi.RestMethodParam):
         try:
             self._model_cls.model_validate_json(to_validate_jsonified)
         except ValidationError as validation_error:
-            raise SystemError(_("Invalid Response")) from validation_error
+            raise SystemError(service.env._("Invalid Response")) from validation_error
         return json_dict
 
     def to_openapi_query_parameters(self, servic, spec):
@@ -71,19 +70,28 @@ class PydanticModel(restapi.RestMethodParam):
                 "required": prop in json_schema.get("required", []),
                 "allowEmptyValue": spec.get("nullable", False),
                 "default": spec.get("default"),
+                "schema": {},
             }
-            if spec.get("schema"):
-                params["schema"] = spec.get("schema")
-            else:
-                params["schema"] = {"type": spec["type"]}
-            if spec.get("items"):
-                params["schema"]["items"] = spec.get("items")
+            if "anyOf" in spec:
+                params["schema"]["anyOf"] = spec["anyOf"]
+            elif "oneOf" in spec:
+                params["schema"]["oneOf"] = spec["oneOf"]
+            elif "type" in spec:
+                params["schema"]["type"] = spec["type"]
+            if spec.get("nullable", False):
+                if "type" in params["schema"]:
+                    params["schema"]["type"] = ["null", params["schema"]["type"]]
+                elif "anyOf" in params["schema"]:
+                    params["schema"]["anyOf"].append({"type": "null"})
+                elif "oneOf" in params["schema"]:
+                    params["schema"]["oneOf"].append({"type": "null"})
+
             if "enum" in spec:
                 params["schema"]["enum"] = spec["enum"]
 
             parameters.append(params)
 
-            if spec["type"] == "array":
+            if spec.get("type") == "array":
                 # To correctly handle array into the url query string,
                 # the name must ends with []
                 params["name"] = params["name"] + "[]"
@@ -154,14 +162,14 @@ class PydanticModelList(PydanticModel):
         self._unique_items = unique_items
 
     def from_params(self, service, params):
-        self._do_validate(params, "input")
+        self._do_validate(service, params, "input")
         return [
             super(PydanticModelList, self).from_params(service, param)
             for param in params
         ]
 
     def to_response(self, service, result):
-        self._do_validate(result, "output")
+        self._do_validate(service, result, "output")
         return [
             super(PydanticModelList, self).to_response(service=service, result=r)
             for r in result
@@ -170,20 +178,26 @@ class PydanticModelList(PydanticModel):
     def to_openapi_query_parameters(self, service, spec):
         raise NotImplementedError("List are not (?yet?) supported as query paramters")
 
-    def _do_validate(self, values, direction):
+    def _do_validate(self, service, values, direction):
         ExceptionClass = UserError if direction == "input" else SystemError
         if self._min_items is not None and len(values) < self._min_items:
             raise ExceptionClass(
-                _(
-                    "BadRequest: Not enough items in the list (%(current)s < %(expected)s)",
+                service.env._(
+                    (
+                        "BadRequest: Not enough items in the list (%(current)s < "
+                        "%(expected)s)"
+                    ),
                     current=len(values),
                     expected=self._min_items,
                 )
             )
         if self._max_items is not None and len(values) > self._max_items:
             raise ExceptionClass(
-                _(
-                    "BadRequest: Too many items in the list (%(current)s > %(expected)s)",
+                service.env._(
+                    (
+                        "BadRequest: Too many items in the list (%(current)s > "
+                        "%(expected)s)"
+                    ),
                     current=len(values),
                     expected=self._max_items,
                 )

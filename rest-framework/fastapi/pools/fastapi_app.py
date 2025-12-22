@@ -61,9 +61,9 @@ class FastApiAppPool:
     """
 
     def __init__(self):
-        self._queue_by_db_by_root_path: dict[
-            str, dict[str, queue.Queue[FastAPI]]
-        ] = defaultdict(lambda: defaultdict(queue.Queue))
+        self._queue_by_db_by_root_path: dict[str, dict[str, queue.Queue[FastAPI]]] = (
+            defaultdict(lambda: defaultdict(queue.Queue))
+        )
         self.__cache_sequences = {}
         self._lock = threading.Lock()
 
