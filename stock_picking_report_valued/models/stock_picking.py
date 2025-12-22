@@ -10,12 +10,7 @@ from odoo import api, fields, models
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
-    valued = fields.Boolean(related="partner_id.valued_picking", readonly=False)
-    company_display_valued_in_picking = fields.Boolean(
-        related="company_id.display_valued_in_picking",
-        depends=["company_id"],
-    )
-
+    valued = fields.Boolean(related="partner_id.valued_picking")
     currency_id = fields.Many2one(
         comodel_name="res.currency",
         string="Currency",
