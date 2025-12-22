@@ -31,3 +31,24 @@ msgstr "Tiene productos permitidos"
 #: model:ir.model,name:sale_order_product_assortment.model_sale_order
 msgid "Sales Order"
 msgstr "Orden de Venta"
+
+#~ msgid "Product"
+#~ msgstr "Producto"
+
+#~ msgid "Sales Order Line"
+#~ msgstr "Línea de pedido de venta"
+
+#~ msgid "Blacklisted Products"
+#~ msgstr "Productos en lista negra"
+
+#~ msgid "Has Blacklist"
+#~ msgstr "Tiene lista negra"
+
+#~ msgid "Has Whitelist"
+#~ msgstr "Tiene lista blanca"
+
+#~ msgid "Sale Order"
+#~ msgstr "Pedido de venta"
+
+#~ msgid "Whitelisted Products"
+#~ msgstr "Productos en lista blanca"

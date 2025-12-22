@@ -3,7 +3,7 @@
 
 
 def pre_init_hook(env):
-    """Create computed columns if not exists when the module is instelled"""
+    """Create computed columns if not exists when the module is installed"""
     env.cr.execute(
         """
         ALTER TABLE sale_order_line

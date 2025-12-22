@@ -135,7 +135,7 @@ class AutomaticWorkflowJob(models.Model):
             and "customer"
             or "supplier"
         )
-        res = {
+        return {
             "reconciled_invoice_ids": [(6, 0, invoice.ids)],
             "amount": invoice.amount_residual,
             "partner_id": invoice.partner_id.id,
@@ -143,12 +143,6 @@ class AutomaticWorkflowJob(models.Model):
             "date": fields.Date.context_today(self),
             "currency_id": invoice.currency_id.id,
         }
-        property_payment_journal_id = (
-            invoice.workflow_process_id.property_payment_journal_id
-        )
-        if property_payment_journal_id:
-            res["journal_id"] = property_payment_journal_id.id
-        return res
 
     @api.model
     def _register_payments(self, payment_filter):
@@ -170,7 +164,7 @@ class AutomaticWorkflowJob(models.Model):
             ("account_type", "in", ("asset_receivable", "liability_payable")),
             ("reconciled", "=", False),
         ]
-        payment_lines = payment.line_ids.filtered_domain(domain)
+        payment_lines = payment.move_id.line_ids.filtered_domain(domain)
         lines = invoice.line_ids
         for account in payment_lines.account_id:
             (payment_lines + lines).filtered_domain(
@@ -182,9 +176,12 @@ class AutomaticWorkflowJob(models.Model):
     def _handle_pickings(self, sale_workflow):
         pass
 
+    def _sale_workflow_domain(self, workflow):
+        return [("workflow_process_id", "=", workflow.id)]
+
     @api.model
     def run_with_workflow(self, sale_workflow):
-        workflow_domain = [("workflow_process_id", "=", sale_workflow.id)]
+        workflow_domain = self._sale_workflow_domain(sale_workflow)
         if sale_workflow.validate_order:
             self.with_context(
                 send_order_confirmation_mail=sale_workflow.send_order_confirmation_mail
@@ -213,9 +210,14 @@ class AutomaticWorkflowJob(models.Model):
             )
 
     @api.model
+    def _workflow_process_to_run_domain(self):
+        return []
+
+    @api.model
     def run(self):
         """Must be called from ir.cron"""
         sale_workflow_process = self.env["sale.workflow.process"]
-        for sale_workflow in sale_workflow_process.search([]):
+        domain = self._workflow_process_to_run_domain()
+        for sale_workflow in sale_workflow_process.search(domain):
             self.run_with_workflow(sale_workflow)
         return True

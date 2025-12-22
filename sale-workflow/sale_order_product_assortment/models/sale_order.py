@@ -12,12 +12,8 @@ class SaleOrder(models.Model):
         comodel_name="product.product",
         string="Allowed Products",
         compute="_compute_product_assortment_ids",
-        compute_sudo=True,
     )
-    has_allowed_products = fields.Boolean(
-        compute="_compute_product_assortment_ids",
-        compute_sudo=True,
-    )
+    has_allowed_products = fields.Boolean(compute="_compute_product_assortment_ids")
 
     @api.depends("partner_id", "partner_shipping_id", "partner_invoice_id")
     def _compute_product_assortment_ids(self):
@@ -39,3 +35,11 @@ class SaleOrder(models.Model):
                 products = self.env["product.product"].search(product_domain)
                 self.allowed_product_ids = products
                 self.has_allowed_products = True
+
+    def _get_product_catalog_domain(self):
+        domain = super()._get_product_catalog_domain()
+        if self.has_allowed_products:
+            domain = expression.AND(
+                [domain, [("id", "in", self.allowed_product_ids.ids)]]
+            )
+        return domain

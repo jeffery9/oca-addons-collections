@@ -160,11 +160,6 @@ msgid "Order Filter Domain"
 msgstr ""
 
 #. module: sale_automatic_workflow
-#: model:ir.model.fields,field_description:sale_automatic_workflow.field_sale_workflow_process__property_payment_journal_id
-msgid "Payment Journal"
-msgstr ""
-
-#. module: sale_automatic_workflow
 #: model:ir.model.fields,field_description:sale_automatic_workflow.field_sale_workflow_process__register_payment
 msgid "Register Payment"
 msgstr ""
@@ -193,7 +188,6 @@ msgstr ""
 #: model:ir.model,name:sale_automatic_workflow.model_sale_workflow_process
 #: model:ir.model.fields,field_description:sale_automatic_workflow.field_account_bank_statement_line__workflow_process_id
 #: model:ir.model.fields,field_description:sale_automatic_workflow.field_account_move__workflow_process_id
-#: model:ir.model.fields,field_description:sale_automatic_workflow.field_account_payment__workflow_process_id
 msgid "Sale Workflow Process"
 msgstr ""
 
@@ -227,11 +221,6 @@ msgstr ""
 #. module: sale_automatic_workflow
 #: model:ir.model.fields,help:sale_automatic_workflow.field_sale_workflow_process__property_journal_id
 msgid "Set default journal to use on invoice"
-msgstr ""
-
-#. module: sale_automatic_workflow
-#: model:ir.model.fields,help:sale_automatic_workflow.field_sale_workflow_process__property_payment_journal_id
-msgid "Set default journal to use on payment"
 msgstr ""
 
 #. module: sale_automatic_workflow
@@ -284,7 +273,6 @@ msgstr ""
 #. module: sale_automatic_workflow
 #. odoo-python
 #: code:addons/sale_automatic_workflow/models/sale_order.py:0
-#, python-format
 msgid "Workflow Warning"
 msgstr ""
 

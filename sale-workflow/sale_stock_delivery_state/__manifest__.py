@@ -5,7 +5,7 @@
 {
     "name": "Sale Stock Delivery State",
     "summary": "Change the way to compute the delivery state",
-    "version": "17.0.1.0.0",
+    "version": "18.0.1.0.0",
     "development_status": "Alpha",
     "category": "Uncategorized",
     "website": "https://github.com/OCA/sale-workflow",
@@ -21,6 +21,4 @@
     ],
     "auto_install": True,
     "data": ["views/sale_order_views.xml"],
-    "demo": [],
-    "post_init_hook": "post_init_hook",
 }

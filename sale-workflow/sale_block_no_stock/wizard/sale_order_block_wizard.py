@@ -93,7 +93,10 @@ class SaleOrderBlockWizard(models.TransientModel):
             )
             if len(companies) > 1:
                 raise exceptions.UserError(
-                    _("Cannot launch wizard from sale orders from different companies.")
+                    _(
+                        """Cannot launch wizard from sale orders
+                    from different companies."""
+                    )
                 )
 
 
@@ -179,7 +182,10 @@ class SaleOrderBlockWizardLine(models.TransientModel):
             if not field_to_check:
                 self.env.cr.postcommit.add(record.unlink)
                 continue
-            if record.sale_line_id.product_type != "product":
+            if (
+                record.sale_line_id.product_type != "consu"
+                and record.sale_line_id.product_id.is_storable
+            ):
                 self.env.cr.postcommit.add(record.unlink)
                 continue
             allowed_max_qty = record.sale_line_id[field_to_check.name]
@@ -247,10 +253,10 @@ class SaleOrderBlockWizardLine(models.TransientModel):
     @api.model
     def _get_adjusted_message(self, product, init_qty, final_qty, uom):
         message = Markup(
-            _(
-                """Product <b>%(product)s</b> adjusted from
-                <b>%(init_qty)s</b> %(uom)s to <b>%(final_qty)s</b> %(uom)s."""
-            )
+            """
+            Product <b>%(product)s</b> adjusted from
+            <b>%(init_qty)s</b> %(uom)s to <b>%(final_qty)s</b> %(uom)s.
+        """
         ) % {
             "product": product,
             "init_qty": init_qty,

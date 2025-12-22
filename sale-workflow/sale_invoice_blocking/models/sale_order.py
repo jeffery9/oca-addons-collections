@@ -31,8 +31,6 @@ class SaleOrder(models.Model):
 
     def _nothing_to_invoice_error_message(self):
         error = super()._nothing_to_invoice_error_message()
-        error += _(
-            "\nAdditionally, you may have an invoice blocking reason on the sale order."
-        )
+        error += _("\n- You may have an invoice blocking reason on the sale order")
 
         return UserError(error)

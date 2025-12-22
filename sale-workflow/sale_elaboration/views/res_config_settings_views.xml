@@ -9,15 +9,13 @@
                     help="Elaboration notes will appear on the delivery slip"
                     id="group_elaboration_note_on_delivery_slip"
                 >
-                        <field name="group_elaboration_note_on_delivery_slip" />
-                        <label for="group_elaboration_note_on_delivery_slip" />
+                    <field name="group_elaboration_note_on_delivery_slip" />
                 </setting>
                 <setting
                     help="Elaboration notes will appear on the picking operations report"
                     id="group_elaboration_note_on_picking_operations"
                 >
                     <field name="group_elaboration_note_on_picking_operations" />
-                    <label for="group_elaboration_note_on_picking_operations" />
                 </setting>
             </xpath>
         </field>

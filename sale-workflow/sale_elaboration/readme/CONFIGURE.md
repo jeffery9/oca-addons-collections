@@ -1,6 +1,6 @@
 To configure this module you need to:
 
-1.  Go to *Sale \> Configuration \> Products \> Sale Elaboration*.
+1.  Go to *Sale \> Configuration \> Elaborations \> Sale Elaboration*.
 2.  Create a new record.
 3.  Set a product linked to the elaboration.
 4.  If you use Multi-Step Routes, you can also select a route to procure

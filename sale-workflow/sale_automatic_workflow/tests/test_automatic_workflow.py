@@ -4,6 +4,8 @@
 from datetime import timedelta
 from unittest import mock
 
+from freezegun import freeze_time
+
 from odoo import fields
 from odoo.tests import tagged
 
@@ -21,7 +23,7 @@ class TestAutomaticWorkflow(TestCommon, TestAutomaticWorkflowMixin):
                 # Compatibility with sale_automatic_workflow_job: even if
                 # the module is installed, ensure we don't delay a job.
                 # Thus, we test the usual flow.
-                _job_force_sync=True,
+                queue_job__no_delay=True,
             )
         )
 
@@ -46,6 +48,7 @@ class TestAutomaticWorkflow(TestCommon, TestAutomaticWorkflowMixin):
         sale.workflow_process_id = workflow2.id
         self.assertEqual(sale.team_id, team_2)
 
+    @freeze_time("2025-1-1")
     def test_03_date_invoice_from_sale_order(self):
         workflow = self.create_full_automatic()
         # date_order on sale.order is date + time
@@ -213,15 +216,3 @@ class TestAutomaticWorkflow(TestCommon, TestAutomaticWorkflowMixin):
         )
         self.assertTrue(payment_id)
         self.assertEqual(invoice.currency_id.id, payment_id.currency_id.id)
-
-    def test_create_payment_with_specified_payment_journal(self):
-        workflow = self.create_full_automatic()
-        workflow.register_payment = True
-        payment_journal = self.env["account.journal"].create(
-            {"name": "Payment Journal Test", "code": "TESTJOURNAL", "type": "bank"}
-        )
-        workflow.property_payment_journal_id = payment_journal
-        self.create_sale_order(workflow)
-        self.run_job()
-        payment = self.env["account.payment"].search([], limit=1, order="id desc")
-        self.assertEqual(payment.journal_id, payment_journal)
