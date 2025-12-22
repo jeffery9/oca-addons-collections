@@ -15,7 +15,7 @@
                         field_y_axis="partner_id"
                         field_value="country_id"
                     >
-                        <tree>
+                        <list>
                             <field name="login" />
                             <field name="partner_id" />
                             <field
@@ -25,7 +25,7 @@
                                 readonly="login == 'demo'"
                                 required="login == 'admin'"
                             />
-                        </tree>
+                        </list>
                     </field>
                     <div
                         class="o_form_label"
@@ -38,7 +38,7 @@
                         field_value="name"
                         x_axis_clickable="True"
                     >
-                        <tree>
+                        <list>
                             <field name="name" required="login == 'admin'" />
                             <field name="partner_id" />
                             <field
@@ -46,8 +46,7 @@
                                 domain="[('name', 'like', 'land')]"
                                 options="{'no_create': True}"
                             />
-                            <field name="login" />
-                        </tree>
+                        </list>
                     </field>
                     <div class="o_form_label">Boolean field as value</div>
                     <field
@@ -57,7 +56,7 @@
                         field_y_axis="partner_id"
                         field_value="active"
                     >
-                        <tree>
+                        <list>
                             <field name="active" />
                             <field name="partner_id" />
                             <field
@@ -65,7 +64,7 @@
                                 domain="[('name', 'like', 'land')]"
                                 options="{'no_create': True}"
                             />
-                        </tree>
+                        </list>
                     </field>
                     <div class="o_form_label">Selection field as value</div>
                     <field
@@ -75,7 +74,7 @@
                         field_y_axis="partner_id"
                         field_value="lang"
                     >
-                        <tree>
+                        <list>
                             <field name="lang" />
                             <field name="partner_id" />
                             <field
@@ -83,7 +82,7 @@
                                 domain="[('name', 'like', 'land')]"
                                 options="{'no_create': True}"
                             />
-                        </tree>
+                        </list>
                     </field>
                     <div class="o_form_label">Float field as value</div>
                     <field
@@ -93,7 +92,7 @@
                         field_y_axis="partner_id"
                         field_value="partner_latitude"
                     >
-                        <tree>[
+                        <list>
                             <field name="partner_latitude" />
                             <field name="partner_id" />
                             <field
@@ -101,7 +100,7 @@
                                 domain="[('name', 'like', 'land')]"
                                 options="{'no_create': True}"
                             />
-                        </tree>
+                        </list>
                     </field>
                     <div
                         class="o_form_label"
@@ -113,7 +112,7 @@
                         field_y_axis="partner_id"
                         field_value="partner_latitude"
                     >
-                        <tree>
+                        <list>
                             <field name="partner_latitude" widget="float_time" />
                             <field name="partner_id" />
                             <field
@@ -121,7 +120,7 @@
                                 domain="[('name', 'like', 'land')]"
                                 options="{'no_create': True}"
                             />
-                        </tree>
+                        </list>
                     </field>
                 </page>
             </notebook>

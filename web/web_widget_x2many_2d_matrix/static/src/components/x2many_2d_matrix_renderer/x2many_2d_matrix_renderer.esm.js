@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import {Component, onWillUpdateProps} from "@odoo/owl";
 import {evaluateBooleanExpr, evaluateExpr} from "@web/core/py_js/py";
 import {Domain} from "@web/core/domain";

@@ -1,10 +1,8 @@
-/** @odoo-module **/
-
 import {registry} from "@web/core/registry";
 
 /**
  * Handle 'ir.actions.act_multi' action
- * @param {object} action see _handleAction() parameters
+ * @param {Object} action see _handleAction() parameters
  * @returns {$.Promise}
  */
 

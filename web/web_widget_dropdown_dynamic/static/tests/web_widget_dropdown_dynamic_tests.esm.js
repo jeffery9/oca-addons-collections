@@ -1,8 +1,5 @@
-/** @odoo-module **/
-
 import {editInput, getFixture} from "@web/../tests/helpers/utils";
 import {makeView, setupViewRegistries} from "@web/../tests/views/helpers";
-const {QUnit} = window;
 
 let serverData = {};
 let target = getFixture();
@@ -93,8 +90,6 @@ QUnit.module("web_widget_dropdown_dynamic", (hooks) => {
     });
     QUnit.test("values are fetched w/o context (char)", async (assert) => {
         assert.expect(6);
-        console.log("Start assert", serverData);
-        console.log("Start makeView");
         await makeView({
             type: "form",
             resModel: "sale.order",
@@ -122,8 +117,6 @@ QUnit.module("web_widget_dropdown_dynamic", (hooks) => {
             "option[value='\"value b\"']",
             "got `value b` "
         );
-
-        console.log("Ending makeView", target);
     });
 
     QUnit.test("values are fetched w/o context (integer)", async (assert) => {

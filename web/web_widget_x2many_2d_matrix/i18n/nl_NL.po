@@ -54,7 +54,6 @@ msgstr ""
 #. module: web_widget_x2many_2d_matrix
 #. odoo-javascript
 #: code:addons/web_widget_x2many_2d_matrix/static/src/components/x2many_2d_matrix_renderer/x2many_2d_matrix_renderer.xml:0
-#, python-format
 msgid "Nothing to display."
 msgstr ""
 
