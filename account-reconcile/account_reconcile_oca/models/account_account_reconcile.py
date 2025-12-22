@@ -25,13 +25,11 @@ class AccountAccountReconcile(models.Model):
 
     @property
     def _table_query(self):
-        return "{} {} {} {} {}".format(
-            self._select(),
-            self._from(),
-            self._where(),
-            self._groupby(),
-            self._having(),
+        query = (
+            f"{self._select()} {self._from()} {self._where()} "
+            f"{self._groupby()} {self._having()}"
         )
+        return query
 
     def _select(self):
         account_account_name_field = (
@@ -56,7 +54,7 @@ class AccountAccountReconcile(models.Model):
                 a.id as account_id,
                 FALSE as is_reconciled,
                 aml.currency_id as currency_id,
-                a.company_id,
+                am.company_id,
                 null as foreign_currency_id,
                 (
                     SUM(
@@ -96,7 +94,7 @@ class AccountAccountReconcile(models.Model):
                     ELSE NULL
                 END,
                 aml.currency_id,
-                a.company_id
+                am.company_id
         """
 
     def _having(self):
@@ -172,11 +170,12 @@ class AccountAccountReconcile(models.Model):
         counterparts = data["counterparts"]
         amount = 0.0
         for line_id in counterparts:
+            max_amount = amount if line_id == counterparts[-1] else 0
             lines = self._get_reconcile_line(
                 self.env["account.move.line"].browse(line_id),
                 "other",
                 is_counterpart=True,
-                max_amount=amount,
+                max_amount=max_amount,
                 move=True,
             )
             new_data["data"] += lines

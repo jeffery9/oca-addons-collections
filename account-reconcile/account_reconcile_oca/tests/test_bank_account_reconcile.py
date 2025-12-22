@@ -1,21 +1,21 @@
 import time
 
+from odoo import Command
 from odoo.tests import Form, tagged
 
 from odoo.addons.account_reconcile_model_oca.tests.common import (
-    TestAccountReconciliationCommon,
+    TestAccountReconciliationCommon as TestAccountReconciliationModelCommon,
 )
 
 
-@tagged("post_install", "-at_install")
-class TestReconciliationWidget(TestAccountReconciliationCommon):
+class TestAccountReconciliationCommon(TestAccountReconciliationModelCommon):
     @classmethod
     def _setup_context(cls):
         return {**cls.env.context, "_test_account_reconcile_oca": True}
 
     @classmethod
-    def setUpClass(cls, chart_template_ref=None):
-        super().setUpClass(chart_template_ref=chart_template_ref)
+    def setUpClass(cls):
+        super().setUpClass()
         cls.env = cls.env(context=cls._setup_context())
         # Auto-disable reconciliation model created automatically with
         # generate_account_reconcile_model() to avoid side effects in tests
@@ -39,7 +39,7 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
         cls.current_assets_account = cls.env["account.account"].search(
             [
                 ("account_type", "=", "asset_current"),
-                ("company_id", "=", cls.env.company.id),
+                ("company_ids", "in", cls.env.company.id),
             ],
             limit=1,
         )
@@ -51,7 +51,9 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
                 "rule_type": "writeoff_button",
                 "match_partner": True,
                 "match_partner_ids": [],
-                "line_ids": [(0, 0, {"account_id": cls.current_assets_account.id})],
+                "line_ids": [
+                    Command.create({"account_id": cls.current_assets_account.id})
+                ],
             }
         )
         cls.tax_10 = cls.env["account.tax"].create(
@@ -85,6 +87,9 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             }
         )
 
+
+@tagged("post_install", "-at_install")
+class TestReconciliationWidget(TestAccountReconciliationCommon):
     # Testing reconcile action
 
     def test_reconcile_invoice_currency(self):
@@ -250,7 +255,7 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             f.add_account_move_line_id = receivable1
             self.assertFalse(f.add_account_move_line_id)
             self.assertTrue(f.can_reconcile)
-            f.manual_reference = "account.move.line;%s" % receivable1.id
+            f.manual_reference = f"account.move.line;{receivable1.id}"
             self.assertEqual(-50, f.manual_amount)
         self.assertEqual(2, len(bank_stmt_line.reconcile_data_info["data"]))
         bank_stmt_line.button_manual_reference_full_paid()
@@ -259,7 +264,7 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             bank_stmt_line,
             view="account_reconcile_oca.bank_statement_line_form_reconcile_view",
         ) as f:
-            f.manual_reference = "account.move.line;%s" % receivable1.id
+            f.manual_reference = f"account.move.line;{receivable1.id}"
             self.assertEqual(-100, f.manual_amount)
 
     def test_reconcile_invoice_unreconcile(self):
@@ -363,12 +368,12 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             f.add_account_move_line_id = receivable1
             self.assertFalse(f.add_account_move_line_id)
             self.assertTrue(f.can_reconcile)
-            f.manual_reference = "account.move.line;%s" % receivable1.id
+            f.manual_reference = f"account.move.line;{receivable1.id}"
             self.assertEqual(f.manual_amount, -100)
             f.manual_amount = -70
             self.assertFalse(f.can_reconcile)
             f.add_account_move_line_id = receivable2
-            f.manual_reference = "account.move.line;%s" % receivable2.id
+            f.manual_reference = f"account.move.line;{receivable2.id}"
             self.assertEqual(f.manual_amount, -30)
             self.assertTrue(f.can_reconcile)
         self.assertEqual(inv1.amount_residual_signed, 100)
@@ -426,12 +431,12 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             f.add_account_move_line_id = receivable1
             self.assertFalse(f.add_account_move_line_id)
             self.assertTrue(f.can_reconcile)
-            f.manual_reference = "account.move.line;%s" % receivable1.id
+            f.manual_reference = f"account.move.line;{receivable1.id}"
             self.assertEqual(f.manual_amount, 100)
             f.manual_amount = 70
             self.assertFalse(f.can_reconcile)
             f.add_account_move_line_id = receivable2
-            f.manual_reference = "account.move.line;%s" % receivable2.id
+            f.manual_reference = f"account.move.line;{receivable2.id}"
             self.assertEqual(f.manual_amount, 30)
             self.assertTrue(f.can_reconcile)
         self.assertEqual(inv1.amount_residual_signed, -100)
@@ -490,7 +495,7 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
         bank statement.
         """
         self.rule.line_ids.write(
-            {"tax_ids": [(4, self.tax_10.id)], "force_tax_included": True}
+            {"tax_ids": [Command.link(self.tax_10.id)], "force_tax_included": True}
         )
         bank_stmt = self.acc_bank_stmt_model.create(
             {
@@ -601,7 +606,9 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
                 "match_label": "contains",
                 "match_label_param": "DEMO WRITEOFF",
                 "auto_reconcile": True,
-                "line_ids": [(0, 0, {"account_id": self.current_assets_account.id})],
+                "line_ids": [
+                    Command.create({"account_id": self.current_assets_account.id})
+                ],
             }
         )
 
@@ -677,7 +684,7 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             .move_id
         )
         bank_stmt_line.unreconcile_bank_line()
-        self.assertTrue(reconcile_move.reversal_move_id)
+        self.assertTrue(reconcile_move.reversal_move_ids)
         self.assertFalse(bank_stmt_line.is_reconciled)
 
     def test_reconcile_model_with_foreign_currency(self):
@@ -769,13 +776,13 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             f.add_account_move_line_id = receivable1
             self.assertTrue(f.can_reconcile)
         self.assertFalse(bank_stmt_line.is_reconciled)
-        self.assertFalse(bank_stmt_line.to_check)
+        self.assertTrue(bank_stmt_line.checked)
         bank_stmt_line.action_to_check()
         self.assertTrue(bank_stmt_line.is_reconciled)
-        self.assertTrue(bank_stmt_line.to_check)
+        self.assertFalse(bank_stmt_line.checked)
         bank_stmt_line.action_checked()
         self.assertTrue(bank_stmt_line.is_reconciled)
-        self.assertFalse(bank_stmt_line.to_check)
+        self.assertTrue(bank_stmt_line.checked)
 
     def test_reconcile_invoice_to_check_not_reconciled(self):
         """
@@ -800,13 +807,13 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             }
         )
         self.assertFalse(bank_stmt_line.is_reconciled)
-        self.assertFalse(bank_stmt_line.to_check)
+        self.assertTrue(bank_stmt_line.checked)
         bank_stmt_line.action_to_check()
         self.assertFalse(bank_stmt_line.is_reconciled)
-        self.assertTrue(bank_stmt_line.to_check)
+        self.assertFalse(bank_stmt_line.checked)
         bank_stmt_line.action_checked()
         self.assertFalse(bank_stmt_line.is_reconciled)
-        self.assertFalse(bank_stmt_line.to_check)
+        self.assertTrue(bank_stmt_line.checked)
 
     # Testing widget
 
@@ -881,7 +888,7 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             f.add_account_move_line_id = receivable1
             self.assertFalse(f.add_account_move_line_id)
             self.assertTrue(f.can_reconcile)
-            f.manual_reference = "account.move.line;%s" % receivable1.id
+            f.manual_reference = f"account.move.line;{receivable1.id}"
             self.assertEqual(f.manual_amount, -100)
             f.manual_delete = True
             self.assertFalse(f.can_reconcile)
@@ -957,7 +964,7 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
         ) as f:
             self.assertFalse(f.can_reconcile)
             self.assertFalse(f.partner_id)
-            f.manual_reference = "account.move.line;%s" % liquidity_lines.id
+            f.manual_reference = f"account.move.line;{liquidity_lines.id}"
             f.manual_partner_id = inv1.partner_id
             f.save()
             self.assertEqual(f.partner_id, inv1.partner_id)
@@ -1111,12 +1118,12 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
     def test_partner_name_with_parent(self):
         parent_partner = self.env["res.partner"].create(
             {
-                "name": "test-account_reconcile_oca",
+                "name": "test_account_reconcile_oca",
             }
         )
         child_partner = self.env["res.partner"].create(
             {
-                "name": "test-account_reconcile_oca",
+                "name": "test_account_reconcile_oca",
                 "parent_id": parent_partner.id,
                 "type": "delivery",
             }
@@ -1132,7 +1139,6 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
                 "name": "test",
             }
         )
-
         self.invoice_matching_models.active = True
         self.invoice_matching_models.match_text_location_label = False
         bank_stmt_line = self.acc_bank_stmt_line_model.create(
@@ -1143,10 +1149,9 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
                 "amount": 100,
                 "date": time.strftime("%Y-07-15"),
                 "payment_ref": "test",
-                "partner_name": "test-account_reconcile_oca",
+                "partner_name": "test_account_reconcile_oca",
             }
         )
-
         bkstmt_data = bank_stmt_line.reconcile_data_info
         self.assertEqual(len(bkstmt_data["counterparts"]), 1)
         self.assertEqual(
@@ -1432,7 +1437,7 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             )
             # check that adding a partner does not recompute the amounts on accounting
             # entries, but is still synchronized with accounting entries
-            f.manual_reference = "account.move.line;%s" % liquidity_lines.id
+            f.manual_reference = f"account.move.line;{liquidity_lines.id}"
             f.manual_partner_id = inv1.partner_id
             self.assertEqual(f.partner_id, inv1.partner_id)
             self.assertEqual(liquidity_lines.debit, 83.33)
@@ -1441,7 +1446,7 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             # partner change
             self.assertEqual(liquidity_lines.debit, 83.33)
             self.assertEqual(liquidity_lines.partner_id, inv1.partner_id)
-            f.manual_reference = "account.move.line;%s" % line["id"]
+            f.manual_reference = f"account.move.line;{line['id']}"
             # simulate click on statement line, check amount does not recompute
             f.manual_partner_id = inv1.partner_id
             self.assertEqual(f.manual_amount, 83.33)

@@ -3,8 +3,7 @@ from contextlib import contextmanager
 from freezegun import freeze_time
 
 from odoo import Command
-from odoo.tests import tagged
-from odoo.tests.common import Form
+from odoo.tests import Form, tagged
 from odoo.tools import mute_logger
 
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
@@ -13,21 +12,14 @@ from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 @tagged("post_install", "-at_install")
 class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
     @classmethod
-    def setUpClass(cls, chart_template_ref=None):
-        super().setUpClass(chart_template_ref=chart_template_ref)
+    def setUpClass(cls):
+        super().setUpClass()
 
         #################
         # Company setup #
         #################
-        cls.currency_data_2 = cls.setup_multi_currency_data(
-            {
-                "name": "Dark Chocolate Coin",
-                "symbol": "🍫",
-                "currency_unit_label": "Dark Choco",
-                "currency_subunit_label": "Dark Cacao Powder",
-            },
-            rate2016=10.0,
-            rate2017=20.0,
+        cls.other_currency = cls.setup_other_currency(
+            "EUR", rates=[("2016-01-01", 10.0), ("2017-01-01", 20.0)]
         )
 
         cls.company = cls.company_data["company"]
@@ -36,7 +28,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         cls.current_assets_account = cls.env["account.account"].search(
             [
                 ("account_type", "=", "asset_current"),
-                ("company_id", "=", cls.company.id),
+                ("company_ids", "in", cls.company.id),
             ],
             limit=1,
         )
@@ -105,6 +97,36 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
                 "match_partner": True,
                 "match_partner_ids": [],
                 "line_ids": [(0, 0, {"account_id": cls.current_assets_account.id})],
+            }
+        )
+        cls.rule_3 = cls.env["account.reconcile.model"].create(
+            {
+                "name": "Line with Bank Fees",
+                "rule_type": "writeoff_suggestion",
+                "match_label": "contains",
+                "match_label_param": "BRT",
+                "line_ids": [
+                    Command.create(
+                        {
+                            "label": "Due amount",
+                            "account_id": cls.company_data[
+                                "default_account_deferred_expense"
+                            ].id,
+                            "amount_type": "regex",
+                            "amount_string": r"BRT: ([\d,.]+)",
+                        }
+                    ),
+                    Command.create(
+                        {
+                            "label": "Bank Fees",
+                            "account_id": cls.company_data[
+                                "default_tax_account_receivable"
+                            ].id,
+                            "amount_type": "percentage",
+                            "amount_string": "100",
+                        }
+                    ),
+                ],
             }
         )
 
@@ -193,6 +215,9 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
                 },
             ]
         )
+        cls.payment_credit_account_id = (
+            cls.outbound_payment_method_line.payment_account_id
+        )
 
     @classmethod
     def _create_invoice_line(
@@ -217,8 +242,6 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         invoice_form.partner_id = partner
         if currency:
             invoice_form.currency_id = currency
-        if pay_reference:
-            invoice_form.payment_reference = pay_reference
         if ref:
             invoice_form.ref = ref
         if name:
@@ -229,6 +252,8 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
             invoice_line_form.price_unit = amount
             invoice_line_form.tax_ids.clear()
         invoice = invoice_form.save()
+        if pay_reference:
+            invoice.payment_reference = pay_reference
         invoice.action_post()
         lines = invoice.line_ids
         return lines.filtered(
@@ -965,7 +990,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
     def test_reverted_move_matching(self):
         partner = self.partner_1
         AccountMove = self.env["account.move"]
-        account = self.bank_journal.company_id.account_journal_payment_credit_account_id
+        account = self.payment_credit_account_id
         move = AccountMove.create(
             {
                 "journal_id": self.bank_journal.id,
@@ -995,8 +1020,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         )
 
         payment_bnk_line = move.line_ids.filtered(
-            lambda line: line.account_id
-            == self.bank_journal.company_id.account_journal_payment_credit_account_id
+            lambda line: line.account_id == self.payment_credit_account_id
         )
 
         move.action_post()
@@ -1164,7 +1188,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
                 "name": "test_match_multi_currencies",
                 "code": "xxxx",
                 "type": "bank",
-                "currency_id": self.currency_data["currency"].id,
+                "currency_id": self.company_data["currency"].id,
             }
         )
 
@@ -1190,7 +1214,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
                 "date": "2016-01-01",
                 "payment_ref": "line",
                 "partner_id": partner.id,
-                "foreign_currency_id": self.currency_data_2["currency"].id,
+                "foreign_currency_id": self.other_currency.id,
                 "amount": 300.0,  # Rate is 3 GOL = 1 USD in 2016.
                 # Rate is 10 DAR = 1 USD in 2016 but the rate used by the bank is 9:1.
                 "amount_currency": 900.0,
@@ -1213,7 +1237,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
                                 "default_account_receivable"
                             ].id,
                             "partner_id": partner.id,
-                            "currency_id": self.currency_data["currency"].id,
+                            "currency_id": self.other_currency.id,
                             "debit": 100.0,
                             "credit": 0.0,
                             "amount_currency": 200.0,
@@ -1228,7 +1252,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
                                 "default_account_receivable"
                             ].id,
                             "partner_id": partner.id,
-                            "currency_id": self.currency_data_2["currency"].id,
+                            "currency_id": self.other_currency.id,
                             "debit": 14.0,
                             "credit": 0.0,
                             "amount_currency": 280.0,
@@ -1267,7 +1291,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
     @freeze_time("2020-01-01")
     def test_matching_with_write_off_foreign_currency(self):
         journal_foreign_curr = self.company_data["default_journal_bank"].copy()
-        journal_foreign_curr.currency_id = self.currency_data["currency"]
+        journal_foreign_curr.currency_id = self.company_data["currency"]
 
         reco_model = self._create_reconcile_model(
             auto_reconcile=True,
@@ -1304,7 +1328,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
                     "payment_type": "inbound",
                     "partner_type": "customer",
                     "partner_id": partner.id,
-                    "ref": memo,
+                    "memo": memo,
                     "destination_account_id": self.company_data[
                         "default_account_receivable"
                     ].id,
@@ -1312,7 +1336,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
             )
             payment.action_post()
 
-            return payment.line_ids.filtered(
+            return payment.move_id.line_ids.filtered(
                 lambda x: x.account_id.account_type
                 not in {"asset_receivable", "liability_payable"}
             )
@@ -1626,7 +1650,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
             )
 
         with self.subTest(test="multi_currencies"):
-            foreign_curr = self.currency_data_2["currency"]
+            foreign_curr = self.other_currency
             invl = self._create_invoice_line(
                 300, self.partner_1, "out_invoice", currency=foreign_curr
             )
@@ -1646,3 +1670,35 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
                     },
                 },
             )
+
+    def test_regex_matching(self):
+        lines = self.rule_3._get_write_off_move_lines_dict(
+            90.0,
+            False,
+            label="R:9772938 10/07 AX 9415116318 T:5 BRT: 100.00 C/ croip",
+        )
+        self.assertEqual(len(lines), 2)
+        for line in lines:
+            if (
+                line["account_id"]
+                == self.company_data["default_account_deferred_expense"].id
+            ):
+                due_line = line
+            elif (
+                line["account_id"]
+                == self.company_data["default_tax_account_receivable"].id
+            ):
+                tax_line = line
+        self.assertTrue(due_line)
+        self.assertTrue(tax_line)
+        self.assertEqual(due_line["debit"], 100.0)
+        self.assertEqual(tax_line["credit"], 10.0)
+
+    def test_regex_not_matched(self):
+        lines = self.rule_3._get_write_off_move_lines_dict(
+            90.0,
+            False,
+            label="R:9772938 10/07 AX 9415116318 T:5 BRT: XX100.00 C/ croip",
+        )
+        self.assertEqual(len(lines), 1)
+        self.assertEqual(lines[0]["debit"], 90.0)

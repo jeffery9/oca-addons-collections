@@ -2,14 +2,13 @@
 <!-- Copyright 2023 Dixmit
      License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
 <odoo>
-
     <record model="ir.ui.view" id="account_account_reconcile_form_view">
         <field
             name="name"
         >account.account.reconcile.form (in account_reconcile_oca)</field>
         <field name="model">account.account.reconcile</field>
         <field name="arch" type="xml">
-            <form js_class="reconcile_manual" create="0">
+            <form js_class="reconcile_form" create="0">
                 <field name="manual_delete" invisible="1" />
                 <field name="manual_reference" invisible="1" />
                 <field name="company_currency_id" invisible="1" />
@@ -36,7 +35,7 @@
                 <field name="is_reconciled" invisible="1" />
                 <group>
                     <group>
-                    <field name="partner_id" />
+                        <field name="partner_id" />
                     </group>
                     <group>
                         <field name="account_id" />
@@ -58,7 +57,7 @@
                             name="add_account_move_line_id"
                             widget="account_reconcile_oca_match"
                             domain="[('parent_state', '=', 'posted'), ('amount_residual', '!=', 0), ('account_id', '=', account_id)]"
-                            context="{'search_default_partner_id': partner_id, 'tree_view_ref': 'account_reconcile_oca.account_move_line_tree_reconcile_view', 'search_view_ref': 'account_reconcile_oca.account_move_line_search_reconcile_view'}"
+                            context="{'search_default_partner_id': partner_id, 'list_view_ref': 'account_reconcile_oca.account_move_line_tree_reconcile_view', 'search_view_ref': 'account_reconcile_oca.account_move_line_search_reconcile_view'}"
                         />
                     </page>
                 </notebook>
@@ -82,15 +81,15 @@
     <record model="ir.ui.view" id="account_account_reconcile_tree_view">
         <field
             name="name"
-        >account.account.reconcile.tree (in account_reconcile_oca)</field>
+        >account.account.reconcile.list (in account_reconcile_oca)</field>
         <field name="model">account.account.reconcile</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <!-- TODO -->
                 <field name="id" />
                 <field name="account_id" />
                 <field name="partner_id" />
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -102,17 +101,12 @@
         <field name="arch" type="xml">
             <kanban js_class="reconcile">
                 <templates>
-                    <t t-name="kanban-box">
-                        <div
-                            t-attf-class="oe_kanban_card oe_kanban_global_click"
-                            style="width:100%"
-                        >
-                            <div>
-                                <field name="account_id" />
-                            </div>
-                            <div>
-                                <field name="partner_id" />
-                            </div>
+                    <t t-name="card">
+                        <div>
+                            <field name="account_id" />
+                        </div>
+                        <div>
+                            <field name="partner_id" />
                         </div>
                     </t>
                 </templates>
@@ -161,9 +155,8 @@
 
     <record model="ir.ui.menu" id="account_account_reconcile_menu">
         <field name="name">Reconcile</field>
-        <field name="parent_id" ref="account.menu_finance_entries_actions" />
+        <field name="parent_id" ref="account.menu_finance_entries" />
         <field name="action" ref="account_account_reconcile_act_window" />
-        <field name="sequence" eval="10" />
+        <field name="sequence" eval="140" />
     </record>
-
 </odoo>

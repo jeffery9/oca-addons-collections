@@ -61,7 +61,7 @@
         t-inherit-mode="primary"
     >
         <!-- we pass to the component the selected record -->
-        <xpath expr="//Layout/t[2]" position="attributes">
+        <xpath expr="//Layout/t[7]" position="attributes">
             <attribute name="selectedRecordId">state.selectedRecordId</attribute>
         </xpath>
         <xpath expr="//Layout" position="attributes">
@@ -71,8 +71,8 @@
         </xpath>
         <xpath expr="//Layout" position="inside">
             <div class="o_account_reconcile_oca_info">
-            <t t-if="state.selectedRecordId">
-                <View t-props="viewReconcileInfo" t-key="state.selectedRecordId" />
+                <t t-if="state.selectedRecordId">
+                    <View t-props="viewReconcileInfo" t-key="state.selectedRecordId" />
                 </t>
             </div>
         </xpath>
@@ -81,7 +81,7 @@
         <button
             t-on-click="onClickNewButton"
             class="btn btn-primary"
-            t-if="activeActions.create"
+            t-if="props.archInfo.activeActions.create"
         >Create</button>
     </t>
     <t t-name="account_reconcile_oca.ReconcileMatchWidget">

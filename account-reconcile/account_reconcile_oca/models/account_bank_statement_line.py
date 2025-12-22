@@ -1,4 +1,5 @@
 # Copyright 2023 Dixmit
+# Copyright 2025 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from collections import defaultdict
@@ -9,7 +10,9 @@ from dateutil.relativedelta import relativedelta
 from odoo import Command, _, api, fields, models, tools
 from odoo.exceptions import UserError
 from odoo.fields import first
-from odoo.tools import float_compare, float_is_zero
+from odoo.tools import LazyTranslate, float_compare, float_is_zero, groupby
+
+_lt = LazyTranslate(__name__, default_lang="en_US")
 
 
 class AccountBankStatementLine(models.Model):
@@ -22,7 +25,6 @@ class AccountBankStatementLine(models.Model):
         ._fields["reconcile_mode"]
         .selection
     )
-    company_id = fields.Many2one(related="journal_id.company_id")
     reconcile_data = fields.Serialized()
     manual_line_id = fields.Many2one(
         "account.move.line",
@@ -300,7 +302,7 @@ class AccountBankStatementLine(models.Model):
                     can_reconcile = True
                     account = self.partner_id.property_account_payable_id
                 suspense_line = {
-                    "reference": "reconcile_auxiliary;%s" % reconcile_auxiliary_id,
+                    "reference": f"reconcile_auxiliary;{reconcile_auxiliary_id}",
                     "id": False,
                     "account_id": [account.id, account.display_name],
                     "partner_id": self.partner_id
@@ -448,7 +450,7 @@ class AccountBankStatementLine(models.Model):
             "account_id": (
                 [self.manual_account_id.id, self.manual_account_id.display_name]
                 if self.manual_account_id
-                else [False, _("Undefined")]
+                else [False, _lt("Undefined")]
             ),
             "amount": self.manual_amount,
             "credit": -self.manual_amount if self.manual_amount < 0 else 0.0,
@@ -587,11 +589,11 @@ class AccountBankStatementLine(models.Model):
             reconcile_model._get_partner_from_mapping(self) or self._retrieve_partner()
         )
         for line in reconcile_model._get_write_off_move_lines_dict(
-            -liquidity_amount, partner.id
+            -liquidity_amount, partner.id, label=self.payment_ref
         ):
             new_line = line.copy()
             new_line["partner_id"] = (
-                (partner.id, partner.display_name) if partner else False
+                partner and [partner.id, partner.display_name] or False
             )
             amount = line.get("balance")
             if self.foreign_currency_id:
@@ -610,7 +612,7 @@ class AccountBankStatementLine(models.Model):
                 )
             new_line.update(
                 {
-                    "reference": "reconcile_auxiliary;%s" % reconcile_auxiliary_id,
+                    "reference": f"reconcile_auxiliary;{reconcile_auxiliary_id}",
                     "id": False,
                     "amount": amount,
                     "debit": amount if amount > 0 else 0,
@@ -796,7 +798,7 @@ class AccountBankStatementLine(models.Model):
     def reconcile_bank_line(self):
         self.ensure_one()
         self.reconcile_mode = self.journal_id.reconcile_mode
-        result = getattr(self, "_reconcile_bank_line_%s" % self.reconcile_mode)(
+        result = getattr(self, f"_reconcile_bank_line_{self.reconcile_mode}")(
             self._prepare_reconcile_line_data(self.reconcile_data_info["data"])
         )
         self.reconcile_data = False
@@ -804,7 +806,9 @@ class AccountBankStatementLine(models.Model):
 
     def _reconcile_bank_line_edit(self, data):
         _liquidity_lines, suspense_lines, other_lines = self._seek_for_lines()
-        lines_to_remove = [(2, line.id) for line in suspense_lines + other_lines]
+        lines_to_remove = [
+            Command.delete(line.id) for line in suspense_lines + other_lines
+        ]
 
         # Cleanup previous lines.
         move = self.move_id
@@ -815,6 +819,7 @@ class AccountBankStatementLine(models.Model):
                 skip_account_move_synchronization=True,
                 force_delete=True,
                 skip_invoice_sync=True,
+                skip_readonly_check=True,
             ).write(
                 {
                     "line_ids": lines_to_remove,
@@ -936,7 +941,7 @@ class AccountBankStatementLine(models.Model):
             default_values_list = [
                 {
                     "date": move.date,
-                    "ref": _("Reversal of: %s", move.name),
+                    "ref": _lt("Reversal of: %s", move.name),
                 }
                 for move in to_reverse
             ]
@@ -971,53 +976,75 @@ class AccountBankStatementLine(models.Model):
             "_test_account_reconcile_oca"
         ):
             return result
-        models = self.env["account.reconcile.model"].search(
-            [
-                ("rule_type", "in", ["invoice_matching", "writeoff_suggestion"]),
-                ("company_id", "in", result.company_id.ids),
-                ("auto_reconcile", "=", True),
-            ]
-        )
-        for record in result:
-            res = models._apply_rules(record, record._retrieve_partner())
-            if not res:
-                continue
-            liquidity_lines, suspense_lines, other_lines = record._seek_for_lines()
-            data = []
-            for line in liquidity_lines:
-                reconcile_auxiliary_id, lines = record._get_reconcile_line(
-                    line,
-                    "liquidity",
-                    move=True,
-                )
-                data += lines
-            reconcile_auxiliary_id = 1
-            if res.get("status", "") == "write_off":
-                data = record._recompute_suspense_line(
-                    *record._reconcile_data_by_model(
-                        data, res["model"], reconcile_auxiliary_id
-                    ),
-                    self.manual_reference,
-                )
-            elif res.get("amls"):
-                amount = self.amount_currency or self.amount
-                for line in res.get("amls", []):
-                    reconcile_auxiliary_id, line_datas = record._get_reconcile_line(
-                        line, "other", is_counterpart=True, max_amount=amount, move=True
-                    )
-                    amount -= sum(line_data.get("amount") for line_data in line_datas)
-                    data += line_datas
-                data = record._recompute_suspense_line(
-                    data,
-                    reconcile_auxiliary_id,
-                    self.manual_reference,
-                )
-            if not data.get("can_reconcile"):
-                continue
-            getattr(
-                record, "_reconcile_bank_line_%s" % record.journal_id.reconcile_mode
-            )(self._prepare_reconcile_line_data(data["data"]))
+        result._auto_reconcile()
         return result
+
+    def _auto_reconcile(self):
+        """Try to auto reconcile records that are not yet reconciled"""
+        non_reconciled = self.filtered(lambda rec: not rec.is_reconciled)
+        lines_by_journal = groupby(non_reconciled, key=lambda r: r.journal_id)
+        for journal, ilines in lines_by_journal:
+            models = self.env["account.reconcile.model"].search(
+                [
+                    (
+                        "rule_type",
+                        "in",
+                        ["invoice_matching", "writeoff_suggestion"],
+                    ),
+                    ("company_id", "in", journal.company_id.ids),
+                    ("auto_reconcile", "=", True),
+                    "|",
+                    ("match_journal_ids", "=", False),
+                    ("match_journal_ids", "in", journal.id),
+                ]
+            )
+            for record in ilines:
+                record._do_auto_reconcile(models)
+
+    def _do_auto_reconcile(self, models):
+        self.ensure_one()
+        if self.is_reconciled:
+            # In case the method is run asynchronously, the record could have
+            # been already reconciled
+            return
+        res = models._apply_rules(self, self._retrieve_partner())
+        if not res:
+            return
+        liquidity_lines, suspense_lines, other_lines = self._seek_for_lines()
+        data = []
+        for line in liquidity_lines:
+            reconcile_auxiliary_id, lines = self._get_reconcile_line(
+                line,
+                "liquidity",
+                move=True,
+            )
+            data += lines
+        reconcile_auxiliary_id = 1
+        if res.get("status", "") == "write_off":
+            data = self._recompute_suspense_line(
+                *self._reconcile_data_by_model(
+                    data, res["model"], reconcile_auxiliary_id
+                ),
+                self.manual_reference,
+            )
+        elif res.get("amls"):
+            amount = self.amount_currency or self.amount
+            for line in res.get("amls", []):
+                reconcile_auxiliary_id, line_datas = self._get_reconcile_line(
+                    line, "other", is_counterpart=True, max_amount=amount, move=True
+                )
+                amount -= sum(line_data.get("amount") for line_data in line_datas)
+                data += line_datas
+            data = self._recompute_suspense_line(
+                data,
+                reconcile_auxiliary_id,
+                self.manual_reference,
+            )
+        if not data.get("can_reconcile"):
+            return
+        getattr(self, f"_reconcile_bank_line_{self.journal_id.reconcile_mode}")(
+            self._prepare_reconcile_line_data(data["data"])
+        )
 
     def _synchronize_to_moves(self, changed_fields):
         """We want to avoid to change stuff (mainly amounts ) in accounting entries
@@ -1058,7 +1085,9 @@ class AccountBankStatementLine(models.Model):
                 st_line_vals = {"line_ids": line_ids_commands}
                 if st_line.move_id.partner_id != st_line.partner_id:
                     st_line_vals["partner_id"] = st_line.partner_id.id
-                st_line.move_id.write(st_line_vals)
+                st_line.move_id.with_context(skip_readonly_check=True).write(
+                    st_line_vals
+                )
         else:
             super()._synchronize_to_moves(changed_fields=changed_fields)
 
@@ -1131,7 +1160,7 @@ class AccountBankStatementLine(models.Model):
                 new_data += lines
                 new_data.append(
                     {
-                        "reference": "reconcile_auxiliary;%s" % reconcile_auxiliary_id,
+                        "reference": f"reconcile_auxiliary;{reconcile_auxiliary_id}",
                         "id": False,
                         "account_id": line["account_id"],
                         "partner_id": line.get("partner_id"),
@@ -1158,13 +1187,13 @@ class AccountBankStatementLine(models.Model):
 
     def action_to_check(self):
         self.ensure_one()
-        self.move_id.to_check = True
+        self.move_id.write({"checked": False})
         if self.can_reconcile and self.journal_id.reconcile_mode == "edit":
             self.reconcile_bank_line()
 
     def action_checked(self):
         self.ensure_one()
-        self.move_id.to_check = False
+        self.move_id.write({"checked": True})
 
     def _get_reconcile_line(
         self,
@@ -1252,7 +1281,7 @@ class AccountBankStatementLine(models.Model):
         data = {
             "is_exchange_counterpart": True,
             "original_exchange_line_id": line.id,
-            "reference": "reconcile_auxiliary;%s" % reconcile_auxiliary_id,
+            "reference": f"reconcile_auxiliary;{reconcile_auxiliary_id}",
             "id": False,
             "account_id": (account.id, account.display_name),
             "partner_id": False,

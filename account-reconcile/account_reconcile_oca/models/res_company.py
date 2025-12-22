@@ -14,13 +14,13 @@ class ResCompany(models.Model):
         .selection
     )
 
-    def _get_fiscalyear_lock_statement_lines_redirect_action(
+    def _get_unreconciled_statement_lines_redirect_action(
         self, unreconciled_statement_lines
     ):
         """Define the appropriate views that this method will have, by default the
         account module does not add any.
         """
-        action = super()._get_fiscalyear_lock_statement_lines_redirect_action(
+        action = super()._get_unreconciled_statement_lines_redirect_action(
             unreconciled_statement_lines
         )
         if len(unreconciled_statement_lines) == 1:
