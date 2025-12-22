@@ -11,7 +11,7 @@ import inspect
 import logging
 import warnings
 
-from odoo import _, fields, models
+from odoo import fields, models
 
 _logger = logging.getLogger(__name__)
 
@@ -89,27 +89,11 @@ class StorageBackend(models.Model):
             data = base64.b64decode(data)
         return self._forward("add", relative_path, data, **kwargs)
 
-    @deprecated("Use `add`")
-    def _add_bin_data(self, relative_path, data, **kwargs):
-        return self.add(relative_path, data, **kwargs)
-
-    @deprecated("Use `add` with `binary=False`")
-    def _add_b64_data(self, relative_path, data, **kwargs):
-        return self.add(relative_path, data, binary=False, **kwargs)
-
     def get(self, relative_path, binary=True, **kwargs):
         data = self._forward("get", relative_path, **kwargs)
         if not binary and data:
             data = base64.b64encode(data)
         return data
-
-    @deprecated("Use `get` with `binary=False`")
-    def _get_b64_data(self, relative_path, **kwargs):
-        return self.get(relative_path, binary=False, **kwargs)
-
-    @deprecated("Use `get`")
-    def _get_bin_data(self, relative_path, **kwargs):
-        return self.get(relative_path, **kwargs)
 
     def list_files(self, relative_path="", pattern=False):
         names = self._forward("list", relative_path)
@@ -117,30 +101,14 @@ class StorageBackend(models.Model):
             names = fnmatch.filter(names, pattern)
         return names
 
-    @deprecated("Use `list_files`")
-    def _list(self, relative_path="", pattern=False):
-        return self.list_files(relative_path, pattern=pattern)
-
     def find_files(self, pattern, relative_path="", **kw):
         return self._forward("find_files", pattern, relative_path=relative_path)
-
-    @deprecated("Use `find_files`")
-    def _find_files(self, pattern, relative_path="", **kw):
-        return self.find_files(pattern, relative_path=relative_path, **kw)
 
     def move_files(self, files, destination_path, **kw):
         return self._forward("move_files", files, destination_path, **kw)
 
-    @deprecated("Use `move_files`")
-    def _move_files(self, files, destination_path, **kw):
-        return self.move_files(files, destination_path, **kw)
-
     def delete(self, relative_path):
         return self._forward("delete", relative_path)
-
-    @deprecated("Use `delete`")
-    def _delete(self, relative_path):
-        return self.delete(relative_path)
 
     def _forward(self, method, *args, **kwargs):
         _logger.debug(
@@ -165,11 +133,11 @@ class StorageBackend(models.Model):
         adapter = self._get_adapter()
         try:
             adapter.validate_config()
-            title = _("Connection Test Succeeded!")
-            message = _("Everything seems properly set up!")
+            title = self.env._("Connection Test Succeeded!")
+            message = self.env._("Everything seems properly set up!")
             msg_type = "success"
         except Exception as err:
-            title = _("Connection Test Failed!")
+            title = self.env._("Connection Test Failed!")
             message = str(err)
             msg_type = "danger"
         return {

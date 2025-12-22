@@ -3,9 +3,9 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 {
-    "name": "Storage Bakend",
+    "name": "Storage Backend",
     "summary": "Implement the concept of Storage with amazon S3, sftp...",
-    "version": "17.0.1.0.0",
+    "version": "18.0.1.0.0",
     "category": "Storage",
     "website": "https://github.com/OCA/storage",
     "author": " Akretion, Odoo Community Association (OCA)",
