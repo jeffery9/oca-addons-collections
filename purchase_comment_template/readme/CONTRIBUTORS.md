@@ -2,5 +2,3 @@
 - Alan Ramos \<<alan.ramos@jarsa.com.mx>\>
 - [Aion Tech](https://aiontech.company/):
   - Simone Rubino \<<simone.rubino@aion-tech.it>\>
-- [Heliconia Solutions Pvt. Ltd.](https://www.heliconia.io)
-  - Bhavesh Heliconia
