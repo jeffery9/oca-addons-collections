@@ -3,7 +3,7 @@
 
 from datetime import datetime, timedelta
 
-from odoo import SUPERUSER_ID, _, api, fields, models
+from odoo import SUPERUSER_ID, api, fields, models
 from odoo.exceptions import UserError
 
 
@@ -18,6 +18,14 @@ class SqlExport(models.Model):
         "User to notify",
         help="Add the users who want to receive the report by e-mail. You "
         "need to link the sql query with a cron to send mail automatically",
+    )
+    mail_partner_ids = fields.Many2many(
+        "res.partner",
+        "mail_partner_sqlquery_rel",
+        "sql_id",
+        "partner_id",
+        help="Add the partners who wants to receive the report by e-mail. You "
+        "need to link the sql query with a cron to send a mail automatically",
     )
     cron_ids = fields.Many2many(
         "ir.cron",
@@ -39,10 +47,8 @@ class SqlExport(models.Model):
             "model_id": self.env.ref("sql_export.model_sql_export").id,
             "state": "code",
             "code": "model._run_all_sql_export_for_cron()",
-            "name": "SQL Export : %s" % self.name,
+            "name": f"SQL Export : {self.name}",
             "nextcall": datetime.now() + timedelta(hours=2),
-            "doall": False,
-            "numbercall": -1,
             "user_id": SUPERUSER_ID,
         }
 
@@ -52,7 +58,7 @@ class SqlExport(models.Model):
         # We need to pass cron_id in the cron args because a cron is not
         # aware of itself in the end method and we need it to find all
         # linked sql exports
-        write_vals = {"code": "model._run_all_sql_export_for_cron([%s])" % cron.id}
+        write_vals = {"code": f"model._run_all_sql_export_for_cron([{cron.id}])"}
         cron.write(write_vals)
         self.write({"cron_ids": [(4, cron.id)]})
 
@@ -74,7 +80,7 @@ class SqlExport(models.Model):
         if "user_id" in params:
             wizard = wizard.with_context(force_user=params["user_id"])
         if "company_id" in params:
-            wizard = wizard.with_context(force_company=params["company_id"])
+            wizard = wizard.with_company(params["company_id"])
 
         wizard.export_sql()
         binary = wizard.binary_file
@@ -123,7 +129,7 @@ class SqlExport(models.Model):
         for export in self:
             if export.query_properties_definition and export.mail_user_ids:
                 raise UserError(
-                    _(
+                    self.env._(
                         "It is not possible to execute and send a query "
                         "automatically by mail if there are parameters to fill"
                     )
@@ -134,15 +140,47 @@ class SqlExport(models.Model):
         for export in self:
             for user in export.mail_user_ids:
                 if not user.email:
-                    raise UserError(_("The user does not have any e-mail address."))
+                    raise UserError(
+                        self.env._("The user does not have any e-mail address.")
+                    )
+
+    @api.constrains("mail_partner_ids", "query")
+    def _check_mail_partner(self):
+        for export in self:
+            if export.mail_partner_ids and (
+                "%(company_id)s" in export.query or "%(user_id)s" in export.query
+            ):
+                raise UserError(
+                    self.env._(
+                        "A query that uses the company_id or user_id parameter "
+                        "cannot be directly sent to a partner."
+                    )
+                )
+            missing_email_partners = export.mail_partner_ids.filtered(
+                lambda partner: not partner.email
+            )
+            if missing_email_partners:
+                raise UserError(
+                    self.env._(
+                        "Missing email address for partner(s): %(names)s",
+                        names=", ".join(missing_email_partners.mapped("name")),
+                    )
+                )
 
     def get_email_address_for_template(self):
         """
-        Called from mail template
+        Called from mail template.
+        Collects email addresses from both users and partners.
         """
         self.ensure_one()
         if self.env.context.get("mail_to"):
             mail_users = self.env["res.users"].browse(self.env.context.get("mail_to"))
+            mail_partners = self.env["res.partner"]
         else:
             mail_users = self.mail_user_ids
-        return ",".join([x.email for x in mail_users if x.email])
+            mail_partners = self.mail_partner_ids
+        email_addresses = set(
+            mail_users.mapped("email") + mail_partners.mapped("email")
+        )
+        email_addresses.discard(False)
+        return ",".join(email_addresses)

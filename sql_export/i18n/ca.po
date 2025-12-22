@@ -106,11 +106,6 @@ msgid "Export"
 msgstr "Exportar "
 
 #. module: sql_export
-#: model_terms:ir.ui.view,arch_db:sql_export.sql_file_wizard_view_form
-msgid "Export file"
-msgstr "Fitxer d'exportació"
-
-#. module: sql_export
 #: model:ir.model.fields,field_description:sql_export.field_sql_file_wizard__binary_file
 msgid "File"
 msgstr "Fitxer"
@@ -159,6 +154,13 @@ msgstr ""
 #. module: sql_export
 #: model:ir.model.fields,help:sql_export.field_sql_export__message_has_error
 msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: sql_export
+#: model:ir.model.fields,help:sql_export.field_sql_export__use_external_database
+msgid ""
+"If filled, the query will be executed against an external database, "
+"configured in Odoo main configuration file. "
 msgstr ""
 
 #. module: sql_export
@@ -240,7 +242,6 @@ msgstr ""
 #. module: sql_export
 #. odoo-python
 #: code:addons/sql_export/wizard/wizard_file.py:0
-#, python-format
 msgid "Please enter a values for the following properties : %s"
 msgstr ""
 
@@ -297,6 +298,11 @@ msgstr ""
 msgid ""
 "Technical fields, used in modules that depends on this one to know if groups "
 "has changed, and that according access should be updated."
+msgstr ""
+
+#. module: sql_export
+#: model:ir.model.fields,field_description:sql_export.field_sql_export__use_external_database
+msgid "Use External Database"
 msgstr ""
 
 #. module: sql_export
@@ -377,6 +383,9 @@ msgstr ""
 #: model:ir.model.fields.selection,name:sql_export.selection__sql_export__encoding__windows-1252
 msgid "windows-1252"
 msgstr ""
+
+#~ msgid "Export file"
+#~ msgstr "Fitxer d'exportació"
 
 #~ msgid "Last Modified on"
 #~ msgstr "Darrera modificació el"
