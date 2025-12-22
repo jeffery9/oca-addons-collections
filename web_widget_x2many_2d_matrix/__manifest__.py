@@ -5,8 +5,8 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
     "name": "2D matrix for x2many fields",
-    "version": "17.0.2.0.1",
-    "maintainers": ["JasminSForgeFlow", "hbrunn"],
+    "version": "18.0.2.0.2",
+    "maintainers": ["JasminSForgeFlow", "DavidJForgeFlow", "hbrunn"],
     "development_status": "Production/Stable",
     "author": (
         "Hunki Enterprises BV, "
@@ -38,6 +38,9 @@
             "x2many_2d_matrix_field.xml",
             "web_widget_x2many_2d_matrix/static/src/components/x2many_2d_matrix_field/"
             "x2many_2d_matrix_field.scss",
+        ],
+        "web.assets_unit_tests": [
+            "web_widget_x2many_2d_matrix/static/tests/*",
         ],
     },
 }

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-03-17 07:30+0000\n"
-"PO-Revision-Date: 2025-08-19 15:25+0000\n"
+"PO-Revision-Date: 2025-08-19 15:27+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (http://www.transifex.com/oca/OCA-web-8-0/language/it/"
 ")\n"
@@ -54,7 +54,6 @@ msgstr "Wisget matrix"
 #. module: web_widget_x2many_2d_matrix
 #. odoo-javascript
 #: code:addons/web_widget_x2many_2d_matrix/static/src/components/x2many_2d_matrix_renderer/x2many_2d_matrix_renderer.xml:0
-#, python-format
 msgid "Nothing to display."
 msgstr "Niente da visualizzare."
 

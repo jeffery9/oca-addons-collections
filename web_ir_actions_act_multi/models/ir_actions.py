@@ -5,7 +5,7 @@ from odoo import fields, models
 
 class IrActionsActMulti(models.Model):
     _name = "ir.actions.act_multi"
-    _description = "Action Multi"
+    _description = "Action Mulit"
     _inherit = "ir.actions.actions"
     _table = "ir_actions"
 
