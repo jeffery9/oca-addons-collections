@@ -1,15 +1,15 @@
 
-[![Runboat](https://img.shields.io/badge/runboat-Try%20me-875A7B.png)](https://runboat.odoo-community.org/builds?repo=OCA/pms&target_branch=17.0)
-[![Pre-commit Status](https://github.com/OCA/pms/actions/workflows/pre-commit.yml/badge.svg?branch=17.0)](https://github.com/OCA/pms/actions/workflows/pre-commit.yml?query=branch%3A17.0)
-[![Build Status](https://github.com/OCA/pms/actions/workflows/test.yml/badge.svg?branch=17.0)](https://github.com/OCA/pms/actions/workflows/test.yml?query=branch%3A17.0)
-[![codecov](https://codecov.io/gh/OCA/pms/branch/17.0/graph/badge.svg)](https://codecov.io/gh/OCA/pms)
-[![Translation Status](https://translation.odoo-community.org/widgets/pms-17-0/-/svg-badge.svg)](https://translation.odoo-community.org/engage/pms-17-0/?utm_source=widget)
+[![Runboat](https://img.shields.io/badge/runboat-Try%20me-875A7B.png)](https://runboat.odoo-community.org/builds?repo=OCA/pms&target_branch=18.0)
+[![Pre-commit Status](https://github.com/OCA/pms/actions/workflows/pre-commit.yml/badge.svg?branch=18.0)](https://github.com/OCA/pms/actions/workflows/pre-commit.yml?query=branch%3A18.0)
+[![Build Status](https://github.com/OCA/pms/actions/workflows/test.yml/badge.svg?branch=18.0)](https://github.com/OCA/pms/actions/workflows/test.yml?query=branch%3A18.0)
+[![codecov](https://codecov.io/gh/OCA/pms/branch/18.0/graph/badge.svg)](https://codecov.io/gh/OCA/pms)
+[![Translation Status](https://translation.odoo-community.org/widgets/pms-18-0/-/svg-badge.svg)](https://translation.odoo-community.org/engage/pms-18-0/?utm_source=widget)
 
 <!-- /!\ do not modify above this line -->
 
 # pms
 
-TODO: add repo description.
+pms
 
 <!-- /!\ do not modify below this line -->
 
@@ -17,7 +17,11 @@ TODO: add repo description.
 
 [//]: # (addons)
 
-This part will be replaced when running the oca-gen-addons-table script from OCA/maintainer-tools.
+Available addons
+----------------
+addon | version | maintainers | summary
+--- | --- | --- | ---
+[multi_pms_properties](multi_pms_properties/) | 18.0.1.0.0 |  | Multi Properties Manager
 
 [//]: # (end addons)
 
