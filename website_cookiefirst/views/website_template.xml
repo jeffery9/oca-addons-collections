@@ -16,7 +16,7 @@
             <attribute name="type">text/plain</attribute>
             <attribute name="data-cookiefirst-category">performance</attribute>
         </xpath>
-        <xpath expr="//script[last()]" position="after">
+        <xpath expr="//div[@id='wrapwrap']" position="after">
             <t t-if="website.cookiefirst_identifier and website.domain">
                 <script
                     t-attf-src="https://consent.cookiefirst.com/sites/{{ (website.domain or '').replace('http://', '').replace('https://', '').replace('www.', '') }}-{{ website.cookiefirst_identifier }}/consent.js"
