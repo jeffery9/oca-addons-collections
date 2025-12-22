@@ -1,11 +1,10 @@
 # Copyright (C) 2020 - Today: GRAP (http://www.grap.coop)
 # @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
-# Copyright 2025 Simone Rubino
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 {
     "name": "Server Actions - Navigate",
-    "version": "17.0.1.0.0",
+    "version": "18.0.1.0.0",
     "author": "GRAP, Odoo Community Association (OCA)",
     "summary": "Navigate between any items of any Odoo Models",
     "category": "Tools",
