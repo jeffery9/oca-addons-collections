@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 17.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -47,7 +47,7 @@ msgid ""
 "                                    </t>\n"
 "                                </td>\n"
 "                                <td>\n"
-"                                    <t t-out=\"format_date(payment_line.date)\"></t>\n"
+"                                    <t t-out=\"format_date(payment_line.date)\"/>\n"
 "                                </td>\n"
 "                                <td>\n"
 "                                    <t t-out=\"format_amount(payment_line.amount_currency, payment_line.currency_id) or ''\">$\n"
@@ -116,7 +116,6 @@ msgstr ""
 #. module: account_payment_order_notification
 #. odoo-python
 #: code:addons/account_payment_order_notification/models/account_payment_order.py:0
-#, python-format
 msgid "Email has been sent to the following partners: %s"
 msgstr ""
 

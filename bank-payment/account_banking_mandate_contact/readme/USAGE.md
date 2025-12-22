@@ -2,7 +2,7 @@ For selecting the mandate at contact level:
 
 1.  Go to *Invoicing \> Customers \> Customers*.
 2.  Open or create one contact that has a parent.
-3.  On the "..." page, fill *Contact Mandate*.
+3.  On the *Sales & Purchase* page, fill *Contact Mandate*.
 4.  That mandate will be populated in the debit order.
 
 Then the normal flow will be:

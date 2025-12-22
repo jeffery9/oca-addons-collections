@@ -13,23 +13,35 @@ class TestAccountVendorBankAccountDefault(AccountTestInvoicingCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.bank_account1 = cls.env["res.partner.bank"].create(
-            {
-                "acc_number": "12341",
-                "partner_id": cls.partner_a.id,
-            }
+        cls.bank_account1 = (
+            cls.env["res.partner.bank"]
+            .sudo()
+            .create(
+                {
+                    "acc_number": "12341",
+                    "partner_id": cls.partner_a.id,
+                }
+            )
         )
-        cls.bank_account2 = cls.env["res.partner.bank"].create(
-            {
-                "acc_number": "12342",
-                "partner_id": cls.partner_a.id,
-            }
+        cls.bank_account2 = (
+            cls.env["res.partner.bank"]
+            .sudo()
+            .create(
+                {
+                    "acc_number": "12342",
+                    "partner_id": cls.partner_a.id,
+                }
+            )
         )
-        cls.bank_account3 = cls.env["res.partner.bank"].create(
-            {
-                "acc_number": "12343",
-                "partner_id": cls.partner_a.id,
-            }
+        cls.bank_account3 = (
+            cls.env["res.partner.bank"]
+            .sudo()
+            .create(
+                {
+                    "acc_number": "12343",
+                    "partner_id": cls.partner_a.id,
+                }
+            )
         )
         cls.manual_out = cls.env.ref("account.account_payment_method_manual_out")
         cls.journal_c1 = (
@@ -67,11 +79,15 @@ class TestAccountVendorBankAccountDefault(AccountTestInvoicingCommon):
         self.assertNotEqual(self.partner_a.default_bank_id, self.bank_account2)
         self.partner_a.default_bank_id = self.bank_account2
         self.assertEqual(self.partner_a.default_bank_id, self.bank_account2)
-        self.bank_account4 = self.env["res.partner.bank"].create(
-            {
-                "acc_number": "12344",
-                "partner_id": self.partner_a.id,
-            }
+        self.bank_account4 = (
+            self.env["res.partner.bank"]
+            .sudo()
+            .create(
+                {
+                    "acc_number": "12344",
+                    "partner_id": self.partner_a.id,
+                }
+            )
         )
         self.assertEqual(self.partner_a.default_bank_id, self.bank_account2)
 

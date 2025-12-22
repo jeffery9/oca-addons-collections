@@ -3,7 +3,7 @@
 {
     "name": "Account Vendor Bank Account Default Purchase",
     "summary": "Set a default bank account purchase orders",
-    "version": "17.0.1.0.0",
+    "version": "18.0.1.0.0",
     "category": "Banking addons",
     "website": "https://github.com/OCA/bank-payment",
     "author": "Sygel, Odoo Community Association (OCA)",

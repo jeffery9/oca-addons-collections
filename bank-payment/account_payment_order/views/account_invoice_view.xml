@@ -21,14 +21,14 @@
                     type="object"
                     string="Add to Debit Order"
                     groups="account_payment_order.group_account_payment"
-                    invisible="not payment_order_ok or state != 'posted' or move_type not in ('out_invoice', 'out_refund')"
+                    invisible="not payment_order_ok or state != 'posted' or move_type not in ('out_invoice', 'out_receipt', 'out_refund')"
                 />
                 <button
                     name="create_account_payment_line"
                     type="object"
                     string="Add to Payment Order"
                     groups="account_payment_order.group_account_payment"
-                    invisible="not payment_order_ok or state != 'posted' or move_type not in ('in_invoice', 'in_refund')"
+                    invisible="not payment_order_ok or state != 'posted' or move_type not in ('in_invoice', 'in_receipt', 'in_refund')"
                 />
             </button>
             <div name="button_box" position="inside">
@@ -47,9 +47,7 @@
                     />
                 </button>
             </div>
-            <field name="payment_mode_id" position="after">
-                <field name="payment_order_ok" invisible="1" />
-            </field>
+            <field name="payment_mode_id" position="after" />
             <!-- First we place the rest of the elements for the new reference distribution -->
             <field name="payment_reference" position="before">
                 <label for="payment_reference" />
@@ -57,8 +55,8 @@
                     <field
                         name="reference_type"
                         readonly="state != 'draft'"
-                        invisible="move_type not in ('out_invoice', 'out_refund')"
-                        required="move_type in ('out_invoice', 'out_refund')"
+                        invisible="move_type not in ('out_invoice', 'out_receipt', 'out_refund')"
+                        required="move_type in ('out_invoice', 'out_receipt', 'out_refund')"
                     />
                 </div>
             </field>
@@ -67,7 +65,7 @@
                 <field name="payment_reference" position="move" />
             </field>
         </field>
-</record>
+    </record>
     <record
         id="account_invoice_create_account_payment_line_action"
         model="ir.actions.act_window"
@@ -84,15 +82,15 @@
         <field name="model">account.move</field>
         <field name="inherit_id" ref="account.view_invoice_tree" />
         <field name="arch" type="xml">
-                <button name="action_register_payment" position="after">
-                    <button
+            <button name="action_force_register_payment" position="after">
+                <button
                     name="%(account_invoice_create_account_payment_line_action)d"
                     type="action"
                     string="Add to Payment/Debit Order"
                     groups="account_payment_order.group_account_payment"
-                    invisible="context.get('default_move_type') not in ('out_invoice', 'out_refund', 'in_invoice', 'in_refund')"
+                    invisible="context.get('default_move_type') not in ('out_invoice', 'out_refund', 'in_invoice', 'in_refund', 'in_receipt', 'out_receipt')"
                 />
             </button>
         </field>
-</record>
+    </record>
 </odoo>

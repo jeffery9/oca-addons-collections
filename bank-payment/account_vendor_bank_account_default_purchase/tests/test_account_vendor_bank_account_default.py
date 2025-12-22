@@ -11,23 +11,35 @@ class TestAccountVendorBankAccountDefaultPurc(AccountTestInvoicingCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.bank_account1 = cls.env["res.partner.bank"].create(
-            {
-                "acc_number": "12341",
-                "partner_id": cls.partner_a.id,
-            }
+        cls.bank_account1 = (
+            cls.env["res.partner.bank"]
+            .sudo()
+            .create(
+                {
+                    "acc_number": "12341",
+                    "partner_id": cls.partner_a.id,
+                }
+            )
         )
-        cls.bank_account2 = cls.env["res.partner.bank"].create(
-            {
-                "acc_number": "12342",
-                "partner_id": cls.partner_a.id,
-            }
+        cls.bank_account2 = (
+            cls.env["res.partner.bank"]
+            .sudo()
+            .create(
+                {
+                    "acc_number": "12342",
+                    "partner_id": cls.partner_a.id,
+                }
+            )
         )
-        cls.bank_account3 = cls.env["res.partner.bank"].create(
-            {
-                "acc_number": "12343",
-                "partner_id": cls.partner_a.id,
-            }
+        cls.bank_account3 = (
+            cls.env["res.partner.bank"]
+            .sudo()
+            .create(
+                {
+                    "acc_number": "12343",
+                    "partner_id": cls.partner_a.id,
+                }
+            )
         )
         cls.product_a.type = "service"
         cls.manual_out = cls.env.ref("account.account_payment_method_manual_out")

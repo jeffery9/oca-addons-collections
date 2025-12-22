@@ -2,7 +2,7 @@
 # Copyright 2021 Tecnativa - João Marques
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
-from odoo import api, fields, models
+from odoo import fields, models
 
 
 class AccountPaymentLineCreate(models.TransientModel):
@@ -10,15 +10,10 @@ class AccountPaymentLineCreate(models.TransientModel):
 
     include_returned = fields.Boolean(string="Include move lines from returns")
 
-    @api.depends(
-        "include_returned",
-    )
     def _compute_move_line_domain(self):
-        result = super()._compute_move_line_domain()
+        res = super()._compute_move_line_domain()
         if not self.include_returned:
-            domain = self.move_line_domain
-            domain += [
+            self.move_line_domain += [
                 ("move_id.returned_payment", "=", False),
             ]
-            self.move_line_domain = domain
-        return result
+        return res

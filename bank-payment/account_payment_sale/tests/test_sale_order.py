@@ -1,18 +1,16 @@
 # Copyright 2018 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.tests import Form
-
-from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
+from odoo.tests import Form, tagged
 
 from .common import CommonTestCase
 
 
+@tagged("post_install", "-at_install")
 class TestSaleOrder(CommonTestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.env = cls.env(context=dict(cls.env.context, **DISABLED_MAIL_CONTEXT))
 
     def create_sale_order(self, payment_mode=None):
         with Form(self.env["sale.order"]) as sale_form:
@@ -92,14 +90,6 @@ class TestSaleOrder(CommonTestCase):
             {
                 "advance_payment_method": "fixed",
                 "fixed_amount": 5,
-                "product_id": self.env["product.product"]
-                .create(
-                    {
-                        "name": "Deposit",
-                        "type": "service",
-                    }
-                )
-                .id,
                 "sale_order_ids": order,
             }
         )
@@ -141,3 +131,12 @@ class TestSaleOrder(CommonTestCase):
         other_company = self.env["res.company"].create({"name": "other company"})
         order.company_id = other_company
         self.assertFalse(order.payment_mode_id)
+
+    def test_grouped_invoicing_payment_mode_compare(self):
+        order_1 = self.create_sale_order()
+        order_1.payment_mode_id = False
+        order_2 = self.create_sale_order()
+        orders = order_1 | order_2
+        orders.action_confirm()
+        invoices = orders._create_invoices(grouped=False)
+        self.assertEqual(len(invoices), 2)

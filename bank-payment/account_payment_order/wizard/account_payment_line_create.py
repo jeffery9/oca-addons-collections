@@ -4,7 +4,7 @@
 # © 2015-2016 Akretion (<https://www.akretion.com>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 
 
 class AccountPaymentLineCreate(models.TransientModel):
@@ -26,15 +26,22 @@ class AccountPaymentLineCreate(models.TransientModel):
         selection=[("posted", "All Posted Entries"), ("all", "All Entries")],
         string="Target Moves",
     )
-    allow_blocked = fields.Boolean(string="Allow Litigation Move Lines")
     invoice = fields.Boolean(string="Linked to an Invoice or Refund")
     date_type = fields.Selection(
         selection=[("due", "Due Date"), ("move", "Move Date")],
         string="Type of Date Filter",
         required=True,
     )
-    due_date = fields.Date()
-    move_date = fields.Date(default=fields.Date.context_today)
+    due_on = fields.Selection(
+        string="Due on",
+        selection=[("<=", "Before or equal"), ("=", "Equal"), ("between", "Between")],
+        default="<=",
+        required=True,
+    )
+    filter_date = fields.Date(default=fields.Date.context_today)
+    filter_date_end = fields.Date(
+        help="For 'Due on' 'Between', date between 'Filter Date' and 'Filter Date End'",
+    )
     payment_mode = fields.Selection(
         selection=[("same", "Same"), ("same_or_null", "Same or Empty"), ("any", "Any")],
     )
@@ -69,12 +76,12 @@ class AccountPaymentLineCreate(models.TransientModel):
 
     @api.depends(
         "date_type",
-        "move_date",
-        "due_date",
+        "due_on",
+        "filter_date",
+        "filter_date_end",
         "journal_ids",
         "invoice",
         "target_move",
-        "allow_blocked",
         "payment_mode",
         "partner_ids",
     )
@@ -92,16 +99,28 @@ class AccountPaymentLineCreate(models.TransientModel):
             domain += [("move_id.state", "=", "posted")]
         else:
             domain += [("move_id.state", "in", ("draft", "posted"))]
-        if not self.allow_blocked:
-            domain += [("blocked", "!=", True)]
         if self.date_type == "due":
-            domain += [
-                "|",
-                ("date_maturity", "<=", fields.Date.to_string(self.due_date)),
-                ("date_maturity", "=", False),
-            ]
+            if self.due_on == "between":
+                domain += [
+                    "&",
+                    ("date_maturity", ">=", self.filter_date),
+                    ("date_maturity", "<=", self.filter_date_end),
+                ]
+            else:
+                domain += [
+                    "|",
+                    ("date_maturity", self.due_on, self.filter_date),
+                    ("date_maturity", "=", False),
+                ]
         elif self.date_type == "move":
-            domain.append(("date", "<=", fields.Date.to_string(self.move_date)))
+            if self.due_on == "between":
+                domain += [
+                    "&",
+                    ("date", ">=", self.filter_date),
+                    ("date", "<=", self.filter_date_end),
+                ]
+            else:
+                domain.append(("date", self.due_on, self.filter_date))
         if self.invoice:
             domain.append(
                 (
@@ -168,7 +187,7 @@ class AccountPaymentLineCreate(models.TransientModel):
         lines = self.env["account.move.line"].search(self.move_line_domain)
         self.move_line_ids = lines
         action = {
-            "name": _("Select Move Lines to Create Transactions"),
+            "name": self.env._("Select Move Lines to Create Transactions"),
             "type": "ir.actions.act_window",
             "res_model": "account.payment.line.create",
             "view_mode": "form",

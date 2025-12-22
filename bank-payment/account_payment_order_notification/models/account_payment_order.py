@@ -1,7 +1,7 @@
 # Copyright 2022 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import _, fields, models
+from odoo import fields, models
 
 
 class AccountPaymentOrder(models.Model):
@@ -39,7 +39,7 @@ class AccountPaymentOrder(models.Model):
             notification.message_post_with_source(template)
 
     def _action_create_note_from_notifications(self):
-        body = _("Email has been sent to the following partners: %s") % (
+        body = self.env._("Email has been sent to the following partners: %s") % (
             ", ".join(self.mapped("notification_ids.partner_id.name"))
         )
         self.message_post(body=body)
