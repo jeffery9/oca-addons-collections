@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: partner-contact (9.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-24 01:41+0000\n"
-"PO-Revision-Date: 2024-06-05 14:37+0000\n"
+"PO-Revision-Date: 2025-11-26 08:41+0000\n"
 "Last-Translator: jakobkrabbe <jakob@syscare.se>\n"
 "Language-Team: Swedish (http://www.transifex.com/oca/OCA-partner-contact-9-0/"
 "language/sv/)\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: account_financial_risk
 #: model_terms:ir.ui.view,arch_db:account_financial_risk.res_partner_view_risk
@@ -42,28 +42,28 @@ msgstr "<span class=\"oe_read_only\">)</span>"
 #. module: account_financial_risk
 #: model_terms:ir.ui.view,arch_db:account_financial_risk.financial_risk_info
 msgid "<strong>Consumed credit </strong>"
-msgstr ""
+msgstr "<strong>Förbrukade krediter </strong>"
 
 #. module: account_financial_risk
 #: model_terms:ir.ui.view,arch_db:account_financial_risk.financial_risk_info
 msgid "<strong>Credit limit </strong>"
-msgstr ""
+msgstr "<strong>Kreditgräns </strong>"
 
 #. module: account_financial_risk
 #: model_terms:ir.ui.view,arch_db:account_financial_risk.financial_risk_info
 msgid "<strong>Remaining credit </strong>"
-msgstr ""
+msgstr "<strong>Kvarvarande krediter </strong>"
 
 #. module: account_financial_risk
 #: model:ir.model.fields,field_description:account_financial_risk.field_res_partner__move_line_ids
 #: model:ir.model.fields,field_description:account_financial_risk.field_res_users__move_line_ids
 msgid "Account Moves"
-msgstr "Konton flyttas"
+msgstr "Verifikat"
 
 #. module: account_financial_risk
 #: model_terms:ir.ui.view,arch_db:account_financial_risk.financial_risk_account_move_line_pivot_view
 msgid "Account move lines"
-msgstr "Konto flytta linjer"
+msgstr "Verifikatsrader"
 
 #. module: account_financial_risk
 #: model:ir.model.fields,field_description:account_financial_risk.field_res_company__allow_overrisk_invoice_validation
@@ -109,14 +109,13 @@ msgstr "Avbryt"
 #. module: account_financial_risk
 #. odoo-python
 #: code:addons/account_financial_risk/models/res_partner.py:0
-#, python-format
 msgid "Choose Manual Credit Currency."
 msgstr "Välj Manuell kreditvaluta."
 
 #. module: account_financial_risk
 #: model:ir.model,name:account_financial_risk.model_res_company
 msgid "Companies"
-msgstr "Företag"
+msgstr "Bolag"
 
 #. module: account_financial_risk
 #: model:ir.model.fields.selection,name:account_financial_risk.selection__res_partner__credit_currency__company
@@ -174,7 +173,7 @@ msgstr "Kreditpolicy"
 #. module: account_financial_risk
 #: model_terms:ir.ui.view,arch_db:account_financial_risk.financial_risk_info
 msgid "Credit information"
-msgstr ""
+msgstr "Kreditinformation"
 
 #. module: account_financial_risk
 #: model:ir.model.fields,help:account_financial_risk.field_res_partner__credit_limit
@@ -201,7 +200,7 @@ msgstr ""
 #. module: account_financial_risk
 #: model:ir.model.fields,field_description:account_financial_risk.field_partner_risk_exceeded_wiz__display_name
 msgid "Display Name"
-msgstr "Visa namn"
+msgstr "Visningsnamn"
 
 #. module: account_financial_risk
 #: model:ir.model.fields,field_description:account_financial_risk.field_partner_risk_exceeded_wiz__exception_msg
@@ -218,14 +217,12 @@ msgstr "Finansiell risk"
 #. module: account_financial_risk
 #. odoo-python
 #: code:addons/account_financial_risk/models/account_invoice.py:0
-#, python-format
 msgid "Financial risk exceeded.\n"
 msgstr "Finansiell risk överträffad.\n"
 
 #. module: account_financial_risk
 #. odoo-python
 #: code:addons/account_financial_risk/models/res_partner.py:0
-#, python-format
 msgid "Financial risk information"
 msgstr "Information om finansiella risker"
 
@@ -304,6 +301,8 @@ msgid ""
 "Helper field to control visibility of the partner option based on global "
 "config."
 msgstr ""
+"Hjälpfält för att kontrollera synligheten för partneralternativet baserat på "
+"global konfiguration."
 
 #. module: account_financial_risk
 #: model:ir.model.fields,field_description:account_financial_risk.field_partner_risk_exceeded_wiz__id
@@ -315,6 +314,7 @@ msgstr "ID"
 #: model_terms:ir.ui.view,arch_db:account_financial_risk.res_config_settings_view_form
 msgid "If enabled, portal users will be able to see their credit information."
 msgstr ""
+"Om aktiverad, portalanvändare kommer att kunna se sin kreditinformation."
 
 #. module: account_financial_risk
 #: model:ir.model.fields,help:account_financial_risk.field_res_partner__show_financial_risk_in_portal
@@ -323,6 +323,8 @@ msgid ""
 "If enabled, this partner will see their financial risk in the portal, "
 "provided the global setting is also enabled."
 msgstr ""
+"Om aktivera, den här partnern kommer att se sin ekonomiska risk i portalen, "
+"förutsatt att den globala inställningen också är aktiverad."
 
 #. module: account_financial_risk
 #: model:ir.model.fields,field_description:account_financial_risk.field_res_partner__risk_invoice_draft_include
@@ -447,7 +449,6 @@ msgstr "Partnerrisk överskreds Guiden"
 #. module: account_financial_risk
 #. odoo-python
 #: code:addons/account_financial_risk/wizards/parner_risk_exceeded.py:0
-#, python-format
 msgid "Partner risk exceeded"
 msgstr "Partnerrisk överskreds"
 
@@ -455,7 +456,7 @@ msgstr "Partnerrisk överskreds"
 #: model:ir.model.fields,field_description:account_financial_risk.field_res_partner__portal_show_financial_risk_visible
 #: model:ir.model.fields,field_description:account_financial_risk.field_res_users__portal_show_financial_risk_visible
 msgid "Portal Show Financial Risk Visible"
-msgstr ""
+msgstr "Portal Visa synlig finansiell risk"
 
 #. module: account_financial_risk
 #: model:ir.model.fields.selection,name:account_financial_risk.selection__res_partner__credit_currency__pricelist
@@ -529,14 +530,12 @@ msgstr "Risk Tillåt redigering"
 #. module: account_financial_risk
 #: model:ir.model.fields,field_description:account_financial_risk.field_account_bank_statement_line__risk_amount_total_currency
 #: model:ir.model.fields,field_description:account_financial_risk.field_account_move__risk_amount_total_currency
-#: model:ir.model.fields,field_description:account_financial_risk.field_account_payment__risk_amount_total_currency
 msgid "Risk Amount Total"
 msgstr "Risk Belopp Totalt"
 
 #. module: account_financial_risk
 #: model:ir.model.fields,field_description:account_financial_risk.field_account_bank_statement_line__risk_currency_id
 #: model:ir.model.fields,field_description:account_financial_risk.field_account_move__risk_currency_id
-#: model:ir.model.fields,field_description:account_financial_risk.field_account_payment__risk_currency_id
 #: model:ir.model.fields,field_description:account_financial_risk.field_res_partner__risk_currency_id
 #: model:ir.model.fields,field_description:account_financial_risk.field_res_users__risk_currency_id
 msgid "Risk Currency"
@@ -595,7 +594,7 @@ msgstr "Ställ in 0 om den inte är låst"
 #: model:ir.model.fields,field_description:account_financial_risk.field_res_partner__show_financial_risk_in_portal
 #: model:ir.model.fields,field_description:account_financial_risk.field_res_users__show_financial_risk_in_portal
 msgid "Show credit information in portal"
-msgstr ""
+msgstr "Visa kreditinformation i portalen"
 
 #. module: account_financial_risk
 #: model_terms:ir.ui.view,arch_db:account_financial_risk.res_partner_view_risk
@@ -611,7 +610,6 @@ msgstr "Summan av total risk som ingår"
 #. module: account_financial_risk
 #. odoo-python
 #: code:addons/account_financial_risk/models/account_invoice.py:0
-#, python-format
 msgid ""
 "The partner %s is in risk exception.\n"
 "You must post his invoices from form view to allow over risk"
@@ -627,14 +625,12 @@ msgstr "Partnern har överskridit sin risk"
 #. module: account_financial_risk
 #. odoo-python
 #: code:addons/account_financial_risk/models/account_invoice.py:0
-#, python-format
 msgid "This invoice exceeds the financial risk.\n"
 msgstr "Denna faktura överstiger den finansiella risken.\n"
 
 #. module: account_financial_risk
 #. odoo-python
 #: code:addons/account_financial_risk/models/account_invoice.py:0
-#, python-format
 msgid "This invoice exceeds the open invoices risk.\n"
 msgstr "Denna faktura överskrider risken för öppna fakturor.\n"
 

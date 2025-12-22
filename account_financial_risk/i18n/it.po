@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: partner-contact (9.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-24 01:41+0000\n"
-"PO-Revision-Date: 2025-08-08 14:26+0000\n"
+"PO-Revision-Date: 2025-08-19 15:27+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (http://www.transifex.com/oca/OCA-partner-contact-9-0/"
 "language/it/)\n"
@@ -113,7 +113,6 @@ msgstr "Annulla"
 #. module: account_financial_risk
 #. odoo-python
 #: code:addons/account_financial_risk/models/res_partner.py:0
-#, python-format
 msgid "Choose Manual Credit Currency."
 msgstr "Scegliere valuta di credito manuale."
 
@@ -222,14 +221,12 @@ msgstr "Rischio finanziario"
 #. module: account_financial_risk
 #. odoo-python
 #: code:addons/account_financial_risk/models/account_invoice.py:0
-#, python-format
 msgid "Financial risk exceeded.\n"
 msgstr "Superato rischio finanziario.\n"
 
 #. module: account_financial_risk
 #. odoo-python
 #: code:addons/account_financial_risk/models/res_partner.py:0
-#, python-format
 msgid "Financial risk information"
 msgstr "Informazioni sul rischio finanziario"
 
@@ -456,7 +453,6 @@ msgstr "Wizard Superamento Fido Partner"
 #. module: account_financial_risk
 #. odoo-python
 #: code:addons/account_financial_risk/wizards/parner_risk_exceeded.py:0
-#, python-format
 msgid "Partner risk exceeded"
 msgstr "Fido partner superato"
 
@@ -538,14 +534,12 @@ msgstr "Consenti modifica fido"
 #. module: account_financial_risk
 #: model:ir.model.fields,field_description:account_financial_risk.field_account_bank_statement_line__risk_amount_total_currency
 #: model:ir.model.fields,field_description:account_financial_risk.field_account_move__risk_amount_total_currency
-#: model:ir.model.fields,field_description:account_financial_risk.field_account_payment__risk_amount_total_currency
 msgid "Risk Amount Total"
 msgstr "Importo totale del fido"
 
 #. module: account_financial_risk
 #: model:ir.model.fields,field_description:account_financial_risk.field_account_bank_statement_line__risk_currency_id
 #: model:ir.model.fields,field_description:account_financial_risk.field_account_move__risk_currency_id
-#: model:ir.model.fields,field_description:account_financial_risk.field_account_payment__risk_currency_id
 #: model:ir.model.fields,field_description:account_financial_risk.field_res_partner__risk_currency_id
 #: model:ir.model.fields,field_description:account_financial_risk.field_res_users__risk_currency_id
 msgid "Risk Currency"
@@ -620,7 +614,6 @@ msgstr "Somma totale dell'esposizione"
 #. module: account_financial_risk
 #. odoo-python
 #: code:addons/account_financial_risk/models/account_invoice.py:0
-#, python-format
 msgid ""
 "The partner %s is in risk exception.\n"
 "You must post his invoices from form view to allow over risk"
@@ -637,14 +630,12 @@ msgstr "Il partner ha superato il fido"
 #. module: account_financial_risk
 #. odoo-python
 #: code:addons/account_financial_risk/models/account_invoice.py:0
-#, python-format
 msgid "This invoice exceeds the financial risk.\n"
 msgstr "Questa fattura supera il fido.\n"
 
 #. module: account_financial_risk
 #. odoo-python
 #: code:addons/account_financial_risk/models/account_invoice.py:0
-#, python-format
 msgid "This invoice exceeds the open invoices risk.\n"
 msgstr "Questa fattura supera il fido Fatture aperte.\n"
 

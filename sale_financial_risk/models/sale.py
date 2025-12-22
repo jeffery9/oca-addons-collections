@@ -1,17 +1,12 @@
 # Copyright 2016-2020 Tecnativa - Carlos Dauden
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.tools import float_round
 
 
 class SaleOrder(models.Model):
     _inherit = "sale.order"
-
-    # Index this field is affected by the related field risk_partner_id. Mainly when
-    # commercial fields in the partner are written and thus recomputation of that
-    # relation is triggered.
-    partner_invoice_id = fields.Many2one(index=True)
 
     def evaluate_risk_message(self, partner):
         self.ensure_one()
@@ -26,20 +21,24 @@ class SaleOrder(models.Model):
         )
         exception_msg = ""
         if partner.risk_exception:
-            exception_msg = _("Financial risk exceeded.\n")
+            exception_msg = self.env._("Financial risk exceeded.\n")
         elif partner.risk_sale_order_limit and (
             (partner.risk_sale_order + risk_amount) > partner.risk_sale_order_limit
         ):
-            exception_msg = _("This sale order exceeds the sales orders risk.\n")
+            exception_msg = self.env._(
+                "This sale order exceeds the sales orders risk.\n"
+            )
         elif partner.risk_sale_order_include and (
-            (partner.risk_total + risk_amount) > partner.credit_limit
+            (partner.risk_total + risk_amount) > partner.sudo().credit_limit
         ):
-            exception_msg = _("This sale order exceeds the financial risk.\n")
+            exception_msg = self.env._("This sale order exceeds the financial risk.\n")
         return exception_msg
 
     def action_confirm(self):
         if not self.env.context.get("bypass_risk", False):
-            for order in self:
+            for order in self.filtered(
+                lambda so: not so.company_id.allow_overrisk_sale_confirmation
+            ):
                 partner = order.partner_invoice_id.commercial_partner_id
                 exception_msg = order.evaluate_risk_message(partner)
                 if exception_msg:
@@ -105,7 +104,8 @@ class SaleOrderLine(models.Model):
             if line.product_id.invoice_policy == "delivery":
                 qty = max(qty, line.qty_delivered)
             risk_qty = float_round(
-                qty - line.qty_invoiced, precision_rounding=line.product_uom.rounding
+                qty - line.qty_invoiced,
+                precision_rounding=line.product_uom.rounding or 0.01,
             )
             # There is no risk if the line hasn't stock moves to deliver
             # Added hasattr condition because fails in post-migration compute

@@ -38,6 +38,8 @@ class Mail(models.Model):
         raise_exception=False,
         smtp_session=None,
         alias_domain_id=False,
+        mail_server=False,
+        post_send_callback=None,
     ):
         # because of
         # https://github.com/odoo/odoo/blob/bcba6c0dda4818e67a9023beb26593a7d74ff6a6/
@@ -50,4 +52,6 @@ class Mail(models.Model):
             raise_exception=raise_exception,
             smtp_session=smtp_session,
             alias_domain_id=alias_domain_id,
+            mail_server=mail_server,
+            post_send_callback=post_send_callback,
         )

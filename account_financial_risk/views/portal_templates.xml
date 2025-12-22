@@ -11,17 +11,20 @@
             <h4>Credit information</h4>
             <hr class="mt-1 mb-1" />
             <ul class="list-group">
-                <li class="list-group-item bg-transparent border-0 ps-0"><strong
-                    >Credit limit </strong><span
+                <li class="list-group-item bg-transparent border-0 ps-0">
+                    <strong>Credit limit </strong>
+                    <span
                         t-field="commercial_partner.sudo().credit_limit"
                         t-options="{'widget': 'monetary', 'display_currency': risk_currency_id}"
-                    /></li>
+                    />
+                </li>
                 <li
                     t-if="commercial_partner.risk_total != 0"
                     class="list-group-item bg-transparent border-0 ps-0"
-                ><strong>Consumed credit </strong><span
-                        t-field="commercial_partner.risk_total"
-                    /></li>
+                >
+                    <strong>Consumed credit </strong>
+                    <span t-field="commercial_partner.risk_total" />
+                </li>
                 <li
                     t-if="commercial_partner.risk_total != 0"
                     class="list-group-item bg-transparent border-0 p-0"
@@ -51,11 +54,11 @@
                     t-if="commercial_partner.risk_remaining_value != 0"
                     class="list-group-item bg-transparent border-0 ps-0"
                 ><strong>Remaining credit </strong><span
-                        class="me-1"
-                        t-field="commercial_partner.risk_remaining_value"
-                    />(<span
-                        t-field="commercial_partner.risk_remaining_percentage"
-                    />%)</li>
+                    class="me-1"
+                    t-field="commercial_partner.risk_remaining_value"
+                />(<span
+                    t-field="commercial_partner.risk_remaining_percentage"
+                />%)</li>
             </ul>
         </div>
     </template>
