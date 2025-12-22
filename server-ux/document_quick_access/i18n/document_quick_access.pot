@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 17.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -63,7 +63,6 @@ msgstr ""
 #. module: document_quick_access
 #. odoo-python
 #: code:addons/document_quick_access/models/document_quick_access_rule.py:0
-#, python-format
 msgid "Document cannot be found"
 msgstr ""
 
@@ -95,7 +94,6 @@ msgstr ""
 #. module: document_quick_access
 #. odoo-python
 #: code:addons/document_quick_access/models/document_quick_access_rule.py:0
-#, python-format
 msgid "No format has been found for this record"
 msgstr ""
 
@@ -107,7 +105,6 @@ msgstr ""
 #. module: document_quick_access
 #. odoo-javascript
 #: code:addons/document_quick_access/static/src/xml/document_quick_access_launcher.xml:0
-#, python-format
 msgid "QR search"
 msgstr ""
 

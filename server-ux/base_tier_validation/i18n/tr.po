@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-04-15 12:24+0000\n"
+"PO-Revision-Date: 2025-10-30 17:00+0000\n"
 "Last-Translator: Betül Öğmen <betulo@eska.biz>\n"
 "Language-Team: none\n"
 "Language: tr\n"
@@ -24,8 +24,8 @@ msgid ""
 "                validated."
 msgstr ""
 "<i class=\"fa fa-lg fa-info-circle\"/>\n"
-"                Bu kaydın onaylanması\n"
-"                gerekiyor."
+"               Bu kaydın onaylanması\n"
+"               gerekmektedir."
 
 #. module: base_tier_validation
 #: model_terms:ir.ui.view,arch_db:base_tier_validation.tier_validation_label
@@ -49,7 +49,7 @@ msgid ""
 "                !"
 msgstr ""
 "<i class=\"fa fa-lg fa-thumbs-up\"/>\n"
-"                İşlem onaylandı\n"
+"                İşlem Onaylandı\n"
 "                <b></b>\n"
 "                !"
 
@@ -62,75 +62,60 @@ msgstr "<span class=\"oe_edit_only\">Adı</span>"
 #: model_terms:ir.ui.view,arch_db:base_tier_validation.tier_definition_view_form
 msgid "<span>Bypass, if previous tier was validated by same reviewer</span>"
 msgstr ""
-"<span>Önceki aşama aynı inceleyici tarafından onaylandıysa atlandı</span>"
+"<span>Önceki aşama aynı inceleyen tarafından doğrulandıysa atlandı</span>"
 
 #. module: base_tier_validation
 #. odoo-python
 #: code:addons/base_tier_validation/models/tier_validation.py:0
-#, python-format
 msgid "A record to be reviewed has been created by %s."
-msgstr "İncelenecek bir kayıt %s tarafından oluşturuldu."
+msgstr "Gözden geçirilmesi gereken bir kayıt %s tarafından oluşturuldu."
 
 #. module: base_tier_validation
 #. odoo-python
 #: code:addons/base_tier_validation/models/tier_review.py:0
-#, python-format
 msgid "A review has been requested %s days ago."
-msgstr "%s gün önce bir inceleme talep edildi."
+msgstr "%s tarafından bir inceleme istendi."
 
 #. module: base_tier_validation
 #. odoo-python
 #: code:addons/base_tier_validation/models/tier_validation.py:0
-#, python-format
 msgid "A review has been requested by %s."
 msgstr "%s tarafından bir inceleme istendi."
 
 #. module: base_tier_validation
 #. odoo-python
 #: code:addons/base_tier_validation/models/tier_validation.py:0
-#, python-format
 msgid "A review was accepted"
 msgstr "Bir inceleme kabul edildi"
 
 #. module: base_tier_validation
 #. odoo-python
 #: code:addons/base_tier_validation/models/tier_validation.py:0
-#, python-format
 msgid "A review was accepted. (%s)"
 msgstr "Bir inceleme kabul edildi. (%s)"
 
 #. module: base_tier_validation
 #. odoo-python
 #: code:addons/base_tier_validation/models/tier_validation.py:0
-#, python-format
 msgid "A review was rejected by %(user)s. (%(comment)s)"
 msgstr "Bir inceleme %(user)s tarafından reddedildi. (%(comment)s)"
 
 #. module: base_tier_validation
 #. odoo-python
 #: code:addons/base_tier_validation/models/tier_validation.py:0
-#, python-format
 msgid "A review was rejected by %s."
 msgstr "Bir inceleme %s tarafından reddedildi."
 
 #. module: base_tier_validation
 #. odoo-python
 #: code:addons/base_tier_validation/models/tier_validation.py:0
-#, python-format
 msgid "A validation process is still open for at least one record."
-msgstr "En az bir kayıt için hala bir onaylama süreci açık."
+msgstr "En az bir kayıt için hala bir doğrulama süreci açık."
 
 #. module: base_tier_validation
 #: model:ir.model.fields,field_description:base_tier_validation.field_tier_definition__active
 msgid "Active"
 msgstr "Etkin"
-
-#. module: base_tier_validation
-#. odoo-javascript
-#: code:addons/base_tier_validation/static/src/components/tier_review_menu/tier_review_menu.xml:0
-#, python-format
-msgid "Activity"
-msgstr "Aktivite"
 
 #. module: base_tier_validation
 #: model_terms:ir.ui.view,arch_db:base_tier_validation.tier_definition_view_search
@@ -140,7 +125,7 @@ msgstr "Bütün"
 #. module: base_tier_validation
 #: model:ir.model.fields,field_description:base_tier_validation.field_tier_definition__allow_write_for_reviewer
 msgid "Allow Write For Reviewers"
-msgstr "İnceleyiciler için Yazmaya İzin ver"
+msgstr "İnceleyenler için yazmaya izin ver"
 
 #. module: base_tier_validation
 #: model:ir.model.fields,help:base_tier_validation.field_tier_validation_exception__group_ids
@@ -167,7 +152,7 @@ msgstr "Belirtilen sıra numarasına göre onay sırası"
 #: model:ir.model.fields,field_description:base_tier_validation.field_tier_definition__approve_sequence_bypass
 #: model:ir.model.fields,field_description:base_tier_validation.field_tier_review__approve_sequence_bypass
 msgid "Approve Sequence Bypass"
-msgstr "Sıra Atlamayı Onayla"
+msgstr "Dizi Atlamasını Onayla"
 
 #. module: base_tier_validation
 #: model:ir.model.fields,field_description:base_tier_validation.field_tier_definition__approve_sequence
@@ -183,18 +168,17 @@ msgstr "Onaylı"
 #. module: base_tier_validation
 #: model_terms:ir.ui.view,arch_db:base_tier_validation.tier_definition_view_form
 msgid "Archived"
-msgstr "Arşivlenmiş"
+msgstr "Arşivlendi"
 
 #. module: base_tier_validation
 #. odoo-python
 #: code:addons/base_tier_validation/models/tier_validation_exception.py:0
-#, python-format
 msgid ""
 "At least one of these fields must be checked! Write under Validation, Write "
 "after Validation"
 msgstr ""
 "Bu alanlardan en az birinin işaretlenmesi gerekmektedir! Doğrulama Altında "
-"Yaz, Doğrulama Sonrası Yaz"
+"Yaz, Doğrulama Sonrası Yaz\""
 
 #. module: base_tier_validation
 #: model:ir.model.fields,help:base_tier_validation.field_tier_definition__approve_sequence_bypass
@@ -202,8 +186,8 @@ msgstr ""
 msgid ""
 "Bypassed (auto validated), if previous tier was validated by same reviewer"
 msgstr ""
-"Önceki aşama aynı inceleyici tarafından onaylandıysa atlandı (otomatik "
-"olarak onaylandı)"
+"Önceki aşama aynı inceleyici tarafından doğrulandıysa atlandı (otomatik "
+"olarak doğrulandı)"
 
 #. module: base_tier_validation
 #: model:ir.model.fields,field_description:base_tier_validation.field_tier_review__can_review
@@ -234,7 +218,6 @@ msgstr "İptal"
 #: model:ir.model.fields,field_description:base_tier_validation.field_tier_definition__has_comment
 #: model:ir.model.fields,field_description:base_tier_validation.field_tier_review__has_comment
 #: model_terms:ir.ui.view,arch_db:base_tier_validation.view_comment_wizard
-#, python-format
 msgid "Comment"
 msgstr "Yorum"
 
@@ -297,8 +280,6 @@ msgstr "Tanım Etki Alanı"
 #. odoo-javascript
 #: code:addons/base_tier_validation/static/src/components/tier_review_widget/tier_review_widget.xml:0
 #: model:ir.model.fields,field_description:base_tier_validation.field_tier_definition__name
-#: model:ir.model.fields,field_description:base_tier_validation.field_tier_review__name
-#, python-format
 msgid "Description"
 msgstr "Açıklama"
 
@@ -313,7 +294,7 @@ msgstr "Görünüm Adı"
 #. module: base_tier_validation
 #: model:ir.model.fields,field_description:base_tier_validation.field_tier_review__display_status
 msgid "Display Status"
-msgstr "Görünüm Durumu"
+msgstr "Durumu Göster"
 
 #. module: base_tier_validation
 #: model:ir.model.fields.selection,name:base_tier_validation.selection__tier_definition__definition_type__domain
@@ -323,14 +304,13 @@ msgstr "Etki Alanı"
 #. module: base_tier_validation
 #: model:ir.model.fields,field_description:base_tier_validation.field_tier_review__done_by
 msgid "Done By"
-msgstr "tarafından tamamlandı"
+msgstr "Tamamlayan"
 
 #. module: base_tier_validation
 #. odoo-javascript
 #: code:addons/base_tier_validation/static/src/components/tier_review_widget/tier_review_widget.xml:0
-#, python-format
 msgid "Done by"
-msgstr "tarafından tamamlandı"
+msgstr "Tamamlayan"
 
 #. module: base_tier_validation
 #: model:ir.model.fields.selection,name:base_tier_validation.selection__tier_definition__review_type__field
@@ -345,7 +325,6 @@ msgstr "Alanlar"
 #. module: base_tier_validation
 #. odoo-python
 #: code:addons/base_tier_validation/models/tier_review.py:0
-#, python-format
 msgid "Group %s"
 msgstr "Grup %s"
 
@@ -378,8 +357,6 @@ msgid "ID"
 msgstr "ID"
 
 #. module: base_tier_validation
-#: model:ir.model.fields,help:base_tier_validation.field_tier_definition__has_comment
-#: model:ir.model.fields,help:base_tier_validation.field_tier_review__has_comment
 #: model:ir.model.fields,help:base_tier_validation.field_tier_validation__has_comment
 msgid "If set, Allow the reviewer to leave a comment on the review."
 msgstr "Ayarlanırsa, İnceleyenin inceleme üzerinde yorum yapmasına izin ver."
@@ -400,9 +377,9 @@ msgid ""
 "reached.Usefull in an Approve by sequence scenario. An notification request "
 "to review is sent out when it's their turn to review."
 msgstr ""
-"Ayarlanırsa, bu duruma ulaşıldığında tüm olası inceleyiciler e-posta ile "
-"bildirilecektir.Sıraya göre onay senaryosunda kullanışlıdır. İnceleme sırası "
-"kendilerine geldiğinde bir inceleme isteği gönderilir."
+"Ayarlanırsa, bu duruma ulaşıldığında tüm olası inceleyenler e-posta ile "
+"bildirilecektir. Sıraya göre onay senaryosunda kullanışlıdır. İnceleme "
+"sırası kendilerine geldiğinde bir inceleme isteği gönderilir."
 
 #. module: base_tier_validation
 #: model:ir.model.fields,help:base_tier_validation.field_tier_definition__notify_on_accepted
@@ -428,23 +405,23 @@ msgid ""
 "If set, reviewers will be notified by email when a reviews related to this "
 "definition are restarted."
 msgstr ""
-"Ayarlanırsa, bu tanımla ilgili bir inceleme yeniden başlatıldığında, "
-"inceleyiciler e-posta yoluyla bilgilendirilecektir."
+"Ayarlanırsa, bu tanımla ilgili bir inceleme yeniden başlatıldığında "
+"inceleyiciler e-postayla bilgilendirilecektir."
 
 #. module: base_tier_validation
 #: model_terms:ir.actions.act_window,help:base_tier_validation.tier_validation_exception_action
 msgid "It's fully validated"
-msgstr "Tamamen doğrulanmıştır"
+msgstr "Tamamen Doğrulandı"
 
 #. module: base_tier_validation
 #: model_terms:ir.actions.act_window,help:base_tier_validation.tier_validation_exception_action
 msgid "It's in the validation process"
-msgstr "Onaylanma sürecindedir"
+msgstr "Doğrulama Aşamasında"
 
 #. module: base_tier_validation
 #: model:ir.model.fields,field_description:base_tier_validation.field_tier_review__last_reminder_date
 msgid "Last Reminder Date"
-msgstr "Son Hatırlatma Tarihi"
+msgstr "Son Bilgilendirme Tarihi"
 
 #. module: base_tier_validation
 #: model:ir.model.fields,field_description:base_tier_validation.field_comment_wizard__write_uid
@@ -473,7 +450,7 @@ msgstr "Modeli"
 #. module: base_tier_validation
 #: model:ir.model.fields,field_description:base_tier_validation.field_tier_validation_exception__model_name
 msgid "Model Name"
-msgstr "Model Adı"
+msgstr "Model İsmi"
 
 #. module: base_tier_validation
 #: model_terms:ir.ui.view,arch_db:base_tier_validation.tier_definition_view_form
@@ -481,9 +458,10 @@ msgid "More Options"
 msgstr "Daha Fazla Seçenek"
 
 #. module: base_tier_validation
+#: model:ir.model.fields,field_description:base_tier_validation.field_tier_review__name
 #: model:ir.model.fields,field_description:base_tier_validation.field_tier_validation_exception__name
 msgid "Name"
-msgstr "Ad"
+msgstr "İsim"
 
 #. module: base_tier_validation
 #: model:ir.model.fields,field_description:base_tier_validation.field_tier_validation__need_validation
@@ -493,7 +471,6 @@ msgstr "Doğrulama Gerekiyor"
 #. module: base_tier_validation
 #. odoo-python
 #: code:addons/base_tier_validation/models/tier_definition.py:0
-#, python-format
 msgid "New Tier Validation"
 msgstr "Yeni Seviye Doğrulama"
 
@@ -505,21 +482,19 @@ msgstr "Sonraki İnceleme"
 #. module: base_tier_validation
 #. odoo-python
 #: code:addons/base_tier_validation/models/tier_validation.py:0
-#, python-format
 msgid "Next: %s"
 msgstr "Sonraki: %s"
 
 #. module: base_tier_validation
 #. odoo-javascript
 #: code:addons/base_tier_validation/static/src/components/tier_review_menu/tier_review_menu.xml:0
-#, python-format
 msgid "No reviews to do."
 msgstr "Yapacak inceleme yok."
 
 #. module: base_tier_validation
 #: model:ir.model.fields,field_description:base_tier_validation.field_tier_definition__notify_on_accepted
 msgid "Notify Reviewers on Accepted"
-msgstr "Kabul Edildiğinde İnceleyenlere Bildir"
+msgstr "Kabul Edilenleri İnceleyicilere Bildir"
 
 #. module: base_tier_validation
 #: model:ir.model.fields,field_description:base_tier_validation.field_tier_definition__notify_on_create
@@ -529,17 +504,17 @@ msgstr "İncelemeleri Oluşturma Hakkında Bilgilendir"
 #. module: base_tier_validation
 #: model:ir.model.fields,field_description:base_tier_validation.field_tier_definition__notify_on_rejected
 msgid "Notify Reviewers on Rejected"
-msgstr "Reddedildiğinde İnceleyenlere Bildir"
+msgstr "Red Edilenleri İnceleyicilere Bildir"
 
 #. module: base_tier_validation
 #: model:ir.model.fields,field_description:base_tier_validation.field_tier_definition__notify_on_restarted
 msgid "Notify Reviewers on Restarted"
-msgstr "Yeniden Başlatıldığında İnceleyenlere Bildir"
+msgstr "Yeniden Başlatmayı İnceleyicilere Bildir"
 
 #. module: base_tier_validation
 #: model:ir.model.fields,field_description:base_tier_validation.field_tier_definition__notify_on_pending
 msgid "Notify Reviewers on reaching Pending"
-msgstr "Bekleme Durumuna ulaştıklarında İnceleyenlere Bildir"
+msgstr "Bekleme Durumuna ulaştıklarında İnceleyicilere Bildir"
 
 #. module: base_tier_validation
 #: model:ir.model.fields,help:base_tier_validation.field_tier_definition__notify_reminder_delay
@@ -547,8 +522,8 @@ msgid ""
 "Number of days after which a message must be posted to remind about pending "
 "validation  (0 = no reminder)"
 msgstr ""
-"Bekleyen doğrulamayı hatırlatmak için bir mesajın gönderilmesi gereken gün  ("
-"0 = hatırlatma yok)"
+"Bekleyen doğrulamayı hatırlatmak için bir mesajın gönderilmesi gereken gün "
+"sayısı  (0 = hatırlatma yok)"
 
 #. module: base_tier_validation
 #: model_terms:ir.actions.act_window,help:base_tier_validation.tier_validation_exception_action
@@ -560,24 +535,10 @@ msgstr ""
 "olmasını istediğinize karar verebilirsiniz:"
 
 #. module: base_tier_validation
-#. odoo-python
-#: code:addons/base_tier_validation/models/tier_validation.py:0
-#, python-format
-msgid "Operation has been <b>rejected</b>."
-msgstr "İşlem <b>reddedildi</b>."
-
-#. module: base_tier_validation
-#. odoo-python
-#: code:addons/base_tier_validation/models/tier_validation.py:0
-#, python-format
-msgid "Operation has been <b>validated</b>!"
-msgstr "İşlem <b>doğrulandı</b>!"
-
-#. module: base_tier_validation
 #: model_terms:ir.ui.view,arch_db:base_tier_validation.res_config_settings_view_form_budget
 msgid "Option to use python formula to get reviewers and find documents"
 msgstr ""
-"İnceleyicileri almak ve belgeleri bulmak için python formülünü kullanma "
+"Gözden geçirenleri almak ve belgeleri bulmak için python formülünü kullanma "
 "seçeneği"
 
 #. module: base_tier_validation
@@ -585,7 +546,6 @@ msgstr ""
 #: code:addons/base_tier_validation/static/src/components/tier_review_menu/tier_review_menu.xml:0
 #: model:ir.model.fields.selection,name:base_tier_validation.selection__tier_review__status__pending
 #: model:ir.model.fields.selection,name:base_tier_validation.selection__tier_validation__validation_status__pending
-#, python-format
 msgid "Pending"
 msgstr "Bekleyen"
 
@@ -634,7 +594,6 @@ msgstr "İsteyen"
 #. module: base_tier_validation
 #. odoo-javascript
 #: code:addons/base_tier_validation/static/src/components/tier_review_widget/tier_review_widget.xml:0
-#, python-format
 msgid "Requested by"
 msgstr "İsteyen"
 
@@ -654,6 +613,8 @@ msgid "Restart Validation"
 msgstr "Yeniden Doğrulama İste"
 
 #. module: base_tier_validation
+#. odoo-javascript
+#: code:addons/base_tier_validation/static/src/components/tier_review_menu/tier_review_menu.xml:0
 #: model:ir.model.fields,field_description:base_tier_validation.field_comment_wizard__review_ids
 msgid "Review"
 msgstr "İncele"
@@ -687,7 +648,6 @@ msgstr "İnceleyenler"
 #: code:addons/base_tier_validation/static/src/components/tier_review_menu/tier_review_menu.xml:0
 #: code:addons/base_tier_validation/static/src/components/tier_review_widget/tier_review_widget.xml:0
 #: model:ir.model.fields,field_description:base_tier_validation.field_res_users__review_ids
-#, python-format
 msgid "Reviews"
 msgstr "İncelemeler"
 
@@ -705,7 +665,6 @@ msgstr "Bekleyen incelemelerle ilgili hatırlatma mesajı gönder"
 #. odoo-javascript
 #: code:addons/base_tier_validation/static/src/components/tier_review_widget/tier_review_widget.xml:0
 #: model:ir.model.fields,field_description:base_tier_validation.field_tier_definition__sequence
-#, python-format
 msgid "Sequence"
 msgstr "Sıra"
 
@@ -718,41 +677,24 @@ msgstr "Belirli kullanıcı"
 #. odoo-javascript
 #: code:addons/base_tier_validation/static/src/components/tier_review_widget/tier_review_widget.xml:0
 #: model:ir.model.fields,field_description:base_tier_validation.field_tier_review__status
-#, python-format
 msgid "Status"
 msgstr "Durumu"
 
 #. module: base_tier_validation
 #. odoo-python
 #: code:addons/base_tier_validation/models/tier_validation.py:0
-#, python-format
 msgid "The review has been reset by %s."
 msgstr "İnceleme %s tarafından sıfırlandı."
 
 #. module: base_tier_validation
 #. odoo-python
-#: code:addons/base_tier_validation/models/tier_review.py:0
-#, python-format
-msgid "There are no res.users in the selected field"
-msgstr "Seçili alanda res.kullanıcı yok"
-
-#. module: base_tier_validation
-#. odoo-python
 #: code:addons/base_tier_validation/models/tier_validation.py:0
-#, python-format
-msgid "This %s needs to be validated"
-msgstr "Bu %s 'nin doğrulanması gerekiyor"
-
-#. module: base_tier_validation
-#. odoo-python
-#: code:addons/base_tier_validation/models/tier_validation.py:0
-#, python-format
 msgid ""
 "This action needs to be validated for at least one record. Reviews pending:\n"
 " - %s \n"
 "Please request a validation."
 msgstr ""
-"Bu eylemin en az bir kayıt için doğrulanması gerekir Bekleyen incelemeler:\n"
+"Bu eylemin en az bir kayıt için doğrulanması gerekir. İnceleme bekliyor:\n"
 " - %s \n"
 "Lütfen doğrulama isteğinde bulunun."
 
@@ -772,7 +714,7 @@ msgstr "Seviye Tanımı"
 #. module: base_tier_validation
 #: model:ir.model.fields,field_description:base_tier_validation.field_res_config_settings__module_base_tier_validation_formula
 msgid "Tier Formula"
-msgstr "Katman Formülü"
+msgstr "Seviye Formülü"
 
 #. module: base_tier_validation
 #: model:ir.model,name:base_tier_validation.model_tier_review
@@ -782,7 +724,7 @@ msgstr "Seviye İncelemesi"
 #. module: base_tier_validation
 #: model_terms:ir.ui.view,arch_db:base_tier_validation.res_config_settings_view_form_budget
 msgid "Tier Validation"
-msgstr "Seviye Doğrulaması"
+msgstr "Katman Doğrulama"
 
 #. module: base_tier_validation
 #: model:ir.model,name:base_tier_validation.model_tier_validation
@@ -845,7 +787,6 @@ msgstr "Yapılacak"
 #. module: base_tier_validation
 #. odoo-javascript
 #: code:addons/base_tier_validation/static/src/components/tier_review_widget/tier_review_widget.xml:0
-#, python-format
 msgid "Todo by"
 msgstr "Yapılacak"
 
@@ -895,7 +836,6 @@ msgstr "Doğrulayan"
 #. odoo-javascript
 #: code:addons/base_tier_validation/static/src/components/tier_review_widget/tier_review_widget.xml:0
 #: model:ir.model.fields,field_description:base_tier_validation.field_tier_review__reviewed_date
-#, python-format
 msgid "Validation Date"
 msgstr "Doğrulama Tarihi"
 
@@ -908,6 +848,12 @@ msgstr "Doğrulama Format Tarihi"
 #: model:ir.model.fields,field_description:base_tier_validation.field_tier_validation__validation_status
 msgid "Validation Status"
 msgstr "Doğrulama Durumu"
+
+#. module: base_tier_validation
+#. odoo-python
+#: code:addons/base_tier_validation/models/tier_review.py:0
+msgid "Validation reviewer field should be of the appropriate type"
+msgstr "Doğrulama gözden geçiren alanı uygun türde olmalıdır"
 
 #. module: base_tier_validation
 #: model:ir.model.fields,field_description:base_tier_validation.field_tier_validation__review_ids
@@ -923,66 +869,83 @@ msgstr "Bekleyenler"
 #. module: base_tier_validation
 #: model:ir.model.fields.selection,name:base_tier_validation.selection__tier_validation__validation_status__no
 msgid "Without validation"
-msgstr "Onaylama olmadan"
+msgstr "Doğrulama olmadan"
 
 #. module: base_tier_validation
 #: model:ir.model.fields,field_description:base_tier_validation.field_tier_validation_exception__allowed_to_write_after_validation
 msgid "Write after Validation"
-msgstr "Onaylamadan sonra Yaz"
+msgstr "Doğrulamadan sonra Yaz"
 
 #. module: base_tier_validation
 #: model_terms:ir.ui.view,arch_db:base_tier_validation.tier_validation_exception_search
 msgid "Write after validation"
-msgstr "Onaylamadan sonra yaz"
+msgstr "Doğrulamadan sonra yaz"
 
 #. module: base_tier_validation
 #: model:ir.model.fields,field_description:base_tier_validation.field_tier_validation_exception__allowed_to_write_under_validation
 msgid "Write under Validation"
-msgstr "Onaylama esnasında Yaz"
+msgstr "Doğrulama esnasında Yaz"
 
 #. module: base_tier_validation
 #: model_terms:ir.ui.view,arch_db:base_tier_validation.tier_validation_exception_search
 msgid "Write under validation"
-msgstr "Onaylama esnasında yaz"
+msgstr "Doğrulama esnasında yaz"
 
 #. module: base_tier_validation
 #. odoo-python
 #: code:addons/base_tier_validation/models/tier_validation.py:0
-#, python-format
 msgid ""
 "You are not allowed to write those fields after validation.\n"
-"- %(not_allowed_fields)s\n"
+"- %(not_allowed_fields_str)s\n"
 "\n"
 "Only those fields can be modified:\n"
-"- %(allowed_fields)s"
+"- %(allowed_fields_str)s"
 msgstr ""
-"Onaylamadan sonra bu alanları yazmanıza izin verilmez.\n"
-"- %(not_allowed_fields)s\n"
+"Doğrulamadan sonra bu alanları yazmanıza izin verilmez.\n"
+"- %(not_allowed_fields_str)s\n"
 "\n"
 "Yalnızca bu alanlar değiştirilebilir:\n"
-"- %(allowed_fields)s"
+"- %(allowed_fields_str)s"
 
 #. module: base_tier_validation
 #. odoo-python
 #: code:addons/base_tier_validation/models/tier_validation.py:0
-#, python-format
 msgid ""
 "You are not allowed to write those fields under validation.\n"
-"- %(not_allowed_fields)s\n"
+"- %(not_allowed_fields_str)s\n"
 "\n"
 "Only those fields can be modified:\n"
-"- %(allowed_fields)s"
+"- %(allowed_fields_str)s"
 msgstr ""
-"Onaylama esnasına bu alanları yazmanıza izin verilmez.\n"
-"- %(not_allowed_fields)s\n"
+"Doğrulamadan sonra bu alanları yazmanıza izin verilmez.\n"
+"- %(not_allowed_fields_str)s\n"
 "\n"
 "Yalnızca bu alanlar değiştirilebilir:\n"
-"- %(allowed_fields)s"
+"- %(allowed_fields_str)s"
 
 #. module: base_tier_validation
 #: model_terms:ir.ui.view,arch_db:base_tier_validation.tier_definition_view_form
 msgid "e.g. Tier Validation for..."
 msgstr "ör. Şunun için Seviye Doğrulaması..."
+
+#~ msgid "There are no res.users in the selected field"
+#~ msgstr "Seçili alanda res.kullanıcı yok"
+
+#, python-format
+#~ msgid "Activity"
+#~ msgstr "Aktivite"
+
+#, python-format
+#~ msgid "Operation has been <b>rejected</b>."
+#~ msgstr "İşlem <b>reddedildi</b>."
+
+#, python-format
+#~ msgid "Operation has been <b>validated</b>!"
+#~ msgstr "İşlem <b>doğrulandı</b>!"
+
+#, python-format
+#~ msgid "This %s needs to be validated"
+#~ msgstr "Bu %s 'nin doğrulanması gerekiyor"
 
 #, python-format
 #~ msgid ""

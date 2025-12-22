@@ -3,9 +3,10 @@
 from lxml import etree
 from odoo_test_helper import FakeModelLoader
 
-from odoo.tests import Form, common
+from odoo.tests import Form, common, tagged
 
 
+@tagged("post_install", "-at_install")
 class TestCancelConfirm(common.TransactionCase):
     @classmethod
     def setUpClass(cls):

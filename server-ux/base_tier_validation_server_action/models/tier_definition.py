@@ -61,6 +61,6 @@ class TierDefinition(models.Model):
                     if review.sequence in sequences:
                         review_doc._validate_tier(review)
                         review_doc._update_counter({"review_deleted": True})
-                        _logger.info("Auto tier validate on %s" % review_doc)
+                        _logger.info(f"Auto tier validate on {review_doc}")
             except Exception as e:
                 _logger.error(f"Cannot auto tier validate {doc}: {e}")

@@ -78,8 +78,8 @@ class TestAnnouncement(BaseCommon):
         res = self.env.user.get_announcements()
         announcement_ids = [announcement["id"] for announcement in res["data"]]
         self.assertIn(self.general_announcement.id, announcement_ids)
-        self.assertIn(self.custom_announcement.id, announcement_ids)
         self.assertNotIn(self.admin_announcement.id, announcement_ids)
+        self.assertIn(self.custom_announcement.id, announcement_ids)
         self.assertNotIn(self.expired_announcement.id, announcement_ids)
 
     def test_custom_anouncement_write(self):

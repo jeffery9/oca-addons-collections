@@ -140,13 +140,21 @@ class TierTierValidation(common.TransactionCase):
         record = test_record.with_user(self.test_user_1)
         record.invalidate_recordset()
         # Auto validate, 1st tier, not auto validated
-        self.tier_def_obj._cron_auto_tier_validation()
+        with self.assertLogs(
+            "odoo.addons.base_tier_validation_server_action.models.tier_definition",
+            level="WARNING",
+        ):
+            self.tier_def_obj._cron_auto_tier_validation()
         self.assertEqual(record.review_ids.mapped("status"), ["waiting", "waiting"])
         # Manual validate 2nd tier -> OK
         record.validate_tier()
         self.assertEqual(record.review_ids.mapped("status"), ["approved", "pending"])
         # Auto validate, 2nd tier -> Not OK, before len(reviewers) > 1
-        self.tier_def_obj._cron_auto_tier_validation()
+        with self.assertLogs(
+            "odoo.addons.base_tier_validation_server_action.models.tier_definition",
+            level="WARNING",
+        ):
+            self.tier_def_obj._cron_auto_tier_validation()
         self.assertEqual(record.review_ids.mapped("status"), ["approved", "pending"])
 
     def test_3_trigger_server_action(self):
