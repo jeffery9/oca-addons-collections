@@ -6,6 +6,7 @@
 import logging
 
 from odoo import _, api, exceptions, fields, models
+from odoo.tools import config
 
 _logger = logging.getLogger(__name__)
 
@@ -63,7 +64,6 @@ class WebserviceBackend(models.Model):
             ("application/xml", "XML"),
             ("application/x-www-form-urlencoded", "Form"),
         ],
-        required=True,
     )
     company_id = fields.Many2one("res.company", string="Company")
 
@@ -123,7 +123,7 @@ class WebserviceBackend(models.Model):
     def _compute_redirect_url(self):
         get_param = self.env["ir.config_parameter"].sudo().get_param
         base_url = get_param("web.base.url")
-        if base_url.startswith("http://"):
+        if base_url.startswith("http://") and not config["test_enable"]:
             _logger.warning(
                 "web.base.url is configured in http. Oauth2 requires using https"
             )

@@ -1,15 +1,15 @@
 
-[![Runboat](https://img.shields.io/badge/runboat-Try%20me-875A7B.png)](https://runboat.odoo-community.org/builds?repo=OCA/web-api&target_branch=17.0)
-[![Pre-commit Status](https://github.com/OCA/web-api/actions/workflows/pre-commit.yml/badge.svg?branch=17.0)](https://github.com/OCA/web-api/actions/workflows/pre-commit.yml?query=branch%3A17.0)
-[![Build Status](https://github.com/OCA/web-api/actions/workflows/test.yml/badge.svg?branch=17.0)](https://github.com/OCA/web-api/actions/workflows/test.yml?query=branch%3A17.0)
-[![codecov](https://codecov.io/gh/OCA/web-api/branch/17.0/graph/badge.svg)](https://codecov.io/gh/OCA/web-api)
-[![Translation Status](https://translation.odoo-community.org/widgets/web-api-17-0/-/svg-badge.svg)](https://translation.odoo-community.org/engage/web-api-17-0/?utm_source=widget)
+[![Runboat](https://img.shields.io/badge/runboat-Try%20me-875A7B.png)](https://runboat.odoo-community.org/builds?repo=OCA/web-api&target_branch=18.0)
+[![Pre-commit Status](https://github.com/OCA/web-api/actions/workflows/pre-commit.yml/badge.svg?branch=18.0)](https://github.com/OCA/web-api/actions/workflows/pre-commit.yml?query=branch%3A18.0)
+[![Build Status](https://github.com/OCA/web-api/actions/workflows/test.yml/badge.svg?branch=18.0)](https://github.com/OCA/web-api/actions/workflows/test.yml?query=branch%3A18.0)
+[![codecov](https://codecov.io/gh/OCA/web-api/branch/18.0/graph/badge.svg)](https://codecov.io/gh/OCA/web-api)
+[![Translation Status](https://translation.odoo-community.org/widgets/web-api-18-0/-/svg-badge.svg)](https://translation.odoo-community.org/engage/web-api-18-0/?utm_source=widget)
 
 <!-- /!\ do not modify above this line -->
 
-# Web API
+# web-api
 
-Collect Odoo modules that help exposing web APIs and/or deal with external web APIs.
+web-api
 
 <!-- /!\ do not modify below this line -->
 
@@ -21,10 +21,13 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[endpoint](endpoint/) | 17.0.1.0.0 | <a href='https://github.com/simahawk'><img src='https://github.com/simahawk.png' width='32' height='32' style='border-radius:50%;' alt='simahawk'/></a> | Provide custom endpoint machinery.
-[endpoint_auth_api_key](endpoint_auth_api_key/) | 17.0.1.0.0 | <a href='https://github.com/simahawk'><img src='https://github.com/simahawk.png' width='32' height='32' style='border-radius:50%;' alt='simahawk'/></a> | Provide API key auth for endpoints.
-[endpoint_route_handler](endpoint_route_handler/) | 17.0.1.0.2 | <a href='https://github.com/simahawk'><img src='https://github.com/simahawk.png' width='32' height='32' style='border-radius:50%;' alt='simahawk'/></a> | Provide mixin and tool to generate custom endpoints on the fly.
-[webservice](webservice/) | 17.0.1.0.1 | <a href='https://github.com/etobella'><img src='https://github.com/etobella.png' width='32' height='32' style='border-radius:50%;' alt='etobella'/></a> | Defines webservice abstract definition to be used generally
+[endpoint](endpoint/) | 18.0.1.1.1 | <a href='https://github.com/simahawk'><img src='https://github.com/simahawk.png' width='32' height='32' style='border-radius:50%;' alt='simahawk'/></a> | Provide custom endpoint machinery.
+[endpoint_auth_api_key](endpoint_auth_api_key/) | 18.0.1.0.1 | <a href='https://github.com/simahawk'><img src='https://github.com/simahawk.png' width='32' height='32' style='border-radius:50%;' alt='simahawk'/></a> | Provide API key auth for endpoints.
+[endpoint_cache](endpoint_cache/) | 18.0.1.0.0 | <a href='https://github.com/simahawk'><img src='https://github.com/simahawk.png' width='32' height='32' style='border-radius:50%;' alt='simahawk'/></a> | Provide basic caching utils for endpoints
+[endpoint_cache_preheat](endpoint_cache_preheat/) | 18.0.1.0.0 | <a href='https://github.com/simahawk'><img src='https://github.com/simahawk.png' width='32' height='32' style='border-radius:50%;' alt='simahawk'/></a> | Provide basic pre-caching features for endpoints
+[endpoint_jsonifier](endpoint_jsonifier/) | 18.0.1.0.0 | <a href='https://github.com/SilvioC2C'><img src='https://github.com/SilvioC2C.png' width='32' height='32' style='border-radius:50%;' alt='SilvioC2C'/></a> <a href='https://github.com/simahawk'><img src='https://github.com/simahawk.png' width='32' height='32' style='border-radius:50%;' alt='simahawk'/></a> | Allow to configure jsonifier parsers on endpoints
+[endpoint_route_handler](endpoint_route_handler/) | 18.0.1.1.0 | <a href='https://github.com/simahawk'><img src='https://github.com/simahawk.png' width='32' height='32' style='border-radius:50%;' alt='simahawk'/></a> | Provide mixin and tool to generate custom endpoints on the fly.
+[webservice](webservice/) | 18.0.1.1.0 | <a href='https://github.com/etobella'><img src='https://github.com/etobella.png' width='32' height='32' style='border-radius:50%;' alt='etobella'/></a> | Defines webservice abstract definition to be used generally
 
 [//]: # (end addons)
 
