@@ -1,17 +1,18 @@
 [project]
 name = "odoo-addons-oca-stock-logistics-availability"
-version = "17.0.20251013.1"
+version = "18.0.20250702.0"
 dependencies = [
-    "odoo-addon-sale_stock_available_info_popup>=17.0dev,<17.1dev",
-    "odoo-addon-stock_available>=17.0dev,<17.1dev",
-    "odoo-addon-stock_available_base_exclude_location>=17.0dev,<17.1dev",
-    "odoo-addon-stock_available_immediately>=17.0dev,<17.1dev",
-    "odoo-addon-stock_available_mrp>=17.0dev,<17.1dev",
-    "odoo-addon-stock_free_quantity>=17.0dev,<17.1dev",
-    "odoo-addon-stock_quant_available_quantity>=17.0dev,<17.1dev",
+    "odoo-addon-stock_available==18.0.*",
+    "odoo-addon-stock_available_base_exclude_location==18.0.*",
+    "odoo-addon-stock_available_immediately==18.0.*",
+    "odoo-addon-stock_available_immediately_exclude_location==18.0.*",
+    "odoo-addon-stock_available_location_get_domain==18.0.*",
+    "odoo-addon-stock_available_unreserved==18.0.*",
+    "odoo-addon-stock_free_quantity==18.0.*",
+    "odoo-addon-stock_picking_product_availability_inline==18.0.*",
 ]
 classifiers=[
     "Programming Language :: Python",
     "Framework :: Odoo",
-    "Framework :: Odoo :: 17.0",
+    "Framework :: Odoo :: 18.0",
 ]
