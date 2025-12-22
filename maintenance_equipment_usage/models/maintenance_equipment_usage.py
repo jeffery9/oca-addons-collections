@@ -1,7 +1,7 @@
 # Copyright 2022-2024 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError
 
 
@@ -12,7 +12,10 @@ class MaintenanceEquipmentUsage(models.Model):
     _order = "name desc"
 
     name = fields.Char(
-        string="Equipment Usage", copy=False, readonly=True, default=lambda x: _("New")
+        string="Equipment Usage",
+        copy=False,
+        readonly=True,
+        default=lambda self: self.env._("New"),
     )
     user_id = fields.Many2one(
         comodel_name="res.users",
@@ -79,10 +82,10 @@ class MaintenanceEquipmentUsage(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
-            if not vals.get("name") or vals["name"] == _("New"):
+            if not vals.get("name") or vals["name"] == self.env._("New"):
                 vals["name"] = self.env["ir.sequence"].next_by_code(
                     "maintenance.equipment.usage"
-                ) or _("New")
+                ) or self.env._("New")
         return super().create(vals_list)
 
     def action_pick(self):
@@ -117,5 +120,7 @@ class MaintenanceEquipmentUsage(models.Model):
             items = equipment.usage_ids.filtered(lambda x: x.state == "in_use")
             if len(items) > 1:
                 raise UserError(
-                    _("Every equipment can only be picked once at the same time!")
+                    self.env._(
+                        "Every equipment can only be picked once at the same time!"
+                    )
                 )

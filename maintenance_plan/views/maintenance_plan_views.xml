@@ -1,17 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <record id="hr_equipment_request_action_from_plan" model="ir.actions.act_window">
-        <field name="name">Maintenance Requests</field>
-        <field name="res_model">maintenance.request</field>
-        <field name="binding_model_id" ref="model_maintenance_plan" />
-        <field name="view_mode">kanban,tree,form,pivot,graph,calendar</field>
-        <field name="context">{
-            'default_maintenance_plan_id': active_id,
-        }</field>
-        <field name="domain">[('maintenance_plan_id', '=', active_id)]</field>
-    </record>
     <record id="maintenance_plan_view_form" model="ir.ui.view">
-        <field name="name">maintenance.plan.form</field>
+        <field name="name">maintenance.plan.form@maintenance_plan</field>
         <field name="model">maintenance.plan</field>
         <field name="arch" type="xml">
             <form string="Maintenance Plan">
@@ -110,28 +100,49 @@
                     </group>
                     <notebook>
                         <page string="Instructions">
-                            <field
-                                name="note"
-                                placeholder="Describe the maintenance to do..."
-                            />
+                            <group col="1">
+                                <field
+                                    name="instruction_type"
+                                    widget="radio"
+                                    nolabel="1"
+                                />
+                                <field
+                                    name="instruction_pdf"
+                                    help="Upload your PDF file."
+                                    widget="pdf_viewer"
+                                    invisible="instruction_type != 'pdf'"
+                                    required="instruction_type == 'pdf'"
+                                    nolabel="1"
+                                />
+                                <field
+                                    name="instruction_google_slide"
+                                    placeholder="Google Slide Link"
+                                    widget="embed_viewer"
+                                    invisible="instruction_type != 'google_slide'"
+                                    required="instruction_type == 'google_slide'"
+                                    nolabel="1"
+                                />
+                                <field
+                                    name="instruction_text"
+                                    placeholder="Your instructions"
+                                    invisible="instruction_type != 'text'"
+                                    nolabel="1"
+                                />
+                            </group>
                         </page>
                     </notebook>
                 </sheet>
                 <div class="o_attachment_preview" />
-                <!-- Chatter -->
-                <div class="oe_chatter">
-                    <field name="message_follower_ids" groups="base.group_user" />
-                    <field name="activity_ids" />
-                    <field name="message_ids" />
-                </div>
+                <chatter />
             </form>
         </field>
     </record>
+
     <record id="maintenance_plan_view_tree" model="ir.ui.view">
-        <field name="name">maintenance.plan.tree</field>
+        <field name="name">maintenance.plan.list@maintenance_plan</field>
         <field name="model">maintenance.plan</field>
         <field name="arch" type="xml">
-            <tree decoration-muted="active == False">
+            <list decoration-muted="active == False">
                 <field name="equipment_id" />
                 <field name="maintenance_kind_id" />
                 <field name="maintenance_team_id" />
@@ -143,13 +154,14 @@
                 <field name="next_maintenance_date" />
                 <field name="maintenance_plan_horizon" />
                 <field name="planning_step" />
-                <field name="active" invisible="1" />
+                <field name="active" column_invisible="True" />
                 <field name="company_id" groups="base.group_multi_company" />
-            </tree>
+            </list>
         </field>
     </record>
+
     <record id="maintenance_plan_view_search" model="ir.ui.view">
-        <field name="name">maintenance.plan.search</field>
+        <field name="name">maintenance.plan.search@maintenance_plan</field>
         <field name="model">maintenance.plan</field>
         <field name="arch" type="xml">
             <search string="Maintenance Plans">
@@ -173,19 +185,23 @@
             </search>
         </field>
     </record>
+
     <record id="maintenance_plan_action" model="ir.actions.act_window">
-        <field name="name">Maintenance plans</field>
+        <field name="name">Maintenance Plans</field>
+        <field name="path">maintenance-plans</field>
         <field name="res_model">maintenance.plan</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="view_id" ref="maintenance_plan_view_tree" />
         <field name="domain">['|', ('active', '=', True), ('active', '=',
             False)]
         </field>
     </record>
+
     <record id="maintenance_plan_equipment_action" model="ir.actions.act_window">
-        <field name="name">Maintenance plans</field>
+        <field name="name">Maintenance Plans</field>
+        <field name="path">maintenance-equipment-plans</field>
         <field name="res_model">maintenance.plan</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="view_id" ref="maintenance_plan_view_tree" />
         <field name="context">{
             'default_equipment_id': active_id, 'hide_equipment_id': 0
@@ -194,6 +210,7 @@
             False), ('search_equipment_id', '=', active_id)]
         </field>
     </record>
+
     <menuitem
         id="menu_m_plan_form"
         name="Maintenance Plans"

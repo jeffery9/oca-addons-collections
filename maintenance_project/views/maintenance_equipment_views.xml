@@ -22,10 +22,10 @@
         <field name="model">maintenance.equipment</field>
         <field name="inherit_id" ref="maintenance.hr_equipment_view_kanban" />
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='activity_state']" position="after">
+            <xpath expr="//progressbar[@field='activity_state']" position="before">
                 <field name="project_id" groups="project.group_project_user" />
             </xpath>
-            <xpath expr="//div[hasclass('o_kanban_record_body')]" position="inside">
+            <xpath expr="//field[@t-if='record.serial_no.raw_value']" position="after">
                 <div
                     t-if="record.project_id.raw_value"
                     groups="project.group_project_user"
@@ -55,7 +55,8 @@
                         class="oe_link"
                         invisible="not id or project_id"
                     >
-                        <span class="fa fa-plus" /><span> Create project</span>
+                        <span class="fa fa-plus" />
+                        <span> Create project</span>
                     </button>
                 </div>
             </xpath>

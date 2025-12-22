@@ -52,3 +52,14 @@ class TestMaintenanceEquipmentUsage(BaseCommon):
         self.assertEqual(self.equipment_usage.state, "cancel")
         equipment_usage2.action_pick()
         self.assertEqual(equipment_usage2.state, "in_use")
+
+    def test_compute_usage_count(self):
+        equipment_usage2 = self.env["maintenance.equipment.usage"].create(
+            {"equipment_id": self.equipment.id, "user_id": self.user.id}
+        )
+        self.equipment._compute_usage_count()
+        self.assertEqual(self.equipment.usage_count, 2)
+
+        equipment_usage2.unlink()
+        self.equipment._compute_usage_count()
+        self.assertEqual(self.equipment.usage_count, 1)
