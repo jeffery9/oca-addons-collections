@@ -21,7 +21,7 @@ class AccountBudgetPost(models.Model):
         column1="budget_id",
         column2="account_id",
         string="Accounts",
-        domain="[('deprecated', '=', False), ('company_id', '=', company_id)]",
+        domain="[('deprecated', '=', False), ('company_ids', 'in', company_id)]",
     )
     crossovered_budget_line_ids = fields.One2many(
         comodel_name="crossovered.budget.lines",
@@ -44,10 +44,11 @@ class AccountBudgetPost(models.Model):
         if not account_ids:
             raise ValidationError(_("The budget must have at least one account."))
 
-    @api.model
-    def create(self, vals):
-        self._check_account_ids(vals)
-        return super().create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            self._check_account_ids(vals)
+        return super().create(vals_list)
 
     def write(self, vals):
         self._check_account_ids(vals)
