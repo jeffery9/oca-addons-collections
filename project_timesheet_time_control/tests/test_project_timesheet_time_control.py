@@ -1,47 +1,56 @@
 # Copyright 2016-2018 Tecnativa - Pedro M. Baeza
+# Copyright 2025 Tecnativa - Víctor Martínez
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0
 
-from datetime import date, datetime, timedelta
+from datetime import date, datetime, time, timedelta
+
+from freezegun import freeze_time
 
 from odoo import exceptions
-from odoo.tests import Form, common
+from odoo.tests import Form, new_test_user
+from odoo.tests.common import users
 from odoo.tools.float_utils import float_compare
 
+from odoo.addons.base.tests.common import BaseCommon
 
-class TestProjectTimesheetTimeControl(common.TransactionCase):
-    def setUp(self):
-        super().setUp()
-        admin = self.browse_ref("base.user_admin")
-        # Stop any timer running
-        self.env["account.analytic.line"].search(
-            [
-                ("date_time", "!=", False),
-                ("user_id", "=", admin.id),
-                ("project_id.allow_timesheets", "=", True),
-                ("unit_amount", "=", 0),
-            ]
-        ).button_end_work()
-        admin.groups_id |= self.browse_ref("hr_timesheet.group_hr_timesheet_user")
-        self.uid = admin.id
-        self.other_employee = self.env["hr.employee"].create({"name": "Somebody else"})
-        self.project = self.env["project.project"].create(
-            {"name": "Test project", "allow_timesheets": True}
+
+class TestProjectTimesheetTimeControlBase(BaseCommon):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.user = new_test_user(
+            cls.env,
+            login="test-user",
+            groups="hr_timesheet.group_hr_timesheet_user,project.group_project_manager",
         )
-        self.project_without_timesheets = self.env["project.project"].create(
+        cls.user.action_create_employee()
+        cls.other_employee = cls.env["hr.employee"].create({"name": "Somebody else"})
+        cls.project = (
+            cls.env["project.project"]
+            .with_user(cls.user)
+            .create({"name": "Test project", "allow_timesheets": True})
+        )
+        cls.project_without_timesheets = cls.env["project.project"].create(
             {"name": "Test project", "allow_timesheets": False}
         )
-        self.analytic_account = self.project.analytic_account_id
-        self.task = self.env["project.task"].create(
-            {"name": "Test task", "project_id": self.project.id}
+        cls.analytic_account = cls.project.account_id
+        cls.task = (
+            cls.env["project.task"]
+            .with_user(cls.user)
+            .create({"name": "Test task", "project_id": cls.project.id})
         )
-        self.line = self.env["account.analytic.line"].create(
-            {
-                "date_time": datetime.now() - timedelta(hours=1),
-                "task_id": self.task.id,
-                "project_id": self.project.id,
-                "account_id": self.analytic_account.id,
-                "name": "Test line",
-            }
+        cls.line = (
+            cls.env["account.analytic.line"]
+            .with_user(cls.user)
+            .create(
+                {
+                    "date_time": datetime.now() - timedelta(hours=1),
+                    "task_id": cls.task.id,
+                    "project_id": cls.project.id,
+                    "account_id": cls.analytic_account.id,
+                    "name": "Test line",
+                }
+            )
         )
 
     def _create_wizard(self, action, active_record):
@@ -65,6 +74,8 @@ class TestProjectTimesheetTimeControl(common.TransactionCase):
         )
         return wiz_form.save()
 
+
+class TestProjectTimesheetTimeControl(TestProjectTimesheetTimeControlBase):
     def test_aal_from_other_employee_no_button(self):
         """Lines from other employees have no resume/stop button."""
         self.line.employee_id = self.other_employee
@@ -83,6 +94,18 @@ class TestProjectTimesheetTimeControl(common.TransactionCase):
         line.with_context(tz="EST").date_time = "2016-03-24 03:00:00"
         self.assertEqual(line.date, date(2016, 3, 23))
 
+    def test_write_analytic_line_date(self):
+        line = self._create_analytic_line(datetime(2016, 3, 24, 12, 0))
+        line2 = self._create_analytic_line(datetime(2016, 3, 23, 13, 0))
+
+        lines = self.env["account.analytic.line"]
+        lines += line
+        lines += line2
+
+        lines.write({"date": datetime(2016, 1, 1)})
+        self.assertEqual(line.date_time, datetime(2016, 1, 1, 12, 0))
+        self.assertEqual(line2.date_time, datetime(2016, 1, 1, 13, 0))
+
     def test_write_analytic_line_with_string_datetime(self):
         line = self._create_analytic_line(datetime.now())
         line.with_context(tz="EST").date_time = datetime(2016, 3, 24, 3)
@@ -92,6 +115,7 @@ class TestProjectTimesheetTimeControl(common.TransactionCase):
         return (
             self.env["account.analytic.line"]
             .with_context(tz=tz)
+            .with_user(self.user)
             .create(
                 {
                     "date_time": datetime_,
@@ -157,6 +181,7 @@ class TestProjectTimesheetTimeControl(common.TransactionCase):
         with self.assertRaises(exceptions.UserError):
             self._create_wizard(resume_action, self.line)
 
+    @users("test-user")
     def test_project_time_control_flow(self):
         """Test project.project time controls."""
         # Resuming a project will try to find lines without task
@@ -181,9 +206,7 @@ class TestProjectTimesheetTimeControl(common.TransactionCase):
         start_action = self.project.button_start_work()
         wizard = self._create_wizard(start_action, self.project)
         self.assertLessEqual(wizard.date_time, datetime.now())
-        self.assertEqual(
-            wizard.analytic_line_id.account_id, self.project.analytic_account_id
-        )
+        self.assertEqual(wizard.analytic_line_id.account_id, self.project.account_id)
         self.assertEqual(wizard.name, "No task here")
         self.assertEqual(wizard.project_id, self.project)
         self.assertFalse(wizard.running_timer_id, self.line)
@@ -198,6 +221,7 @@ class TestProjectTimesheetTimeControl(common.TransactionCase):
         # Projects without timesheets show no buttons
         self.assertFalse(self.project_without_timesheets.show_time_control)
 
+    @users("test-user")
     def test_task_time_control_flow(self):
         """Test project.task time controls."""
         # Running line found, stop the timer
@@ -212,7 +236,7 @@ class TestProjectTimesheetTimeControl(common.TransactionCase):
         wizard = self._create_wizard(start_action, self.task)
         self.assertLessEqual(wizard.date_time, datetime.now())
         self.assertEqual(
-            wizard.analytic_line_id.account_id, self.task.project_id.analytic_account_id
+            wizard.analytic_line_id.account_id, self.task.project_id.account_id
         )
         self.assertEqual(wizard.name, self.line.name)
         self.assertEqual(wizard.project_id, self.task.project_id)
@@ -225,6 +249,7 @@ class TestProjectTimesheetTimeControl(common.TransactionCase):
         self.assertEqual(new_line.unit_amount, 0)
         self.assertTrue(self.line.unit_amount)
 
+    @users("test-user")
     def test_wizard_standalone(self):
         """Standalone wizard usage works properly."""
         # It detects the running timer
@@ -267,6 +292,7 @@ class TestProjectTimesheetTimeControl(common.TransactionCase):
         line.date_time_end = datetime(2020, 8, 1, 15, 0, 0)
         self.assertFalse(float_compare(line.unit_amount, 5.0, precision_digits=2))
 
+    @users("test-user")
     def test_non_timesheet_analytic_line(self):
         line = self.env["account.analytic.line"].create(
             {
@@ -278,3 +304,88 @@ class TestProjectTimesheetTimeControl(common.TransactionCase):
         )
         line.unit_amount = 500.0
         self.assertFalse(line.date_time_end)
+
+    def test_onchange_date_time_with_hour_uom_and_dates(self):
+        hour_uom = self.env.ref("uom.product_uom_hour")
+        form = Form(
+            self.env["account.analytic.line"]
+            .with_user(self.user)
+            .with_context(default_product_uom_id=hour_uom.id),
+            view=self.env.ref("project_timesheet_time_control.hr_timesheet_line_form"),
+        )
+        form.date_time = datetime(2023, 1, 1, 8, 0, 0)
+        form.date_time_end = datetime(2023, 1, 1, 10, 0, 0)
+        self.assertEqual(form.unit_amount, 2.0)
+
+        form.date_time_end = datetime(2023, 1, 1, 12, 0, 0)
+        self.assertEqual(form.unit_amount, 4.0)
+        self.assertEqual(form.date, date(2023, 1, 1))
+
+    def test_onchange_date_time_with_hour_uom_no_end_date(self):
+        hour_uom = self.env.ref("uom.product_uom_hour")
+        form = Form(
+            self.env["account.analytic.line"]
+            .with_user(self.user)
+            .with_context(default_product_uom_id=hour_uom.id),
+            view=self.env.ref("project_timesheet_time_control.hr_timesheet_line_form"),
+        )
+        form.date_time = datetime(2023, 1, 1, 8, 0, 0)
+        form.date_time_end = False
+
+        self.assertEqual(form.unit_amount, 0)
+        self.assertEqual(form.date, date(2023, 1, 1))
+
+    @freeze_time("2023-01-10 09:05:10")
+    def test_create_with_date(self):
+        line = (
+            self.env["account.analytic.line"]
+            .with_user(self.user)
+            .create(
+                {
+                    "date": date(2023, 1, 1),
+                    "project_id": self.project.id,
+                    "name": "Test line",
+                }
+            )
+        )
+        self.assertEqual(line.date_time.date(), date(2023, 1, 1))
+
+        line.date = date(2023, 1, 3)
+        self.assertEqual(line.date, date(2023, 1, 3))
+        self.assertEqual(line.date_time.date(), date(2023, 1, 3))
+        self.assertEqual(line.date_time.time(), time(9, 5, 10))
+
+    def test_create_with_date_and_date_time(self):
+        line = (
+            self.env["account.analytic.line"]
+            .with_user(self.user)
+            .create(
+                {
+                    "date": date(2023, 1, 1),
+                    "date_time": datetime(2023, 1, 1, 8, 0, 0),
+                    "project_id": self.project.id,
+                    "name": "Test line",
+                }
+            )
+        )
+        self.assertEqual(line.date_time, datetime(2023, 1, 1, 8, 0, 0))
+
+        line.date = date(2023, 1, 3)
+        self.assertEqual(line.date, date(2023, 1, 3))
+        self.assertEqual(line.date_time, datetime(2023, 1, 3, 8, 0, 0))
+
+    def test_create_with_date_and_different_date_time(self):
+        line = (
+            self.env["account.analytic.line"]
+            .with_user(self.user)
+            .create(
+                {
+                    "date": date(2023, 1, 1),
+                    "date_time": datetime(2023, 1, 3, 8, 0, 0),
+                    "project_id": self.project.id,
+                    "name": "Test line",
+                }
+            )
+        )
+        self.assertEqual(line.date, date(2023, 1, 3))
+        self.assertEqual(line.date_time, datetime(2023, 1, 3, 8, 0, 0))

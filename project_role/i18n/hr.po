@@ -20,28 +20,24 @@ msgstr ""
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_assignment.py:0
-#, python-format
 msgid "%(USER)s as %(ROLE)s"
 msgstr "%(USER)s kao %(ROLE)s"
 
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_assignment.py:0
-#, python-format
 msgid "%(USER)s as %(ROLE)s in %(PROJECT)s"
 msgstr "%(USER)s kao %(ROLE)s na %(PROJECT)s"
 
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_assignment.py:0
-#, python-format
 msgid "%(USER)s as %(ROLE)s on %(PROJECT)s"
 msgstr "%(USER)s kao %(ROLE)s na %(PROJECT)s"
 
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_role.py:0
-#, python-format
 msgid "%(parent)s / %(own)s"
 msgstr "%(parent)s / %(own)s"
 
@@ -93,7 +89,6 @@ msgstr "Arhivirano"
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_assignment.py:0
-#, python-format
 msgid ""
 "Assignment %(ASSIGNMENT)s conflicts with another assignment: "
 "%(OTHER_ASSIGNMENT)s"
@@ -307,7 +302,6 @@ msgstr "Nadređena uloga"
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_role.py:0
-#, python-format
 msgid "Please activate first parent role %s"
 msgstr "Molimo prije aktivirajte nadređenu ulogu %s"
 
@@ -365,7 +359,6 @@ msgstr "Uloga"
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_role.py:0
-#, python-format
 msgid "Role \"%s\" conflicts with another role due to same name."
 msgstr "Uloga \"%s\" je u konfliktu sa drugom ulogom zbog istog naziva."
 
@@ -398,7 +391,6 @@ msgstr "Korisnik"
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_assignment.py:0
-#, python-format
 msgid "User %(USER)s can not be assigned to role %(ROLE)s on %(PROJECT)s."
 msgstr ""
 "Korisniku %(USER)s nije moguće dodijeliti ulogu %(ROLE)s na %(PROJECT)s."
@@ -406,7 +398,6 @@ msgstr ""
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_assignment.py:0
-#, python-format
 msgid "User %(USER)s can not be assigned to role %(ROLE)s."
 msgstr "Korisniku %(USER)s nije moguće dodijeliti ulogu %(ROLE)s."
 
@@ -435,14 +426,14 @@ msgstr "Poruke sa webstranica"
 msgid "Website communication history"
 msgstr "Povijest komunikacije webstranica"
 
+#~ msgid "SMS Delivery error"
+#~ msgstr "Greška isporuke SMSa"
+
 #~ msgid "Last Modified on"
 #~ msgstr "Zadnje modificirano"
 
 #~ msgid "Main Attachment"
 #~ msgstr "Glavni prilog"
-
-#~ msgid "SMS Delivery error"
-#~ msgstr "Greška isporuke SMSa"
 
 #~ msgid "Number of messages which requires an action"
 #~ msgstr "Broj poruka koje zahtijevaju pažnju"

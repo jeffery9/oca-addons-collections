@@ -1,8 +1,6 @@
 # Copyright 2017 - 2018 Modoolar <info@modoolar.com>
 # License LGPLv3.0 or later (https://www.gnu.org/licenses/lgpl-3.0.en.html).
 
-import requests
-
 from odoo.tests.common import HttpCase, TransactionCase
 
 
@@ -30,28 +28,16 @@ class TestMixin:
 
         self.task30 = self.Task.create({"name": "3"})
 
-    def get_record_url(self, record, model, action):
-        return f"/web#id={record.id}&view_type=form&model={model}&action={action}"
-
     def get_task_url(self, task):
-        return self.get_record_url(task, task._name, self.task_action.id)
-
-    def get_project_url(self, project):
-        return self.get_record_url(project, project._name, self.project_action.id)
+        return f"/odoo/{task._name}/{task.id}"
 
 
 class TestCommon(TransactionCase, TestMixin):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls._super_send = requests.Session.send
         cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         cls._setup_records(cls)
-
-    @classmethod
-    def _request_handler(cls, s, r, /, **kw):
-        """Don't block external requests."""
-        return cls._super_send(s, r, **kw)
 
 
 class HttpTestCommon(HttpCase, TestMixin):

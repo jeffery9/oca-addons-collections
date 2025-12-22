@@ -19,28 +19,24 @@ msgstr ""
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_assignment.py:0
-#, python-format
 msgid "%(USER)s as %(ROLE)s"
 msgstr ""
 
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_assignment.py:0
-#, python-format
 msgid "%(USER)s as %(ROLE)s in %(PROJECT)s"
 msgstr ""
 
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_assignment.py:0
-#, python-format
 msgid "%(USER)s as %(ROLE)s on %(PROJECT)s"
 msgstr ""
 
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_role.py:0
-#, python-format
 msgid "%(parent)s / %(own)s"
 msgstr ""
 
@@ -84,7 +80,6 @@ msgstr "Archivé"
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_assignment.py:0
-#, python-format
 msgid ""
 "Assignment %(ASSIGNMENT)s conflicts with another assignment: "
 "%(OTHER_ASSIGNMENT)s"
@@ -300,7 +295,6 @@ msgstr "Rôle parent"
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_role.py:0
-#, python-format
 msgid "Please activate first parent role %s"
 msgstr "Veuillez activé le rôle parent %s"
 
@@ -358,7 +352,6 @@ msgstr "Rôle"
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_role.py:0
-#, python-format
 msgid "Role \"%s\" conflicts with another role due to same name."
 msgstr ""
 "Le rôle \"%s\" est en conflit avec un autre rôle à cause d'un nom identique."
@@ -392,14 +385,12 @@ msgstr "Utilisateur"
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_assignment.py:0
-#, python-format
 msgid "User %(USER)s can not be assigned to role %(ROLE)s on %(PROJECT)s."
 msgstr ""
 
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_assignment.py:0
-#, python-format
 msgid "User %(USER)s can not be assigned to role %(ROLE)s."
 msgstr ""
 

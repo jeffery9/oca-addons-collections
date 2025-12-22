@@ -20,22 +20,14 @@ class TestProjectTaskCode(BaseCommon):
     def test_new_task_code_assign(self):
         number_next = self.task_sequence.number_next_actual
         code = self.task_sequence.get_next_char(number_next)
-        project_task = self.project_task_model.create(
-            {
-                "name": "Testing task code",
-            }
-        )
+        project_task = self.project_task_model.create({"name": "Testing task code"})
         self.assertNotEqual(project_task.code, "/")
         self.assertEqual(project_task.code, code)
 
     def test_name_get(self):
         number_next = self.task_sequence.number_next_actual
         code = self.task_sequence.get_next_char(number_next)
-        project_task = self.project_task_model.create(
-            {
-                "name": "Task Testing Get Name",
-            }
-        )
+        project_task = self.project_task_model.create({"name": "Task Testing Get Name"})
         result = project_task.display_name
         # Check by regex, as the display name can be modified in other modules
         self.assertRegex(result, f"\\[{code}\\]")

@@ -19,28 +19,24 @@ msgstr ""
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_assignment.py:0
-#, python-format
 msgid "%(USER)s as %(ROLE)s"
 msgstr "%(USER)s como %(ROLE)s"
 
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_assignment.py:0
-#, python-format
 msgid "%(USER)s as %(ROLE)s in %(PROJECT)s"
 msgstr "%(USER)s como %(ROLE)s en %(PROJECT)s"
 
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_assignment.py:0
-#, python-format
 msgid "%(USER)s as %(ROLE)s on %(PROJECT)s"
 msgstr "%(USER)s como %(ROLE)s en %(PROJECT)s"
 
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_role.py:0
-#, python-format
 msgid "%(parent)s / %(own)s"
 msgstr "%(parent)s / %(own)s"
 
@@ -93,7 +89,6 @@ msgstr "Archivado"
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_assignment.py:0
-#, python-format
 msgid ""
 "Assignment %(ASSIGNMENT)s conflicts with another assignment: "
 "%(OTHER_ASSIGNMENT)s"
@@ -311,7 +306,6 @@ msgstr "Rol padre"
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_role.py:0
-#, python-format
 msgid "Please activate first parent role %s"
 msgstr "Por favor active el rol %s del primer padre"
 
@@ -369,7 +363,6 @@ msgstr "Rol"
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_role.py:0
-#, python-format
 msgid "Role \"%s\" conflicts with another role due to same name."
 msgstr "El Rol \"%s\" entra en conflicto con otro rol debido al mismo nombre."
 
@@ -402,7 +395,6 @@ msgstr "Usuario"
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_assignment.py:0
-#, python-format
 msgid "User %(USER)s can not be assigned to role %(ROLE)s on %(PROJECT)s."
 msgstr ""
 "El usuario %(USER)s no se puede asignar al rol %(ROLE)s en %(PROJECT)s."
@@ -410,7 +402,6 @@ msgstr ""
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_assignment.py:0
-#, python-format
 msgid "User %(USER)s can not be assigned to role %(ROLE)s."
 msgstr "El usuario %(USER)s no se puede asignar al rol %(ROLE)s."
 
@@ -441,14 +432,14 @@ msgstr "Mensajes del Sitio Web"
 msgid "Website communication history"
 msgstr "Historial de comunicación del Sitio Web"
 
+#~ msgid "SMS Delivery error"
+#~ msgstr "Error de Entrega SMS"
+
 #~ msgid "Last Modified on"
 #~ msgstr "Última Modificación el"
 
 #~ msgid "Main Attachment"
 #~ msgstr "Adjunto Principal"
-
-#~ msgid "SMS Delivery error"
-#~ msgstr "Error de Entrega SMS"
 
 #~ msgid "Number of messages which requires an action"
 #~ msgstr "Número de mensajes que requieren una acción"

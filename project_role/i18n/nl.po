@@ -19,28 +19,24 @@ msgstr ""
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_assignment.py:0
-#, python-format
 msgid "%(USER)s as %(ROLE)s"
 msgstr ""
 
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_assignment.py:0
-#, python-format
 msgid "%(USER)s as %(ROLE)s in %(PROJECT)s"
 msgstr ""
 
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_assignment.py:0
-#, python-format
 msgid "%(USER)s as %(ROLE)s on %(PROJECT)s"
 msgstr "%(USER)s als %(ROLE)s op %(PROJECT)s"
 
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_role.py:0
-#, python-format
 msgid "%(parent)s / %(own)s"
 msgstr ""
 
@@ -92,7 +88,6 @@ msgstr "Gearchiveerd"
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_assignment.py:0
-#, python-format
 msgid ""
 "Assignment %(ASSIGNMENT)s conflicts with another assignment: "
 "%(OTHER_ASSIGNMENT)s"
@@ -310,7 +305,6 @@ msgstr "Ouderrol"
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_role.py:0
-#, python-format
 msgid "Please activate first parent role %s"
 msgstr "Activeer alstublieft eerst de ouderrol %s"
 
@@ -368,7 +362,6 @@ msgstr "Rol"
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_role.py:0
-#, python-format
 msgid "Role \"%s\" conflicts with another role due to same name."
 msgstr "Rol \"%s\" conflicteert met een andere rol vanwege dezelfde naam."
 
@@ -401,7 +394,6 @@ msgstr "Gebruiker"
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_assignment.py:0
-#, python-format
 msgid "User %(USER)s can not be assigned to role %(ROLE)s on %(PROJECT)s."
 msgstr ""
 "Gebruiker %(USER)s kan niet worden toegewezen aan de rol %(ROLE)s op "
@@ -410,7 +402,6 @@ msgstr ""
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_assignment.py:0
-#, python-format
 msgid "User %(USER)s can not be assigned to role %(ROLE)s."
 msgstr "Gebruiker %(USER)s kan niet worden toegewezen aan rol %(ROLE)s."
 
@@ -443,11 +434,11 @@ msgstr "Websiteberichten"
 msgid "Website communication history"
 msgstr "Communicatiegeschiedenis van websites"
 
+#~ msgid "SMS Delivery error"
+#~ msgstr "SMS-bezorgfout"
+
 #~ msgid "Last Modified on"
 #~ msgstr "Laatst gewijzigd op"
 
 #~ msgid "Main Attachment"
 #~ msgstr "Hoofdbijlage"
-
-#~ msgid "SMS Delivery error"
-#~ msgstr "SMS-bezorgfout"

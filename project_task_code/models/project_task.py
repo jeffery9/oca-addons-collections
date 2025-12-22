@@ -1,7 +1,7 @@
 # Copyright 2016 Tecnativa <vicent.cubells@tecnativa.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 
 PROJECT_TASK_WRITABLE_FIELDS = {
     "code",
@@ -24,7 +24,7 @@ class ProjectTask(models.Model):
         (
             "project_task_unique_code",
             "UNIQUE (company_id, code)",
-            _("The code must be unique!"),
+            "The code must be unique!",
         ),
     ]
 
@@ -37,8 +37,7 @@ class ProjectTask(models.Model):
         for vals in vals_list:
             if vals.get("code", "/") == "/":
                 vals["code"] = (
-                    # `sudo()` for portal users
-                    self.env["ir.sequence"].sudo().next_by_code("project.task") or "/"
+                    self.sudo().env["ir.sequence"].next_by_code("project.task") or "/"
                 )
         return super().create(vals_list)
 

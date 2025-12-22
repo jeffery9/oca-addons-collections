@@ -3,23 +3,22 @@
 
 from odoo import api, fields, models
 
-TASK_URL = "/web#id=%s&view_type=form&model=project.task&action=%s"
+TASK_URL = "/odoo/%s/%s"
 
 
 class Task(models.Model):
     _inherit = "project.task"
     _rec_names_search = ["key", "name"]
 
-    key = fields.Char(size=20, required=False, index=True)
+    key = fields.Char(size=20, index=True)
 
     url = fields.Char(string="URL", compute="_compute_task_url")
 
     _sql_constraints = [("task_key_unique", "UNIQUE(key)", "Task key must be unique!")]
 
     def _compute_task_url(self):
-        action_id = self.env.ref("project.action_view_task").id
         for task in self:
-            task.url = TASK_URL % (task.id, action_id)
+            task.url = TASK_URL % (task._name, task.id)
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -29,7 +28,7 @@ class Task(models.Model):
             if not project_id:
                 project_id = ctx("default_project_id", False)
 
-            if not project_id and ctx("model", False) == "project.project":
+            if not project_id and ctx("active_model", False) == "project.project":
                 project_id = ctx("id", False)
 
             if project_id:
