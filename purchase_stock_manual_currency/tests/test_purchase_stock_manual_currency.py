@@ -1,7 +1,11 @@
 # Copyright 2024 ForgeFlow, S.L.
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0)
 
+import logging
+
 from odoo.tests.common import TransactionCase
+
+_logger = logging.getLogger(__name__)
 
 
 class TestPurchaseStockManualCurrency(TransactionCase):
@@ -43,7 +47,7 @@ class TestPurchaseStockManualCurrency(TransactionCase):
         cls.product = cls.product_model.create(
             {
                 "name": "Test Product 1",
-                "type": "product",
+                "is_storable": True,
                 "uom_id": cls.env.ref("uom.product_uom_unit").id,
                 "categ_id": cls.product_category.id,
             }
@@ -93,7 +97,11 @@ class TestPurchaseStockManualCurrency(TransactionCase):
         self.assertTrue(stock_picking.move_ids)
         self.assertEqual(len(stock_picking.move_ids), 1)
         stock_move = stock_picking.move_ids
-        price = stock_move._get_price_unit()
+        price_data = stock_move._get_price_unit()
+        if isinstance(price_data, dict):
+            price = list(price_data.values())[0]
+        else:
+            price = price_data
         self.assertEqual(round(price, 2), 7.21)
         stock_picking.move_ids.write({"quantity": 10})
         stock_picking.button_validate()
@@ -124,7 +132,11 @@ class TestPurchaseStockManualCurrency(TransactionCase):
         self.assertTrue(stock_picking.move_ids)
         self.assertEqual(len(stock_picking.move_ids), 1)
         stock_move = stock_picking.move_ids
-        price = stock_move._get_price_unit()
+        price_data = stock_move._get_price_unit()
+        if isinstance(price_data, dict):
+            price = list(price_data.values())[0]
+        else:
+            price = price_data
         self.assertEqual(round(price, 2), 4.00)
         stock_picking.move_ids.write({"quantity": 10})
         stock_picking.button_validate()
@@ -154,7 +166,11 @@ class TestPurchaseStockManualCurrency(TransactionCase):
         self.assertTrue(stock_picking.move_ids)
         self.assertEqual(len(stock_picking.move_ids), 1)
         stock_move = stock_picking.move_ids
-        price = stock_move._get_price_unit()
+        price_data = stock_move._get_price_unit()
+        if isinstance(price_data, dict):
+            price = price_data.get("price_unit", list(price_data.values())[0])
+        else:
+            price = price_data
         self.assertEqual(round(price, 2), 8.00)
         stock_picking.move_ids.write({"quantity": 10})
         stock_picking.button_validate()

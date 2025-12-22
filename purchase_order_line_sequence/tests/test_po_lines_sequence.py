@@ -1,15 +1,17 @@
 # Copyright 2017 Camptocamp SA - Damien Crier, Alexandre Fayolle
-# Copyright 2017 Eficent Business and IT Consulting Services S.L.
+# Copyright 2017 ForgeFlow, S.L.
 # Copyright 2017 Serpent Consulting Services Pvt. Ltd.
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 from datetime import datetime
 
-from odoo.tests import Form, common, tagged
+from odoo.tests import Form, tagged
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
 @tagged("post_install", "-at_install")
-class TestPurchaseOrder(common.TransactionCase):
+class TestPurchaseOrder(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()

@@ -1,2 +1,0 @@
-- Manuel Regidor <manuel.regidor@sygel.es>
-- Valentin Vinagre <valentin.vinagre@sygel.es>

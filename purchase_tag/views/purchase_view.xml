@@ -55,12 +55,14 @@
         <field name="model">purchase.order</field>
         <field name="inherit_id" ref="purchase.view_purchase_order_kanban" />
         <field name="arch" type="xml">
-            <field name="activity_state" position="after">
+            <field name="currency_id" position="after">
                 <field name="tag_ids" />
             </field>
-
-            <xpath expr="//div/field[@name='state']/../.." position="after">
-                <div class="mt16">
+            <xpath expr="//t[@t-name='card']/footer" position="attributes">
+                <attribute name="class" add="mt-2" separator=" " />
+            </xpath>
+            <xpath expr="//footer/field[@name='state']/.." position="after">
+                <div class="mt-3">
                     <field
                         name="tag_ids"
                         widget="many2many_tags"
@@ -68,7 +70,6 @@
                     />
                 </div>
             </xpath>
-
         </field>
     </record>
 

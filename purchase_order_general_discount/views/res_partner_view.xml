@@ -11,6 +11,7 @@
                     invisible="is_company == False and parent_id != False"
                     name="purchase_general_discount"
                 />
-            </xpath></field>
+            </xpath>
+        </field>
     </record>
 </odoo>

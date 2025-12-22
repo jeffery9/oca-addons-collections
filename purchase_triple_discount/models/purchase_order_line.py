@@ -6,23 +6,7 @@ from odoo import api, fields, models
 
 class PurchaseOrderLine(models.Model):
     _name = "purchase.order.line"
-    _inherit = ["triple.discount.mixin", "purchase.order.line"]
-
-    discount1 = fields.Float(
-        compute="_compute_price_unit_and_date_planned_and_name",
-        store=True,
-        readonly=False,
-    )
-    discount2 = fields.Float(
-        compute="_compute_price_unit_and_date_planned_and_name",
-        store=True,
-        readonly=False,
-    )
-    discount3 = fields.Float(
-        compute="_compute_price_unit_and_date_planned_and_name",
-        store=True,
-        readonly=False,
-    )
+    _inherit = ["purchase.triple.discount.mixin", "purchase.order.line"]
 
     @api.depends("product_qty", "product_uom", "company_id")
     def _compute_price_unit_and_date_planned_and_name(self):
@@ -62,7 +46,6 @@ class PurchaseOrderLine(models.Model):
                 for fname in self._get_multiple_discount_field_names()
             )
         )
-        res.pop("discount")
         return res
 
     @api.model
@@ -89,5 +72,4 @@ class PurchaseOrderLine(models.Model):
                 for fname in self._get_multiple_discount_field_names()
             )
         )
-        res.pop("discount")
         return res

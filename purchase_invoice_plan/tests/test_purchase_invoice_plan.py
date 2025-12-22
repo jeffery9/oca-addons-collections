@@ -5,10 +5,12 @@ from freezegun import freeze_time
 
 from odoo import fields
 from odoo.exceptions import UserError, ValidationError
-from odoo.tests.common import Form, TransactionCase
+from odoo.tests import Form
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestPurchaseInvoicePlan(TransactionCase):
+class TestPurchaseInvoicePlan(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -181,6 +183,8 @@ class TestPurchaseInvoicePlan(TransactionCase):
         self.assertEqual(len(self.test_po_product.invoice_plan_ids), 5)
         first_install = self.test_po_product.invoice_plan_ids[0]
         first_install.amount = 1000
+        self.assertIn(self.test_po_product.name, first_install.display_name)
+        self.assertIn("Invoice Plan", first_install.display_name)
         self.test_po_product.invoice_plan_ids[4].amount = 3000
         self.test_po_product.button_confirm()
         self.assertEqual(self.test_po_product.state, "purchase")

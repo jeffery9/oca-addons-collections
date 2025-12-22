@@ -3,11 +3,14 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 from freezegun import freeze_time
 
+from odoo import Command
 from odoo.fields import Datetime
-from odoo.tests.common import Form, TransactionCase
+from odoo.tests import Form
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestDeliverySingle(TransactionCase):
+class TestDeliverySingle(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -17,7 +20,7 @@ class TestDeliverySingle(TransactionCase):
         cls.p1 = cls.product1 = cls.product_model.create(
             {
                 "name": "Test Product 1",
-                "type": "product",
+                "type": "consu",
                 "default_code": "PROD1",
                 "standard_price": 10,
             }
@@ -25,7 +28,7 @@ class TestDeliverySingle(TransactionCase):
         cls.p2 = cls.product2 = cls.product_model.create(
             {
                 "name": "Test Product 2",
-                "type": "product",
+                "type": "consu",
                 "default_code": "PROD2",
                 "standard_price": 10,
             }
@@ -33,7 +36,7 @@ class TestDeliverySingle(TransactionCase):
         cls.p3 = cls.product2 = cls.product_model.create(
             {
                 "name": "Test Product 3",
-                "type": "product",
+                "type": "consu",
                 "default_code": "PROD3",
                 "standard_price": 10,
             }
@@ -56,9 +59,7 @@ class TestDeliverySingle(TransactionCase):
             {
                 "partner_id": cls.env.ref("base.res_partner_3").id,
                 "order_line": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "product_id": cls.p1.id,
                             "product_uom": cls.p1.uom_id.id,
@@ -68,9 +69,7 @@ class TestDeliverySingle(TransactionCase):
                             "product_qty": 42.0,
                         },
                     ),
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "product_id": cls.p2.id,
                             "product_uom": cls.p2.uom_id.id,
@@ -80,9 +79,7 @@ class TestDeliverySingle(TransactionCase):
                             "product_qty": 12.0,
                         },
                     ),
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "product_id": cls.p1.id,
                             "product_uom": cls.p1.uom_id.id,
@@ -96,7 +93,7 @@ class TestDeliverySingle(TransactionCase):
             }
         )
 
-    def test_01_check_single_date(self):
+    def test_check_single_date(self):
         """Tests with single date."""
         self.assertEqual(
             len(self.po.picking_ids),
@@ -115,7 +112,7 @@ class TestDeliverySingle(TransactionCase):
             "The picking must be planned at the expected date",
         )
 
-    def test_02_adding_line(self):
+    def test_adding_line(self):
         # A modification on line product quantity will recompute the
         # date_planned field with the seller (supplierinfo) lead time
         # Check if the original date planned is kept if new date_planned is before
@@ -142,7 +139,7 @@ class TestDeliverySingle(TransactionCase):
             Datetime.to_datetime("2015-12-13"), self.po.order_line[0].date_planned
         )
 
-    def test_03_check_multiple_dates(self):
+    def test_check_multiple_dates(self):
         """Tests changing the date of the first line."""
         self.po.order_line[0].date_planned = self.date_later
         self.assertEqual(
@@ -154,8 +151,8 @@ class TestDeliverySingle(TransactionCase):
         self.assertEqual(
             len(self.po.picking_ids),
             2,
-            "There must be 2 pickings for the PO when confirmed. %s found"
-            % len(self.po.picking_ids),
+            f"There must be 2 pickings for the PO when confirmed. "
+            f"{len(self.po.picking_ids)} found",
         )
 
         sorted_pickings = sorted(self.po.picking_ids, key=lambda x: x.scheduled_date)
@@ -170,7 +167,7 @@ class TestDeliverySingle(TransactionCase):
             "The second picking must be planned at the latest date",
         )
 
-    def test_04_purchase_line_date_change(self):
+    def test_purchase_line_date_change(self):
         self.po.order_line[0].date_planned = self.date_later
         self.po.button_confirm()
         moves = self.env["stock.move"].search(
@@ -180,7 +177,7 @@ class TestDeliverySingle(TransactionCase):
         line.write({"date_planned": self.date_3rd})
         self.assertEqual(moves.date_deadline.strftime("%Y-%m-%d"), self.date_3rd)
 
-    def test_05_group_multiple_picking_same_date(self):
+    def test_group_multiple_picking_same_date(self):
         """Check multiple picking with same planned date are also merged
 
         This can happen if another module changes the picking planned date
@@ -198,13 +195,24 @@ class TestDeliverySingle(TransactionCase):
         self.assertEqual(len(moves.mapped("picking_id")), 1)
         self.assertEqual(len(pickings.filtered(lambda r: r.state == "cancel")), 1)
 
-    def test_06_purchase_line_date_change_split_picking(self):
+    def test_purchase_line_time_change_nosplit_picking(self):
+        self.po.button_confirm()
+        line1 = self.po.order_line[0]
+        line1.write({"date_planned": Datetime.add(line1.date_planned, minutes=1)})
+        self.assertEqual(
+            len(self.po.picking_ids),
+            1,
+            "There must be 1 picking when I change the time",
+        )
+
+    def test_purchase_line_date_change_split_picking(self):
         self.po.button_confirm()
         line1 = self.po.order_line[0]
         line2 = self.po.order_line[1]
         move1 = self.env["stock.move"].search([("purchase_line_id", "=", line1.id)])
         move2 = self.env["stock.move"].search([("purchase_line_id", "=", line2.id)])
 
+        # Check when date is put later
         line1.write({"date_planned": self.date_later})
         self.assertEqual(
             len(self.po.picking_ids),
@@ -221,8 +229,38 @@ class TestDeliverySingle(TransactionCase):
             "If I change the other line to the same date as the first, "
             "both moves must be in the same picking",
         )
+        self.assertEqual(
+            len(self.po.picking_ids),
+            2,
+            "There must be 2 picking as line3 is still sooner",
+        )
+        # Check move is well assigned
+        self.assertEqual("assigned", move2.picking_id.state)
+        self.assertTrue(move2.move_line_ids)
+        # Now check when date is put sooner
+        line1.write({"date_planned": self.date_sooner})
+        self.assertEqual(
+            len(self.po.picking_ids),
+            2,
+            "There must be 2 pickings when I change the date",
+        )
+        self.assertEqual(move1.date_deadline.strftime("%Y-%m-%d"), self.date_sooner)
+        self.assertEqual(move2.date_deadline.strftime("%Y-%m-%d"), self.date_later)
+        self.assertNotEqual(move1.picking_id, move2.picking_id)
+        line2.write({"date_planned": self.date_sooner})
+        self.assertEqual(
+            move1.picking_id,
+            move2.picking_id,
+            "If I change the other line to the same date as the first, "
+            "both moves must be in the same picking",
+        )
+        self.assertEqual(
+            len(self.po.picking_ids),
+            1,
+            "There must be 1 picking",
+        )
 
-    def test_07_purchase_line_created_after_confirm(self):
+    def test_purchase_line_created_after_confirm(self):
         """Check new line created when order is confirmed.
 
         When a new line is added on an already `purchased` order
@@ -238,9 +276,7 @@ class TestDeliverySingle(TransactionCase):
         )
         self.assertEqual(len(moves_before.mapped("picking_id")), 1)
         self.po.order_line = [
-            (
-                0,
-                0,
+            Command.create(
                 {
                     "product_id": self.p3.id,
                     "product_uom": self.p3.uom_id.id,
@@ -256,7 +292,7 @@ class TestDeliverySingle(TransactionCase):
         )
         self.assertEqual(len(moves_after.mapped("picking_id")), 2)
 
-    def test_08_purchase_line_date_change_tz_aware(self):
+    def test_purchase_line_date_change_tz_aware(self):
         """Check that the grouping  is time zone aware.
 
         Datetime are always stored in utc in the database.
@@ -275,13 +311,13 @@ class TestDeliverySingle(TransactionCase):
         self.assertEqual(len(self.po.picking_ids), 1)
 
         self.env.user.tz = "Etc/UTC"
+        # No time difference so will be another day (2 pickings)
         line1.write({"date_planned": "2021-05-05 03:00:00"})
         self.assertEqual(len(self.po.picking_ids), 2)
-        # No time difference so will be another day (2 pickings)
         line2.write({"date_planned": "2021-05-04 23:00:00"})
         self.assertEqual(len(self.po.picking_ids), 2)
 
-    def test_09_create_from_form(self):
+    def test_create_from_form(self):
         partner_purchase = self.env["res.partner"].create(
             {"name": "Partner 1 of purchase on create from form"}
         )
@@ -289,7 +325,7 @@ class TestDeliverySingle(TransactionCase):
             purchase_form.partner_id = partner_purchase
         self.assertEqual(purchase_form.partner_id, partner_purchase)
 
-    def test_10_po_with_services(self):
+    def test_po_with_services(self):
         """Test that no empty pickings are created because of service lines."""
         prev_count = self.env["stock.picking"].search_count([])
         self.env["purchase.order.line"].create(
@@ -308,85 +344,63 @@ class TestDeliverySingle(TransactionCase):
         new_pickings = post_count - prev_count
         self.assertEqual(new_pickings, 1)
 
-    def test_11_purchase_line_created_after_confirm_merge_pickings(self):
-        """
-        If a line is modified and two different moves in different pickings
-         are now compatible, the pickings should be merged.
-
-        """
+    def test_picking_partner_matches_po_partner(self):
+        """Ensure all pickings' partner_id matches the PO partner_id."""
+        self.po.order_line[0].date_planned = self.date_later
         self.po.button_confirm()
-        self.assertEqual(self.po.state, "purchase")
-        new_date = "2016-01-30"
-        moves_before = self.env["stock.move"].search(
-            [("purchase_line_id", "in", self.po.order_line.ids)]
+        self.assertEqual(
+            len(self.po.picking_ids),
+            2,
+            f"There must be 2 pickings for the PO when confirmed. "
+            f"{len(self.po.picking_ids)} found",
         )
-        self.assertEqual(len(moves_before.mapped("picking_id")), 1)
-        self.po.order_line = [
-            (
-                0,
-                0,
-                {
-                    "product_id": self.p3.id,
-                    "product_uom": self.p3.uom_id.id,
-                    "name": self.p3.name,
-                    "price_unit": self.p3.standard_price,
-                    "date_planned": new_date,
-                    "product_qty": 2.0,
-                },
-            ),
-        ]
-        moves_after = self.env["stock.move"].search(
-            [("purchase_line_id", "in", self.po.order_line.ids)]
-        )
-        self.assertEqual(len(moves_after.mapped("picking_id")), 2)
+        for picking in self.po.picking_ids:
+            self.assertEqual(
+                picking.partner_id,
+                self.po.partner_id,
+                f"Picking {picking.name} partner_id must match the PO partner_id",
+            )
 
-        po_line = self.po.order_line.filtered(lambda line: line.product_id == self.p3)
-        po_line.write({"date_planned": self.date_sooner})
-
-        moves_after = self.env["stock.move"].search(
-            [("purchase_line_id", "in", self.po.order_line.ids)]
-        )
-        self.assertEqual(len(moves_after.mapped("picking_id")), 1)
-        for move in moves_after:
-            self.assertEqual(move.date, Datetime.to_datetime(self.date_sooner))
-
-    def test_12_purchase_line_created_after_confirm_check_dates(self):
-        """
-
-        When a new line is added on an already `purchased` order
-        If it is planned for a non yet existing date in the purchase, a
-        new picking should be created and the previous dates should not be
-        modified.
-
-        """
+    def test_picking_partner_matches_po_dest_address(self):
+        """Ensure all pickings' partner_id matches the PO dest_address_id (if set)"""
+        # purchase.order.line::_prepare_stock_move_vals
+        # assigns partner_id using the value from order_id.dest_address_id
+        self.po.dest_address_id = self.po.partner_id
+        self.po.order_line[0].date_planned = self.date_later
         self.po.button_confirm()
-        self.assertEqual(self.po.state, "purchase")
-        new_date = "2016-01-30"
-        moves_before = self.env["stock.move"].search(
-            [("purchase_line_id", "in", self.po.order_line.ids)]
+        self.assertEqual(
+            len(self.po.picking_ids),
+            2,
+            f"There must be 2 pickings for the PO when confirmed. "
+            f"{len(self.po.picking_ids)} found",
         )
-        self.assertEqual(len(moves_before.mapped("picking_id")), 1)
-        self.po.order_line = [
-            (
-                0,
-                0,
-                {
-                    "product_id": self.p3.id,
-                    "product_uom": self.p3.uom_id.id,
-                    "name": self.p3.name,
-                    "price_unit": self.p3.standard_price,
-                    "date_planned": new_date,
-                    "product_qty": 2.0,
-                },
-            ),
-        ]
-        moves_after = self.env["stock.move"].search(
-            [("purchase_line_id", "in", self.po.order_line.ids)]
+        for picking in self.po.picking_ids:
+            self.assertEqual(
+                picking.partner_id,
+                self.po.dest_address_id,
+                f"Picking {picking.name} partner_id must match the PO dest_address_id",
+            )
+
+    def test_picking_partner_dropship(self):
+        """Ensure pickings for dropship PO have the correct partner_id."""
+        location_customer = self.env.ref("stock.stock_location_customers")
+        dropship_customer = self.env["res.partner"].create(
+            {"name": "Dropship Customer"}
         )
-        self.assertEqual(len(moves_after.mapped("picking_id")), 2)
-
-        new_move = moves_after.filtered(lambda line: line.product_id == self.p3)
-        self.assertEqual(new_move.date, Datetime.to_datetime(new_date))
-
-        for move in moves_after - new_move:
-            self.assertEqual(move.date, Datetime.to_datetime(self.date_sooner))
+        dropship_partner = self.env["res.partner"].create({"name": "Dropship Partner"})
+        self.po.dest_address_id = dropship_customer
+        self.po.partner_id = dropship_partner
+        self.po.button_confirm()
+        # Because the module `stock_dropshipping is not a dependency
+        # We need to fake a dropshipping PO by changing the destination location
+        # On the operation type and the picking and moves.
+        self.po.picking_ids.picking_type_id.default_location_dest_id = location_customer
+        self.po.picking_ids.location_dest_id = location_customer
+        # Change the date to trigger a new picking
+        self.po.order_line[0].date_planned = self.date_later
+        for picking in self.po.picking_ids:
+            self.assertEqual(
+                picking.partner_id,
+                dropship_partner,
+                f"Picking {picking.name} partner_id must match the dropship address",
+            )

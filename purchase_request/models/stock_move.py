@@ -37,14 +37,11 @@ class StockMove(models.Model):
         distinct_fields += ["created_purchase_request_line_id"]
         return distinct_fields
 
-    def _action_cancel(self):
+    def _action_cancel_create_mail_activity(self):
         """Create an activity on the request for the cancelled procurement move"""
         for move in self:
             if move.created_purchase_request_line_id:
-                try:
-                    activity_type_id = self.env.ref("mail.mail_activity_data_todo").id
-                except ValueError:
-                    activity_type_id = False
+                activity_type_id = self.env.ref("mail.mail_activity_data_todo").id
                 pr_line = move.created_purchase_request_line_id
                 if pr_line.product_id.responsible_id:
                     activity_user = pr_line.product_id.responsible_id
@@ -69,6 +66,9 @@ class StockMove(models.Model):
                         ).id,
                     }
                 )
+
+    def _action_cancel(self):
+        self._action_cancel_create_mail_activity()
         return super()._action_cancel()
 
     @api.depends("purchase_request_allocation_ids")
@@ -117,41 +117,43 @@ class StockMove(models.Model):
         """
         if default is None:
             default = {}
-        if not default.get("purchase_request_allocation_ids") and (
-            default.get("product_uom_qty") or self.state in ("done", "cancel")
-        ):
-            default["purchase_request_allocation_ids"] = []
-            new_move_qty = default.get("product_uom_qty") or self.product_uom_qty
-            rounding = self.product_id.uom_id.rounding
-            for alloc in self.purchase_request_allocation_ids.filtered(
-                "open_product_qty"
+        vals_list = super().copy_data(default)
+        for move, vals in zip(self, vals_list, strict=False):
+            if not default.get("purchase_request_allocation_ids") and (
+                default.get("product_uom_qty") or move.state in ("done", "cancel")
             ):
-                if (
-                    float_compare(
-                        new_move_qty,
-                        0,
-                        precision_rounding=self.product_id.uom_id.rounding,
-                    )
-                    <= 0
-                    or float_compare(
-                        alloc.open_product_qty, 0, precision_rounding=rounding
-                    )
-                    <= 0
+                vals["purchase_request_allocation_ids"] = []
+                new_move_qty = default.get("product_uom_qty") or move.product_uom_qty
+                rounding = move.product_id.uom_id.rounding
+                for alloc in move.purchase_request_allocation_ids.filtered(
+                    "open_product_qty"
                 ):
-                    break
-                open_qty = min(new_move_qty, alloc.open_product_qty)
-                new_move_qty -= open_qty
-                default["purchase_request_allocation_ids"].append(
-                    (
-                        0,
-                        0,
-                        {
-                            "purchase_request_line_id": (
-                                alloc.purchase_request_line_id.id
-                            ),
-                            "requested_product_uom_qty": open_qty,
-                        },
+                    if (
+                        float_compare(
+                            new_move_qty,
+                            0,
+                            precision_rounding=move.product_id.uom_id.rounding,
+                        )
+                        <= 0
+                        or float_compare(
+                            alloc.open_product_qty, 0, precision_rounding=rounding
+                        )
+                        <= 0
+                    ):
+                        break
+                    open_qty = min(new_move_qty, alloc.open_product_qty)
+                    new_move_qty -= open_qty
+                    vals["purchase_request_allocation_ids"].append(
+                        (
+                            0,
+                            0,
+                            {
+                                "purchase_request_line_id": (
+                                    alloc.purchase_request_line_id.id
+                                ),
+                                "requested_product_uom_qty": open_qty,
+                            },
+                        )
                     )
-                )
-                alloc.requested_product_uom_qty -= open_qty
-        return super().copy_data(default)
+                    alloc.requested_product_uom_qty -= open_qty
+        return vals_list

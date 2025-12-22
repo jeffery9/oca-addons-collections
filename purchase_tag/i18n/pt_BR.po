@@ -114,12 +114,5 @@ msgstr "Marcador já Existe!"
 msgid "Tags"
 msgstr "Marcadores"
 
-#. module: purchase_tag
-#. odoo-python
-#: code:addons/purchase_tag/models/purchase_tag.py:0
-#, python-format
-msgid "Tags cannot be recursive."
-msgstr ""
-
 #~ msgid "Last Modified on"
 #~ msgstr "Última Modificação em"

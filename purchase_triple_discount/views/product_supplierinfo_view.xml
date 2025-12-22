@@ -1,5 +1,4 @@
 <odoo>
-
     <record model="ir.ui.view" id="product_supplierinfo_form_view">
         <field name="model">product.supplierinfo</field>
         <field name="inherit_id" ref="product.product_supplierinfo_form_view" />
@@ -29,5 +28,4 @@
             </field>
         </field>
     </record>
-
 </odoo>

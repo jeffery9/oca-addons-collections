@@ -28,5 +28,7 @@ msgstr ""
 msgid "Purchase Order Line"
 msgstr ""
 
-#~ msgid "Transfer"
-#~ msgstr "Transferencia"
+#. module: purchase_location_by_line
+#: model:ir.model,name:purchase_location_by_line.model_stock_picking
+msgid "Transfer"
+msgstr "Transferencia"

@@ -26,14 +26,11 @@ msgstr "購買オーダのキャンセル理由を質問"
 
 #. module: purchase_cancel_reason
 #: model_terms:ir.ui.view,arch_db:purchase_cancel_reason.purchase_order_form
+#: model_terms:ir.ui.view,arch_db:purchase_cancel_reason.purchase_order_kpis_tree
+#: model_terms:ir.ui.view,arch_db:purchase_cancel_reason.purchase_order_view_tree
 #: model_terms:ir.ui.view,arch_db:purchase_cancel_reason.view_purchase_order_cancel
 msgid "Cancel"
 msgstr "キャンセル"
-
-#. module: purchase_cancel_reason
-#: model_terms:ir.ui.view,arch_db:purchase_cancel_reason.purchase_order_form
-msgid "Cancellation reason:"
-msgstr "キャンセル理由:"
 
 #. module: purchase_cancel_reason
 #: model_terms:ir.ui.view,arch_db:purchase_cancel_reason.view_purchase_order_cancel
@@ -117,6 +114,12 @@ msgid "Reason"
 msgstr "理由"
 
 #. module: purchase_cancel_reason
+#. odoo-python
+#: code:addons/purchase_cancel_reason/models/purchase_order.py:0
+msgid "Reason for Cancellation"
+msgstr "キャンセル理由"
+
+#. module: purchase_cancel_reason
 #: model:ir.model.fields,field_description:purchase_cancel_reason.field_purchase_order__cancel_reason_id
 msgid "Reason for cancellation"
 msgstr "キャンセル理由"
@@ -131,6 +134,16 @@ msgstr "キャンセル理由"
 #: model:purchase.order.cancel.reason,name:purchase_cancel_reason.cancel_reason_no_service_needed
 msgid "Service no longer needed"
 msgstr "サービスが不要になった"
+
+#. module: purchase_cancel_reason
+#. odoo-python
+#: code:addons/purchase_cancel_reason/models/purchase_order.py:0
+msgid ""
+"You cannot cancel any of the selected orders as they are all in 'Done' or "
+"'Canceled' state:\n"
+"%s"
+msgstr "選択したオーダはすべて「完了」または「キャンセル」の状態のため、キャンセルで"
+"きません："
 
 #. module: purchase_cancel_reason
 #: model_terms:ir.ui.view,arch_db:purchase_cancel_reason.view_purchase_order_cancel

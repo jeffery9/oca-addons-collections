@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-08-20 17:27+0000\n"
-"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"PO-Revision-Date: 2025-11-28 16:42+0000\n"
+"Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
@@ -80,10 +80,8 @@ msgstr "Valuta"
 
 #. module: purchase_manual_delivery
 #: model_terms:ir.ui.view,arch_db:purchase_manual_delivery.res_config_settings_view_form
-msgid "Deliveries on purchase orders should be created manually by default."
-msgstr ""
-"Per impostazione predefinita, le consegne degli ordini di acquisto devono "
-"essere create manualmente."
+msgid "Deliveries on purchase orders should be created manually."
+msgstr "Le consegne negli ordini di acquisto devono essere create manualmente."
 
 #. module: purchase_manual_delivery
 #: model_terms:ir.ui.view,arch_db:purchase_manual_delivery.res_config_settings_view_form
@@ -116,6 +114,17 @@ msgid "Display Name"
 msgstr "Nome visualizzato"
 
 #. module: purchase_manual_delivery
+#: model_terms:ir.ui.view,arch_db:purchase_manual_delivery.view_create_stock_picking
+msgid "Existing Qty"
+msgstr "Q.tà esistente"
+
+#. module: purchase_manual_delivery
+#: model:ir.model.fields,field_description:purchase_manual_delivery.field_create_stock_picking_wizard_line__existing_qty
+#: model:ir.model.fields,field_description:purchase_manual_delivery.field_purchase_order_line__existing_qty
+msgid "Existing Quantity"
+msgstr "Quantità esistente"
+
+#. module: purchase_manual_delivery
 #: model:ir.model.fields,field_description:purchase_manual_delivery.field_create_stock_picking_wizard_line__date_planned
 msgid "Expected Arrival"
 msgstr "Arrivo atteso"
@@ -128,7 +137,7 @@ msgstr "Raggruppa per"
 #. module: purchase_manual_delivery
 #: model_terms:ir.actions.act_window,help:purchase_manual_delivery.action_order_line_delivery_tree
 msgid "Here is a list of each purchase order line to be received."
-msgstr "Ecco un elenco di ogni linea di ordine di acquisto da ricevere."
+msgstr "Ecco un elenco di ogni riga di ordine di acquisto da ricevere."
 
 #. module: purchase_manual_delivery
 #: model:ir.model.fields,field_description:purchase_manual_delivery.field_create_stock_picking_wizard__id
@@ -140,8 +149,14 @@ msgstr "ID"
 #: model_terms:ir.ui.view,arch_db:purchase_manual_delivery.res_config_settings_view_form
 msgid "If active, Receipt of purchase orders should be manual created."
 msgstr ""
-"Se selezionata, la ricevuta degli ordini di acquisto deve essere creata "
+"Se selezionato, la ricezione degli ordini di acquisto deve essere creata "
 "manualmente."
+
+#. module: purchase_manual_delivery
+#: model:ir.model.fields,field_description:purchase_manual_delivery.field_create_stock_picking_wizard____last_update
+#: model:ir.model.fields,field_description:purchase_manual_delivery.field_create_stock_picking_wizard_line____last_update
+msgid "Last Modified on"
+msgstr "Ultima modifica il"
 
 #. module: purchase_manual_delivery
 #: model:ir.model.fields,field_description:purchase_manual_delivery.field_create_stock_picking_wizard__write_uid
@@ -171,11 +186,6 @@ msgid "Manual Delivery"
 msgstr "Consegna manuale"
 
 #. module: purchase_manual_delivery
-#: model:ir.model.fields,field_description:purchase_manual_delivery.field_purchase_order__manual_delivery
-msgid "Manual delivery"
-msgstr "Consegna manuale"
-
-#. module: purchase_manual_delivery
 #: model_terms:ir.ui.view,arch_db:purchase_manual_delivery.view_create_stock_picking
 msgid "Ordered Qty"
 msgstr "Q.tà ordinata"
@@ -198,7 +208,7 @@ msgstr "Da ricevere in attesa"
 #. module: purchase_manual_delivery
 #: model_terms:ir.ui.view,arch_db:purchase_manual_delivery.view_create_stock_picking
 msgid "Picking Scheduled Date"
-msgstr "Data prelievo pianificato"
+msgstr "Data pianificata prelievo"
 
 #. module: purchase_manual_delivery
 #. odoo-python
@@ -223,11 +233,6 @@ msgstr "Impostazioni raggruppamento approvvigionamento acquisti"
 #: model:ir.model.fields,field_description:purchase_manual_delivery.field_create_stock_picking_wizard_line__product_id
 msgid "Product"
 msgstr "Prodotto"
-
-#. module: purchase_manual_delivery
-#: model:ir.model,name:purchase_manual_delivery.model_product_product
-msgid "Product Variant"
-msgstr "Variante prodotto"
 
 #. module: purchase_manual_delivery
 #: model:ir.actions.act_window,name:purchase_manual_delivery.action_order_line_delivery_tree
@@ -267,16 +272,11 @@ msgstr ""
 "spedizione in ingresso per soddisfarle"
 
 #. module: purchase_manual_delivery
+#: model:ir.model.fields,field_description:purchase_manual_delivery.field_purchase_order__manual_delivery
 #: model:ir.model.fields,field_description:purchase_manual_delivery.field_res_company__purchase_manual_delivery
 #: model:ir.model.fields,field_description:purchase_manual_delivery.field_res_config_settings__purchase_manual_delivery
 msgid "Purchase manual delivery?"
 msgstr "Consegna manuale acquisto?"
-
-#. module: purchase_manual_delivery
-#: model:ir.model.fields,field_description:purchase_manual_delivery.field_create_stock_picking_wizard_line__qty_in_receipt
-#: model:ir.model.fields,field_description:purchase_manual_delivery.field_purchase_order_line__qty_in_receipt
-msgid "Qty In Receipt"
-msgstr "Q.tà in ricezione"
 
 #. module: purchase_manual_delivery
 #: model:ir.model.fields,field_description:purchase_manual_delivery.field_create_stock_picking_wizard_line__product_qty
@@ -285,20 +285,15 @@ msgid "Quantity"
 msgstr "Quantità"
 
 #. module: purchase_manual_delivery
-#: model:ir.model.fields,help:purchase_manual_delivery.field_create_stock_picking_wizard_line__qty_in_receipt
-#: model:ir.model.fields,help:purchase_manual_delivery.field_purchase_order_line__qty_in_receipt
-msgid "Quantity for which there are pending stock moves"
-msgstr "Quantità per la quale ci sono movimenti di magazzino in sospeso"
+#: model:ir.model.fields,help:purchase_manual_delivery.field_create_stock_picking_wizard_line__existing_qty
+#: model:ir.model.fields,help:purchase_manual_delivery.field_purchase_order_line__existing_qty
+msgid "Quantity already planned or shipped (stock movements already created)"
+msgstr "Quantità già programmata o spedita (movimenti di magazzino già creati)"
 
 #. module: purchase_manual_delivery
 #: model:ir.model.fields,field_description:purchase_manual_delivery.field_create_stock_picking_wizard_line__qty
 msgid "Quantity to Receive"
 msgstr "Quantità da ricevere"
-
-#. module: purchase_manual_delivery
-#: model:ir.model.fields,field_description:purchase_manual_delivery.field_create_stock_picking_wizard_line__qty_received
-msgid "Received Qty"
-msgstr "Q.tà ricevuta"
 
 #. module: purchase_manual_delivery
 #: model_terms:ir.ui.view,arch_db:purchase_manual_delivery.view_purchase_order_unreceived_line_filter
@@ -314,13 +309,6 @@ msgstr "Q.tà rimanente"
 #: model:ir.model.fields,field_description:purchase_manual_delivery.field_create_stock_picking_wizard_line__remaining_qty
 msgid "Remaining Quantity"
 msgstr "Quantità residua"
-
-#. module: purchase_manual_delivery
-#. odoo-javascript
-#: code:addons/purchase_manual_delivery/static/src/purchase_manual_delivery_forecasted/forecasted_details.xml:0
-#, python-format
-msgid "Requests without delivery"
-msgstr "Richieste senza consegna"
 
 #. module: purchase_manual_delivery
 #: model:ir.model.fields,field_description:purchase_manual_delivery.field_create_stock_picking_wizard__scheduled_date
@@ -349,19 +337,6 @@ msgstr "Ricerca righe non consegnate"
 #, python-format
 msgid "Stock Picking"
 msgstr "Prelievo di magazzino"
-
-#. module: purchase_manual_delivery
-#: model:ir.model,name:purchase_manual_delivery.model_stock_forecasted_product_product
-msgid "Stock Replenishment Report"
-msgstr "Resoconto rifornimento di magazzino"
-
-#. module: purchase_manual_delivery
-#: model:ir.model.fields,help:purchase_manual_delivery.field_purchase_order__manual_delivery
-msgid ""
-"Stock transfers need to be created manually to receive this PO's products"
-msgstr ""
-"I trasferimenti di magazzino devono essere creati manualmente per ricevere i "
-"prodotti di questo OA"
 
 #. module: purchase_manual_delivery
 #: model:ir.model.fields,field_description:purchase_manual_delivery.field_create_stock_picking_wizard_line__taxes_id
@@ -414,26 +389,8 @@ msgid ""
 "You can not receive more than the remaining quantity. If you need to do so, "
 "please edit the purchase order first."
 msgstr ""
-"Non è possibile ricever più della quantità rimanente. Se è necessario, "
+"Non è possibile ricevere più della quantità rimanente. Se è necessario, "
 "modificare prima l'ordine di acquisto."
-
-#~ msgid "Deliveries on purchase orders should be created manually."
-#~ msgstr ""
-#~ "Le consegne negli ordini di acquisto devono essere create manualmente."
-
-#~ msgid "Existing Qty"
-#~ msgstr "Q.tà esistente"
-
-#~ msgid "Existing Quantity"
-#~ msgstr "Quantità esistente"
-
-#~ msgid "Last Modified on"
-#~ msgstr "Ultima modifica il"
-
-#~ msgid ""
-#~ "Quantity already planned or shipped (stock movements already created)"
-#~ msgstr ""
-#~ "Quantità già programmata o spedita (movimenti di magazzino già creati)"
 
 #~ msgid "Purchase Order Lines"
 #~ msgstr "Righe ordine di acquisto"

@@ -26,7 +26,9 @@ class TestPurchaseTag(BaseCommon):
 
     def test_name_search(self):
         # Perform a search using part of the display_name.
-        results = self.env["purchase.tag"].name_search(name="Grandchild")
+        results = self.env["purchase.tag"].name_search(
+            name="Parent / Child / Grandchild"
+        )
         self.assertTrue(results)
         self.assertEqual(results[0][0], self.tag_grandchild.id)
         self.assertEqual(results[0][1], "Parent / Child / Grandchild")
