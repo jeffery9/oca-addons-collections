@@ -140,9 +140,9 @@ class IrExportsLine(models.Model):
                 # You could get to failing constraint while populating the
                 # fields, so we skip the uniqueness check and manually check
                 # the full constraint after the loop
-                one.with_context(skip_check=True)[
-                    one.field_n(num, True)
-                ] = one._get_field_id(model, field_name)
+                one.with_context(skip_check=True)[one.field_n(num, True)] = (
+                    one._get_field_id(model, field_name)
+                )
             if any(parts):
                 # invalidate_recordset -> in order to get actual value of field 'label'
                 # in function '_check_name'
@@ -159,9 +159,11 @@ class IrExportsLine(models.Model):
                 raise exceptions.ValidationError(
                     _("Field '%s' does not exist") % one.name
                 )
-            num_lines = one.search_count(
-                [("export_id", "=", one.export_id.id), ("name", "=", one.name)]
-            )
+            num_lines = 0
+            if one.export_id and not isinstance(one.export_id.id, models.NewId):
+                num_lines = one.search_count(
+                    [("export_id", "=", one.export_id.id), ("name", "=", one.name)]
+                )
             if num_lines > 1:
                 raise exceptions.ValidationError(
                     _("Field '%s' already exists") % one.name

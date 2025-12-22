@@ -1,6 +1,6 @@
 # Copyright 2020 Ecosoft Co., Ltd. (http://ecosoft.co.th)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from odoo import _, fields, models
+from odoo import fields, models
 
 
 class TierValidation(models.AbstractModel):
@@ -15,7 +15,7 @@ class TierValidation(models.AbstractModel):
                 continue
             sequences = self._get_sequences_to_approve(self.env.user)
             reviews = rec.review_ids.filtered(
-                lambda r, sqs=sequences: r.sequence in sqs
+                lambda review, sequences=sequences: review.sequence in sequences
             )
             definitions = reviews.mapped("definition_id")
             rec.can_forward = True in definitions.mapped("has_forward")
@@ -38,7 +38,7 @@ class TierValidation(models.AbstractModel):
         )
         wizard = self.env.ref("base_tier_validation_forward.view_forward_wizard")
         return {
-            "name": _("Forward"),
+            "name": self.env._("Forward"),
             "type": "ir.actions.act_window",
             "view_mode": "form",
             "res_model": "tier.validation.forward.wizard",
@@ -56,7 +56,8 @@ class TierValidation(models.AbstractModel):
         self.ensure_one()
         tier_reviews = tiers or self.review_ids
         user_reviews = tier_reviews.filtered(
-            lambda r: r.status != "approved" and (self.env.user in r.reviewer_ids)
+            lambda review: review.status != "approved"
+            and (self.env.user in review.reviewer_ids)
         )
         user_reviews.write(
             {
@@ -80,11 +81,15 @@ class TierValidation(models.AbstractModel):
 
     def _notify_forwarded_reviews_body(self):
         has_comment = self.review_ids.filtered(
-            lambda r: (self.env.user in r.reviewer_ids) and r.comment
+            lambda review: (self.env.user in review.reviewer_ids) and review.comment
         )
         if has_comment:
             comment = has_comment.mapped("comment")[0]
-            return _("A review was forwarded from %(user_name)s %(comment)s") % (
-                {"user_name": self.env.user.name, "comment": comment}
+            return self.env._(
+                "A review was forwarded from %(user_name)s %(comment)s",
+                user_name=self.env.user.name,
+                comment=comment,
             )
-        return _("A review was forwarded by %s.") % (self.env.user.name)
+        return self.env._(
+            "A review was forwarded by %(user_name)s.", user_name=self.env.user.name
+        )

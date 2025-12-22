@@ -1,13 +1,11 @@
-/** @odoo-module **/
-
 import {ListController} from "@web/views/list/list_controller";
-import {onWillRender} from "@odoo/owl";
+const {onWillRender} = owl;
 import {patch} from "@web/core/utils/patch";
 import {session} from "@web/session";
 
 patch(ListController.prototype, {
     setup() {
-        super.setup(...arguments);
+        super.setup();
         onWillRender(async () => {
             if (this.isExportEnable) {
                 const is_export_enabled =
