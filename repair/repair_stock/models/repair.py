@@ -14,7 +14,7 @@ class RepairOrder(models.Model):
         string="Transfers",
     )
     picking_count = fields.Integer(
-        string="Transfers", copy=False, compute="_compute_picking_ids"
+        string="Transfers Count", copy=False, compute="_compute_picking_ids"
     )
 
     def action_view_pickings(self):
@@ -32,8 +32,6 @@ class RepairOrder(models.Model):
             #  modules depending on this.
             moves = self.env["stock.move"].search(
                 [
-                    "|",
-                    ("repair_id", "=", order.id),
                     ("related_repair_id", "=", order.id),
                 ]
             )

@@ -12,11 +12,11 @@
                 </group>
                 <footer>
                     <button
-                        name="action_create_transfer"
-                        string="Create transfer"
-                        type="object"
-                        class="oe_highlight"
-                    />
+                    name="action_create_transfer"
+                    string="Create transfer"
+                    type="object"
+                    class="oe_highlight"
+                />
                     or
                     <button string="Cancel" class="oe_link" special="cancel" />
                 </footer>

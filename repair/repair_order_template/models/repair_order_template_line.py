@@ -30,12 +30,7 @@ class RepairOrderTemplateLine(models.Model):
     product_id = fields.Many2one(
         "product.product",
         string="Product",
-        domain="""
-            [
-                ('type', 'in', ['product', 'consu']),
-                ('company_id', 'in', [False, company_id])
-            ]
-        """,
+        domain=[("type", "=", "consu")],
         check_company=True,
         required=True,
     )
