@@ -1,5 +1,6 @@
 # Copyright (C) 2010 Savoir-faire Linux (<http://www.savoirfairelinux.com>).
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+from odoo import Command
 
 from odoo.addons.base.tests.common import BaseCommon
 
@@ -14,8 +15,8 @@ class TestModelAudit(BaseCommon):
                 "name": "Test audit",
                 "date": "2025-01-01",
                 "line_ids": [
-                    (0, 0, {"name": "test", "procedure_id": cls.page.id}),
-                    (0, 0, {"name": "test2"}),
+                    Command.create({"name": "test", "procedure_id": cls.page.id}),
+                    Command.create({"name": "test2"}),
                 ],
             }
         )

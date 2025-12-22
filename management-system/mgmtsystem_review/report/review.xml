@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <template id="review_report">
-
         <t t-call="web.external_layout">
             <div class="page">
                 <div class="row" style="padding-top:10px">
@@ -54,7 +52,9 @@
                     <div class="col-9 pull-right">
                         <ul class="list-unstyled">
                             <t t-foreach="doc.user_ids" t-as="participant">
-                                <li><span t-field="participant.name" /></li>
+                                <li>
+                                    <span t-field="participant.name" />
+                                </li>
                             </t>
                         </ul>
                     </div>
@@ -87,21 +87,19 @@
                             <ul class="list-unstyled" style="padding-left:15px">
                                 <li>Action:
                                     <t t-if="line.type=='action'">
-                                        <span t-field="line.action_id.name" />
-                                    </t>
+                                    <span t-field="line.action_id.name" />
+                                </t>
                                     <t t-if="line.type=='nonconformity'">
-                                        <span
-                                            t-field="line.nonconformity_id.description"
-                                        />
-                                    </t>
+                                    <span t-field="line.nonconformity_id.description" />
+                                </t>
                                 </li>
                                 <li>State:
                                     <t t-if="line.type=='action'">
-                                        <span t-field="line.action_id.stage_id.name" />
-                                    </t>
+                                    <span t-field="line.action_id.stage_id.name" />
+                                </t>
                                     <t t-if="line.type=='nonconformity'">
-                                        <span t-field="line.nonconformity_id.state" />
-                                    </t>
+                                    <span t-field="line.nonconformity_id.state" />
+                                </t>
                                 </li>
                                 <li>Decision:
                                     <span t-field="line.decision" /></li>
@@ -127,9 +125,7 @@
                         <span t-field="doc.conclusion" />
                     </div>
                 </div>
-
             </div>
         </t>
     </template>
-
 </odoo>
