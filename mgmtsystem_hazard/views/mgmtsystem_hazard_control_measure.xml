@@ -14,17 +14,19 @@
             </form>
         </field>
     </record>
+
     <record id="view_mgmtsystem_hazard_control_measure_tree" model="ir.ui.view">
         <field name="name">mgmtsystem.hazard.control_measure.tree</field>
         <field name="model">mgmtsystem.hazard.control_measure</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="name" />
                 <field name="responsible_user_id" />
                 <field name="comments" />
-            </tree>
+            </list>
         </field>
     </record>
+
     <record id="view_mgmtsystem_hazard_control_measure_filter" model="ir.ui.view">
         <field name="name">Control Measures</field>
         <field name="model">mgmtsystem.hazard.control_measure</field>
@@ -36,13 +38,14 @@
             </search>
         </field>
     </record>
+
     <record
         id="open_mgmtsystem_hazard_control_measure_list"
         model="ir.actions.act_window"
     >
         <field name="name">Control Measures</field>
         <field name="res_model">mgmtsystem.hazard.control_measure</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="view_id" eval="False" />
         <field
             name="search_view_id"

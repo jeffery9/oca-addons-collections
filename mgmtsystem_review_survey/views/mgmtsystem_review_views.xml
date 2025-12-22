@@ -13,7 +13,7 @@
                     nolabel="1"
                     readonly="state == 'done'"
                 >
-                    <tree>
+                    <list>
                         <field name="survey_id" />
                         <field name="create_date" />
                         <field name="deadline" />
@@ -22,7 +22,7 @@
                         <field name="state" />
                         <field name="test_entry" column_invisible="True" />
                         <field name="scoring_percentage" groups="base.group_no_one" />
-                    </tree>
+                    </list>
                 </field>
             </page>
         </field>
