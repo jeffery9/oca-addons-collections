@@ -10,7 +10,6 @@
             <xpath expr="//field[@name='color']" position="before">
                 <field name="to_spread" />
             </xpath>
-
         </field>
     </record>
 

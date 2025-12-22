@@ -44,6 +44,9 @@ class TestAccountAnalyticTag(TestAccountAnalyticTagBase):
         cls.line_c = cls.invoice.invoice_line_ids.filtered(
             lambda x: x.product_id == cls.product_c
         )
+        cls.column_name_a = cls.analytic_account_a.root_plan_id._column_name()
+        cls.column_name_b = cls.analytic_account_b.root_plan_id._column_name()
+        cls.column_name_c = cls.analytic_account_c.root_plan_id._column_name()
 
     @users("test-analytic-tag-user")
     def test_spread_by_tag_default_01(self):
@@ -59,15 +62,15 @@ class TestAccountAnalyticTag(TestAccountAnalyticTagBase):
             [
                 {
                     "amount": -333.333333,
-                    "account_id": self.analytic_account_c.id,
+                    self.column_name_c: self.analytic_account_c.id,
                 },
                 {
                     "amount": -333.333333,
-                    "account_id": self.analytic_account_b.id,
+                    self.column_name_b: self.analytic_account_b.id,
                 },
                 {
                     "amount": -333.333333,
-                    "account_id": self.analytic_account_a.id,
+                    self.column_name_a: self.analytic_account_a.id,
                 },
             ],
         )
@@ -88,11 +91,11 @@ class TestAccountAnalyticTag(TestAccountAnalyticTagBase):
             [
                 {
                     "amount": -500.0,
-                    "account_id": self.analytic_account_c.id,
+                    self.column_name_c: self.analytic_account_c.id,
                 },
                 {
                     "amount": -500.0,
-                    "account_id": self.analytic_account_b.id,
+                    self.column_name_b: self.analytic_account_b.id,
                 },
             ],
         )
@@ -112,7 +115,7 @@ class TestAccountAnalyticTag(TestAccountAnalyticTagBase):
             [
                 {
                     "amount": -1000,
-                    "account_id": self.analytic_account_a.id,
+                    self.column_name_a: self.analytic_account_a.id,
                 }
             ],
         )

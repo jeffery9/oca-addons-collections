@@ -20,6 +20,4 @@
 
   > - Nguyễn Minh Chiến \<<chien@trobz.com>\>
 
-- [APSL-Nagarro](https://apsl.tech):
-
-  > - Antoni Marroig \<<amarroig@apsl.net>\>
+- Jairo Llopis ([Moduon](https://www.moduon.team/))

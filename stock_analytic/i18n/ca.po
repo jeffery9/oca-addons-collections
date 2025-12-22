@@ -27,13 +27,6 @@ msgid "Analytic Distribution"
 msgstr "Distribució analítica"
 
 #. module: stock_analytic
-#: model:ir.model.fields,field_description:stock_analytic.field_stock_move__analytic_distribution_search
-#: model:ir.model.fields,field_description:stock_analytic.field_stock_move_line__analytic_distribution_search
-#: model:ir.model.fields,field_description:stock_analytic.field_stock_scrap__analytic_distribution_search
-msgid "Analytic Distribution Search"
-msgstr "Cerca de distribució analítica"
-
-#. module: stock_analytic
 #: model:ir.model,name:stock_analytic.model_account_analytic_applicability
 msgid "Analytic Plan's Applicabilities"
 msgstr "Aplicabilitats del pla analític"
@@ -82,6 +75,11 @@ msgid "Manual Distribution"
 msgstr ""
 
 #. module: stock_analytic
+#: model:ir.model.fields,field_description:stock_analytic.field_account_analytic_applicability__stock_picking_type_id
+msgid "Operation Type"
+msgstr ""
+
+#. module: stock_analytic
 #: model:ir.model,name:stock_analytic.model_stock_move_line
 msgid "Product Moves (Stock Move Line)"
 msgstr "Moviments de producte (línia de moviment d'existències)"
@@ -106,6 +104,9 @@ msgstr "Regla d’estoc"
 #: model:ir.model,name:stock_analytic.model_stock_picking
 msgid "Transfer"
 msgstr "Transferència"
+
+#~ msgid "Analytic Distribution Search"
+#~ msgstr "Cerca de distribució analítica"
 
 #~ msgid "Analytic Account"
 #~ msgstr "Compte analític"
