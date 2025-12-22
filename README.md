@@ -1,15 +1,15 @@
 
-[![Runboat](https://img.shields.io/badge/runboat-Try%20me-875A7B.png)](https://runboat.odoo-community.org/builds?repo=OCA/report-print-send&target_branch=17.0)
-[![Pre-commit Status](https://github.com/OCA/report-print-send/actions/workflows/pre-commit.yml/badge.svg?branch=17.0)](https://github.com/OCA/report-print-send/actions/workflows/pre-commit.yml?query=branch%3A17.0)
-[![Build Status](https://github.com/OCA/report-print-send/actions/workflows/test.yml/badge.svg?branch=17.0)](https://github.com/OCA/report-print-send/actions/workflows/test.yml?query=branch%3A17.0)
-[![codecov](https://codecov.io/gh/OCA/report-print-send/branch/17.0/graph/badge.svg)](https://codecov.io/gh/OCA/report-print-send)
-[![Translation Status](https://translation.odoo-community.org/widgets/report-print-send-17-0/-/svg-badge.svg)](https://translation.odoo-community.org/engage/report-print-send-17-0/?utm_source=widget)
+[![Runboat](https://img.shields.io/badge/runboat-Try%20me-875A7B.png)](https://runboat.odoo-community.org/builds?repo=OCA/report-print-send&target_branch=18.0)
+[![Pre-commit Status](https://github.com/OCA/report-print-send/actions/workflows/pre-commit.yml/badge.svg?branch=18.0)](https://github.com/OCA/report-print-send/actions/workflows/pre-commit.yml?query=branch%3A18.0)
+[![Build Status](https://github.com/OCA/report-print-send/actions/workflows/test.yml/badge.svg?branch=18.0)](https://github.com/OCA/report-print-send/actions/workflows/test.yml?query=branch%3A18.0)
+[![codecov](https://codecov.io/gh/OCA/report-print-send/branch/18.0/graph/badge.svg)](https://codecov.io/gh/OCA/report-print-send)
+[![Translation Status](https://translation.odoo-community.org/widgets/report-print-send-18-0/-/svg-badge.svg)](https://translation.odoo-community.org/engage/report-print-send-18-0/?utm_source=widget)
 
 <!-- /!\ do not modify above this line -->
 
 # report-print-send
 
-TODO: add repo description.
+report-print-send
 
 <!-- /!\ do not modify below this line -->
 
@@ -21,8 +21,12 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[base_report_to_printer](base_report_to_printer/) | 17.0.1.1.1 |  | Report to printer
-[printer_zpl2](printer_zpl2/) | 17.0.1.0.0 |  | Add a ZPL II label printing feature
+[base_report_to_label_printer](base_report_to_label_printer/) | 18.0.1.0.1 |  | Report to label printer
+[base_report_to_printer](base_report_to_printer/) | 18.0.1.1.4 |  | Report to printer
+[base_report_to_printer_mail](base_report_to_printer_mail/) | 18.0.1.0.0 |  | Report to printer - Mail extension
+[printer_zpl2](printer_zpl2/) | 18.0.1.0.1 |  | Add a ZPL II label printing feature
+[printing_auto_base](printing_auto_base/) | 18.0.1.2.0 | <a href='https://github.com/jbaudoux'><img src='https://github.com/jbaudoux.png' width='32' height='32' style='border-radius:50%;' alt='jbaudoux'/></a> | Printing Auto Base
+[server_env_printing_server](server_env_printing_server/) | 18.0.1.0.0 |  | Server Environment for Printing Server
 
 [//]: # (end addons)
 

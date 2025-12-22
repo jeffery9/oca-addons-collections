@@ -35,7 +35,7 @@ class TestPrintingLabelZpl2(PrinterZpl2Common):
         with self.assertRaises(exceptions.UserError):
             label.print_label(self.printer, label)
 
-    @patch("%s.cups" % model)
+    @patch(f"{model}.cups")
     def test_print_empty_label(self, cups):
         """Check that printing an empty label works"""
         label = self.new_label()
@@ -382,7 +382,7 @@ class TestPrintingLabelZpl2(PrinterZpl2Common):
         """Check contents of a text label"""
         label = self.new_label()
         data = "Some text"
-        self.new_component({"label_id": label.id, "data": '"%s"' % data})
+        self.new_component({"label_id": label.id, "data": f'"{data}"'})
         contents = label._generate_zpl2_data(self.printer).decode("utf-8")
         self.assertEqual(
             contents,
