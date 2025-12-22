@@ -2,7 +2,8 @@
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
 
-from unittest.mock import patch
+import logging
+from unittest.mock import MagicMock, patch
 
 from odoo.tests import Form, common
 
@@ -13,6 +14,9 @@ class TestAvatax(common.TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        logging.getLogger("odoo.addons.account_avatax_oca.models.res_company").setLevel(
+            logging.ERROR
+        )
         cls.fiscal_position = cls.env["account.fiscal.position"].create(
             {
                 "name": "Avatax Demo",
@@ -27,7 +31,7 @@ class TestAvatax(common.TransactionCase):
                 "property_exemption_number": "12321",
                 "property_exemption_code_id": cls.env.ref(
                     "account_avatax_oca.resale_type"
-                ),
+                ).id,
             }
         )
 
@@ -48,11 +52,29 @@ class TestAvatax(common.TransactionCase):
         )
 
     def test_101_moves_onchange(self):
-        self.invoice.onchange_warehouse_id()
-        self.invoice.onchange_reset_avatax_amount()
-        self.invoice.onchange_avatax_calculation()
-        self.invoice.action_post()
-        self.invoice.button_draft()
+        mock_response = MagicMock()
+        mock_response.json.return_value = mock_response
+        void_response = MagicMock()
+        void_response.json.return_value = {
+            "status": "Success",
+            "message": "Transaction voided",
+        }
+
+        with (
+            patch(
+                "avalara.client_methods.Mixin.create_or_adjust_transaction",
+                return_value=mock_response,
+            ),
+            patch(
+                "avalara.client_methods.Mixin.void_transaction",
+                return_value=void_response,
+            ),
+        ):
+            self.invoice.onchange_warehouse_id()
+            self.invoice.onchange_reset_avatax_amount()
+            self.invoice.onchange_avatax_calculation()
+            self.invoice.action_post()
+            self.invoice.button_draft()
 
     @patch(
         "odoo.addons.account_avatax_oca.models.res_company.Company.get_avatax_config_company"
@@ -73,7 +95,7 @@ class TestAvatax(common.TransactionCase):
             {
                 "account_number": "123456",
                 "license_key": "123456",
-                "company_code": "DEFAULT",
+                "company_code": "DEFAULT2",
                 "disable_tax_calculation": False,
                 "invoice_calculate_tax": False,
             }
