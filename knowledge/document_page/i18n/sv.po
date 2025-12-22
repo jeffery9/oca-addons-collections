@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-04-17 00:50+0000\n"
-"PO-Revision-Date: 2024-06-05 14:38+0000\n"
+"PO-Revision-Date: 2025-09-18 16:42+0000\n"
 "Last-Translator: jakobkrabbe <jakob@syscare.se>\n"
 "Language-Team: Swedish (https://www.transifex.com/oca/teams/23907/sv/)\n"
 "Language: sv\n"
@@ -17,12 +17,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: document_page
 #. odoo-python
 #: code:addons/document_page/models/document_page.py:0
-#, python-format
 msgid "%s (copy)"
 msgstr "%s (kopia)"
 
@@ -79,6 +78,13 @@ msgid "Backend URL"
 msgstr "URL för backend"
 
 #. module: document_page
+#: model:ir.actions.act_window,name:document_page.action_browse_all_content
+#: model:ir.actions.act_window,name:document_page.action_browse_top_content
+#: model:ir.ui.menu,name:document_page.menu_browse_content
+msgid "Browse Wiki Content"
+msgstr "Bläddra bland Wiki-innehåll"
+
+#. module: document_page
 #: model_terms:ir.ui.view,arch_db:document_page.view_wiki_create_menu
 msgid "Cancel"
 msgstr "Avbryt"
@@ -119,6 +125,11 @@ msgstr "Klicka för att skapa en ny webbsida."
 #: model_terms:ir.ui.view,arch_db:document_page.view_wiki_show_diff
 msgid "Close"
 msgstr "Nära"
+
+#. module: document_page
+#: model:ir.model.fields,field_description:document_page.field_document_page__color
+msgid "Color Index"
+msgstr "Färgindex"
 
 #. module: document_page
 #: model:ir.model.fields,field_description:document_page.field_document_page__company_id
@@ -167,7 +178,7 @@ msgstr "Beskriv de förändringar som gjorts"
 #: model:ir.model.fields,field_description:document_page.field_document_page_history__diff
 #: model:ir.model.fields,field_description:document_page.field_wizard_document_page_history_show_diff__diff
 msgid "Diff"
-msgstr "Diff"
+msgstr "Skillnad"
 
 #. module: document_page
 #: model:ir.actions.act_window,name:document_page.action_view_wiki_show_diff_values
@@ -290,6 +301,11 @@ msgstr "Om kryssrutan är markerad får vissa meddelanden ett leveransfel."
 #: model:ir.model.fields,help:document_page.field_document_page_history__company_id
 msgid "If set, page is accessible only from this company"
 msgstr "Om den är inställd är sidan endast tillgänglig från detta företag"
+
+#. module: document_page
+#: model:ir.model.fields,field_description:document_page.field_document_page__image
+msgid "Image"
+msgstr "Bild"
 
 #. module: document_page
 #: model_terms:ir.ui.view,arch_db:document_page.view_wiki_form
@@ -454,7 +470,7 @@ msgstr "Föräldrameny"
 #. module: document_page
 #: model:ir.model.fields,field_description:document_page.field_document_page__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "Betyg"
 
 #. module: document_page
 #: model:ir.model.fields,field_description:document_page.field_document_page__activity_user_id
@@ -475,7 +491,6 @@ msgstr "Revision"
 #. module: document_page
 #. odoo-python
 #: code:addons/document_page/wizard/document_page_show_diff.py:0
-#, python-format
 msgid "Select one or maximum two history revisions!"
 msgstr "Välj en eller högst två historierevisioner!"
 
@@ -495,6 +510,7 @@ msgstr ""
 #. module: document_page
 #: model:ir.model.fields,field_description:document_page.field_document_page__draft_summary
 #: model:ir.model.fields,field_description:document_page.field_document_page_history__summary
+#: model_terms:ir.ui.view,arch_db:document_page.view_wiki_filter
 msgid "Summary"
 msgstr "Sammanfattning"
 
@@ -514,17 +530,15 @@ msgstr ""
 "kategori."
 
 #. module: document_page
-#. odoo-python
-#: code:addons/document_page/models/document_page_history.py:0
-#, python-format
-msgid "There are no changes in revisions."
-msgstr "Det finns inga förändringar i revisionerna."
-
-#. module: document_page
 #: model:ir.model.fields,field_description:document_page.field_document_page__name
 #: model_terms:ir.ui.view,arch_db:document_page.view_wiki_filter
 msgid "Title"
 msgstr "Titel"
+
+#. module: document_page
+#: model_terms:ir.ui.view,arch_db:document_page.view_browse_top_document_filter
+msgid "Top Level Ressources"
+msgstr "Resurser på högsta nivå"
 
 #. module: document_page
 #: model:ir.model.fields,field_description:document_page.field_document_page__type
@@ -544,12 +558,12 @@ msgstr "Använd den för att länka resurser på ett entydigt sätt"
 #. module: document_page
 #: model:ir.model.fields,field_description:document_page.field_document_page__website_message_ids
 msgid "Website Messages"
-msgstr ""
+msgstr "Webbplatsmeddelande"
 
 #. module: document_page
 #: model:ir.model.fields,help:document_page.field_document_page__website_message_ids
 msgid "Website communication history"
-msgstr ""
+msgstr "Webbplatsens kommunikationshistorik"
 
 #. module: document_page
 #: model:ir.model,name:document_page.model_document_page_create_menu
@@ -559,7 +573,6 @@ msgstr "Guiden Skapa meny"
 #. module: document_page
 #. odoo-python
 #: code:addons/document_page/models/document_page.py:0
-#, python-format
 msgid "You cannot create recursive categories."
 msgstr "Du kan inte skapa rekursiva kategorier."
 
@@ -584,9 +597,11 @@ msgstr "eller"
 #. module: document_page
 #. odoo-python
 #: code:addons/document_page/models/document_page.py:0
-#, python-format
 msgid "summary"
 msgstr "sammanfattning"
+
+#~ msgid "There are no changes in revisions."
+#~ msgstr "Det finns inga förändringar i revisionerna."
 
 #~ msgid "Last Modified on"
 #~ msgstr "Senast ändrad den"

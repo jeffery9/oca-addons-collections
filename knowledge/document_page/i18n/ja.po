@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-04-17 00:50+0000\n"
-"PO-Revision-Date: 2025-11-20 23:28+0000\n"
+"PO-Revision-Date: 2025-11-20 14:42+0000\n"
 "Last-Translator: Ryoko Tsuda <ryoko@quartile.co>\n"
 "Language-Team: Japanese (https://www.transifex.com/oca/teams/23907/ja/)\n"
 "Language: ja\n"
@@ -22,7 +22,6 @@ msgstr ""
 #. module: document_page
 #. odoo-python
 #: code:addons/document_page/models/document_page.py:0
-#, python-format
 msgid "%s (copy)"
 msgstr "%s (コピー)"
 
@@ -79,6 +78,13 @@ msgid "Backend URL"
 msgstr "バックエンドURL"
 
 #. module: document_page
+#: model:ir.actions.act_window,name:document_page.action_browse_all_content
+#: model:ir.actions.act_window,name:document_page.action_browse_top_content
+#: model:ir.ui.menu,name:document_page.menu_browse_content
+msgid "Browse Wiki Content"
+msgstr "Wikiコンテンツを閲覧"
+
+#. module: document_page
 #: model_terms:ir.ui.view,arch_db:document_page.view_wiki_create_menu
 msgid "Cancel"
 msgstr "取消"
@@ -119,6 +125,11 @@ msgstr "クリックして新しいWebページを作成"
 #: model_terms:ir.ui.view,arch_db:document_page.view_wiki_show_diff
 msgid "Close"
 msgstr "クローズ"
+
+#. module: document_page
+#: model:ir.model.fields,field_description:document_page.field_document_page__color
+msgid "Color Index"
+msgstr "カラーインデックス"
 
 #. module: document_page
 #: model:ir.model.fields,field_description:document_page.field_document_page__company_id
@@ -206,8 +217,9 @@ msgstr "ドキュメントページ履歴"
 
 #. module: document_page
 #: model:ir.model,name:document_page.model_wizard_document_page_history_show_diff
+#, fuzzy
 msgid "Document Page Show Diff"
-msgstr ""
+msgstr "文書"
 
 #. module: document_page
 #: model_terms:ir.ui.view,arch_db:document_page.view_category_form
@@ -290,6 +302,11 @@ msgstr "チェックされている場合、配送エラーのメッセージが
 #: model:ir.model.fields,help:document_page.field_document_page_history__company_id
 msgid "If set, page is accessible only from this company"
 msgstr "設定されている場合、ページはこの会社からのみアクセス可能です"
+
+#. module: document_page
+#: model:ir.model.fields,field_description:document_page.field_document_page__image
+msgid "Image"
+msgstr "画像"
 
 #. module: document_page
 #: model_terms:ir.ui.view,arch_db:document_page.view_wiki_form
@@ -475,7 +492,6 @@ msgstr "改訂"
 #. module: document_page
 #. odoo-python
 #: code:addons/document_page/wizard/document_page_show_diff.py:0
-#, python-format
 msgid "Select one or maximum two history revisions!"
 msgstr "履歴の改訂版を1つ、または最大2つ選択してください！"
 
@@ -495,6 +511,7 @@ msgstr ""
 #. module: document_page
 #: model:ir.model.fields,field_description:document_page.field_document_page__draft_summary
 #: model:ir.model.fields,field_description:document_page.field_document_page_history__summary
+#: model_terms:ir.ui.view,arch_db:document_page.view_wiki_filter
 msgid "Summary"
 msgstr "概要"
 
@@ -509,21 +526,20 @@ msgstr "テンプレート"
 msgid ""
 "Template that will be used as a content template for all new page of this "
 "category."
-msgstr "このカテゴリのすべての新規ページでコンテンツテンプレートとして使用されるテン"
+msgstr ""
+"このカテゴリのすべての新規ページでコンテンツテンプレートとして使用されるテン"
 "プレート。"
-
-#. module: document_page
-#. odoo-python
-#: code:addons/document_page/models/document_page_history.py:0
-#, python-format
-msgid "There are no changes in revisions."
-msgstr "改訂に変更はありません。"
 
 #. module: document_page
 #: model:ir.model.fields,field_description:document_page.field_document_page__name
 #: model_terms:ir.ui.view,arch_db:document_page.view_wiki_filter
 msgid "Title"
 msgstr "タイトル"
+
+#. module: document_page
+#: model_terms:ir.ui.view,arch_db:document_page.view_browse_top_document_filter
+msgid "Top Level Ressources"
+msgstr "最上位リソース"
 
 #. module: document_page
 #: model:ir.model.fields,field_description:document_page.field_document_page__type
@@ -558,7 +574,6 @@ msgstr "メニュー作成ウィザード"
 #. module: document_page
 #. odoo-python
 #: code:addons/document_page/models/document_page.py:0
-#, python-format
 msgid "You cannot create recursive categories."
 msgstr "再帰的なカテゴリを作成することはできません。"
 
@@ -583,9 +598,11 @@ msgstr "または"
 #. module: document_page
 #. odoo-python
 #: code:addons/document_page/models/document_page.py:0
-#, python-format
 msgid "summary"
 msgstr "概要"
+
+#~ msgid "There are no changes in revisions."
+#~ msgstr "改訂に変更はありません。"
 
 #, fuzzy
 #~ msgid "Document History"

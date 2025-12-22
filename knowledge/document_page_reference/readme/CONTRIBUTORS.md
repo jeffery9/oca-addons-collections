@@ -1,1 +1,1 @@
-- Enric Tobella \<<etobella@creublanca.es>\>
+- Enric Tobella \<etobella@creublanca.es\>
