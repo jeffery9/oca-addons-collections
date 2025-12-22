@@ -14,14 +14,14 @@
                 >
                     <block title="Units" name="general_settings_container">
                         <setting id="tms_uom">
-                            <field name="group_tms_uom" string="Units of Measure" />
+                            <field name="group_tms_uom" string="TMS Units of Measure" />
                             <div class="content-group">
                                 <div class="mt8" invisible="not group_tms_uom">
                                     <button
                                         name="%(uom.product_uom_categ_form_action)d"
                                         icon="oi-arrow-right"
                                         type="action"
-                                        string="Units Of Measure"
+                                        string="TMS Units of Measure"
                                         class="btn-link"
                                     />
                                 </div>
@@ -126,14 +126,12 @@
                     </block>
                     <block title="Trips" name="trips_settings_container">
                         <setting
-                            id="tms_route"
                             string="Manage pre-defined routes"
                             help="Allow the use of predefined routes in trips"
                         >
                             <field name="group_tms_route" />
                         </setting>
                         <setting
-                            id="tms_stops"
                             string="Stops"
                             help="Enable the creation of stops in a route"
                             invisible="not group_tms_route"
@@ -141,14 +139,12 @@
                             <field name="group_tms_route_stop" />
                         </setting>
                         <setting
-                            id="tms_account"
                             string="Manage Trips Accounting"
                             help="Create vendor bills and customer invoices when completing trip orders."
                         >
                             <field name="module_tms_account" />
                         </setting>
                         <setting
-                            id="tms_sale"
                             string="Sell trips or tickets"
                             name="tms_sale_setting"
                             help="Create Trip Orders with Sale Orders"
@@ -156,15 +152,11 @@
                             <field name="module_tms_sale" />
                         </setting>
                         <setting
-                            id="tms_purchase"
                             help="Manage purchase requests for drivers and other suppliers"
                         >
                             <field name="module_tms_purchase" />
                         </setting>
-                        <setting
-                            id="tms_expense"
-                            help="Manage expenses of a trip: hotel, tolls, fuel"
-                        >
+                        <setting help="Manage expenses of a trip: hotel, tolls, fuel">
                             <field name="module_tms_expense" />
                         </setting>
                     </block>
@@ -181,6 +173,4 @@
         <field name="target">inline</field>
         <field name="context">{'module': 'tms'}</field>
     </record>
-
-
 </odoo>
