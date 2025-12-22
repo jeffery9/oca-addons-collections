@@ -1,4 +1,3 @@
-/* @odoo-module */
 import {Record} from "@mail/core/common/record";
 
 export class GatewayChannel extends Record {
@@ -13,9 +12,9 @@ export class GatewayChannel extends Record {
     static insert() {
         return super.insert(...arguments);
     }
-    /** @type {number} */
+    /** @type {Number} */
     id;
-    /** @type {string} */
+    /** @type {String} */
     name;
     gateway = Record.one("Gateway");
 }

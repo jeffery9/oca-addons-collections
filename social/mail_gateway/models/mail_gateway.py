@@ -79,11 +79,11 @@ class MailGateway(models.Model):
     def set_webhook(self):
         self.ensure_one()
         if self.can_set_webhook:
-            self.env["mail.gateway.%s" % self.gateway_type]._set_webhook(self)
+            self.env[f"mail.gateway.{self.gateway_type}"]._set_webhook(self)
 
     def remove_webhook(self):
         self.ensure_one()
-        self.env["mail.gateway.%s" % self.gateway_type]._remove_webhook(self)
+        self.env[f"mail.gateway.{self.gateway_type}"]._remove_webhook(self)
 
     def update_webhook(self):
         self.ensure_one()
@@ -98,13 +98,13 @@ class MailGateway(models.Model):
             or "webhook_secret" in vals
             or "webhook_user_id" in vals
         ):
-            self.clear_caches()
+            self.env.registry.clear_cache()
         return res
 
     @api.model_create_multi
     def create(self, mvals):
         res = super().create(mvals)
-        self.clear_caches()
+        self.env.registry.clear_cache()
         return res
 
     @api.model

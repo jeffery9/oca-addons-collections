@@ -1,5 +1,0 @@
-- Thore Baden \<thorebaden@gmail.com\>
-- [Tecnativa](https://www.tecnativa.com):
-  - Víctor Martínez
-  - Ernesto Tejeda
-  - Carlos Lopez
