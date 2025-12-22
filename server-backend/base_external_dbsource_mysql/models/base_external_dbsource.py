@@ -4,17 +4,18 @@
 
 import sqlalchemy
 
-from odoo import models
-
-from odoo.addons.base_external_dbsource.models import base_external_dbsource
-
-base_external_dbsource.BaseExternalDbsource.CONNECTORS.append(("mysql", "MySQL"))
+from odoo import fields, models
 
 
 class BaseExternalDbsource(models.Model):
     """It provides logic for connection to a MySQL data source."""
 
     _inherit = "base.external.dbsource"
+
+    connector = fields.Selection(
+        selection_add=[("mysql", "MySQL")],
+        ondelete={"mysql": "cascade"},
+    )
 
     def connection_close_mysql(self, connection):
         return connection.close()

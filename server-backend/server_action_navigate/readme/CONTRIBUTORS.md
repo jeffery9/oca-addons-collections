@@ -1,3 +1,4 @@
 - Sylvain LE GAL (<https://www.twitter.com/legalsylvain>)
 - Ashish Hirpara (<https://ashish-hirpara.com>)
-- Simone Rubino
+- [Heliconia Solutions Pvt. Ltd.](https://www.heliconia.io)
+  - Bhavesh Heliconia
