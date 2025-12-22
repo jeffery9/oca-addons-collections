@@ -139,8 +139,8 @@ class EndpointMixin(models.AbstractModel):
                 exceptions, ["UserError", "ValidationError"]
             ),
             "log": self._code_snippet_log_func,
-            "hashlib": hashlib,
             "hmac": hmac,
+            "hashlib": hashlib,
         }
 
     def _code_snippet_log_func(self, message, level="info"):

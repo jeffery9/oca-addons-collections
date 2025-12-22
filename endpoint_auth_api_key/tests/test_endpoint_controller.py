@@ -37,11 +37,11 @@ class EndpoinAuthApikeytHttpCase(HttpCase):
             headers.update({"API-KEY": api_key.key})
         return requests.get(self._make_url(route), headers=headers, timeout=60)
 
-    @mute_logger("odoo.addons.auth_api_key.models.ir_http")
+    @mute_logger("odoo.addons.auth_api_key.models.ir_http", "odoo.http")
     def test_call_no_key(self):
         route = "/demo/api/key"
         response = self._make_request(route)
-        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.status_code, 401)
 
     def test_call_good_key(self):
         route = "/demo/api/key"
