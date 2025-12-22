@@ -9,8 +9,10 @@ class TestFillwithStock(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+
         cls.stock_location = cls.env.ref("stock.stock_location_stock")
         cls.pack_location = cls.env.ref("stock.location_pack_zone")
+
         cls.shelf1_location = cls.env["stock.location"].create(
             {
                 "name": "Test location",
@@ -22,13 +24,13 @@ class TestFillwithStock(BaseCommon):
         cls.product1 = cls.env["product.product"].create(
             {
                 "name": "Product A",
-                "type": "product",
+                "is_storable": True,
             }
         )
         cls.product2 = cls.env["product.product"].create(
             {
                 "name": "Product B",
-                "type": "product",
+                "is_storable": True,
             }
         )
 

@@ -84,8 +84,6 @@ class TestMoveLocation(TestsCommon):
         wizard = self._create_wizard(self.internal_loc_1, self.internal_loc_2)
         wizard.onchange_origin_location()
         self.assertEqual(len(wizard.stock_move_location_line_ids), 7)
-        wizard._onchange_destination_location_id()
-        self.assertEqual(len(wizard.stock_move_location_line_ids), 7)
         dest_location_line = wizard.stock_move_location_line_ids.mapped(
             "destination_location_id"
         )
@@ -97,7 +95,7 @@ class TestMoveLocation(TestsCommon):
         """Test a product that have existing quants with undefined quantity."""
 
         product_not_available = self.env["product.product"].create(
-            {"name": "Mango", "type": "product", "tracking": "none"}
+            {"name": "Mango", "is_storable": True, "tracking": "none"}
         )
         self.quant_obj.create(
             {
@@ -154,7 +152,7 @@ class TestMoveLocation(TestsCommon):
 
     def test_planned_transfer_strict(self):
         product = self.env["product.product"].create(
-            {"name": "Test", "type": "product", "tracking": "lot"}
+            {"name": "Test", "is_storable": True, "tracking": "lot"}
         )
         lot = self.env["stock.lot"].create(
             {
@@ -288,10 +286,12 @@ class TestMoveLocation(TestsCommon):
         wh_stock_shelf_1 = self.env.ref("stock.stock_location_components")
         wh_stock_shelf_2 = self.env.ref("stock.stock_location_14")
         wh_stock_shelf_3 = wh_stock_shelf_1.copy({"name": "Shelf 3"})
+
         # Create some quants
         self.set_product_amount(
             self.product_lots, wh_stock_shelf_1, 100, lot_id=self.lot1
         )
+
         # Create and assign a delivery picking to reserve some quantities
         delivery_picking = self._create_picking(delivery_order_type)
         # delivery_picking.location_id = wh_stock_shelf_1
@@ -309,12 +309,14 @@ class TestMoveLocation(TestsCommon):
         delivery_picking.action_confirm()
         self.assertEqual(delivery_picking.state, "assigned")
         self.assertEqual(delivery_move.move_line_ids.location_id, wh_stock_shelf_1)
+
         # Move all quantities to other location using module's wizard
         wizard = self._create_wizard(wh_stock_shelf_1, wh_stock_shelf_2)
         wizard.onchange_origin_location()
         wizard.action_move_location()
         self.assertEqual(delivery_picking.state, "assigned")
         self.assertEqual(delivery_move.move_line_ids.location_id, wh_stock_shelf_2)
+
         # Do a planned transfer to move quantities to other location
         #  without using module's wizard
         internal_picking = self._create_picking(internal_transfer_type)

@@ -1,7 +1,6 @@
 # Copyright (C) 2011 Julius Network Solutions SARL <contact@julius.fr>
 # Copyright 2018 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
-
 from odoo.tests import Form
 
 from odoo.addons.base.tests.common import BaseCommon
@@ -11,7 +10,6 @@ class TestsCommon(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-
         cls.location_obj = cls.env["stock.location"]
         cls.product_obj = cls.env["product.product"]
         cls.wizard_obj = cls.env["wiz.stock.move.location"]
@@ -46,13 +44,13 @@ class TestsCommon(BaseCommon):
         )
         cls.uom_unit = cls.env.ref("uom.product_uom_unit")
         cls.product_no_lots = cls.product_obj.create(
-            {"name": "Pineapple", "type": "product", "tracking": "none"}
+            {"name": "Pineapple", "is_storable": True, "tracking": "none"}
         )
         cls.product_lots = cls.product_obj.create(
-            {"name": "Apple", "type": "product", "tracking": "lot"}
+            {"name": "Apple", "is_storable": True, "tracking": "lot"}
         )
         cls.product_package = cls.product_obj.create(
-            {"name": "Orange", "type": "product", "tracking": "lot"}
+            {"name": "Orange", "is_storable": True, "tracking": "lot"}
         )
         cls.lot1 = cls.env["stock.lot"].create(
             {
@@ -76,7 +74,7 @@ class TestsCommon(BaseCommon):
             }
         )
         cls.product_package = cls.product_obj.create(
-            {"name": "Orange", "type": "product", "tracking": "lot"}
+            {"name": "Orange", "is_storable": True, "tracking": "lot"}
         )
         cls.lot4 = cls.env["stock.lot"].create(
             {

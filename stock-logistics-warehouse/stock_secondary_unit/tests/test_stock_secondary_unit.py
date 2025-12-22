@@ -1,16 +1,16 @@
 # Copyright 2018 Tecnativa - Sergio Teruel
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from odoo.tests import Form, TransactionCase, tagged
+from odoo import Command
+from odoo.tests import Form, tagged
 
-from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
+from odoo.addons.base.tests.common import BaseCommon
 
 
 @tagged("-at_install", "post_install")
-class TestProductSecondaryUnit(TransactionCase):
+class TestProductSecondaryUnit(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.env = cls.env(context=dict(cls.env.context, **DISABLED_MAIL_CONTEXT))
         # Active multiple units of measure security group for user
         cls.env.user.groups_id = [(4, cls.env.ref("uom.group_uom").id)]
         cls.StockPicking = cls.env["stock.picking"]
@@ -38,11 +38,10 @@ class TestProductSecondaryUnit(TransactionCase):
                 "name": "test",
                 "uom_id": cls.product_uom_kg.id,
                 "uom_po_id": cls.product_uom_kg.id,
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
                 "secondary_uom_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "code": "A",
                             "name": "unit-500",
@@ -50,9 +49,7 @@ class TestProductSecondaryUnit(TransactionCase):
                             "factor": 0.5,
                         },
                     ),
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "code": "B",
                             "name": "unit-900",
@@ -60,9 +57,7 @@ class TestProductSecondaryUnit(TransactionCase):
                             "factor": 0.9,
                         },
                     ),
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "code": "C",
                             "name": "box 10",
@@ -72,9 +67,7 @@ class TestProductSecondaryUnit(TransactionCase):
                     ),
                 ],
                 "attribute_line_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "attribute_id": cls.attribute_color.id,
                             "value_ids": [
