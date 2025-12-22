@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 17.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-02-04 23:06+0000\n"
+"PO-Revision-Date: 2025-04-08 16:49+0000\n"
 "Last-Translator: Bosd <c5e2fd43-d292-4c90-9d1f-74ff3436329a@anonaddy.me>\n"
 "Language-Team: none\n"
 "Language: nl\n"
@@ -14,31 +14,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.6.2\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__supplier_invoice_count
 msgid "# Vendor Bills"
-msgstr ""
-
-#. module: brand
-#: model:ir.model.fields,help:brand.field_res_brand__type
-msgid ""
-"- Contact: Use this to organize the contact details of employees of a given "
-"company (e.g. CEO, CFO, ...).\n"
-"- Invoice Address: Preferred address for all invoices. Selected by default "
-"when you invoice an order that belongs to this company.\n"
-"- Delivery Address: Preferred address for all deliveries. Selected by "
-"default when you deliver an order that belongs to this company.\n"
-"- Other: Other address for the company (e.g. subsidiary, ...)"
-msgstr ""
-"- Contact: Gebruik dit om de contactgegevens van werknemers van een bepaald "
-"bedrijf te organiseren (bijv. CEO, CFO, ...).\n"
-"- Factuuradres: Voorkeursadres voor alle facturen. Standaard geselecteerd "
-"wanneer u een bestelling factureert die bij dit bedrijf hoort.\n"
-"- Afleveradres: Voorkeursadres voor alle leveringen. Standaard geselecteerd "
-"wanneer u een bestelling levert die bij dit bedrijf hoort.\n"
-"- Anders: Ander adres voor het bedrijf (bijv. dochteronderneming, ...)"
+msgstr "# leveranciersfacturen"
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__property_account_payable_id
@@ -115,6 +96,23 @@ msgid "Attachment Count"
 msgstr "Aantal bijlagen"
 
 #. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__autopost_bills
+msgid "Auto-post bills"
+msgstr "Facturen automatisch boeken"
+
+#. module: brand
+#: model:ir.model.fields,help:brand.field_res_brand__autopost_bills
+msgid "Automatically post bills for this trusted partner"
+msgstr "Automatisch rekeningen boeken voor deze vertrouwde partner"
+
+#. module: brand
+#: model:ir.model.fields,help:brand.field_res_brand__receipt_reminder_email
+msgid ""
+"Automatically send a confirmation email to the vendor X days before the "
+"expected receipt date, asking him to confirm the exact date."
+msgstr ""
+
+#. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__avatar_1920
 msgid "Avatar"
 msgstr "Avatar"
@@ -186,14 +184,12 @@ msgstr "Merkgebruiksniveau"
 #. module: brand
 #. odoo-python
 #: code:addons/brand/models/res_brand_mixin.py:0
-#, python-format
 msgid "Brand company must match document company for %s"
 msgstr "Merkbedrijf moet overeenkomen met documentbedrijf voor %s"
 
 #. module: brand
 #. odoo-python
 #: code:addons/brand/models/res_brand_mixin.py:0
-#, python-format
 msgid "Brand is required"
 msgstr "Merk is vereist"
 
@@ -205,10 +201,15 @@ msgstr "Merk om te gebruiken voor deze verkoop"
 #. module: brand
 #: model:ir.actions.act_window,name:brand.res_brand_act_window
 #: model:ir.ui.menu,name:brand.res_brand_menu
+#: model_terms:ir.ui.view,arch_db:brand.res_brand_list_view
 #: model_terms:ir.ui.view,arch_db:brand.res_brand_search_view
-#: model_terms:ir.ui.view,arch_db:brand.res_brand_tree_view
 msgid "Brands"
 msgstr "Merken"
+
+#. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__buyer_id
+msgid "Buyer"
+msgstr ""
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__channel_ids
@@ -231,17 +232,6 @@ msgstr "Vink dit vakje aan als deze contactpersoon een werknemer is."
 #: model_terms:ir.ui.view,arch_db:brand.res_brand_form_view
 msgid "City"
 msgstr "Stad"
-
-#. module: brand
-#: model:ir.model.fields,help:brand.field_res_brand__peppol_eas
-msgid ""
-"Code used to identify the Endpoint for BIS Billing 3.0 and its derivatives.\n"
-"             List available at https://docs.peppol.eu/poacc/billing/3.0/"
-"codelist/eas/"
-msgstr ""
-"Code die wordt gebruikt om het eindpunt voor BIS Billing 3.0 en zijn "
-"derivaten te identificeren.\n"
-"Lijst beschikbaar op https://docs.peppol.eu/poacc/billing/3.0/codelist/eas/"
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__color
@@ -273,6 +263,11 @@ msgstr "Bedrijf"
 #: model:ir.model.fields,field_description:brand.field_res_brand__company_registry
 msgid "Company ID"
 msgstr "Bedrijfs-ID"
+
+#. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__company_registry_label
+msgid "Company ID Label"
+msgstr "Bedrijfs-ID Label"
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__company_name
@@ -316,6 +311,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:brand.field_res_brand__child_ids
 msgid "Contact"
 msgstr "Contactpersoon"
+
+#. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__contract_ids
+msgid "Contracts"
+msgstr ""
 
 #. module: brand
 #: model:ir.model.fields,help:brand.field_res_brand__message_bounce
@@ -364,6 +364,16 @@ msgid "Currency"
 msgstr "Valuta"
 
 #. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__property_stock_customer
+msgid "Customer Location"
+msgstr ""
+
+#. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__customer_payment_mode_id
+msgid "Customer Payment Mode"
+msgstr ""
+
+#. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__property_payment_term_id
 msgid "Customer Payment Terms"
 msgstr "Betalingsvoorwaarden klant"
@@ -374,9 +384,9 @@ msgid "Customer Rank"
 msgstr "Klant ranking"
 
 #. module: brand
-#: model:ir.model.fields,field_description:brand.field_res_brand__date
-msgid "Date"
-msgstr "Datum"
+#: model:ir.model.fields,field_description:brand.field_res_brand__reminder_date_before_receipt
+msgid "Days Before Receipt"
+msgstr ""
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__days_sales_outstanding
@@ -389,6 +399,16 @@ msgid "Degree of trust you have in this debtor"
 msgstr "Mate van vertrouwen die u in deze debiteur heeft"
 
 #. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__display_invoice_edi_format
+msgid "Display Invoice Edi Format"
+msgstr "Factuur EDI-formaat weergeven"
+
+#. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__display_invoice_template_pdf_report_id
+msgid "Display Invoice Template Pdf Report"
+msgstr "Factuur sjabloon pdf-rapport weergeven"
+
+#. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__display_name
 msgid "Display Name"
 msgstr "Weergavenaam"
@@ -397,6 +417,11 @@ msgstr "Weergavenaam"
 #: model:ir.model.fields.selection,name:brand.selection__res_company__brand_use_level__no
 msgid "Do not use brands on business document"
 msgstr "Gebruik geen merken op bedrijfsdocumenten"
+
+#. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__duplicate_bank_partner_ids
+msgid "Duplicate Bank Partner"
+msgstr ""
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__duplicated_bank_account_partners_count
@@ -450,11 +475,6 @@ msgid "Font awesome icon e.g. fa-tasks"
 msgstr "Font awesome pictogram, bijvoorbeeld fa-tasks"
 
 #. module: brand
-#: model:ir.model.fields,field_description:brand.field_res_brand__ubl_cii_format
-msgid "Format"
-msgstr "Formaat"
-
-#. module: brand
 #: model:ir.model.fields,help:brand.field_res_brand__email_formatted
 msgid "Format email address \"Name <email@domain>\""
 msgstr "E-mailadres opmaken \"Naam <email@domain>\""
@@ -478,16 +498,6 @@ msgstr "Geografische lengtegraad"
 #: model:ir.model.fields,field_description:brand.field_res_brand__has_message
 msgid "Has Message"
 msgstr "Heeft bericht"
-
-#. module: brand
-#: model:ir.model.fields,field_description:brand.field_res_brand__has_unreconciled_entries
-msgid "Has Unreconciled Entries"
-msgstr "Heeft niet-afgestemde items"
-
-#. module: brand
-#: model:ir.model.fields,field_description:brand.field_res_brand__hide_peppol_fields
-msgid "Hide Peppol Fields"
-msgstr "Verberg Peppol-velden"
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__id
@@ -520,15 +530,6 @@ msgid "If checked, some messages have a delivery error."
 msgstr "Indien aangevinkt, hebben sommige berichten een leveringsfout."
 
 #. module: brand
-#: model:ir.model.fields,help:brand.field_res_brand__team_id
-msgid ""
-"If set, this Sales Team will be used for sales and assignments related to "
-"this partner"
-msgstr ""
-"Indien ingesteld, wordt dit verkoopteam gebruikt voor verkopen en "
-"toewijzingen met betrekking tot deze partner."
-
-#. module: brand
 #: model:ir.model.fields,help:brand.field_res_brand__is_blacklisted
 msgid ""
 "If the email address is on the blacklist, the contact won't receive mass "
@@ -536,6 +537,16 @@ msgid ""
 msgstr ""
 "Als het e-mailadres op de zwarte lijst staat, ontvangt de contactpersoon "
 "geen massamailings meer, van welke lijst dan ook."
+
+#. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__ignore_abnormal_invoice_amount
+msgid "Ignore Abnormal Invoice Amount"
+msgstr "Negeer een afwijkend factuurbedrag"
+
+#. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__ignore_abnormal_invoice_date
+msgid "Ignore Abnormal Invoice Date"
+msgstr "Negeer afwijkende factuurdatum"
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__image_1920
@@ -578,9 +589,29 @@ msgid "Invoice"
 msgstr "Factuur"
 
 #. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__invoice_edi_format_store
+msgid "Invoice Edi Format Store"
+msgstr "Opslagplaats Factuur Edi Formaat"
+
+#. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__invoice_sending_method
+msgid "Invoice sending"
+msgstr "Factuurverzending"
+
+#. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__invoice_template_pdf_report_id
+msgid "Invoice template"
+msgstr "Factuursjabloon"
+
+#. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__invoice_ids
 msgid "Invoices"
 msgstr "Facturen"
+
+#. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand_mixin__is_brand_required
+msgid "Is Brand Required"
+msgstr ""
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__is_coa_installed
@@ -628,22 +659,6 @@ msgid "Last Updated on"
 msgstr "Laatst bijgewerkt op"
 
 #. module: brand
-#: model:ir.model.fields,help:brand.field_res_brand__last_time_entries_checked
-msgid ""
-"Last time the invoices & payments matching was performed for this partner. "
-"It is set either if there's not at least an unreconciled debit and an "
-"unreconciled credit or if you click the \"Done\" button."
-msgstr ""
-"Laatste keer dat de facturen en betalingen werden vergeleken voor deze "
-"partner. Het wordt ingesteld als er niet minstens één niet-afgestemde debet "
-"en één niet-afgestemde credit is of als u op de knop \"Gereed\" klikt."
-
-#. module: brand
-#: model:ir.model.fields,field_description:brand.field_res_brand__last_time_entries_checked
-msgid "Latest Invoices & Payments Matching Date"
-msgstr "Datum van laatste factuur- en betalingsafstemming"
-
-#. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__message_has_error
 msgid "Message Delivery error"
 msgstr "Berichtbezorgingsfout"
@@ -654,9 +669,19 @@ msgid "Message for Invoice"
 msgstr "Bericht voor factuur"
 
 #. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__purchase_warn_msg
+msgid "Message for Purchase Order"
+msgstr ""
+
+#. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__sale_warn_msg
 msgid "Message for Sales Order"
 msgstr "Bericht voor verkooporder"
+
+#. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__picking_warn_msg
+msgid "Message for Stock Picking"
+msgstr ""
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__message_ids
@@ -709,6 +734,11 @@ msgid "Number of Actions"
 msgstr "Aantal acties"
 
 #. module: brand
+#: model:ir.model.fields,help:brand.field_res_brand__reminder_date_before_receipt
+msgid "Number of days to send reminder email before the promised receipt date"
+msgstr ""
+
+#. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__message_has_error_counter
 msgid "Number of errors"
 msgstr "Aantal fouten"
@@ -724,9 +754,22 @@ msgid "Number of messages with delivery error"
 msgstr "Aantal berichten met bezorgfout"
 
 #. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__on_time_rate
+msgid "On-Time Delivery Rate"
+msgstr ""
+
+#. module: brand
 #: model:ir.model.fields.selection,name:brand.selection__res_company__brand_use_level__optional
 msgid "Optional"
 msgstr "Optioneel"
+
+#. module: brand
+#: model:ir.model.fields,help:brand.field_res_brand__on_time_rate
+msgid ""
+"Over the past x days; the number of products received on time divided by the "
+"number of ordered products.x is either the System Parameter purchase_stock."
+"on_time_delivery_days or the default 365"
+msgstr ""
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__parent_name
@@ -739,14 +782,19 @@ msgid "Partner"
 msgstr "Partner"
 
 #. module: brand
-#: model:ir.model.fields,field_description:brand.field_res_brand__contract_ids
-msgid "Partner Contracts"
-msgstr "Partnercontracten"
+#: model:ir.model.fields,field_description:brand.field_res_brand__partner_company_registry_placeholder
+msgid "Partner Company Registry Placeholder"
+msgstr "Plaatshouder Handelsregister Partner"
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__use_partner_credit_limit
 msgid "Partner Limit"
 msgstr "Partnerlimiet"
+
+#. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__partner_vat_placeholder
+msgid "Partner Vat Placeholder"
+msgstr "Plaatshouder Btw-nummer Partner"
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__same_company_registry_partner_id
@@ -769,11 +817,6 @@ msgid "Payable Limit"
 msgstr "Te betalen limiet"
 
 #. module: brand
-#: model:ir.model.fields,field_description:brand.field_res_brand__property_payment_method_id
-msgid "Payment Method"
-msgstr "Betaalmethode"
-
-#. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__payment_token_count
 msgid "Payment Token Count"
 msgstr "Aantal betalingstokens"
@@ -784,36 +827,68 @@ msgid "Payment Tokens"
 msgstr "Betalingstokens"
 
 #. module: brand
-#: model:ir.model.fields,field_description:brand.field_res_brand__peppol_endpoint
-msgid "Peppol Endpoint"
-msgstr "Peppol eindpunt"
-
-#. module: brand
-#: model:ir.model.fields,field_description:brand.field_res_brand__peppol_eas
-msgid "Peppol e-address (EAS)"
-msgstr "Peppol e-adres (EAS)"
-
-#. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__phone
 msgid "Phone"
 msgstr "Telefoon"
 
 #. module: brand
-#: model:ir.model.fields,help:brand.field_res_brand__property_payment_method_id
+#: model:ir.model.fields,help:brand.field_res_brand__property_outbound_payment_method_line_id
 msgid ""
-"Preferred payment method when paying this vendor. This is used to filter "
-"vendor bills by preferred payment method to register payments in mass. Use "
-"cases: create bank files for batch wires, check runs."
+"Preferred payment method when buying from this vendor. This will be set by "
+"default on all outgoing payments created for this vendor"
 msgstr ""
-"Voorkeursbetaalmethode bij het betalen van deze leverancier. Dit wordt "
-"gebruikt om leveranciersfacturen te filteren op voorkeursbetaalmethode om "
-"betalingen massaal te registreren. Gebruiksscenario's: bankbestanden maken "
-"voor batchoverschrijvingen, controleruns."
+"Voorkeursbetaalmethode bij aankoop van deze leverancier. Dit wordt standaard "
+"ingesteld op alle uitgaande betalingen die voor deze leverancier worden "
+"aangemaakt."
+
+#. module: brand
+#: model:ir.model.fields,help:brand.field_res_brand__property_inbound_payment_method_line_id
+msgid ""
+"Preferred payment method when selling to this customer. This will be set by "
+"default on all incoming payments created for this customer"
+msgstr ""
+"Voorkeursbetaalmethode bij verkoop aan deze klant. Dit wordt standaard "
+"ingesteld op alle inkomende betalingen die voor deze klant worden aangemaakt."
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__property_product_pricelist
 msgid "Pricelist"
 msgstr "Prijslijst"
+
+#. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__property_inbound_payment_method_line_id
+msgid "Property Inbound Payment Method Line"
+msgstr "Lijn Inkomende Betaalmethode (Eigenschap)"
+
+#. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__property_outbound_payment_method_line_id
+msgid "Property Outbound Payment Method Line"
+msgstr "Lijn Uitgaande Betaalmethode (Eigenschap)"
+
+#. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__purchase_contract_count
+msgid "Purchase Contracts"
+msgstr ""
+
+#. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__purchase_line_ids
+msgid "Purchase Lines"
+msgstr ""
+
+#. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__purchase_order_count
+msgid "Purchase Order Count"
+msgstr ""
+
+#. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__purchase_warn
+msgid "Purchase Order Warning"
+msgstr ""
+
+#. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__receipt_reminder_email
+msgid "Receipt Reminder"
+msgstr ""
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__ref
@@ -836,6 +911,11 @@ msgid "Responsible User"
 msgstr "Verantwoordelijke gebruiker"
 
 #. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__sale_contract_count
+msgid "Sale Contracts"
+msgstr ""
+
+#. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__sale_order_count
 msgid "Sale Order Count"
 msgstr "Aantal verkooporders"
@@ -844,11 +924,6 @@ msgstr "Aantal verkooporders"
 #: model:ir.model.fields,field_description:brand.field_res_brand__sale_order_ids
 msgid "Sales Order"
 msgstr "Verkooporder"
-
-#. module: brand
-#: model:ir.model.fields,field_description:brand.field_res_brand__team_id
-msgid "Sales Team"
-msgstr "Verkoopteam"
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__sale_warn
@@ -861,7 +936,19 @@ msgid "Salesperson"
 msgstr "Verkoper"
 
 #. module: brand
+#: model:ir.model.fields,help:brand.field_res_brand__customer_payment_mode_id
+msgid "Select the default payment mode for this customer."
+msgstr ""
+
+#. module: brand
+#: model:ir.model.fields,help:brand.field_res_brand__supplier_payment_mode_id
+msgid "Select the default payment mode for this supplier."
+msgstr ""
+
+#. module: brand
 #: model:ir.model.fields,help:brand.field_res_brand__invoice_warn
+#: model:ir.model.fields,help:brand.field_res_brand__picking_warn
+#: model:ir.model.fields,help:brand.field_res_brand__purchase_warn
 #: model:ir.model.fields,help:brand.field_res_brand__sale_warn
 msgid ""
 "Selecting the \"Warning\" option will notify user with the message, "
@@ -882,6 +969,7 @@ msgstr "Zelf"
 #: model:ir.model.fields,help:brand.field_res_brand__use_partner_credit_limit
 msgid "Set a value greater than 0.0 to activate a credit limit check"
 msgstr ""
+"Stel een waarde hoger dan 0.0 in om een kredietlimietcontrole te activeren"
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__partner_share
@@ -894,29 +982,14 @@ msgid "Show Credit Limit"
 msgstr "Toon kredietlimiet"
 
 #. module: brand
-#: model:ir.model.fields,field_description:brand.field_res_brand__signup_expiration
-msgid "Signup Expiration"
-msgstr "Aanmeldingsvervaldatum"
-
-#. module: brand
-#: model:ir.model.fields,field_description:brand.field_res_brand__signup_token
-msgid "Signup Token"
-msgstr "Aanmeldingstoken"
-
-#. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__signup_type
 msgid "Signup Token Type"
 msgstr "Type aanmeldingstoken"
 
 #. module: brand
-#: model:ir.model.fields,field_description:brand.field_res_brand__signup_valid
-msgid "Signup Token is Valid"
-msgstr "Aanmeldingstoken is geldig"
-
-#. module: brand
-#: model:ir.model.fields,field_description:brand.field_res_brand__signup_url
-msgid "Signup URL"
-msgstr "Aanmeldings-URL"
+#: model:ir.model.fields,field_description:brand.field_res_brand__specific_property_product_pricelist
+msgid "Specific Property Product Pricelist"
+msgstr "Specifieke Eigenschap Productprijslijst"
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__starred_message_ids
@@ -943,6 +1016,11 @@ msgstr ""
 "Gepland: Toekomstige activiteiten."
 
 #. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__picking_warn
+msgid "Stock Picking"
+msgstr ""
+
+#. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__street
 msgid "Street"
 msgstr "Straat"
@@ -963,6 +1041,16 @@ msgid "Street2"
 msgstr "Straat2"
 
 #. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__property_purchase_currency_id
+msgid "Supplier Currency"
+msgstr ""
+
+#. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__supplier_payment_mode_id
+msgid "Supplier Payment Mode"
+msgstr ""
+
+#. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__supplier_rank
 msgid "Supplier Rank"
 msgstr "Leveranciers ranking"
@@ -976,6 +1064,11 @@ msgstr "Tags"
 #: model:ir.model.fields,field_description:brand.field_res_brand__vat
 msgid "Tax ID"
 msgstr "BTW nummer"
+
+#. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__vat_label
+msgid "Tax ID Label"
+msgstr "Label Btw-nummer"
 
 #. module: brand
 #: model:ir.model.fields,help:brand.field_res_brand__country_code
@@ -1011,15 +1104,6 @@ msgid "The internal user in charge of this contact."
 msgstr "De interne gebruiker die verantwoordelijk is voor deze contactpersoon."
 
 #. module: brand
-#: model:ir.model.fields,help:brand.field_res_brand__has_unreconciled_entries
-msgid ""
-"The partner has at least one unreconciled debit and credit since last time "
-"the invoices & payments matching was performed."
-msgstr ""
-"De partner heeft ten minste één niet-afgestemde debet en credit sinds de "
-"laatste keer dat de facturen en betalingen werden vergeleken."
-
-#. module: brand
 #: model:ir.model.fields,help:brand.field_res_brand__company_registry
 msgid ""
 "The registry number of the company. Use it if it is different from the Tax "
@@ -1027,6 +1111,18 @@ msgid ""
 msgstr ""
 "Het registratienummer van het bedrijf. Gebruik dit als het verschilt van het "
 "btw-nummer. Het moet uniek zijn voor alle partners in hetzelfde land."
+
+#. module: brand
+#: model:ir.model.fields,help:brand.field_res_brand__property_stock_customer
+msgid ""
+"The stock location used as destination when sending goods to this contact."
+msgstr ""
+
+#. module: brand
+#: model:ir.model.fields,help:brand.field_res_brand__property_stock_supplier
+msgid ""
+"The stock location used as source when receiving goods from this contact."
+msgstr ""
 
 #. module: brand
 #: model:ir.model.fields,help:brand.field_res_brand__property_account_payable_id
@@ -1045,6 +1141,13 @@ msgid ""
 msgstr ""
 "Deze rekening wordt gebruikt in plaats van de standaardrekening als de te "
 "ontvangen rekening voor de huidige partner."
+
+#. module: brand
+#: model:ir.model.fields,help:brand.field_res_brand__property_purchase_currency_id
+msgid ""
+"This currency will be used, instead of the default one, for purchases from "
+"the current partner"
+msgstr ""
 
 #. module: brand
 #: model:ir.model.fields,help:brand.field_res_brand__email_normalized
@@ -1128,15 +1231,6 @@ msgid "Type of the exception activity on record."
 msgstr "Type uitzonderingsactiviteit op record."
 
 #. module: brand
-#: model:ir.model.fields,help:brand.field_res_brand__peppol_endpoint
-msgid ""
-"Unique identifier used by the BIS Billing 3.0 and its derivatives, also "
-"known as 'Endpoint ID'."
-msgstr ""
-"Unieke identificatie die wordt gebruikt door BIS Billing 3.0 en zijn "
-"afgeleiden, ook wel 'Endpoint ID' genoemd."
-
-#. module: brand
 #: model:ir.model.fields,help:brand.field_res_brand__barcode
 msgid "Use a barcode to identify this contact."
 msgstr "Gebruik een barcode om deze contactpersoon te identificeren."
@@ -1145,6 +1239,11 @@ msgstr "Gebruik een barcode om deze contactpersoon te identificeren."
 #: model:ir.model.fields,field_description:brand.field_res_brand__user_ids
 msgid "Users"
 msgstr "Gebruikers"
+
+#. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__property_stock_supplier
+msgid "Vendor Location"
+msgstr ""
 
 #. module: brand
 #: model:ir.model.fields,field_description:brand.field_res_brand__property_supplier_payment_term_id
@@ -1214,3 +1313,99 @@ msgstr "bijv. BE0477472701"
 #: model_terms:ir.ui.view,arch_db:brand.res_brand_form_view
 msgid "e.g. https://www.odoo.com"
 msgstr "bijv. https://www.odoo.com"
+
+#. module: brand
+#: model:ir.model.fields,field_description:brand.field_res_brand__invoice_edi_format
+msgid "eInvoice format"
+msgstr "eFactuur formaat"
+
+#~ msgid ""
+#~ "Code used to identify the Endpoint for BIS Billing 3.0 and its "
+#~ "derivatives.\n"
+#~ "             List available at https://docs.peppol.eu/poacc/billing/3.0/"
+#~ "codelist/eas/"
+#~ msgstr ""
+#~ "Code die wordt gebruikt om het eindpunt voor BIS Billing 3.0 en zijn "
+#~ "derivaten te identificeren.\n"
+#~ "Lijst beschikbaar op https://docs.peppol.eu/poacc/billing/3.0/codelist/"
+#~ "eas/"
+
+#~ msgid "Is Peppol Edi Format"
+#~ msgstr "Is Peppol Edi Formaat"
+
+#~ msgid "Is Ubl Format"
+#~ msgstr "Is Ubl Formaat"
+
+#~ msgid "Peppol Endpoint"
+#~ msgstr "Peppol eindpunt"
+
+#~ msgid "Peppol e-address (EAS)"
+#~ msgstr "Peppol e-adres (EAS)"
+
+#~ msgid ""
+#~ "Unique identifier used by the BIS Billing 3.0 and its derivatives, also "
+#~ "known as 'Endpoint ID'."
+#~ msgstr ""
+#~ "Unieke identificatie die wordt gebruikt door BIS Billing 3.0 en zijn "
+#~ "afgeleiden, ook wel 'Endpoint ID' genoemd."
+
+#~ msgid "Partner Contracts"
+#~ msgstr "Partnercontracten"
+
+#~ msgid "Additional info"
+#~ msgstr "Extra info"
+
+#~ msgid "Blacklisted Phone Is Mobile"
+#~ msgstr "Zwarte lijst Telefoon is mobiel"
+
+#~ msgid "Blacklisted Phone is Phone"
+#~ msgstr "Zwarte lijst Telefoon is Telefoon"
+
+#~ msgid "Company database ID"
+#~ msgstr "Bedrijfs database id"
+
+#~ msgid ""
+#~ "Field used to store sanitized phone number. Helps speeding up searches "
+#~ "and comparisons."
+#~ msgstr ""
+#~ "Veld gebruikt om opgeschoond telefoonnummer op te slaan. Helpt bij het "
+#~ "versnellen van zoekopdrachten en vergelijkingen."
+
+#~ msgid ""
+#~ "If the sanitized phone number is on the blacklist, the contact won't "
+#~ "receive mass mailing sms anymore, from any list"
+#~ msgstr ""
+#~ "Als het opgeschoonde telefoonnummer op de zwarte lijst staat, ontvangt "
+#~ "het contact geen massale sms-berichten meer van welke lijst dan ook"
+
+#~ msgid ""
+#~ "Indicates if a blacklisted sanitized phone number is a mobile number. "
+#~ "Helps distinguish which number is blacklisted             when there is "
+#~ "both a mobile and phone field in a model."
+#~ msgstr ""
+#~ "Geeft aan of een op de zwarte lijst geplaatst, gezuiverd telefoonnummer "
+#~ "een mobiel nummer is. Helpt te onderscheiden welk nummer op de zwarte "
+#~ "lijst staat wanneer er zowel een mobiel als een telefoonveld in een model "
+#~ "is."
+
+#~ msgid ""
+#~ "Indicates if a blacklisted sanitized phone number is a phone number. "
+#~ "Helps distinguish which number is blacklisted             when there is "
+#~ "both a mobile and phone field in a model."
+#~ msgstr ""
+#~ "Geeft aan of een geblokkeerd, geschoond telefoonnummer een telefoonnummer "
+#~ "is. \n"
+#~ "Helpt onderscheiden welk nummer geblokkeerd is wanneer er zowel een "
+#~ "mobiel- als een telefoonveld in een model aanwezig is."
+
+#~ msgid "Phone Blacklisted"
+#~ msgstr "Telefoonnummer Geblokkeerd"
+
+#~ msgid "Phone/Mobile"
+#~ msgstr "Telefoon/Mobiel"
+
+#~ msgid "SMS Delivery error"
+#~ msgstr "Fout bij SMS-bezorging"
+
+#~ msgid "Sanitized Number"
+#~ msgstr "Geschoond Nummer"

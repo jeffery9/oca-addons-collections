@@ -20,6 +20,11 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. module: product_brand
+#: model_terms:ir.ui.view,arch_db:product_brand.view_product_brand_kanban
+msgid "Avatar"
+msgstr ""
+
+#. module: product_brand
 #: model:ir.actions.act_window,name:product_brand.action_product_brand
 #: model:ir.model.fields,field_description:product_brand.field_account_invoice_report__product_brand_id
 #: model:ir.model.fields,field_description:product_brand.field_product_product__product_brand_id
@@ -27,6 +32,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:product_brand.field_sale_report__product_brand_id
 #: model_terms:ir.ui.view,arch_db:product_brand.product_template_form_brand_add
 #: model_terms:ir.ui.view,arch_db:product_brand.view_account_invoice_report_search
+#: model_terms:ir.ui.view,arch_db:product_brand.view_order_product_search
 #: model_terms:ir.ui.view,arch_db:product_brand.view_product_template_search_brand
 msgid "Brand"
 msgstr "Marque"
@@ -85,11 +91,6 @@ msgid "Last Updated on"
 msgstr ""
 
 #. module: product_brand
-#: model_terms:ir.ui.view,arch_db:product_brand.view_product_brand_kanban
-msgid "Logo"
-msgstr ""
-
-#. module: product_brand
 #: model:ir.model.fields,field_description:product_brand.field_product_brand__logo
 msgid "Logo File"
 msgstr ""
@@ -113,7 +114,6 @@ msgstr ""
 #: model:ir.actions.act_window,name:product_brand.action_open_single_product_brand
 #: model:ir.model,name:product_brand.model_product_brand
 #: model_terms:ir.ui.view,arch_db:product_brand.product_brand_search_form_view
-#: model_terms:ir.ui.view,arch_db:product_brand.view_order_product_search
 msgid "Product Brand"
 msgstr ""
 
