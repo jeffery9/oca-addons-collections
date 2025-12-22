@@ -8,4 +8,6 @@
   > - Sergio Teruel \<<sergio.teruel@tecnativa.com>\>
   > - Alexandre Díaz
   > - David Vidal
-  > - Carlos Lopez
+  > - Carlos López
+  > - Pilar Vargas
+
