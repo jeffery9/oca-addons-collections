@@ -162,11 +162,6 @@ msgid "Order Filter Domain"
 msgstr "订单筛选域"
 
 #. module: sale_automatic_workflow
-#: model:ir.model.fields,field_description:sale_automatic_workflow.field_sale_workflow_process__property_payment_journal_id
-msgid "Payment Journal"
-msgstr ""
-
-#. module: sale_automatic_workflow
 #: model:ir.model.fields,field_description:sale_automatic_workflow.field_sale_workflow_process__register_payment
 msgid "Register Payment"
 msgstr ""
@@ -195,7 +190,6 @@ msgstr "销售完成筛选域"
 #: model:ir.model,name:sale_automatic_workflow.model_sale_workflow_process
 #: model:ir.model.fields,field_description:sale_automatic_workflow.field_account_bank_statement_line__workflow_process_id
 #: model:ir.model.fields,field_description:sale_automatic_workflow.field_account_move__workflow_process_id
-#: model:ir.model.fields,field_description:sale_automatic_workflow.field_account_payment__workflow_process_id
 msgid "Sale Workflow Process"
 msgstr "销售工作流程"
 
@@ -231,11 +225,6 @@ msgstr ""
 #: model:ir.model.fields,help:sale_automatic_workflow.field_sale_workflow_process__property_journal_id
 msgid "Set default journal to use on invoice"
 msgstr "将默认日记帐设置为在发票上使用"
-
-#. module: sale_automatic_workflow
-#: model:ir.model.fields,help:sale_automatic_workflow.field_sale_workflow_process__property_payment_journal_id
-msgid "Set default journal to use on payment"
-msgstr ""
 
 #. module: sale_automatic_workflow
 #: model_terms:ir.ui.view,arch_db:sale_automatic_workflow.sale_workflow_process_view_form
@@ -287,7 +276,6 @@ msgstr "工作流程选项"
 #. module: sale_automatic_workflow
 #. odoo-python
 #: code:addons/sale_automatic_workflow/models/sale_order.py:0
-#, python-format
 msgid "Workflow Warning"
 msgstr "工作流程警告"
 

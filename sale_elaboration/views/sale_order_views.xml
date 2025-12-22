@@ -14,12 +14,12 @@
                     <field
                         name="elaboration_ids"
                         widget="many2many_tags"
-                        readonly="not product_updatable or parent.state in ['done', 'cancel']"
+                        readonly="not product_updatable or parent.state in ('done', 'cancel')"
                         domain="elaboration_profile_id and [('profile_ids', 'in', [elaboration_profile_id])] or []"
                     />
                     <field
                         name="elaboration_note"
-                        readonly="not product_updatable or parent.state in ['done', 'cancel']"
+                        readonly="not product_updatable or parent.state in ('done', 'cancel')"
                     />
                     <field
                         name="elaboration_price_unit"
@@ -30,20 +30,20 @@
                 </group>
             </xpath>
             <xpath
-                expr="//field[@name='order_line']/tree//field[@name='price_unit']"
+                expr="//field[@name='order_line']/list//field[@name='price_unit']"
                 position="after"
             >
                 <field name="elaboration_profile_id" column_invisible="1" />
                 <field
                     name="elaboration_ids"
                     widget="many2many_tags"
-                    readonly="not product_updatable or parent.state in ['done', 'cancel']"
+                    readonly="not product_updatable or parent.state in ('done', 'cancel')"
                     domain="elaboration_profile_id and [('profile_ids', 'in', [elaboration_profile_id])] or []"
                     optional="show"
                 />
                 <field
                     name="elaboration_note"
-                    readonly="not product_updatable or parent.state in ['done', 'cancel']"
+                    readonly="not product_updatable or parent.state in ('done', 'cancel')"
                     optional="show"
                 />
                 <field
@@ -54,37 +54,36 @@
                 />
             </xpath>
             <xpath
-                expr="//field[@name='order_line']/kanban//field[@name='company_id']"
+                expr="//field[@name='order_line']/kanban//field[@name='currency_id']"
                 position="after"
             >
-                <field name="elaboration_ids" invisible="1" />
-                <field name="elaboration_note" invisible="1" />
-                <field name="elaboration_price_unit" invisible="1" />
+                <field name="elaboration_ids" />
+                <field name="elaboration_note" />
+                <field name="elaboration_price_unit" />
             </xpath>
             <xpath
-                expr="//field[@name='order_line']/kanban//t[@t-out='record.price_unit.value']"
+                expr="//field[@name='order_line']/kanban//field[@name='price_unit']/.."
                 position="after"
             >
                 <t t-if="record.elaboration_ids.raw_value.length gt 0">
                     <div>
                             Elaboration price: <field
-                            name="elaboration_price_unit"
-                            widget="monetary"
-                        />
+                        name="elaboration_price_unit"
+                        widget="monetary"
+                    />
                     </div>
                 </t>
             </xpath>
             <xpath
-                expr="//field[@name='order_line']/kanban//t[@t-out='record.price_unit.value']/../.."
+                expr="//field[@name='order_line']/kanban//field[@name='discount']/../.."
                 position="after"
             >
                 <t t-if="record.elaboration_ids.raw_value.length gt 0">
                     <div class="row mt8">
                         <div class="col-12">
-                            <strong><field
-                                    name="elaboration_ids"
-                                    widget="many2many_tags"
-                                /></strong>
+                            <strong>
+                                <field name="elaboration_ids" widget="many2many_tags" />
+                            </strong>
                         </div>
                     </div>
                 </t>

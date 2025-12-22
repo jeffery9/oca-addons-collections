@@ -3,7 +3,7 @@
 {
     "name": "Sale Elaboration",
     "summary": "Set an elaboration for any sale line",
-    "version": "17.0.1.0.1",
+    "version": "18.0.1.0.2",
     "development_status": "Production/Stable",
     "category": "Sale",
     "website": "https://github.com/OCA/sale-workflow",
@@ -23,12 +23,12 @@
         "views/sale_elaboration_report_views.xml",
         "views/stock_move_line_views.xml",
         "views/stock_picking_views.xml",
-        "views/stock_move_views.xml",
         "reports/report_base.xml",
         "reports/report_deliveryslip.xml",
         "reports/report_picking_operations.xml",
         "views/product_category_views.xml",
     ],
+    "demo": ["demo/sale_elaboration_demo.xml"],
     "pre_init_hook": "pre_init_hook",
     "maintainers": ["CarlosRoca13", "rafaelbn", "sergio-teruel", "yajo"],
 }

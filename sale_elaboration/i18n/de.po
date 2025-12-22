@@ -36,6 +36,11 @@ msgid "Archived"
 msgstr ""
 
 #. module: sale_elaboration
+#: model:product.elaboration,name:sale_elaboration.product_elaboration_assembly
+msgid "Assembly"
+msgstr ""
+
+#. module: sale_elaboration
 #: model:ir.model.constraint,message:sale_elaboration.constraint_product_elaboration_code_uniq
 msgid "Code must be unique!"
 msgstr ""
@@ -96,6 +101,7 @@ msgid "Elab. Price"
 msgstr ""
 
 #. module: sale_elaboration
+#: model:product.template,name:sale_elaboration.product_product_elaboration_product_template
 #: model_terms:ir.ui.view,arch_db:sale_elaboration.elaboration_view_search
 #: model_terms:ir.ui.view,arch_db:sale_elaboration.view_sales_order_line_filter
 msgid "Elaboration"
@@ -336,7 +342,6 @@ msgstr ""
 #. module: sale_elaboration
 #. odoo-python
 #: code:addons/sale_elaboration/models/sale_order.py:0
-#, python-format
 msgid "Unsupported operator %s for searching on is_prepared"
 msgstr ""
 

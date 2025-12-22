@@ -4,25 +4,24 @@
 # © 2020 Manuel Regidor  <manuel.regidor@sygel.es>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 
-from odoo import api, fields, models
+from odoo import api, models
 
 
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
-    quotation_seq_used = fields.Boolean(
-        string="Quotation Sequence Used", default=False, copy=False, readonly=True
-    )
-
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
-            if self.is_using_quotation_number(vals):
-                if not vals.get("name"):
+            if not vals.get("name"):
+                if self.is_using_quotation_number(vals):
                     company_id = vals.get("company_id", self.env.company.id)
-                    sequence = self.with_company(company_id).get_quotation_seq()
+                    sequence = (
+                        self.with_company(company_id)
+                        .env["ir.sequence"]
+                        .next_by_code("sale.quotation")
+                    )
                     vals["name"] = sequence or "/"
-                vals["quotation_seq_used"] = True
         return super().create(vals_list)
 
     @api.model
@@ -44,20 +43,12 @@ class SaleOrder(models.Model):
             default["origin"] = self.name
         return super().copy(default)
 
-    @api.model
-    def get_quotation_seq(self):
-        return self.env["ir.sequence"].next_by_code("sale.quotation")
-
-    def get_sale_order_seq(self):
-        self.ensure_one()
-        return self.env["ir.sequence"].next_by_code("sale.order")
-
     def action_confirm(self):
         sequence = self.env["ir.sequence"].search(
             [("code", "=", "sale.quotation")], limit=1
         )
         for order in self:
-            if not self.quotation_seq_used:
+            if sequence and self.name[: len(sequence.prefix)] != sequence.prefix:
                 continue
             if order.state not in ("draft", "sent") or order.company_id.keep_name_so:
                 continue
@@ -65,6 +56,10 @@ class SaleOrder(models.Model):
                 quo = order.origin + ", " + order.name
             else:
                 quo = order.name
-            sequence = order.with_company(order.company_id.id).get_sale_order_seq()
-            order.write({"origin": quo, "name": sequence, "quotation_seq_used": False})
+            sequence = (
+                self.with_company(order.company_id.id)
+                .env["ir.sequence"]
+                .next_by_code("sale.order")
+            )
+            order.write({"origin": quo, "name": sequence})
         return super().action_confirm()

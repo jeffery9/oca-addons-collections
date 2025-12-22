@@ -1,5 +1,6 @@
 # Copyright 2018-2020 Tecnativa - Carlos Dauden
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+from odoo import Command
 from odoo.tests import Form, tagged
 
 from odoo.addons.base.tests.common import BaseCommon
@@ -27,9 +28,7 @@ class TestSaleOrder(BaseCommon):
         cls.product.product_tmpl_id.write(
             {
                 "secondary_uom_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "name": "unit-500",
                             "uom_id": cls.product_uom_unit.id,
@@ -80,8 +79,8 @@ class TestSaleOrder(BaseCommon):
 
     def test_independent_type(self):
         # dependent type is already tested as dependency_type by default
-        self.secondary_unit.write({"dependency_type": "independent"})
         self.order.order_line.secondary_uom_id = self.secondary_unit.id
+        self.order.order_line.secondary_uom_id.write({"dependency_type": "independent"})
 
         # Remember previous UoM quantity for avoiding interactions with other modules
         previous_uom_qty = self.order.order_line.product_uom_qty

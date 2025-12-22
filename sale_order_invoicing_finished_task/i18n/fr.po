@@ -55,6 +55,11 @@ msgid "Product"
 msgstr ""
 
 #. module: sale_order_invoicing_finished_task
+#: model:ir.model,name:sale_order_invoicing_finished_task.model_sale_order
+msgid "Sales Order"
+msgstr ""
+
+#. module: sale_order_invoicing_finished_task
 #: model:ir.model,name:sale_order_invoicing_finished_task.model_sale_order_line
 msgid "Sales Order Line"
 msgstr "Ligne de bons de commande"
@@ -82,10 +87,3 @@ msgid ""
 "You cannot create/modify a task related with a invoiced, locked or cancel "
 "sale order line "
 msgstr ""
-
-#~ msgid "Product Template"
-#~ msgstr "Modèle de produit"
-
-#, fuzzy
-#~ msgid "Sale Order"
-#~ msgstr "Bon de commande"

@@ -6,11 +6,11 @@
         <field name="inherit_id" ref="sale.res_config_settings_view_form" />
         <field name="arch" type="xml">
             <setting id="proforma_configuration" position="after">
-                <setting
-                    id="skip_service_sale_delivery_state_configuration"
-                    help="If active, sale order lines containing Service products will not be evaluated by default when determining the Delivery State."
-                >
+                <setting id="skip_service_sale_delivery_state_configuration">
                     <field name="skip_service_sale_delivery_state" />
+                    <div class="text-muted">
+                  If active, sale order lines containing Service products will not be evaluated by default when determining the Delivery State.
+              </div>
                 </setting>
             </setting>
         </field>

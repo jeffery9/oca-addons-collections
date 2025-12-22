@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 17.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -135,7 +135,7 @@ msgid "Domain applied to find SO lines to propose as recommended products."
 msgstr ""
 
 #. module: sale_order_product_recommendation
-#: model:ir.model.fields,field_description:sale_order_product_recommendation.field_sale_order_recommendation_line__product_priority
+#: model:ir.model.fields,field_description:sale_order_product_recommendation.field_sale_order_recommendation_line__product_is_favorite
 msgid "Favorite"
 msgstr ""
 
@@ -167,6 +167,11 @@ msgstr ""
 #. module: sale_order_product_recommendation
 #: model:ir.model.fields,help:sale_order_product_recommendation.field_sale_order_recommendation_line__pricelist_id
 msgid "If you change the pricelist, only newly added lines will be affected."
+msgstr ""
+
+#. module: sale_order_product_recommendation
+#: model:ir.model.fields,field_description:sale_order_product_recommendation.field_sale_order_recommendation_line__image_128
+msgid "Image 128"
 msgstr ""
 
 #. module: sale_order_product_recommendation
@@ -205,7 +210,6 @@ msgstr ""
 #. module: sale_order_product_recommendation
 #. odoo-python
 #: code:addons/sale_order_product_recommendation/wizards/sale_order_recommendation.py:0
-#, python-format
 msgid "Nothing found! Modify your criteria or fill the order manually."
 msgstr ""
 

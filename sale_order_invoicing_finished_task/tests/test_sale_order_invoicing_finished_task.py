@@ -132,6 +132,7 @@ class TestInvoicefinishedTask(BaseCommon):
         self.env["account.analytic.line"].create(
             self._prepare_timesheet_vals(task, 10.0)
         )
+        self.sale_order.order_line._compute_invoice_status()
         self.assertTrue(task.invoiceable)
         self.assertEqual(self.sale_order.invoice_status, "to invoice")
         # Click on toggle_invoiceable method (invoiceable=False)

@@ -22,7 +22,7 @@ class SaleOrder(models.Model):
 
             blocked_lines = self.env["sale.order.line"].browse()
             lines = record.order_line.filtered_domain(
-                [("product_type", "=", "product")]
+                [("product_type", "=", "consu"), ("is_storable", "=", True)]
             )
             for line in lines:
                 if line.product_uom_qty > line[field_to_check.name]:

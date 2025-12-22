@@ -5,7 +5,7 @@
 {
     "name": "Sale delivery State",
     "summary": "Show the delivery state on the sale order",
-    "version": "17.0.2.0.0",
+    "version": "18.0.1.2.1",
     "category": "Product",
     "website": "https://github.com/OCA/sale-workflow",
     "author": "Akretion, Odoo Community Association (OCA)",
@@ -19,4 +19,6 @@
     "demo": [
         "demo/sale_demo.xml",
     ],
+    "pre_init_hook": "pre_init_hook",
+    "post_init_hook": "post_init_hook",
 }

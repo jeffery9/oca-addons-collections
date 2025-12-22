@@ -5,7 +5,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 
 from odoo import Command
-from odoo.exceptions import ValidationError
+from odoo.exceptions import UserError, ValidationError
 from odoo.tests import Form, TransactionCase
 
 
@@ -126,17 +126,18 @@ class TestSaleException(TransactionCase):
             }
         )
         exception.active = False
-        so1.action_cancel()
+        so1.with_context(disable_cancel_warning=True).action_cancel()
         so1.action_draft()
         self.assertTrue(not so1.ignore_exception)
 
         # Simulation the opening of the wizard sale_exception_confirm and
         # set ignore_exception to True
         so_except_confirm = self.sale_exception_confirm.with_context(
-            **{"active_id": so1.id, "active_ids": [so1.id], "active_model": so1._name}
+            active_id=so1.id, active_ids=so1.ids, active_model=so1._name
         ).create({"ignore": True})
         so_except_confirm.action_confirm()
         self.assertTrue(so1.ignore_exception)
+        self.assertEqual(so1.state, "sale")
 
     def _create_sale_order(self, partner, product):
         order_form = Form(self.env["sale.order"])
@@ -155,7 +156,28 @@ class TestSaleException(TransactionCase):
         sale_order.action_confirm()
         partner.sale_warn = "warning"
         sale_order2 = sale_order.copy()
-        sale_order2.detect_exceptions()
+        self.env.company.sale_exception_show_popup = True
+        result = sale_order2.action_confirm()
+        self.assertEqual(
+            result.get("xml_id"), "sale_exception.action_sale_exception_confirm"
+        )
+        self.assertEqual(sale_order2.state, "draft")
+        self.assertTrue(sale_order2.exception_ids.filtered(lambda x: x == exception))
+
+    def test_exception_partner_sale_warning_no_popup(self):
+        exception = self.env.ref("sale_exception.exception_partner_sale_warning")
+        exception.active = True
+        partner = self.env.ref("base.res_partner_1")
+        sale_order = self._create_sale_order(
+            partner=partner, product=self.env.ref("product.product_product_6")
+        )
+        sale_order.action_confirm()
+        partner.sale_warn = "warning"
+        sale_order2 = sale_order.copy()
+        self.env.company.sale_exception_show_popup = False
+        result = sale_order2.action_confirm()
+        self.assertIsNone(result)
+        self.assertEqual(sale_order2.state, "draft")
         self.assertTrue(sale_order2.exception_ids.filtered(lambda x: x == exception))
 
     def test_exception_product_sale_warning(self):
@@ -206,6 +228,10 @@ class TestSaleException(TransactionCase):
                 "active_model": sale_order._name,
             }
         ).create({"ignore": True})
-        so_except_confirm.action_confirm()
+        with self.assertRaisesRegex(
+            UserError,
+            "The exceptions can not be ignored, because some of them are blocking.",
+        ):
+            so_except_confirm.action_confirm()
         self.assertFalse(sale_order.ignore_exception)
         self.assertTrue(sale_order.state == "draft")

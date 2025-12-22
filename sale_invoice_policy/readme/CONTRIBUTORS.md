@@ -5,3 +5,6 @@
 - Luis J. Salvatierra \<<luis.salvatierra@factorlibre.com>\>
 - Alejandro Ji Cheung \<<alejandro.jicheung@factorlibre.com>\>
 - Ioan Galan \<<ioan@studio73.es>\>
+- Laurent Mignon \<<laurent.mignon@acsone.eu>\>
+- Marie Lejeune \<<marie.lejeune@acsone.eu>\>
+- Jacques-Etienne Baudoux (BCIM) \<<je.bcim.be>\>

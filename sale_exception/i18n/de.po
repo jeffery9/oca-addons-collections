@@ -23,8 +23,8 @@ msgstr ""
 #. module: sale_exception
 #: model_terms:ir.ui.view,arch_db:sale_exception.view_order_form
 msgid ""
-"<strong>There are exceptions blocking the confirmation of this Sale "
-"Order:</strong>"
+"<strong>There are exceptions blocking the confirmation of this Sale Order:</"
+"strong>"
 msgstr ""
 "<strong>Es gibt Fehler, die das Bestätigen dieses Verkaufsauftrags "
 "blockieren:</strong>"
@@ -78,6 +78,16 @@ msgid ""
 msgstr "Bitte hier klicken, um den Auftrag trotz der Fehler zu bestätigen."
 
 #. module: sale_exception
+#: model:ir.model,name:sale_exception.model_res_company
+msgid "Companies"
+msgstr ""
+
+#. module: sale_exception
+#: model:ir.model,name:sale_exception.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: sale_exception
 #: model_terms:ir.ui.view,arch_db:sale_exception.view_sale_exception_confirm
 msgid "Confirm"
 msgstr "Bestätigen"
@@ -101,6 +111,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_exception.field_sale_exception_confirm__display_name
 msgid "Display Name"
 msgstr "Anzeigename"
+
+#. module: sale_exception
+#: model_terms:ir.ui.view,arch_db:sale_exception.res_config_settings_view_form_sale_exception
+msgid ""
+"Display popup at confirm or simply rely on the red alert already visible on "
+"top of the order."
+msgstr ""
 
 #. module: sale_exception
 #: model:ir.model,name:sale_exception.model_exception_rule
@@ -141,11 +158,6 @@ msgstr "Fehler ignorieren"
 #: model:ir.model.fields,field_description:sale_exception.field_sale_order_line__is_exception_danger
 msgid "Is Exception Danger"
 msgstr ""
-
-#. module: sale_exception
-#: model:ir.model.fields,field_description:sale_exception.field_sale_exception_confirm____last_update
-msgid "Last Modified on"
-msgstr "Zuletzt geändert am"
 
 #. module: sale_exception
 #: model:ir.model.fields,field_description:sale_exception.field_sale_exception_confirm__write_uid
@@ -200,6 +212,12 @@ msgid "Sale"
 msgstr "Verkauf"
 
 #. module: sale_exception
+#: model:ir.model.fields,field_description:sale_exception.field_res_company__sale_exception_show_popup
+#: model:ir.model.fields,field_description:sale_exception.field_res_config_settings__sale_exception_show_popup
+msgid "Sale Exception Popup"
+msgstr ""
+
+#. module: sale_exception
 #: model:ir.actions.act_window,name:sale_exception.action_sale_test_tree
 #: model:ir.ui.menu,name:sale_exception.menu_sale_test
 msgid "Sale Exception Rules"
@@ -237,7 +255,6 @@ msgstr "Auftragsposition"
 
 #. module: sale_exception
 #: model:ir.actions.server,name:sale_exception.ir_cron_test_orders_ir_actions_server
-#: model:ir.cron,cron_name:sale_exception.ir_cron_test_orders
 msgid "Test Draft Orders"
 msgstr ""
 
@@ -255,6 +272,9 @@ msgstr ""
 #: model:exception.rule,description:sale_exception.excep_no_free
 msgid "The total can't be 0"
 msgstr ""
+
+#~ msgid "Last Modified on"
+#~ msgstr "Zuletzt geändert am"
 
 #~ msgid "Quotation"
 #~ msgstr "Angebot"
