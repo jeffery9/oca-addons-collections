@@ -1,19 +1,17 @@
 [project]
 name = "odoo-addons-oca-stock-logistics-request"
-version = "17.0.20251117.0"
+version = "18.0.20250903.0"
 dependencies = [
-    "odoo-addon-stock_request>=17.0dev,<17.1dev",
-    "odoo-addon-stock_request_analytic>=17.0dev,<17.1dev",
-    "odoo-addon-stock_request_direction>=17.0dev,<17.1dev",
-    "odoo-addon-stock_request_kanban>=17.0dev,<17.1dev",
-    "odoo-addon-stock_request_mrp>=17.0dev,<17.1dev",
-    "odoo-addon-stock_request_picking_type>=17.0dev,<17.1dev",
-    "odoo-addon-stock_request_purchase>=17.0dev,<17.1dev",
-    "odoo-addon-stock_request_stage>=17.0dev,<17.1dev",
-    "odoo-addon-stock_request_submit>=17.0dev,<17.1dev",
+    "odoo-addon-stock_request==18.0.*",
+    "odoo-addon-stock_request_bom==18.0.*",
+    "odoo-addon-stock_request_kanban==18.0.*",
+    "odoo-addon-stock_request_mrp==18.0.*",
+    "odoo-addon-stock_request_purchase==18.0.*",
+    "odoo-addon-stock_request_tier_validation==18.0.*",
+    "odoo-addon-stock_return_request==18.0.*",
 ]
 classifiers=[
     "Programming Language :: Python",
     "Framework :: Odoo",
-    "Framework :: Odoo :: 17.0",
+    "Framework :: Odoo :: 18.0",
 ]
