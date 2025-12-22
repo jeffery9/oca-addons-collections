@@ -298,7 +298,7 @@ class TestMrpMultiLevel(TestMrpMultiLevelCommon):
         )
         self.assertNotEqual(this.create_uid, prev.create_uid)
 
-    def test_11_special_scenario_1(self):
+    def test_10_special_scenario_1(self):
         """When grouping demand supply and demand are in the same day but
         supply goes first."""
         moves = self.mrp_move_obj.search(
@@ -314,7 +314,7 @@ class TestMrpMultiLevel(TestMrpMultiLevelCommon):
         # Net needs = 18, available on-hand = 3 -> 15
         self.assertEqual(mrp_invs[1].to_procure, 15)
 
-    def test_12_bom_line_attribute_value_skip(self):
+    def test_11_bom_line_attribute_value_skip(self):
         """Check for the correct demand on components of a product with
         multiple variants"""
         product_4b_demand = self.mrp_inventory_obj.search(
@@ -348,7 +348,7 @@ class TestMrpMultiLevel(TestMrpMultiLevelCommon):
         )
         self.assertTrue(av_22_supply.to_procure, 100.0)
 
-    def test_13_timezone_handling(self):
+    def test_12_timezone_handling(self):
         self.calendar.tz = "Australia/Sydney"  # Oct-Apr/Apr-Oct: UTC+11/UTC+10
         date_move = datetime(2090, 4, 19, 20, 00)  # Apr 20 6/7 am in Sidney
         sidney_date = date(2090, 4, 20)
@@ -367,7 +367,7 @@ class TestMrpMultiLevel(TestMrpMultiLevelCommon):
         self.assertEqual(len(inventory), 1)
         self.assertEqual(inventory.date, sidney_date)
 
-    def test_14_timezone_not_set(self):
+    def test_13_timezone_not_set(self):
         self.wh.calendar_id = False
         date_move = datetime(2090, 4, 19, 20, 00)
         self._create_picking_in(
@@ -385,7 +385,7 @@ class TestMrpMultiLevel(TestMrpMultiLevelCommon):
         self.assertEqual(len(inventory), 1)
         self.assertEqual(inventory.date, date_move.date())
 
-    def test_15_units_case(self):
+    def test_14_units_case(self):
         """When a product has a different purchase unit of measure than
         the general unit of measure and the supply is coming from an RFQ"""
         prod_uom_test_inventory_lines = self.mrp_inventory_obj.search(
@@ -399,7 +399,7 @@ class TestMrpMultiLevel(TestMrpMultiLevelCommon):
         res = prod_uom_test_inventory_lines.action_open_rfqs()
         self.assertEqual(res["res_id"], self.po_uom.id)
 
-    def test_16_phantom_comp_planning(self):
+    def test_15_phantom_comp_planning(self):
         """
         Phantom components will not appear in MRP Inventory or Planned Orders.
         MRP Parameter will have 'phantom' supply method.
@@ -435,7 +435,7 @@ class TestMrpMultiLevel(TestMrpMultiLevelCommon):
         )
         self.assertEqual(len(pp_4_planned_orders), 1)
 
-    def test_17_supply_method(self):
+    def test_16_supply_method(self):
         """Test supply method computation."""
         self.fp_4.route_ids = [(5, 0, 0)]
         product_mrp_area = self.product_mrp_area_obj.search(
@@ -464,7 +464,7 @@ class TestMrpMultiLevel(TestMrpMultiLevelCommon):
         self.assertEqual(product_mrp_area.supply_method, "phantom")
         self.assertEqual(product_mrp_area.supply_bom_id, kit_bom)
 
-    def test_18_priorize_safety_stock(self):
+    def test_17_priorize_safety_stock(self):
         now = datetime.now()
         product = self.prod_test  # has Buy route
         product.seller_ids[0].delay = 2  # set a purchase lead time
@@ -543,7 +543,7 @@ class TestMrpMultiLevel(TestMrpMultiLevelCommon):
                     f"(expected {test_vals[key]} on {inv.date})",
                 )
 
-    def test_19_on_hand_with_lots(self):
+    def test_18_on_hand_with_lots(self):
         """Check that on-hand is correctly computed when tracking by lots."""
         lots_line_1 = self.mrp_inventory_obj.search(
             [("product_mrp_area_id.product_id", "=", self.product_lots.id)]
@@ -552,7 +552,7 @@ class TestMrpMultiLevel(TestMrpMultiLevelCommon):
         self.assertEqual(lots_line_1.initial_on_hand_qty, 210)
         self.assertEqual(lots_line_1.final_on_hand_qty, 185)
 
-    def test_20_prioritize_safety_stock_grouped_1(self):
+    def test_19_prioritize_safety_stock_grouped_1(self):
         """Test grouped demand MRP but with a short nbr days.
         Safety stock should be ordered."""
         now = datetime.now()
@@ -633,7 +633,7 @@ class TestMrpMultiLevel(TestMrpMultiLevelCommon):
                     f"(expected {test_vals[key]} on {inv.date})",
                 )
 
-    def test_21_prioritize_safety_stock_grouped_2(self):
+    def test_20_prioritize_safety_stock_grouped_2(self):
         """Test grouped demand MRP but with a longer nbr days.
         Safety stock should be ordered."""
         now = datetime.now()
@@ -714,7 +714,7 @@ class TestMrpMultiLevel(TestMrpMultiLevelCommon):
                     f"(expected {test_vals[key]} on {inv.date})",
                 )
 
-    def test_22_prioritize_safety_stock_grouped_3(self):
+    def test_21_prioritize_safety_stock_grouped_3(self):
         """Test grouped demand MRP but with an existing incoming supply
         Safety stock should NOT be ordered."""
         now = datetime.now()
@@ -786,7 +786,7 @@ class TestMrpMultiLevel(TestMrpMultiLevelCommon):
                     f"(expected {test_vals[key]} on {inv.date})",
                 )
 
-    def test_23_prioritize_safety_stock_with_mrp_moves_today(self):
+    def test_22_prioritize_safety_stock_with_mrp_moves_today(self):
         """Test MRP but with moves today. Safety stock should not be ordered."""
         now = datetime.now()
         product = self.prod_test  # has Buy route
@@ -828,7 +828,7 @@ class TestMrpMultiLevel(TestMrpMultiLevelCommon):
                     f"(expected {test_vals[key]} on {inv.date})",
                 )
 
-    def test_24_prioritize_safety_stock_with_mrp_moves_today_grouped(self):
+    def test_23_prioritize_safety_stock_with_mrp_moves_today_grouped(self):
         """Test grouped demand MRP but with moves today. Safety stock should not be
         ordered.
         """
@@ -873,7 +873,7 @@ class TestMrpMultiLevel(TestMrpMultiLevelCommon):
                     f"(expected {test_vals[key]} on {inv.date})",
                 )
 
-    def test_25_phantom_comp_on_hand(self):
+    def test_24_phantom_comp_on_hand(self):
         """
         A phantom product with positive qty_available (which is computed from the
         availability of its components) should not satisfy demand, because this leads
@@ -922,3 +922,67 @@ class TestMrpMultiLevel(TestMrpMultiLevelCommon):
             .create({})
         )
         self.assertEqual(len(procure_wizard.item_ids), 0)
+
+    def test_25_multi_step_routes(self):
+        """Test that deliveries and receipts in several steps are
+        correctly considered."""
+        # Enable 3 step routes
+        self.wh.write(
+            {
+                "delivery_steps": "pick_pack_ship",
+                "reception_steps": "three_steps",
+            }
+        )
+        # Create delivery first step
+        self._run_procurement(self.product_routes)
+        move = self.env["stock.move"].search(
+            [("product_id", "=", self.product_routes.id)]
+        )
+        self.assertEqual(len(move), 1)
+        self.assertEqual(move.location_dest_id, self.wh.wh_pack_stock_loc_id)
+        self.assertEqual(move.location_final_id, self.customer_location)
+        # create incoming first step
+        self._run_procurement(self.product_routes, location=self.wh.lot_stock_id)
+        pol = self.env["purchase.order.line"].search(
+            [("product_id", "=", self.product_routes.id)]
+        )
+        pol.order_id.button_confirm()
+        move = self.env["stock.move"].search(
+            [
+                ("product_id", "=", self.product_routes.id),
+                ("location_id.usage", "!=", "internal"),
+            ]
+        )
+        self.assertEqual(len(move), 1)
+        self.assertEqual(move.location_dest_id, self.wh.wh_input_stock_loc_id)
+        self.assertEqual(move.location_final_id, self.wh.lot_stock_id)
+        # Execute MRP and check result
+        self.mrp_multi_level_wiz.create(
+            {"mrp_area_ids": [(6, 0, self.mrp_area.ids)]}
+        ).run_mrp_multi_level()
+        inventory = self.mrp_inventory_obj.search(
+            [
+                ("mrp_area_id", "=", self.mrp_area.id),
+                ("product_id", "=", self.product_routes.id),
+            ]
+        )
+        self.assertEqual(len(inventory), 1)
+        self.assertEqual(inventory.demand_qty, 10.0)
+        self.assertEqual(inventory.supply_qty, 10.0)
+        # Change area location to include intermediate locations.
+        # A planned operation from WH/stock to WH/Packing Zone should
+        # still be considered demand if the final destination is out of
+        # the area (case of standard deliver in 3-step route).
+        self.mrp_area.location_id = self.wh.view_location_id
+        self.mrp_multi_level_wiz.create(
+            {"mrp_area_ids": [(6, 0, self.mrp_area.ids)]}
+        ).run_mrp_multi_level()
+        inventory = self.mrp_inventory_obj.search(
+            [
+                ("mrp_area_id", "=", self.mrp_area.id),
+                ("product_id", "=", self.product_routes.id),
+            ]
+        )
+        self.assertEqual(len(inventory), 1)
+        self.assertEqual(inventory.demand_qty, 10.0)
+        self.assertEqual(inventory.supply_qty, 10.0)

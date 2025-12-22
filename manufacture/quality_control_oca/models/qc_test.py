@@ -5,7 +5,7 @@
 # Copyright 2017 Simone Rubino - Agile Business Group
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import _, api, exceptions, fields, models
+from odoo import api, exceptions, fields, models
 
 
 class QcTest(models.Model):
@@ -49,6 +49,19 @@ class QcTest(models.Model):
         default=lambda self: self.env.company,
     )
 
+    @api.constrains("test_lines")
+    def _check_valid_questions(self):
+        for tc in self:
+            for line in tc.test_lines.filtered(lambda line: line.type == "qualitative"):
+                if not line.ql_values:
+                    raise exceptions.ValidationError(
+                        self.env._(
+                            "Question '%(line_name)s' is not valid: "
+                            "you have to define at least one possible value.",
+                            line_name=line.display_name,
+                        )
+                    )
+
 
 class QcTestQuestion(models.Model):
     """Each test line is a question with its valid value(s)."""
@@ -66,7 +79,7 @@ class QcTestQuestion(models.Model):
                 and not tc.ql_values.filtered("ok")
             ):
                 raise exceptions.ValidationError(
-                    _(
+                    self.env._(
                         "Question '%s' is not valid: "
                         "you have to mark at least one value as OK."
                     )
@@ -78,7 +91,7 @@ class QcTestQuestion(models.Model):
         for tc in self:
             if tc.type == "quantitative" and tc.min_value > tc.max_value:
                 raise exceptions.ValidationError(
-                    _(
+                    self.env._(
                         "Question '%s' is not valid: "
                         "minimum value can't be higher than maximum value."
                     )

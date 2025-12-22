@@ -143,9 +143,9 @@ class Common(common.TransactionCase):
                 att_values_commands.append(
                     fields.Command.link(attribute_values_dict[att_value.name])
                 )
-            create_values[
-                "bom_product_template_attribute_value_ids"
-            ] = att_values_commands
+            create_values["bom_product_template_attribute_value_ids"] = (
+                att_values_commands
+            )
             bom_line_create_values.append(create_values)
         cls.env["mrp.bom.line"].create(bom_line_create_values)
         new_bom_form = Form(new_bom)

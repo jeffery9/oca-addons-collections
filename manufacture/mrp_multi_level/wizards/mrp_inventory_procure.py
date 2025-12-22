@@ -32,7 +32,7 @@ class MrpInventoryProcure(models.TransientModel):
     def fields_view_get(
         self, view_id=None, view_type="form", toolbar=False, submenu=False
     ):
-        if self.user_has_groups("mrp_multi_level.group_change_mrp_procure_qty"):
+        if self.env.user.has_group("mrp_multi_level.group_change_mrp_procure_qty"):
             view_id = self.env.ref(
                 "mrp_multi_level.view_mrp_inventory_procure_wizard"
             ).id
@@ -75,7 +75,7 @@ class MrpInventoryProcure(models.TransientModel):
         errors = []
         pg = self.env["procurement.group"]
         procurements = []
-        for item in self.item_ids:
+        for item in self.item_ids.sudo():
             if not item.qty:
                 raise ValidationError(_("Quantity must be positive."))
             values = item._prepare_procurement_values()
@@ -94,7 +94,7 @@ class MrpInventoryProcure(models.TransientModel):
         # Run procurements
         try:
             pg.run(procurements)
-            for item in self.item_ids:
+            for item in self.item_ids.sudo():
                 item.planned_order_id.qty_released += item.qty
         except UserError as error:
             errors.append(str(error))

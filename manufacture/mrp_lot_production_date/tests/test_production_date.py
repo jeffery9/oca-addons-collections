@@ -10,8 +10,7 @@ class TestMrpLotProductionDate(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        # BoM of a product tracked by S/N with flexible consumption
-        cls.bom = cls.env.ref("mrp.mrp_bom_desk")
+        cls.bom = cls.env.ref("mrp.mrp_bom_table_top")  # Tracked by S/N
 
     @classmethod
     def _create_manufacturing_order(cls, bom, product_qty=1):

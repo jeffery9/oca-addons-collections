@@ -83,11 +83,8 @@
                             <field name="product_id" />
                         </group>
                         <group>
-                            <field
-                                name="date"
-                                readonly="state not in ['draft', 'plan']"
-                            />
-                            <field name="date_done" readonly="1" />
+                            <field name="date" />
+                            <field name="date_done" />
                             <field name="success" />
                             <field name="auto_generated" readonly="1" />
                         </group>
@@ -99,9 +96,13 @@
                                 nolabel="1"
                                 readonly="state != 'ready'"
                             >
-                                <tree editable="top" delete="false" create="false">
+                                <list editable="top" delete="false" create="false">
                                     <field name="name" readonly="1" />
-                                    <field name="question_type" readonly="1" />
+                                    <field
+                                        name="question_type"
+                                        readonly="1"
+                                        optional="show"
+                                    />
                                     <field
                                         name="possible_ql_values"
                                         column_invisible="1"
@@ -133,9 +134,15 @@
                                         column_invisible="1"
                                         readonly="1"
                                     />
-                                    <field name="valid_values" />
+                                    <field
+                                        name="test_uom_category"
+                                        column_invisible="1"
+                                    />
+                                    <field name="min_value" column_invisible="1" />
+                                    <field name="max_value" column_invisible="1" />
+                                    <field name="valid_values" optional="show" />
                                     <field name="success" />
-                                </tree>
+                                </list>
                             </field>
                         </page>
                         <page string="Notes">
@@ -146,29 +153,22 @@
                                 <field
                                     name="external_notes"
                                     nolabel="1"
-                                    colspan="2"
                                     readonly="state in ['success', 'failed']"
+                                    colspan="2"
                                 />
                             </group>
                         </page>
                     </notebook>
                 </sheet>
-                <div class="oe_chatter">
-                    <field
-                        name="message_follower_ids"
-                        widget="mail_followers"
-                        groups="base.group_user"
-                    />
-                    <field name="message_ids" widget="mail_thread" />
-                </div>
+                <chatter />
             </form>
         </field>
     </record>
     <record model="ir.ui.view" id="qc_inspection_tree_view">
-        <field name="name">qc.inspection.tree</field>
+        <field name="name">qc.inspection.list</field>
         <field name="model">qc.inspection</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="name" />
                 <field name="user" />
                 <field name="test" />
@@ -186,7 +186,87 @@
                     decoration-danger="state == 'failed'"
                     decoration-muted="state == 'canceled'"
                 />
-            </tree>
+            </list>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="qc_inspection_kanban_view">
+        <field name="name">qc.inspection.kanban</field>
+        <field name="model">qc.inspection</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile">
+                <field name="name" />
+                <field name="product_id" />
+                <field name="qty" />
+                <field name="date" />
+                <field name="test" />
+                <field name="state" />
+                <field name="success" />
+                <progressbar
+                    field="activity_state"
+                    colors="{&quot;planned&quot;: &quot;success&quot;, &quot;today&quot;: &quot;warning&quot;, &quot;overdue&quot;: &quot;danger&quot;}"
+                />
+                <templates>
+                    <t t-name="card">
+                        <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                            <div class="o_kanban_record_top">
+                                <div class="o_kanban_record_headings mt4 ms-1">
+                                    <strong class="o_kanban_record_title">
+                                        <span>
+                                            <t t-esc="record.product_id.value" />
+                                        </span>
+                                    </strong>
+                                    <div class="o_kanban_record_subtitle">
+                                        <span>
+                                            <t t-esc="record.test.value" />
+                                        </span>
+                                    </div>
+                                </div>
+                                <span class="float-end text-end">
+                                    <t t-esc="record.qty.value" />
+                                </span>
+                            </div>
+                            <div class="o_kanban_record_bottom">
+                                <div class="oe_kanban_bottom_left text-muted">
+                                    <span>
+                                        <t t-esc="record.name.value" />
+                                        <t
+                                            t-esc="record.date.value and record.date.value.split(' ')[0] or False"
+                                        />
+                                    </span>
+                                    <field
+                                        name="activity_ids"
+                                        widget="kanban_activity"
+                                    />
+                                </div>
+                                <div class="oe_kanban_bottom_right">
+                                    <div
+                                        class="me-2"
+                                        invisible="state in ['success', 'failed']"
+                                    >
+                                        <i
+                                            t-if="record.success.raw_value == 1"
+                                            class="fa fa-check text-success"
+                                            role="img"
+                                            aria-label="Success"
+                                        />
+                                        <i
+                                            t-else=""
+                                            class="fa fa-times text-danger"
+                                            role="img"
+                                            aria-label="Failed"
+                                        />
+                                    </div>
+                                    <span
+                                        t-attf-class="badge #{['canceled'].indexOf(record.state.raw_value) &gt; -1 ? 'bg-light' : ['draft'].indexOf(record.state.raw_value) &gt; -1 ? 'bg-200' : ['waiting'].indexOf(record.state.raw_value) &gt; -1 ? 'bg-warning' : ['success'].indexOf(record.state.raw_value) &gt; -1 ? 'bg-success text-white' : ['failed'].indexOf(record.state.raw_value) &gt; -1 ? 'bg-danger text-white' : 'bg-primary'}"
+                                    >
+                                        <t t-esc="record.state.value" />
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
         </field>
     </record>
     <record model="ir.ui.view" id="qc_inspection_search_view">
@@ -278,7 +358,7 @@
     <record model="ir.actions.act_window" id="action_qc_inspection">
         <field name="name">Inspections</field>
         <field name="res_model">qc.inspection</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form,kanban</field>
     </record>
     <menuitem
         name="Inspections"
@@ -287,10 +367,10 @@
         action="action_qc_inspection"
     />
     <record model="ir.ui.view" id="qc_inspection_line_tree_view">
-        <field name="name">qc.inspection.line.tree</field>
+        <field name="name">qc.inspection.line.list</field>
         <field name="model">qc.inspection.line</field>
         <field name="arch" type="xml">
-            <tree
+            <list
                 decoration-danger="success==False"
                 decoration-info="success==True"
                 delete="false"
@@ -317,7 +397,69 @@
                 <field name="test_uom_category" column_invisible="1" />
                 <field name="valid_values" />
                 <field name="success" />
-            </tree>
+            </list>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="qc_inspection_line_kanban_view">
+        <field name="name">qc.inspection.line.kanban</field>
+        <field name="model">qc.inspection.line</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile">
+                <field name="name" />
+                <field name="product_id" />
+                <field name="question_type" />
+                <field name="qualitative_value" />
+                <field name="quantitative_value" />
+                <field name="success" />
+                <templates>
+                    <t t-name="card">
+                        <div t-attf-class="oe_kanban_global_click">
+                            <div class="o_kanban_record_top">
+                                <div class="o_kanban_record_headings">
+                                    <strong class="o_kanban_record_title">
+                                        <span>
+                                            <field name="name" />
+                                        </span>
+                                    </strong>
+                                </div>
+                            </div>
+                            <div class="o_kanban_record_body">
+                                <span>
+                                    <field name="product_id" />
+                                </span>
+                            </div>
+                            <div class="o_kanban_record_bottom">
+                                <div class="oe_kanban_bottom_left">
+                                    <field
+                                        t-if="record.question_type.raw_value == 'qualitative'"
+                                        name="qualitative_value"
+                                    />
+                                    <span
+                                        t-elif="record.question_type.raw_value == 'quantitative'"
+                                    >
+                                        <field name="quantitative_value" />
+                                        <field name="uom_id" />
+                                    </span>
+                                </div>
+                                <div class="oe_kanban_bottom_right">
+                                    <i
+                                        t-if="record.success.raw_value == 1"
+                                        class="fa fa-check text-success"
+                                        role="img"
+                                        aria-label="Success"
+                                    />
+                                    <i
+                                        t-else=""
+                                        class="fa fa-times text-danger"
+                                        role="img"
+                                        aria-label="Failed"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
         </field>
     </record>
     <record model="ir.ui.view" id="qc_inspection_line_search_view">
@@ -375,7 +517,7 @@
     <record model="ir.actions.act_window" id="action_qc_inspection_line">
         <field name="name">Inspection lines</field>
         <field name="res_model">qc.inspection.line</field>
-        <field name="view_mode">tree</field>
+        <field name="view_mode">list,kanban</field>
         <field name="view_id" ref="qc_inspection_line_tree_view" />
     </record>
     <menuitem
