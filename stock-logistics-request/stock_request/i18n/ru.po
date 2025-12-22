@@ -23,10 +23,7 @@ msgstr ""
 #. module: stock_request
 #. odoo-python
 #: code:addons/stock_request/models/stock_move_line.py:0
-#, python-format
-msgid ""
-"<li><b>%(product_name)s</b>: Transferred quantity "
-"%(product_qty)s%(product_uom)s</li>"
+msgid "%(product_name)s : Transferred quantity %(product_qty)s %(product_uom)s"
 msgstr ""
 
 #. module: stock_request
@@ -142,11 +139,6 @@ msgid "Category"
 msgstr ""
 
 #. module: stock_request
-#: model_terms:ir.ui.view,arch_db:stock_request.res_config_settings_view_form
-msgid "Check Stock Request Order requested by"
-msgstr ""
-
-#. module: stock_request
 #: model:ir.model.fields,field_description:stock_request.field_res_company__stock_request_check_available_first
 #: model:ir.model.fields,field_description:stock_request.field_res_config_settings__stock_request_check_available_first
 #: model_terms:ir.ui.view,arch_db:stock_request.res_config_settings_view_form
@@ -174,7 +166,6 @@ msgstr ""
 #. module: stock_request
 #. odoo-python
 #: code:addons/stock_request/models/stock_request.py:0
-#, python-format
 msgid "Company must be equal to the order"
 msgstr ""
 
@@ -287,7 +278,6 @@ msgstr ""
 #. module: stock_request
 #. odoo-python
 #: code:addons/stock_request/models/stock_request.py:0
-#, python-format
 msgid "Expected date must be equal to the order"
 msgstr ""
 
@@ -435,7 +425,6 @@ msgstr ""
 #. module: stock_request
 #. odoo-python
 #: code:addons/stock_request/models/stock_request.py:0
-#, python-format
 msgid "Location must be equal to the order"
 msgstr ""
 
@@ -543,30 +532,15 @@ msgid "Number of messages with delivery error"
 msgstr ""
 
 #. module: stock_request
-#: model:ir.model.fields,field_description:stock_request.field_res_company__stock_request_check_order_requested_by
-#: model:ir.model.fields,field_description:stock_request.field_res_config_settings__check_order_requested_by
-msgid "Only allow edit stock request orders if requested by the same user"
-msgstr ""
-
-#. module: stock_request
 #. odoo-python
 #: code:addons/stock_request/models/stock_request_order.py:0
-#, python-format
 msgid "Only orders on draft state can be unlinked"
 msgstr ""
 
 #. module: stock_request
 #. odoo-python
 #: code:addons/stock_request/models/stock_request.py:0
-#, python-format
 msgid "Only requests on draft state can be unlinked"
-msgstr ""
-
-#. module: stock_request
-#: model_terms:ir.ui.view,arch_db:stock_request.res_config_settings_view_form
-msgid ""
-"Only the user who submitted the request will be able to edit the stock "
-"request order."
 msgstr ""
 
 #. module: stock_request
@@ -606,7 +580,6 @@ msgstr ""
 #. module: stock_request
 #. odoo-python
 #: code:addons/stock_request/models/stock_request.py:0
-#, python-format
 msgid "Procurement group must be equal to the order"
 msgstr ""
 
@@ -706,7 +679,6 @@ msgstr ""
 #. module: stock_request
 #. odoo-python
 #: code:addons/stock_request/models/stock_move_line.py:0
-#, python-format
 msgid "Receipt confirmation %(picking_name)s for your Request %(request_name)s"
 msgstr ""
 
@@ -747,7 +719,6 @@ msgstr ""
 #. module: stock_request
 #. odoo-python
 #: code:addons/stock_request/models/stock_request.py:0
-#, python-format
 msgid "Requested by must be equal to the order"
 msgstr ""
 
@@ -891,14 +862,12 @@ msgstr ""
 #. module: stock_request
 #. odoo-python
 #: code:addons/stock_request/models/stock_request.py:0
-#, python-format
 msgid "Stock Request product quantity cannot be negative."
 msgstr ""
 
 #. module: stock_request
 #. odoo-python
 #: code:addons/stock_request/models/stock_request.py:0
-#, python-format
 msgid "Stock Request product quantity has to be strictly positive."
 msgstr ""
 
@@ -953,21 +922,18 @@ msgstr ""
 #. odoo-python
 #: code:addons/stock_request/models/stock_move.py:0
 #: code:addons/stock_request/models/stock_request_order.py:0
-#, python-format
 msgid "The company of the stock request must match with that of the location."
 msgstr ""
 
 #. module: stock_request
 #. odoo-python
 #: code:addons/stock_request/models/stock_request_order.py:0
-#, python-format
 msgid "The company of the stock request must match with that of the warehouse."
 msgstr ""
 
 #. module: stock_request
 #. odoo-python
 #: code:addons/stock_request/models/stock_move_line.py:0
-#, python-format
 msgid ""
 "The following requested items from Stock Request %(request_name)s have now "
 "been received in %(location_name)s using Picking %(picking_name)s:"
@@ -976,7 +942,6 @@ msgstr ""
 #. module: stock_request
 #. odoo-python
 #: code:addons/stock_request/models/stock_request.py:0
-#, python-format
 msgid "The picking policy must be equal to the order"
 msgstr ""
 
@@ -988,14 +953,12 @@ msgstr ""
 #. module: stock_request
 #. odoo-python
 #: code:addons/stock_request/models/stock_request_order.py:0
-#, python-format
 msgid "There should be at least one request item for confirming the order."
 msgstr ""
 
 #. module: stock_request
 #. odoo-python
 #: code:addons/stock_request/models/stock_request_order.py:0
-#, python-format
 msgid "This action only works in the context of products"
 msgstr ""
 
@@ -1050,7 +1013,6 @@ msgstr ""
 #. module: stock_request
 #. odoo-python
 #: code:addons/stock_request/models/stock_request.py:0
-#, python-format
 msgid "Warehouse must be equal to the order"
 msgstr ""
 
@@ -1071,7 +1033,6 @@ msgstr ""
 #. module: stock_request
 #. odoo-python
 #: code:addons/stock_request/models/stock_location.py:0
-#, python-format
 msgid ""
 "You cannot change the company of the location, as it is already assigned to "
 "stock request orders that belong to another company."
@@ -1080,7 +1041,6 @@ msgstr ""
 #. module: stock_request
 #. odoo-python
 #: code:addons/stock_request/models/stock_location.py:0
-#, python-format
 msgid ""
 "You cannot change the company of the location, as it is already assigned to "
 "stock requests that belong to another company."
@@ -1089,7 +1049,6 @@ msgstr ""
 #. module: stock_request
 #. odoo-python
 #: code:addons/stock_request/models/stock_route.py:0
-#, python-format
 msgid ""
 "You cannot change the company of the route, as it is already assigned to "
 "stock requests that belong to another company."
@@ -1098,7 +1057,6 @@ msgstr ""
 #. module: stock_request
 #. odoo-python
 #: code:addons/stock_request/models/stock_warehouse.py:0
-#, python-format
 msgid ""
 "You cannot change the company of the warehouse, as it is already assigned to "
 "stock request orders that belong to another company."
@@ -1107,7 +1065,6 @@ msgstr ""
 #. module: stock_request
 #. odoo-python
 #: code:addons/stock_request/models/stock_warehouse.py:0
-#, python-format
 msgid ""
 "You cannot change the company of the warehouse, as it is already assigned to "
 "stock requests that belong to another company."
@@ -1116,35 +1073,30 @@ msgstr ""
 #. module: stock_request
 #. odoo-python
 #: code:addons/stock_request/models/stock_request_abstract.py:0
-#, python-format
 msgid "You have entered a location that is assigned to another company."
 msgstr ""
 
 #. module: stock_request
 #. odoo-python
 #: code:addons/stock_request/models/stock_request_abstract.py:0
-#, python-format
 msgid "You have entered a product that is assigned to another company."
 msgstr ""
 
 #. module: stock_request
 #. odoo-python
 #: code:addons/stock_request/models/stock_request_abstract.py:0
-#, python-format
 msgid "You have entered a route that is assigned to another company."
 msgstr ""
 
 #. module: stock_request
 #. odoo-python
 #: code:addons/stock_request/models/stock_request_abstract.py:0
-#, python-format
 msgid "You have entered a warehouse that is assigned to another company."
 msgstr ""
 
 #. module: stock_request
 #. odoo-python
 #: code:addons/stock_request/models/stock_request_abstract.py:0
-#, python-format
 msgid ""
 "You have to select a product unit of measure in the same category than the "
 "default unit of measure of the product"
