@@ -39,16 +39,6 @@ msgid "Has Comment"
 msgstr ""
 
 #. module: account_move_tier_validation
-#: model:ir.model.fields,field_description:account_move_tier_validation.field_account_move__hide_reviews
-msgid "Hide Reviews"
-msgstr ""
-
-#. module: account_move_tier_validation
-#: model:ir.model.fields,help:account_move_tier_validation.field_account_move__has_comment
-msgid "If set, Allow the reviewer to leave a comment on the review."
-msgstr ""
-
-#. module: account_move_tier_validation
 #. odoo-python
 #: code:addons/account_move_tier_validation/models/account_move.py:0
 #, python-format

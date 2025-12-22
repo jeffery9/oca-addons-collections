@@ -113,7 +113,7 @@ class TestPurchaseStockPickingReturnInvoicing(BaseCommon):
         # Return some items, after PO was invoiced
         return_wizard = self.env["stock.return.picking"].create({"picking_id": pick.id})
         return_wizard.product_return_moves.write({"quantity": 2, "to_refund": True})
-        return_pick = pick.browse(return_wizard.create_returns()["res_id"])
+        return_pick = pick.browse(return_wizard.action_create_returns()["res_id"])
         return_pick.move_ids.write({"quantity": 2})
         return_pick.button_validate()
         self.check_values(self.po_line, 2, 3, 0, 5, "to invoice")
@@ -144,7 +144,7 @@ class TestPurchaseStockPickingReturnInvoicing(BaseCommon):
         # Return some items before PO was invoiced
         return_wizard = self.env["stock.return.picking"].create({"picking_id": pick.id})
         return_wizard.product_return_moves.write({"quantity": 2, "to_refund": True})
-        return_pick = pick.browse(return_wizard.create_returns()["res_id"])
+        return_pick = pick.browse(return_wizard.action_create_returns()["res_id"])
         return_pick.move_ids.write({"quantity": 2})
         return_pick.button_validate()
         self.check_values(self.po_line, 2, 3, 0, 0, "to invoice")

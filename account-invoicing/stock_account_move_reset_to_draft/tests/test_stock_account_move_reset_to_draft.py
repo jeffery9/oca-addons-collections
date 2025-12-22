@@ -3,8 +3,9 @@
 # License AGPL-3 - See https://www.gnu.org/licenses/agpl-3.0.html
 
 
+from odoo import Command
 from odoo.exceptions import UserError
-from odoo.tests import Form, tagged
+from odoo.tests import tagged
 from odoo.tools import mute_logger
 
 from odoo.addons.base.tests.common import BaseCommon
@@ -30,14 +31,21 @@ class TestStockAccountMoveResetToDraft(BaseCommon):
         cls.partner = cls.env["res.partner"].create({"name": "Test partner"})
 
     def create_and_confirm_order(self, price=10, qty=1):
-        order_form = Form(self.env["purchase.order"])
-        order_form.partner_id = self.partner
-        with order_form.order_line.new() as line_form:
-            line_form.product_id = self.product
-            line_form.product_qty = qty
-            line_form.price_unit = price
-            line_form.taxes_id.clear()
-        order = order_form.save()
+        order = self.env["purchase.order"].create(
+            {
+                "partner_id": self.partner.id,
+                "order_line": [
+                    Command.create(
+                        {
+                            "product_id": self.product.id,
+                            "product_qty": qty,
+                            "price_unit": price,
+                            "taxes_id": False,
+                        }
+                    )
+                ],
+            }
+        )
         order.button_confirm()
         return order
 
@@ -149,7 +157,9 @@ class TestStockAccountMoveResetToDraft(BaseCommon):
         self.assertTrue(invoice.show_reset_to_draft_button)
         # Reset the first bill to draft -> User error to prevent valuation
         # inconsistencies
-        with self.assertRaises(UserError):
+        with self.assertRaisesRegex(
+            UserError, "Inventory valuation records are intertwined"
+        ):
             invoice.button_draft()
 
     @mute_logger("odoo.models.unlink")

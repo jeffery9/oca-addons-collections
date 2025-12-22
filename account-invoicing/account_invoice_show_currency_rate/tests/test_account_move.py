@@ -11,13 +11,9 @@ class TestAccountMove(common.TransactionCase):
         super().setUpClass()
         usd = cls.env.ref("base.USD")
         eur = cls.env.ref("base.EUR")
-        # To be able to write currency_id field
-        cls.env.user.groups_id |= cls.env.ref("base.group_multi_currency")
         cls.currency = cls.env.ref("base.main_company").currency_id
         cls.currency_extra = eur if cls.currency == usd else usd
-        # EUR currency deactivated by default
-        if not cls.currency_extra.active:
-            cls.currency_extra.active = True
+        cls.currency_extra.active = True
         cls.account_tax = cls.env["account.tax"].create(
             {"name": "0%", "amount_type": "fixed", "type_tax_use": "sale", "amount": 0}
         )
@@ -80,20 +76,20 @@ class TestAccountMove(common.TransactionCase):
     def test_01_invoice_currency(self):
         self.partner.property_product_pricelist = self.pricelist_currency
         invoice = self._create_invoice(self.currency)
-        self.assertAlmostEqual(invoice.currency_rate_amount, 1.0, 2)
+        self.assertAlmostEqual(invoice.invoice_currency_rate, 1.0, 2)
         self.assertAlmostEqual(invoice.line_ids[0].currency_rate, 1.0, 2)
 
     def test_02_invoice_currency_extra(self):
         self.partner.property_product_pricelist = self.pricelist_currency_extra
         invoice = self._create_invoice(self.currency_extra)
-        self.assertAlmostEqual(invoice.currency_rate_amount, 2.0, 2)
+        self.assertAlmostEqual(invoice.invoice_currency_rate, 2.0, 2)
         self.assertAlmostEqual(invoice.line_ids[0].currency_rate, 2.0, 2)
         rate_custom = self.currency_extra.rate_ids.filtered(
             lambda x: x.name == fields.Date.from_string("2000-01-01")
         )
         rate_custom.rate = 3.0
-        self.assertAlmostEqual(invoice.currency_rate_amount, 2.0, 2)
+        self.assertAlmostEqual(invoice.invoice_currency_rate, 2.0, 2)
         self.assertAlmostEqual(invoice.line_ids[0].currency_rate, 2.0, 2)
         invoice.button_draft()
-        self.assertAlmostEqual(invoice.currency_rate_amount, 3.0, 2)
+        self.assertAlmostEqual(invoice.invoice_currency_rate, 3.0, 2)
         self.assertAlmostEqual(invoice.line_ids[0].currency_rate, 3.0, 2)

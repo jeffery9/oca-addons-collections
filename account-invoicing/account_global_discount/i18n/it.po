@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-03-03 11:06+0000\n"
+"PO-Revision-Date: 2025-11-04 09:42+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.10.2\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: account_global_discount
 #: model_terms:ir.ui.view,arch_db:account_global_discount.report_invoice_document
@@ -115,11 +115,6 @@ msgstr "Nome visualizzato"
 #: model:ir.model.fields,field_description:account_global_discount.field_account_invoice_global_discount__global_discount_id
 msgid "Global Discount"
 msgstr "Sconto Globale"
-
-#. module: account_global_discount
-#: model:ir.model.fields,field_description:account_global_discount.field_account_move_line__global_discount_item
-msgid "Global Discount Item"
-msgstr "Oggetto Sconto Globale"
 
 #. module: account_global_discount
 #: model:ir.ui.menu,name:account_global_discount.menu_account_global_discount
