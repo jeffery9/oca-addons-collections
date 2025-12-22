@@ -6,15 +6,14 @@ import re
 
 from markupsafe import Markup
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools import html_escape
-
-from odoo.addons.http_routing.models.ir_http import slugify
 
 
 class DocumentPage(models.Model):
     _inherit = "document.page"
+    _description = "Document Page"
 
     reference = fields.Char(
         help="Used to find the document, it can contain letters, numbers and _"
@@ -41,10 +40,10 @@ class DocumentPage(models.Model):
                 continue
             regex = r"^[a-zA-Z_][a-zA-Z0-9_]*$"
             if not re.match(regex, rec.reference):
-                raise ValidationError(_("Reference is not valid"))
+                raise ValidationError(self.env._("Reference is not valid"))
             domain = [("reference", "=", rec.reference), ("id", "!=", rec.id)]
             if self.search(domain):
-                raise ValidationError(_("Reference must be unique"))
+                raise ValidationError(self.env._("Reference must be unique"))
 
     def _get_document(self, code):
         return self.search([("reference", "=", code)], limit=1)
@@ -80,5 +79,6 @@ class DocumentPage(models.Model):
     def create(self, vals_list):
         for vals in vals_list:
             if not vals.get("reference") and vals.get("name"):
-                vals["reference"] = slugify(vals["name"]).replace("-", "_")
+                reference = self.env["ir.http"]._slugify(vals["name"]).replace("-", "_")
+                vals["reference"] = reference
         return super().create(vals_list)

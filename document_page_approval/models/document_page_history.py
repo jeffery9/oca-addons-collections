@@ -1,6 +1,7 @@
 # Copyright (C) 2013 Savoir-faire Linux (<http://www.savoirfairelinux.com>).
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+
 from odoo import fields, models
 from odoo.exceptions import UserError
 from odoo.tools.translate import _
@@ -93,12 +94,14 @@ class DocumentPageHistory(models.Model):
                 raise UserError(
                     _(
                         "You are not authorized to do this.\r\n"
-                        "Only approvers with these groups can approve this: "
-                    )
-                    % ", ".join(
-                        [g.display_name for g in rec.page_id.approver_group_ids]
+                        "Only approvers with these groups can approve this: {}"
+                    ).format(
+                        ", ".join(
+                            [g.display_name for g in rec.page_id.approver_group_ids]
+                        )
                     )
                 )
+
             # Update state
             rec.write(
                 {
@@ -151,8 +154,9 @@ class DocumentPageHistory(models.Model):
             )
 
             page.page_url = (
-                "{}/web#db={}&id={}&" "model=document.page.history"
-            ).format(base_url, self.env.cr.dbname, page.id)
+                f"{base_url}/web#db={self.env.cr.dbname}&id={page.id}&"
+                "model=document.page.history"
+            )
 
     def _compute_diff(self):
         """Shows a diff between this version and the previous version"""

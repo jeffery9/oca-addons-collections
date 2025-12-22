@@ -1,4 +1,3 @@
-/** @odoo-module **/
 import {HtmlField, htmlField} from "@web/views/fields/html/html_field";
 import {onMounted} from "@odoo/owl";
 import {registry} from "@web/core/registry";
