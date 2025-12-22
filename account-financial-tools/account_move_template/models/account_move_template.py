@@ -55,10 +55,10 @@ class AccountMoveTemplate(models.Model):
         except ValueError as err:
             raise UserError(
                 _(
-                    "Impossible to compute the formula of line with sequence %(sequence)s "
-                    "(formula: %(code)s). Check that the lines used in the formula "
-                    "really exists and have a lower sequence than the current "
-                    "line.",
+                    "Impossible to compute the formula of line with sequence "
+                    "%(sequence)s (formula: %(code)s). Check that the lines used in "
+                    "the formula really exists and have a lower sequence than "
+                    "the current line.",
                     sequence=line.sequence,
                     code=line.python_code,
                 )
@@ -66,8 +66,9 @@ class AccountMoveTemplate(models.Model):
         except SyntaxError as err:
             raise UserError(
                 _(
-                    "Impossible to compute the formula of line with sequence %(sequence)s "
-                    "(formula: %(code)s): the syntax of the formula is wrong.",
+                    "Impossible to compute the formula of line with sequence "
+                    "%(sequence)s (formula: %(code)s): the syntax of the formula "
+                    "is wrong.",
                     sequence=line.sequence,
                     code=line.python_code,
                 )
@@ -125,7 +126,7 @@ class AccountMoveTemplateLine(models.Model):
         "account.account",
         string="Account",
         required=True,
-        domain="[('company_id', '=', company_id), ('deprecated', '=', False)]",
+        domain="[('company_ids', 'in', company_id), ('deprecated', '=', False)]",
         check_company=True,
     )
     partner_id = fields.Many2one(
@@ -160,6 +161,7 @@ class AccountMoveTemplateLine(models.Model):
         "account.payment.term",
         string="Payment Terms",
         help="Used to compute the due date of the journal item.",
+        check_company=True,
     )
     is_refund = fields.Boolean(
         default=False,
@@ -174,7 +176,7 @@ class AccountMoveTemplateLine(models.Model):
     opt_account_id = fields.Many2one(
         "account.account",
         string="Account if Negative",
-        domain="[('company_id', '=', company_id), ('deprecated', '=', False)]",
+        domain="[('company_ids', 'in', company_id), ('deprecated', '=', False)]",
         check_company=True,
         help="When amount is negative, use this account instead",
     )
@@ -219,7 +221,7 @@ class AccountMoveTemplateLine(models.Model):
     ]
 
     @api.constrains("type", "python_code")
-    def check_python_code(self):
+    def _check_python_code(self):
         for line in self:
             if line.type == "computed" and not line.python_code:
                 raise ValidationError(

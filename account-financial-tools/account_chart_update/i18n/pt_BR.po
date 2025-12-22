@@ -159,7 +159,6 @@ msgstr "Impostos Desativados"
 #. module: account_chart_update
 #. odoo-python
 #: code:addons/account_chart_update/wizard/wizard_chart_update.py:0
-#, python-format
 msgid "Differences in these fields: %s."
 msgstr "Diferenças nestes campos: %s."
 
@@ -362,14 +361,12 @@ msgstr "Mensagens e erros"
 #. module: account_chart_update
 #. odoo-python
 #: code:addons/account_chart_update/wizard/wizard_chart_update.py:0
-#, python-format
 msgid "Missing XML-ID."
 msgstr "ID XML ausente."
 
 #. module: account_chart_update
 #. odoo-python
 #: code:addons/account_chart_update/wizard/wizard_chart_update.py:0
-#, python-format
 msgid "Name or description not found."
 msgstr "Nome ou descrição não encontrado."
 
@@ -431,14 +428,12 @@ msgstr "Proximo"
 #. module: account_chart_update
 #. odoo-python
 #: code:addons/account_chart_update/wizard/wizard_chart_update.py:0
-#, python-format
 msgid "No account found with this code."
 msgstr "Nenhuma posição fiscal encontrada com este nome."
 
 #. module: account_chart_update
 #. odoo-python
 #: code:addons/account_chart_update/wizard/wizard_chart_update.py:0
-#, python-format
 msgid "No fiscal position found with this name."
 msgstr "Nenhuma posição fiscal encontrada com este nome."
 
@@ -593,7 +588,6 @@ msgstr ""
 #. module: account_chart_update
 #. odoo-python
 #: code:addons/account_chart_update/wizard/wizard_chart_update.py:0
-#, python-format
 msgid "To deactivate: not in the template"
 msgstr "Para desativar: não está no modelo"
 

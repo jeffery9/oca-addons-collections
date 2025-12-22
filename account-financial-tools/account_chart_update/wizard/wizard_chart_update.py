@@ -11,10 +11,32 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import logging
+from unittest.mock import patch
 
 from odoo import _, api, fields, models, tools
+from odoo.tools.translate import TranslationImporter
 
 _logger = logging.getLogger(__name__)
+
+
+# HACK https://github.com/odoo/odoo/pull/234333
+# If merged upstream, we can remove this class and the patch where it is used.
+class _OverwritingTranslationImporter(TranslationImporter):
+    def save(self, *args, **kwargs):
+        """Always force overwriting existing translations."""
+        # Fix for HTML fields
+        for mname, fnames in self.model_translations.items():
+            for fname, xml_ids in fnames.items():
+                if not callable(self.env[mname]._fields[fname].translate):
+                    continue
+                for xml_id, langs in xml_ids.items():
+                    src = str(self.env.ref(xml_id).with_context(lang="en_US")[fname])
+                    for lang, translation in langs.items():
+                        self.model_terms_translations[mname][fname][xml_id][src][
+                            lang
+                        ] = translation
+
+        return super().save(overwrite=True, force_overwrite=True)
 
 
 class WizardUpdateChartsAccounts(models.TransientModel):
@@ -460,7 +482,12 @@ class WizardUpdateChartsAccounts(models.TransientModel):
         """Return a right-zero-padded code with the chosen digits.
         Similar to what is done in the _pre_load_data() method of chart.template
         """
-        return code.ljust(self.code_digits, "0")
+        if isinstance(code, str):
+            return code.ljust(self.code_digits, "0")
+        _logger.info(
+            "padded_code received a non-string value: %s. Returning it as is.", code
+        )
+        return code
 
     @api.model
     @tools.ormcache("name")
@@ -521,7 +548,13 @@ class WizardUpdateChartsAccounts(models.TransientModel):
         fields_by_key = {x.name: x for x in field_mapping[real._name]}
         to_include = field_mapping[real._name].mapped("name")
         for key in record_values.keys():
-            if key in ignore or key not in to_include or not record_values.get(key):
+            if (
+                key in ignore
+                or key not in to_include
+                or key in fields_by_key
+                and fields_by_key.get(key).ttype != "boolean"
+                and not record_values.get(key)
+            ):
                 continue
             field = fields_by_key[key]
             record_value, real_value = record_values[key], real[key]
@@ -545,6 +578,10 @@ class WizardUpdateChartsAccounts(models.TransientModel):
                         result[key] = record_value
                 continue
             elif field.ttype == "many2one":
+                if isinstance(record_value, int):
+                    if record_value != real_value.id:
+                        result[key] = record_value
+                    continue
                 real_xml_id = self._get_external_id(real_value) if real_value else False
                 full_xml_id = (
                     f"account.{self.company_id.id}_{record_value}"
@@ -574,13 +611,28 @@ class WizardUpdateChartsAccounts(models.TransientModel):
             # Define correct value if field is translatable
             if field.translate:
                 for lang in langs:
-                    short_lang = lang.code.split("_")[0]
-                    key_lang = f"{key}@{short_lang}"
+                    if lang.code == "en_US":
+                        key_lang = key
+                    else:
+                        short_lang = lang.code.split("_")[0]
+                        key_lang = f"{key}@{short_lang}"
                     if key_lang in record_values:
                         real_value_lang = real.with_context(lang=lang.code)[key]
-                        record_value_lang = record_values[key_lang]
+                        record_value_lang = record_values[key_lang].strip()
+                        if field.ttype == "html":
+                            # Convert HTML to inner content for comparison
+                            # especially to prevent comparing str with Markup
+                            real_value_lang = tools.mail.html_to_inner_content(
+                                real_value_lang
+                            )
                         if record_value_lang != real_value_lang:
                             result[key_lang] = record_value_lang
+            elif field.ttype == "html":
+                # Convert HTML to inner content for comparison
+                # especially to prevent comparing str with Markup
+                real_value = tools.mail.html_to_inner_content(real_value)
+                if record_value != real_value:
+                    result[key] = record_value
             elif record_value != real_value:
                 result[key] = record_value
         # __translation_module__
@@ -605,14 +657,17 @@ class WizardUpdateChartsAccounts(models.TransientModel):
             Notes result.
         """
         result = list()
-        different_fields = sorted(
-            real._fields[f.split("@")[0] if "@" in f else f].get_description(self.env)[
-                "string"
-            ]
-            for f in self.with_context(skip_translation_keys=True)
+        different_fields_set = set()
+        for f in (
+            self.with_context(skip_translation_keys=True)
             .diff_fields(record_values, real)
             .keys()
-        )
+        ):
+            field_name = f.split("@")[0] if "@" in f else f
+            different_fields_set.add(
+                real._fields[field_name].get_description(self.env)["string"]
+            )
+        different_fields = sorted(list(different_fields_set))
         if different_fields:
             result.append(
                 _("Differences in these fields: %s.") % ", ".join(different_fields)
@@ -636,7 +691,11 @@ class WizardUpdateChartsAccounts(models.TransientModel):
         }
         company = self.company_id
         model = self.env[model_name]
-        company_domain = [("company_id", "=", company.id)]
+        company_domain = []
+        if "company_id" in model._fields:
+            company_domain = [("company_id", "=", company.id)]
+        elif "company_ids" in model._fields:
+            company_domain = [("company_ids", "in", company.ids)]
         for matching in mapped_fields[model_name].sorted("sequence"):
             if matching.matching_value == "xml_id":
                 full_xmlid = (
@@ -644,7 +703,8 @@ class WizardUpdateChartsAccounts(models.TransientModel):
                 )
                 record = self.env.ref(full_xmlid, raise_if_not_found=False)
                 if record:
-                    return record
+                    # To read company-dependent fields correctly
+                    return record.with_company(company)
             else:
                 f_name = matching.matching_value
                 if not data.get(f_name):
@@ -665,31 +725,36 @@ class WizardUpdateChartsAccounts(models.TransientModel):
         return False
 
     def _get_external_id(self, record):
-        return record.get_external_id()[record.id]
+        external_ids = record.get_external_id()
+        return external_ids.get(record.id, False)
 
-    @tools.ormcache("self", "record", "xml_id")
     def missing_xml_id(self, record, xml_id):
-        record_xml_id = self._get_external_id(record)
+        record_xml_ids = record._get_external_ids()[record.id]
         full_xml_id = (
             f"account.{self.company_id.id}_{xml_id}" if "." not in xml_id else xml_id
         )
-        return record_xml_id != full_xml_id
+        return full_xml_id not in record_xml_ids
 
     def recreate_xml_id(self, record, xml_id):
-        """Eecreate the xml_id if it is different than expected, otherwise
+        """Recreate the xml_id if it is different than expected, otherwise
         chart.template won't do it correctly.
         """
-        if self.missing_xml_id(record, xml_id):
-            ir_model_data = self.env["ir.model.data"]
-            ir_model_data.search(
-                [("model", "=", record._name), ("res_id", "=", record.id)]
-            ).write(
-                {
-                    "module": "account",
-                    "name": f"{self.company_id.id}_{xml_id}",
-                    "noupdate": True,
-                }
-            )
+        if not self.missing_xml_id(record, xml_id):
+            return
+        try:
+            module, name = xml_id.split(".")
+        except ValueError:
+            module = "account"
+            name = f"{self.company_id.id}_{xml_id}"
+        self.env["ir.model.data"].create(
+            {
+                "module": module,
+                "model": record._name,
+                "name": name,
+                "res_id": record.id,
+                "noupdate": True,
+            }
+        )
 
     def _find_tax_groups(self, t_data):
         """Search for, and load, template data to create/update/delete."""
@@ -898,34 +963,27 @@ class WizardUpdateChartsAccounts(models.TransientModel):
             allowed_company_ids=[self.company_id.id],
             tracking_disable=True,
             delay_account_group_sync=True,
-            # lang="en_US",
+            lang="en_US",
         )
         created_records = template._load_data({model: data})[model]
-        langs = self.env["res.lang"].search([])
-        # Similar and simpler process than what the _load_translations() method does
-        for xml_id, record_vals in data.items():
-            if "__translation_module__" not in record_vals:
+        # Make sure all translation data is indexed by XML ID
+        translation_data = {}
+        created_xmlids = created_records.get_external_id()
+        for _id, record_data in data.items():
+            xml_id = _id
+            if isinstance(_id, int):
+                xml_id = created_xmlids.get(xml_id)
+            if not xml_id:
                 continue
-            translation_vals_lang = {}
-            for f_name in record_vals["__translation_module__"].keys():
-                for lang in langs:
-                    short_lang = lang.code.split("_")[0]
-                    key_lang = f"{f_name}@{short_lang}"
-                    if key_lang in record_vals:
-                        if lang not in translation_vals_lang:
-                            translation_vals_lang[lang.code] = {}
-                        translation_vals_lang[lang.code][f_name] = record_vals[key_lang]
-            if isinstance(xml_id, int):
-                record = self.env[model].browse(xml_id)
-            else:
-                xml_id = f"{('account.' + str(self.company_id.id) + '_') if '.' not in xml_id else ''}{xml_id}"
-                record = self.env.ref(xml_id)
-            # Updatr translation vals
-            for lang in langs:
-                if lang.code not in translation_vals_lang:
-                    continue
-                translation_vals = translation_vals_lang[lang.code]
-                record.with_context(lang=lang.code).write(translation_vals)
+            translation_data[xml_id] = record_data
+        with patch(
+            "odoo.addons.account.models.chart_template.TranslationImporter",
+            _OverwritingTranslationImporter,
+        ):
+            template._load_translations(
+                companies=self.company_id, template_data={model: translation_data}
+            )
+        created_records.invalidate_recordset()
         for record in created_records:
             msg = _(
                 (f"Created/updated {record._name} %s."),
@@ -960,7 +1018,7 @@ class WizardUpdateChartsAccounts(models.TransientModel):
             tax = wiz_tax.update_tax_id
             if wiz_tax.type == "deleted":
                 tax.active = False
-                _logger.info(_("Deactivated tax %s."), "'%s'" % tax.name)
+                _logger.info(_("Deactivated tax %s."), tax.name)
                 continue
             xml_id = wiz_tax.xml_id
             key = tax.id or xml_id

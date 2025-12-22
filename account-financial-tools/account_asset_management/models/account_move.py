@@ -3,15 +3,11 @@
 # Copyright 2021 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-import logging
 
 from markupsafe import Markup
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError
-from odoo.tests.common import Form
-
-_logger = logging.getLogger(__name__)
 
 # List of move's fields that can't be modified if move is linked
 # with a depreciation line
@@ -53,7 +49,7 @@ class AccountMove(models.Model):
         )
         if deprs and not self.env.context.get("unlink_from_asset"):
             raise UserError(
-                _(
+                self.env._(
                     "You are not allowed to remove an accounting entry "
                     "linked to an asset."
                     "\nYou should remove such entries from the asset."
@@ -72,7 +68,7 @@ class AccountMove(models.Model):
             )
             if deprs:
                 raise UserError(
-                    _(
+                    self.env._(
                         "You cannot change an accounting entry "
                         "linked to an asset depreciation line."
                     )
@@ -84,9 +80,9 @@ class AccountMove(models.Model):
         return {
             "name": aml.name,
             "code": self.name,
-            "profile_id": aml.asset_profile_id,
+            "profile_id": aml.asset_profile_id.id,
             "purchase_value": depreciation_base,
-            "partner_id": aml.partner_id,
+            "partner_id": aml.partner_id.id,
             "date_start": self.date,
         }
 
@@ -98,19 +94,17 @@ class AccountMove(models.Model):
             ):
                 if not aml.name:
                     raise UserError(
-                        _("Asset name must be set in the label of the line.")
+                        self.env._("Asset name must be set in the label of the line.")
                     )
                 if aml.asset_id:
                     continue
                 vals = move._prepare_asset_vals(aml)
-                asset_form = Form(
+                asset = (
                     self.env["account.asset"]
                     .with_company(move.company_id)
                     .with_context(create_asset_from_move_line=True, move_id=move.id)
+                    .create(vals)
                 )
-                for key, val in vals.items():
-                    setattr(asset_form, key, val)
-                asset = asset_form.save()
                 asset.analytic_distribution = aml.analytic_distribution
                 aml.with_context(
                     allow_asset=True, allow_asset_removal=True
@@ -119,11 +113,12 @@ class AccountMove(models.Model):
             for asset in move.line_ids.filtered("asset_profile_id").asset_id:
                 new_name_get = [asset.id, asset.display_name]
             if new_name_get:
-                message = _(
+                message = self.env._(
                     "This invoice created the asset(s): %s",
                     Markup(
-                        """<a href=# data-oe-model=account.asset data-oe-id={}"""
-                        """>{}</a>""".format(new_name_get[0], new_name_get[1])
+                        """<a href=# data-oe-model=account.asset"""
+                        f""" data-oe-id={new_name_get[0]}"""
+                        f""">{new_name_get[1]}</a>"""
                     ),
                 )
                 move.message_post(body=message)
@@ -210,7 +205,7 @@ class AccountMoveLine(models.Model):
             if not move.is_sale_document():
                 if vals.get("asset_id") and not self.env.context.get("allow_asset"):
                     raise UserError(
-                        _(
+                        self.env._(
                             "You are not allowed to link "
                             "an accounting entry to an asset."
                             "\nYou should generate such entries from the asset."
@@ -232,7 +227,7 @@ class AccountMoveLine(models.Model):
                 linked_asset = move_line.asset_id
                 if linked_asset:
                     raise UserError(
-                        _(
+                        self.env._(
                             "You cannot change an accounting item "
                             "linked to an asset depreciation line."
                         )
@@ -244,7 +239,7 @@ class AccountMoveLine(models.Model):
             and not self.env.context.get("allow_asset")
         ):
             raise UserError(
-                _(
+                self.env._(
                     "You are not allowed to link "
                     "an accounting entry to an asset."
                     "\nYou should generate such entries from the asset."

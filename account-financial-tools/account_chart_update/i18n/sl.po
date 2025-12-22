@@ -157,7 +157,6 @@ msgstr "Deaktivirani davki"
 #. module: account_chart_update
 #. odoo-python
 #: code:addons/account_chart_update/wizard/wizard_chart_update.py:0
-#, python-format
 msgid "Differences in these fields: %s."
 msgstr "Razlike v naslednjih poljih: %s."
 
@@ -355,14 +354,12 @@ msgstr "Sporočila in napake"
 #. module: account_chart_update
 #. odoo-python
 #: code:addons/account_chart_update/wizard/wizard_chart_update.py:0
-#, python-format
 msgid "Missing XML-ID."
 msgstr "Manjkajoči XML-ID."
 
 #. module: account_chart_update
 #. odoo-python
 #: code:addons/account_chart_update/wizard/wizard_chart_update.py:0
-#, python-format
 msgid "Name or description not found."
 msgstr "Naziv ali opis nista najdena."
 
@@ -424,14 +421,12 @@ msgstr "Naslednji"
 #. module: account_chart_update
 #. odoo-python
 #: code:addons/account_chart_update/wizard/wizard_chart_update.py:0
-#, python-format
 msgid "No account found with this code."
 msgstr "Ni kontov s to kodo."
 
 #. module: account_chart_update
 #. odoo-python
 #: code:addons/account_chart_update/wizard/wizard_chart_update.py:0
-#, python-format
 msgid "No fiscal position found with this name."
 msgstr "Ni fiskalnih pozicij s tem nazivom."
 
@@ -585,7 +580,6 @@ msgstr ""
 #. module: account_chart_update
 #. odoo-python
 #: code:addons/account_chart_update/wizard/wizard_chart_update.py:0
-#, python-format
 msgid "To deactivate: not in the template"
 msgstr "Za deaktivacijo: ni v predlogi"
 

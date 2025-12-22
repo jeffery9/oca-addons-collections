@@ -158,7 +158,6 @@ msgstr ""
 #. module: account_chart_update
 #. odoo-python
 #: code:addons/account_chart_update/wizard/wizard_chart_update.py:0
-#, python-format
 msgid "Differences in these fields: %s."
 msgstr ""
 
@@ -346,14 +345,12 @@ msgstr ""
 #. module: account_chart_update
 #. odoo-python
 #: code:addons/account_chart_update/wizard/wizard_chart_update.py:0
-#, python-format
 msgid "Missing XML-ID."
 msgstr ""
 
 #. module: account_chart_update
 #. odoo-python
 #: code:addons/account_chart_update/wizard/wizard_chart_update.py:0
-#, python-format
 msgid "Name or description not found."
 msgstr ""
 
@@ -415,14 +412,12 @@ msgstr ""
 #. module: account_chart_update
 #. odoo-python
 #: code:addons/account_chart_update/wizard/wizard_chart_update.py:0
-#, python-format
 msgid "No account found with this code."
 msgstr ""
 
 #. module: account_chart_update
 #. odoo-python
 #: code:addons/account_chart_update/wizard/wizard_chart_update.py:0
-#, python-format
 msgid "No fiscal position found with this name."
 msgstr ""
 
@@ -573,7 +568,6 @@ msgstr ""
 #. module: account_chart_update
 #. odoo-python
 #: code:addons/account_chart_update/wizard/wizard_chart_update.py:0
-#, python-format
 msgid "To deactivate: not in the template"
 msgstr ""
 

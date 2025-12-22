@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-30 02:39+0000\n"
-"PO-Revision-Date: 2025-11-11 10:52+0000\n"
+"PO-Revision-Date: 2025-12-15 17:42+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
@@ -208,7 +208,7 @@ msgstr "Azienda o Persona che presta i soldi con un tasso di interesse."
 #. module: account_loan
 #: model_terms:ir.ui.view,arch_db:account_loan.account_loan_form
 msgid "Compute items"
-msgstr "Calcola prestito"
+msgstr "Calcola elementi"
 
 #. module: account_loan
 #: model:ir.model,name:account_loan.model_res_partner
@@ -613,11 +613,6 @@ msgid "Loans"
 msgstr "Prestiti"
 
 #. module: account_loan
-#: model_terms:ir.ui.view,arch_db:account_loan.account_loan_pivot
-msgid "Loans pivot"
-msgstr "Pivot prestiti"
-
-#. module: account_loan
 #: model:ir.model.fields,field_description:account_loan.field_account_loan_line__long_term_pending_principal_amount
 msgid "Long Term Pending Principal Amount"
 msgstr "Importo sospeso entro 12 mesi"
@@ -783,7 +778,7 @@ msgstr ""
 #. module: account_loan
 #: model:ir.model.fields,field_description:account_loan.field_account_loan__method_period
 msgid "Period Length"
-msgstr "Durata periodo"
+msgstr "Durata in mesi"
 
 #. module: account_loan
 #: model:ir.model.fields,field_description:account_loan.field_account_loan__periods
@@ -1003,11 +998,6 @@ msgstr ""
 #, python-format
 msgid "The total principal amount does not match the loan amount."
 msgstr "Il valore totale del capitale non corrisponde al valore del prestito."
-
-#. module: account_loan
-#: model_terms:ir.ui.view,arch_db:account_loan.account_loan_tree
-msgid "Total"
-msgstr "Totale"
 
 #. module: account_loan
 #: model:ir.model.fields,help:account_loan.field_account_loan_line__payment_amount
