@@ -3,7 +3,7 @@
 # Copyright 2020 Druidoo - Iván Todorovich
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 
-from odoo import _, api, exceptions, fields, models
+from odoo import api, exceptions, fields, models
 
 
 class AccountAccount(models.Model):
@@ -11,26 +11,22 @@ class AccountAccount(models.Model):
 
     analytic_policy = fields.Selection(
         selection=[
-            ("optional", "Optional"),
             ("always", "Always"),
             ("posted", "Posted moves"),
             ("never", "Never"),
         ],
         string="Policy for analytic account",
-        default="optional",
-        company_dependent=True,
         help=(
             "Sets the policy for analytic accounts.\n"
             "If you select:\n"
-            "- Optional: The accountant is free to put an analytic account "
+            "- Empty: The accountant is free to put an analytic account "
             "on an account move line with this type of account.\n"
             "- Always: The accountant will get an error message if "
             "there is no analytic account.\n"
             "- Posted moves: The accountant will get an error message if no "
             "analytic account is defined when the move is posted.\n"
             "- Never: The accountant will get an error message if an analytic "
-            "account is present.\n\n"
-            "This field is company dependent."
+            "account is present."
         ),
     )
 
@@ -59,7 +55,7 @@ class AccountMoveLine(models.Model):
             return None
         analytic_policy = self.account_id._get_analytic_policy()
         if analytic_policy == "always" and not self.analytic_distribution:
-            return _(
+            return self.env._(
                 "Analytic policy is set to 'Always' with account "
                 "'%(account)s' but the analytic account is missing in "
                 "the account move line with label '%(move)s'."
@@ -73,7 +69,7 @@ class AccountMoveLine(models.Model):
             analytic_accs = self.env["account.analytic.account"].browse(
                 analytic_acc_ids
             )
-            return _(
+            return self.env._(
                 "Analytic policy is set to 'Never' with account "
                 "'%(account)s' but the account move line with label '%(move)s' "
                 "has an analytic account '%(analytic_account)s'."
@@ -87,7 +83,7 @@ class AccountMoveLine(models.Model):
             and not self.analytic_distribution
             and self.move_id.state == "posted"
         ):
-            return _(
+            return self.env._(
                 "Analytic policy is set to 'Posted moves' with "
                 "account '%(account)s' but the analytic account is missing "
                 "in the account move line with label '%(move)s'."

@@ -10,14 +10,14 @@
         </field>
     </record>
 
-   <record id="account_analytic_acount_spread_form_view" model="ir.ui.view">
+    <record id="account_analytic_acount_spread_form_view" model="ir.ui.view">
         <field name="name">account.analytic.account.spread.form</field>
         <field name="model">account.analytic.account</field>
         <field name="inherit_id" ref="analytic.view_account_analytic_account_form" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='code']" position="after">
                 <div colspan="2">
-                    <group string="Spreading" name="spreading">>
+                    <group string="Spreading" name="spreading">
                         <field
                             name="mapped_analytic_tag_ids"
                             string="Tags Mapping"

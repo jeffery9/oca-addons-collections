@@ -3,9 +3,10 @@
 
 {
     "name": "Account Analytic Spread by Tag",
-    "version": "17.0.1.0.1",
+    "version": "18.0.1.0.0",
     "author": "Miquel Alzanillas (APSL-Nagarro), Odoo Community Association (OCA)",
     "category": "Account",
+    "maintainers": ["miquelalzanillas"],
     "website": "https://github.com/OCA/account-analytic",
     "depends": ["account_analytic_tag"],
     "data": [

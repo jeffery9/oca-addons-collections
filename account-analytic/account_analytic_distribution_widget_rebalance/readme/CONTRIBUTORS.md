@@ -1,1 +1,0 @@
-- Camptocamp \<<https://www.camptocamp.com>\>

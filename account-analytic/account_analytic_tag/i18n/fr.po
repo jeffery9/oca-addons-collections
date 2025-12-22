@@ -4,17 +4,17 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 17.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-01-06 14:06+0000\n"
-"Last-Translator: Valaeys Stéphane <svalaeys@fiefmanage.ch>\n"
+"PO-Revision-Date: 2025-10-06 16:42+0000\n"
+"Last-Translator: Rémi <remi@le-filament.com>\n"
 "Language-Team: none\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.6.2\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: account_analytic_tag
 #: model:ir.model.fields,field_description:account_analytic_tag.field_account_analytic_tag__active
@@ -30,8 +30,8 @@ msgstr "Ajouter une nouvelle étiquette"
 #: model_terms:ir.ui.view,arch_db:account_analytic_tag.res_config_settings_view_form
 msgid "Allows to tag analytic entries and to manage analytic distributions"
 msgstr ""
-"Permet aux enregistrements d'étiquettes analytiques de gérer les "
-"distributions analytiques"
+"Permet de catégoriser les écritures analytiques et de configurer les "
+"répartitions analytiques"
 
 #. module: account_analytic_tag
 #: model:ir.model.fields,field_description:account_analytic_tag.field_account_analytic_tag__account_analytic_id
@@ -72,7 +72,7 @@ msgstr "Archivé"
 #. module: account_analytic_tag
 #: model:ir.model.fields,field_description:account_analytic_tag.field_account_analytic_tag__color
 msgid "Color Index"
-msgstr "Index de la couleur"
+msgstr "Couleur"
 
 #. module: account_analytic_tag
 #: model:ir.model.fields,field_description:account_analytic_tag.field_account_analytic_tag__company_id
@@ -87,7 +87,7 @@ msgstr "Paramètres de configuration"
 #. module: account_analytic_tag
 #: model:ir.model.fields,field_description:account_analytic_tag.field_account_analytic_tag__create_uid
 msgid "Created by"
-msgstr "Créé par"
+msgstr "Crée par"
 
 #. module: account_analytic_tag
 #: model:ir.model.fields,field_description:account_analytic_tag.field_account_analytic_tag__create_date
@@ -107,7 +107,7 @@ msgstr "ID"
 #. module: account_analytic_tag
 #: model:ir.model,name:account_analytic_tag.model_account_move_line
 msgid "Journal Item"
-msgstr "Écriture comptable"
+msgstr "Pièce comptable"
 
 #. module: account_analytic_tag
 #: model:ir.model.fields,field_description:account_analytic_tag.field_account_analytic_tag__write_uid
@@ -127,7 +127,7 @@ msgstr "Rechercher dans les étiquettes analytiques"
 #. module: account_analytic_tag
 #: model:ir.model.fields,help:account_analytic_tag.field_account_analytic_tag__active
 msgid "Set active to false to hide the Analytic Tag without removing it."
-msgstr "Désactiver pour cacher l'étiquette analytique sans la supprimer."
+msgstr "Archiver pour cacher l'étiquette analytique sans la supprimer."
 
 #. module: account_analytic_tag
 #: model:ir.model.fields,field_description:account_analytic_tag.field_account_analytic_line__tag_ids

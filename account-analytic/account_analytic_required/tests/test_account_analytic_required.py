@@ -3,10 +3,11 @@
 from datetime import datetime
 
 from odoo import exceptions
-from odoo.tests import common
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestAccountAnalyticRequired(common.TransactionCase):
+class TestAccountAnalyticRequired(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -93,7 +94,7 @@ class TestAccountAnalyticRequired(common.TransactionCase):
         account.analytic_policy = policy
 
     def test_optional(self):
-        self._set_analytic_policy("optional")
+        self._set_analytic_policy(False)
         self._create_move(with_analytic=False)
         self._create_move(with_analytic=True)
 

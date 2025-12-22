@@ -20,7 +20,8 @@ class CommonStockPicking(TransactionCase):
         cls.product = cls.env["product.product"].create(
             {
                 "name": "Test Product",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
                 "standard_price": 1.0,
             }
         )
@@ -32,7 +33,7 @@ class CommonStockPicking(TransactionCase):
                 "code": "tv",
                 "account_type": "liability_current",
                 "reconcile": True,
-                "company_id": cls.env.ref("base.main_company").id,
+                "company_ids": [Command.link(cls.env.ref("base.main_company").id)],
             }
         )
         cls.stock_input_account = cls.env["account.account"].create(
@@ -41,7 +42,7 @@ class CommonStockPicking(TransactionCase):
                 "code": "tsti",
                 "account_type": "expense",
                 "reconcile": True,
-                "company_id": cls.env.ref("base.main_company").id,
+                "company_ids": [Command.link(cls.env.ref("base.main_company").id)],
             }
         )
         cls.stock_output_account = cls.env["account.account"].create(
@@ -50,7 +51,7 @@ class CommonStockPicking(TransactionCase):
                 "code": "tout",
                 "account_type": "income",
                 "reconcile": True,
-                "company_id": cls.env.ref("base.main_company").id,
+                "company_ids": [Command.link(cls.env.ref("base.main_company").id)],
             }
         )
         cls.stock_journal = cls.env["account.journal"].create(
@@ -58,14 +59,6 @@ class CommonStockPicking(TransactionCase):
         )
         cls.analytic_distribution = dict(
             {str(cls.env.ref("analytic.analytic_agrolait").id): 100.0}
-        )
-        # analytic.analytic_agrolait belongs to analytic.analytic_plan_projects
-        cls.analytic_applicability = cls.env["account.analytic.applicability"].create(
-            {
-                "business_domain": "stock_move",
-                "applicability": "optional",
-                "analytic_plan_id": cls.env.ref("analytic.analytic_plan_projects").id,
-            }
         )
         cls.warehouse = cls.env.ref("stock.warehouse0")
         cls.location = cls.warehouse.lot_stock_id
@@ -83,6 +76,16 @@ class CommonStockPicking(TransactionCase):
             }
         )
         cls.product.update({"categ_id": cls.product_categ.id})
+
+    def _create_analytic_applicability(self):
+        # analytic.analytic_agrolait belongs to analytic.analytic_plan_projects
+        return self.env["account.analytic.applicability"].create(
+            {
+                "business_domain": "stock_move",
+                "applicability": "optional",
+                "analytic_plan_id": self.env.ref("analytic.analytic_plan_projects").id,
+            }
+        )
 
     def _create_picking(
         self,
@@ -181,6 +184,17 @@ class TestStockPicking(CommonStockPicking):
         self._check_analytic_consistency(picking)
 
     def test_outgoing_picking_without_analytic_optional(self):
+        # Create a general optional applicability for stock moves.
+        self._create_analytic_applicability()
+        # Create a another applicability which makes the analytic mandatory only for
+        # incoming stock moves. i.e. applicability should be optional for the outgoing
+        applicability_specific = self._create_analytic_applicability()
+        applicability_specific.write(
+            {
+                "stock_picking_type_id": self.incoming_picking_type.id,
+                "applicability": "mandatory",
+            }
+        )
         picking = self._create_picking(
             self.location,
             self.dest_location,
@@ -194,7 +208,15 @@ class TestStockPicking(CommonStockPicking):
         self._check_analytic_consistency(picking)
 
     def test_outgoing_picking_without_analytic_mandatory(self):
-        self.analytic_applicability.write({"applicability": "mandatory"})
+        # Create a general mandatory applicability for stock moves.
+        applicability_general = self._create_analytic_applicability()
+        applicability_general.write({"applicability": "mandatory"})
+        # Create a another applicability which makes the analytic optional only for
+        # incoming stock moves.
+        applicability_specific = self._create_analytic_applicability()
+        applicability_specific.write(
+            {"stock_picking_type_id": self.incoming_picking_type.id}
+        )
         picking = self._create_picking(
             self.location,
             self.dest_location,

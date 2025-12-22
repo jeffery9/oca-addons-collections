@@ -54,7 +54,7 @@ class AccountMoveLine(models.Model):
                             {
                                 "name": default_name,
                                 "date": self.date,
-                                "account_id": aac.id,
+                                aac.root_plan_id._column_name(): aac.id,
                                 "partner_id": self.partner_id.id,
                                 "unit_amount": self.quantity,
                                 "product_id": self.product_id
