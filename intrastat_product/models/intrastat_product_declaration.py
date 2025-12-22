@@ -70,9 +70,7 @@ class IntrastatProductDeclaration(models.Model):
         copy=False,
         default="draft",
     )
-    note = fields.Html(
-        string="Notes",
-    )
+    note = fields.Html(string="Notes")
     year = fields.Char(required=True)
     month = fields.Selection(
         selection=[
@@ -100,6 +98,10 @@ class IntrastatProductDeclaration(models.Model):
     )
     declaration_type = fields.Selection(
         selection="_get_declaration_type",
+        compute="_compute_declaration_type",
+        store=True,
+        readonly=False,
+        precompute=True,
         string="Type",
         required=True,
         tracking=True,
@@ -117,12 +119,12 @@ class IntrastatProductDeclaration(models.Model):
     computation_line_ids = fields.One2many(
         comodel_name="intrastat.product.computation.line",
         inverse_name="parent_id",
-        string="Intrastat Product Computation Lines",
+        string="Computation Lines",
     )
     declaration_line_ids = fields.One2many(
         comodel_name="intrastat.product.declaration.line",
         inverse_name="parent_id",
-        string="Intrastat Product Declaration Lines",
+        string="Declaration Lines",
         readonly=True,
     )
     num_decl_lines = fields.Integer(
@@ -184,6 +186,45 @@ class IntrastatProductDeclaration(models.Model):
             if this.year and this.month:
                 this.year_month = "-".join([this.year, this.month])
 
+    @api.depends("company_id", "year", "month")
+    def _compute_declaration_type(self):
+        for this in self:
+            company = this.company_id
+            declaration_type = False
+            if company:
+                if (
+                    company.intrastat_arrivals == "exempt"
+                    and company.intrastat_dispatches != "exempt"
+                ):
+                    declaration_type = "dispatches"
+                elif (
+                    company.intrastat_dispatches == "exempt"
+                    and company.intrastat_arrivals != "exempt"
+                ):
+                    declaration_type = "arrivals"
+                elif (
+                    company.intrastat_dispatches != "exempt"
+                    and company.intrastat_arrivals != "exempt"
+                    and this.year
+                    and this.month
+                ):
+                    existing_decls = self.search(
+                        [
+                            ("year", "=", this.year),
+                            ("month", "=", this.month),
+                            ("company_id", "=", company.id),
+                        ]
+                    )
+                    if len(existing_decls) == 1:
+                        declaration_type = (
+                            existing_decls.declaration_type == "arrivals"
+                            and "dispatches"
+                            or "arrivals"
+                        )
+                    elif not existing_decls:
+                        declaration_type = "dispatches"
+            this.declaration_type = declaration_type
+
     @api.constrains("company_id")
     def _check_company_country(self):
         for this in self:
@@ -195,17 +236,14 @@ class IntrastatProductDeclaration(models.Model):
 
     @api.depends("declaration_line_ids.amount_company_currency")
     def _compute_numbers(self):
-        rg_res = self.env["intrastat.product.declaration.line"].read_group(
+        rg_res = self.env["intrastat.product.declaration.line"]._read_group(
             [("parent_id", "in", self.ids)],
-            ["parent_id", "amount_company_currency:sum"],
-            ["parent_id"],
+            groupby=["parent_id"],
+            aggregates=["amount_company_currency:sum", "__count"],
         )
         mapped_data = {
-            x["parent_id"][0]: {
-                "num_decl_lines": x["parent_id_count"],
-                "total_amount": x["amount_company_currency"],
-            }
-            for x in rg_res
+            decl.id: {"num_decl_lines": line_count, "total_amount": total_amount}
+            for (decl, total_amount, line_count) in rg_res
         }
         for this in self:
             this.num_decl_lines = mapped_data.get(this.id, {}).get("num_decl_lines", 0)
@@ -575,9 +613,9 @@ class IntrastatProductDeclaration(models.Model):
         return domain
 
     def _is_product(self, invoice_line):
-        if invoice_line.product_id and invoice_line.product_id.type in (
-            "product",
-            "consu",
+        if (
+            invoice_line.product_id
+            and invoice_line.product_id.intrastat_type == "product"
         ):
             return True
         else:
@@ -597,8 +635,11 @@ class IntrastatProductDeclaration(models.Model):
         self._gather_invoices_init(notedict)
         domain = self._prepare_invoice_domain()
         order = "journal_id, name"
-        invoices = self.env["account.move"].search(domain, order=order)
-
+        invoices = (
+            self.env["account.move"]
+            .with_context(prefetch_fields=False)
+            .search(domain, order=order)
+        )
         for invoice in invoices:
             lines_current_invoice = []
             total_inv_accessory_costs_cc = 0.0  # in company currency
@@ -772,9 +813,9 @@ class IntrastatProductDeclaration(models.Model):
         note = ""
         for key, entries in notedict.items():
             if not key.endswith("_origin") and entries:
-                note += "<h3>%s</h3><ul>" % key2label[key]
+                note += f"<h3>{key2label[key]}</h3><ul>"
                 for obj_name, messages in entries.items():
-                    note += "<li>%s<ul>" % obj_name
+                    note += f"<li>{obj_name}<ul>"
                     if isinstance(
                         messages, dict
                     ):  # 2 layers of dict (partner, product)
@@ -783,7 +824,7 @@ class IntrastatProductDeclaration(models.Model):
                             note += f"<li>{message} <small>({origin_str})</small></li>"
                     else:  # 1st layer=dict, 2nd layer=set (invoice)
                         for message in messages:
-                            note += "<li>%s</li>" % message
+                            note += f"<li>{message}</li>"
                     note += "</ul>"
                 note += "</ul>"
         return note
@@ -958,12 +999,10 @@ class IntrastatProductDeclaration(models.Model):
         )[self.declaration_type]
         draft_label = ""
         if self.state == "draft":
-            draft_label = (
-                "-%s"
-                % dict(self.fields_get("state", "selection")["state"]["selection"])[
-                    self.state
-                ]
+            state2label = dict(
+                self.fields_get("state", "selection")["state"]["selection"]
             )
+            draft_label = f"-{state2label[self.state]}"
         filename = _(
             "intrastat-%(year_month)s-%(declaration_type)s%(draft)s",
             year_month=self.year_month,
