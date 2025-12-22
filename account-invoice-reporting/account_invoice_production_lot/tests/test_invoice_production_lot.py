@@ -21,8 +21,9 @@ class TestProdLot(TransactionCase):
         cls.product = cls.env["product.product"].create(
             {
                 "name": "Product Test",
-                "detailed_type": "product",
+                "type": "consu",
                 "tracking": "lot",
+                "is_storable": True,
                 "invoice_policy": "delivery",
                 "list_price": 15,
             }
@@ -30,8 +31,9 @@ class TestProdLot(TransactionCase):
         cls.product2 = cls.env["product.product"].create(
             {
                 "name": "Product Test 2",
-                "detailed_type": "product",
+                "type": "consu",
                 "tracking": "serial",
+                "is_storable": True,
                 "invoice_policy": "delivery",
                 "list_price": 10,
             }

@@ -1,16 +1,22 @@
 [project]
 name = "odoo-addons-oca-account-invoice-reporting"
-version = "17.0.20250410.0"
+version = "18.0.20251207.0"
 dependencies = [
-    "odoo-addon-account_comment_template>=17.0dev,<17.1dev",
-    "odoo-addon-account_invoice_bank_details>=17.0dev,<17.1dev",
-    "odoo-addon-account_invoice_line_report>=17.0dev,<17.1dev",
-    "odoo-addon-account_invoice_production_lot>=17.0dev,<17.1dev",
-    "odoo-addon-account_invoice_report_grouped_by_picking>=17.0dev,<17.1dev",
-    "odoo-addon-partner_time_to_pay>=17.0dev,<17.1dev",
+    "odoo-addon-account_comment_template==18.0.*",
+    "odoo-addon-account_invoice_line_report==18.0.*",
+    "odoo-addon-account_invoice_line_sale_line_position==18.0.*",
+    "odoo-addon-account_invoice_production_lot==18.0.*",
+    "odoo-addon-account_invoice_report_grouped_by_picking==18.0.*",
+    "odoo-addon-account_invoice_report_payment_info==18.0.*",
+    "odoo-addon-account_invoice_report_picking_customer_note==18.0.*",
+    "odoo-addon-account_invoice_report_product_sticker==18.0.*",
+    "odoo-addon-account_invoice_report_salesperson==18.0.*",
+    "odoo-addon-account_reporting_volume==18.0.*",
+    "odoo-addon-account_reporting_weight==18.0.*",
+    "odoo-addon-partner_time_to_pay==18.0.*",
 ]
 classifiers=[
     "Programming Language :: Python",
     "Framework :: Odoo",
-    "Framework :: Odoo :: 17.0",
+    "Framework :: Odoo :: 18.0",
 ]
