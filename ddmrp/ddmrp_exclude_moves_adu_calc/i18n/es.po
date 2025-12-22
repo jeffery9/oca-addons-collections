@@ -61,7 +61,6 @@ msgstr ""
 #. module: ddmrp_exclude_moves_adu_calc
 #. odoo-python
 #: code:addons/ddmrp_exclude_moves_adu_calc/models/stock_move.py:0
-#, python-format
 msgid "Only buffer maintainers are allowed perform this action."
 msgstr "Sólo los mantenedores de búferes pueden realizar esta acción."
 

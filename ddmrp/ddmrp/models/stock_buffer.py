@@ -93,7 +93,7 @@ class StockBuffer(models.Model):
     product_id = fields.Many2one(
         comodel_name="product.product",
         string="Product",
-        domain=[("type", "=", "product")],
+        domain=[("is_storable", "=", True)],
         ondelete="cascade",
         required=True,
     )
@@ -876,7 +876,7 @@ class StockBuffer(models.Model):
 
                 unit = rec.product_uom.name
                 hover = HoverTool(
-                    tooltips=[("qty", "$y %s" % unit)], point_policy="follow_mouse"
+                    tooltips=[("qty", f"$y {unit}")], point_policy="follow_mouse"
                 )
                 p.add_tools(hover)
 
@@ -933,7 +933,7 @@ class StockBuffer(models.Model):
 
                 unit = rec.product_uom.name
                 hover = HoverTool(
-                    tooltips=[("qty", "$y %s" % unit)], point_policy="follow_mouse"
+                    tooltips=[("qty", f"$y {unit}")], point_policy="follow_mouse"
                 )
                 p.add_tools(hover)
 
@@ -1380,7 +1380,7 @@ class StockBuffer(models.Model):
         views = []
         tree_view = self.env.ref("stock.view_move_tree", False)
         if tree_view:
-            views += [(tree_view.id, "tree")]
+            views += [(tree_view.id, "list")]
         form_view = self.env.ref("stock.view_move_form", False)
         if form_view:
             views += [(form_view.id, "form")]
@@ -1391,7 +1391,7 @@ class StockBuffer(models.Model):
             "res_model": "stock.move",
             "view_type": "form",
             "views": views,
-            "view_mode": "tree,form",
+            "view_mode": "list,form",
             "domain": str([("id", "in", lines.ids)]),
         }
 
@@ -1567,7 +1567,13 @@ class StockBuffer(models.Model):
         moves = self.env["stock.move"].search(domain)
         moves = moves.filtered(
             lambda move: move.location_id.is_sublocation_of(self.location_id)
-            and not move.location_dest_id.is_sublocation_of(self.location_id)
+            and (
+                not move.location_dest_id.is_sublocation_of(self.location_id)
+                or (
+                    move.location_final_id
+                    and not move.location_final_id.is_sublocation_of(self.location_id)
+                )
+            )
         )
         return moves
 
@@ -1595,7 +1601,13 @@ class StockBuffer(models.Model):
         moves = self.env["stock.move"].search(domain)
         moves = moves.filtered(
             lambda move: not move.location_id.is_sublocation_of(self.location_id)
-            and move.location_dest_id.is_sublocation_of(self.location_id)
+            and (
+                move.location_dest_id.is_sublocation_of(self.location_id)
+                or (
+                    move.location_final_id
+                    and move.location_final_id.is_sublocation_of(self.location_id)
+                )
+            )
         )
         return moves
 
@@ -1852,7 +1864,7 @@ class StockBuffer(models.Model):
             outside_dlt=True
         )
         result["domain"] = [("id", "in", moves.ids)]
-        result["views"] = sorted(result["views"], key=lambda view: view[1] != "tree")
+        result["views"] = sorted(result["views"], key=lambda view: view[1] != "list")
         return result
 
     def _get_rfq_dlt(self, dlt_interval=None):
@@ -1879,7 +1891,7 @@ class StockBuffer(models.Model):
         moves = self._search_stock_moves_incoming()
         result["context"] = {}
         result["domain"] = [("id", "in", moves.ids)]
-        result["views"] = sorted(result["views"], key=lambda view: view[1] != "tree")
+        result["views"] = sorted(result["views"], key=lambda view: view[1] != "list")
         return result
 
     def action_view_supply_moves_outside_dlt_window(self):
@@ -1887,7 +1899,7 @@ class StockBuffer(models.Model):
         moves = self._search_stock_moves_incoming(outside_dlt=True)
         result["context"] = {}
         result["domain"] = [("id", "in", moves.ids)]
-        result["views"] = sorted(result["views"], key=lambda view: view[1] != "tree")
+        result["views"] = sorted(result["views"], key=lambda view: view[1] != "list")
         return result
 
     def action_view_supply_rfq_inside_dlt_window(self):
@@ -1910,7 +1922,7 @@ class StockBuffer(models.Model):
         result = self.env["ir.actions.actions"]._for_xml_id("stock.stock_move_action")
         result["context"] = {}
         result["domain"] = [("id", "in", self.qualified_demand_stock_move_ids.ids)]
-        result["views"] = sorted(result["views"], key=lambda view: view[1] != "tree")
+        result["views"] = sorted(result["views"], key=lambda view: view[1] != "list")
         return result
 
     def action_view_qualified_demand_mrp(self):
@@ -1936,7 +1948,7 @@ class StockBuffer(models.Model):
             result["context"] = {}
             result["domain"] = [("id", "in", moves.ids)]
             result["views"] = sorted(
-                result["views"], key=lambda view: view[1] != "tree"
+                result["views"], key=lambda view: view[1] != "list"
             )
         else:
             domain = self._demand_estimate_domain(locations, date_from, date_to)
@@ -1978,7 +1990,7 @@ class StockBuffer(models.Model):
             result["context"] = {}
             result["domain"] = [("id", "in", moves.ids)]
             result["views"] = sorted(
-                result["views"], key=lambda view: view[1] != "tree"
+                result["views"], key=lambda view: view[1] != "list"
             )
         else:
             domain = self._demand_estimate_domain(locations, date_from, date_to)
@@ -2012,11 +2024,13 @@ class StockBuffer(models.Model):
         return action
 
     @api.model
-    def cron_ddmrp_adu(self, automatic=False):
+    def cron_ddmrp_adu(self, automatic=False, domain=None):
         """calculate ADU for each DDMRP buffer. Called by cronjob."""
         auto_commit = not getattr(threading.current_thread(), "testing", False)
         _logger.info("Start cron_ddmrp_adu.")
-        buffer_ids = self.search([]).ids
+        if not domain:
+            domain = []
+        buffer_ids = self.search(domain).ids
         i = 0
         j = len(buffer_ids)
         for buffer_chunk_ids in split_every(self.CRON_DDMRP_CHUNKS, buffer_ids):
@@ -2073,12 +2087,14 @@ class StockBuffer(models.Model):
         return True
 
     @api.model
-    def cron_ddmrp(self, automatic=False):
+    def cron_ddmrp(self, automatic=False, domain=None):
         """Calculate key DDMRP parameters for each buffer.
         Called by cronjob."""
         auto_commit = not getattr(threading.current_thread(), "testing", False)
         _logger.info("Start cron_ddmrp.")
-        buffer_ids = self.search([]).ids
+        if not domain:
+            domain = []
+        buffer_ids = self.search(domain).ids
         i = 0
         j = len(buffer_ids)
         for buffer_chunk_ids in split_every(self.CRON_DDMRP_CHUNKS, buffer_ids):
@@ -2138,5 +2154,5 @@ class StockBuffer(models.Model):
             current_location = rule.location_src_id
 
     def action_dummy(self):
-        # no action, used to show an image in the tree view
+        # no action, used to show an image in the list view
         return

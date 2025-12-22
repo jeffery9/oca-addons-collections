@@ -2,17 +2,16 @@
 <!-- Copyright 2024 ForgeFlow S.L. (https://www.forgeflow.com)
      License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl-3.0) -->
 <odoo>
-
     <record id="view_ddmrp_flow_index_group_tree" model="ir.ui.view">
         <field name="name">ddmrp.flow.index.group.tree</field>
         <field name="model">ddmrp.flow.index.group</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="sequence" widget="handle" />
                 <field name="name" />
                 <field name="lower_range" />
                 <field name="upper_range" />
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -30,7 +29,6 @@
                     />
                     <group>
                         <group>
-                            <field name="active" invisible="1" />
                             <field name="name" />
                             <field name="sequence" />
                             <field name="lower_range" />
@@ -62,7 +60,7 @@
     <record id="action_ddmrp_flow_index_group" model="ir.actions.act_window">
         <field name="name">DDMRP Flow Index Group</field>
         <field name="res_model">ddmrp.flow.index.group</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
 
     <menuitem
@@ -71,5 +69,4 @@
         action="action_ddmrp_flow_index_group"
         id="menu_ddmrp_flow_index_group"
     />
-
 </odoo>
