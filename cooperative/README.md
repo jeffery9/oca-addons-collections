@@ -1,15 +1,15 @@
 
-[![Runboat](https://img.shields.io/badge/runboat-Try%20me-875A7B.png)](https://runboat.odoo-community.org/builds?repo=OCA/cooperative&target_branch=17.0)
-[![Pre-commit Status](https://github.com/OCA/cooperative/actions/workflows/pre-commit.yml/badge.svg?branch=17.0)](https://github.com/OCA/cooperative/actions/workflows/pre-commit.yml?query=branch%3A17.0)
-[![Build Status](https://github.com/OCA/cooperative/actions/workflows/test.yml/badge.svg?branch=17.0)](https://github.com/OCA/cooperative/actions/workflows/test.yml?query=branch%3A17.0)
-[![codecov](https://codecov.io/gh/OCA/cooperative/branch/17.0/graph/badge.svg)](https://codecov.io/gh/OCA/cooperative)
-[![Translation Status](https://translation.odoo-community.org/widgets/cooperative-17-0/-/svg-badge.svg)](https://translation.odoo-community.org/engage/cooperative-17-0/?utm_source=widget)
+[![Runboat](https://img.shields.io/badge/runboat-Try%20me-875A7B.png)](https://runboat.odoo-community.org/builds?repo=OCA/cooperative&target_branch=18.0)
+[![Pre-commit Status](https://github.com/OCA/cooperative/actions/workflows/pre-commit.yml/badge.svg?branch=18.0)](https://github.com/OCA/cooperative/actions/workflows/pre-commit.yml?query=branch%3A18.0)
+[![Build Status](https://github.com/OCA/cooperative/actions/workflows/test.yml/badge.svg?branch=18.0)](https://github.com/OCA/cooperative/actions/workflows/test.yml?query=branch%3A18.0)
+[![codecov](https://codecov.io/gh/OCA/cooperative/branch/18.0/graph/badge.svg)](https://codecov.io/gh/OCA/cooperative)
+[![Translation Status](https://translation.odoo-community.org/widgets/cooperative-18-0/-/svg-badge.svg)](https://translation.odoo-community.org/engage/cooperative-18-0/?utm_source=widget)
 
 <!-- /!\ do not modify above this line -->
 
-# Cooperative
+# cooperative
 
-Modules related to a cooperative registry (subscribtion requests, share transfer, ...).
+cooperative
 
 <!-- /!\ do not modify below this line -->
 
