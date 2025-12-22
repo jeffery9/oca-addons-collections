@@ -33,13 +33,13 @@
             </search>
         </field>
     </record>
-    <!-- Supplier Aging Tree -->
-    <record model="ir.ui.view" id="view_supplier_aging_ad_tree">
-        <field name="name">supplier.aging.ad.tree</field>
+    <!-- Supplier Aging list -->
+    <record model="ir.ui.view" id="view_supplier_aging_ad_list">
+        <field name="name">supplier.aging.ad.list</field>
         <field name="model">res.partner.aging.supplier</field>
-        <field name="type">tree</field>
+        <field name="type">list</field>
         <field name="arch" type="xml">
-            <tree
+            <list
                 create="false"
                 delete="false"
                 decoration-danger="max_days_overdue > 0 and total > 0"
@@ -64,15 +64,15 @@
                 <field name="days_due_91to120" sum="Total" />
                 <field name="days_due_121togr" sum="Total" />
                 <field name="total" sum="Total" />
-            </tree>
+            </list>
         </field>
     </record>
     <!-- Supplier Aging action -->
-    <record id="action_supplier_aging_tree" model="ir.actions.act_window">
+    <record id="action_supplier_aging_list" model="ir.actions.act_window">
         <field name="name">Supplier Aging</field>
         <field name="res_model">res.partner.aging.supplier</field>
-        <field name="view_id" ref="view_supplier_aging_ad_tree" />
-        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_supplier_aging_ad_list" />
+        <field name="view_mode">list</field>
         <field name="limit">99999999</field>
     </record>
     <record id="view_supplier_aging_date" model="ir.ui.view">
@@ -85,11 +85,11 @@
                 </group>
                 <footer>
                     <button
-                        name="open_supplier_aging"
-                        string="Supplier Aging"
-                        type="object"
-                        class="oe_highlight"
-                    />
+                    name="open_supplier_aging"
+                    string="Supplier Aging"
+                    type="object"
+                    class="oe_highlight"
+                />
                     or
                     <button string="Cancel" class="oe_link" special="cancel" />
                 </footer>

@@ -3,15 +3,17 @@
 
     <t t-name="PaymentAmountPopOver" owl="1">
         <div class="js_payment_amount_div m-2">
-            <h3 t-if="props.title" class="o_popover_header"><t
-                    t-esc="props.title"
-                /></h3>
+            <h3 t-if="props.title" class="o_popover_header">
+                <t t-esc="props.title" />
+            </h3>
             <table>
                 <tr>
-                    <td style="padding-right:20px;"><strong
-                            style="white-space: nowrap;"
-                        >Paid Amount: </strong></td>
-                    <td t-if="position == 'before'"><t t-esc="currency" /></td>
+                    <td style="padding-right:20px;">
+                        <strong style="white-space: nowrap;">Paid Amount: </strong>
+                    </td>
+                    <td t-if="position == 'before'">
+                        <t t-esc="currency" />
+                    </td>
                     <td style="text-align:right;">
                         <input
                             type="number"

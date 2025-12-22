@@ -20,7 +20,7 @@ class ResPartnerAgingDate(models.TransientModel):
             ctx = self._context.copy()
             ctx.update({"age_date": res.age_date})
             customer_aging.execute_aging_query(age_date=res.age_date)
-            xmlid = "partner_aging.action_customer_aging_tree"
+            xmlid = "partner_aging.action_customer_aging_list"
             action = self.env["ir.actions.act_window"]._for_xml_id(xmlid)
             action["domain"] = [("total", "<>", 0.0000000)]
             action["context"] = ctx
@@ -32,7 +32,7 @@ class ResPartnerAgingDate(models.TransientModel):
             ctx = self._context.copy()
             ctx.update({"age_date": res.age_date})
             supplier_aging.execute_aging_query(age_date=res.age_date)
-            xmlid = "partner_aging.action_supplier_aging_tree"
+            xmlid = "partner_aging.action_supplier_aging_list"
             action = self.env["ir.actions.act_window"]._for_xml_id(xmlid)
             action["domain"] = [
                 "|",
