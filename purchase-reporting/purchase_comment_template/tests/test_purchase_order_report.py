@@ -5,7 +5,7 @@
 from ast import literal_eval
 
 from odoo import Command
-from odoo.tests.common import Form
+from odoo.tests import Form
 
 from odoo.addons.base.tests.common import BaseCommon
 from odoo.addons.mail.tests.common import mail_new_test_user
