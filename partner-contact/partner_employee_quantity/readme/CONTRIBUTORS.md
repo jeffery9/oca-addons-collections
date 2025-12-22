@@ -11,3 +11,5 @@
   - Jonathan Oscategui Taza \<<info@pesol.es>\>
 - [Moduon](https://www.moduon.es):
   - Eduardo López Peñalver
+- [Heliconia Solutions Pvt. Ltd.](https://www.heliconia.io)
+  - Bhavesh Heliconia

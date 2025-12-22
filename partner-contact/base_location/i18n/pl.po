@@ -43,6 +43,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:base_location.field_res_city_zip__city_id
 #: model:ir.model.fields,field_description:base_location.field_res_partner__city
 #: model:ir.model.fields,field_description:base_location.field_res_users__city
+#: model_terms:ir.ui.view,arch_db:base_location.view_company_form_city
 msgid "City"
 msgstr ""
 
@@ -157,7 +158,6 @@ msgstr ""
 #. module: base_location
 #. odoo-python
 #: code:addons/base_location/models/res_partner.py:0
-#, python-format
 msgid ""
 "The city of the partner %(partner)s differs from that in location "
 "%(location)s"
@@ -166,7 +166,6 @@ msgstr ""
 #. module: base_location
 #. odoo-python
 #: code:addons/base_location/models/res_partner.py:0
-#, python-format
 msgid ""
 "The country of the partner %(partner)s differs from that in location "
 "%(location)s"
@@ -175,7 +174,6 @@ msgstr ""
 #. module: base_location
 #. odoo-python
 #: code:addons/base_location/models/res_partner.py:0
-#, python-format
 msgid ""
 "The state of the partner %(partner)s differs from that in location "
 "%(location)s"
@@ -184,7 +182,6 @@ msgstr ""
 #. module: base_location
 #. odoo-python
 #: code:addons/base_location/models/res_partner.py:0
-#, python-format
 msgid ""
 "The zip of the partner %(partner)s differs from that in location %(location)s"
 msgstr ""

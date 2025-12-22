@@ -9,15 +9,14 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-10 01:50+0000\n"
-"PO-Revision-Date: 2025-06-26 18:25+0000\n"
-"Last-Translator: Francisco Javier Galera Martínez <javier.galera@sygel.es>\n"
+"PO-Revision-Date: 2017-06-10 01:50+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
 "Language-Team: Catalan (https://www.transifex.com/oca/teams/23907/ca/)\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.10.4\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: partner_identification
 #: model_terms:ir.ui.view,arch_db:partner_identification.view_partner_id_category_form
@@ -27,50 +26,43 @@ msgid ""
 "#  - self: browse_record of the current ID Category browse_record\n"
 "#  - id_number: browse_record of ID number to validate\n"
 "\n"
-"<b><i># Sample 1: ID number only contains digits</i></b>\n"
+"<b>\n"
+"                                    <i># Sample 1: ID number only contains "
+"digits</i>\n"
+"                                </b>\n"
 "if not id_number.name.isdigit():\n"
 "    failed = True\n"
 "else:\n"
 "    failed = False\n"
 "\n"
-"<b><i># Sample 2: Length of ID number cannot exceed 10 chars</i></b>\n"
+"<b>\n"
+"                                    <i># Sample 2: Length of ID number "
+"cannot exceed 10 chars</i>\n"
+"                                </b>\n"
 "failed = len(id_number.name) &gt; 10 and True or False\n"
 "\n"
-"<b><i># Sample 3: ID number must start with the category code</i></b>\n"
+"<b>\n"
+"                                    <i># Sample 3: ID number must start with "
+"the category code</i>\n"
+"                                </b>\n"
 "failed = not id_number.name.startswith(self.code) and True or False"
 msgstr ""
-"# Utilitzeu failed = True per especificar que el número d'identificació no "
-"és vàlid.\n"
-"# Podeu utilitzar les variables següents:\n"
-"# - self: registre_de_navegació de l'ID actual Categoria "
-"registre_de_navegació\n"
-"# - id_number: registre_de_navegació del número d'identificació a validar\n"
-"\n"
-"<b><i># Exemple 1: el número d'identificació només conté dígits</i></b>\n"
-"si no és id_number.name.isdigit():\n"
-"    fallat = cert\n"
-"altra cosa:\n"
-"    fallat = Fals\n"
-"\n"
-"<b><i># Exemple 2: La longitud del número d'identificació no pot superar els "
-"10 caràcters</i></b>\n"
-"fallit = len(id_número.nom) &gt; 10 i Vertader o Fals\n"
-"\n"
-"<b><i># Exemple 3: el número d'identificació ha de començar pel codi de "
-"categoria</i></b>\n"
-"fallit = no és id_number.name.startswith(self.code) i Cert o Fals"
+
+#. module: partner_identification
+#. odoo-python
+#: code:addons/partner_identification/models/res_partner_id_category.py:0
+msgid "%(id_name)s is not a valid %(cat_name)s identifier"
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields,help:partner_identification.field_res_partner_id_category__code
 msgid "Abbreviation or acronym of this ID type. For example, 'driver_license'"
 msgstr ""
-"Abreviatura o acrònim d'aquest tipus d'identificació. Per exemple, "
-"'driver_license'"
 
 #. module: partner_identification
 #: model:ir.model.fields,field_description:partner_identification.field_res_partner_id_number__message_needaction
 msgid "Action Needed"
-msgstr "Acció necessària"
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields,field_description:partner_identification.field_res_partner_id_category__active
@@ -81,22 +73,22 @@ msgstr "Actiu"
 #. module: partner_identification
 #: model:ir.model.fields,field_description:partner_identification.field_res_partner_id_number__activity_ids
 msgid "Activities"
-msgstr "Activitats"
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields,field_description:partner_identification.field_res_partner_id_number__activity_exception_decoration
 msgid "Activity Exception Decoration"
-msgstr "Activitat Excepció Decoració"
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields,field_description:partner_identification.field_res_partner_id_number__activity_state
 msgid "Activity State"
-msgstr "Estat de l'activitat"
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields,field_description:partner_identification.field_res_partner_id_number__activity_type_icon
 msgid "Activity Type Icon"
-msgstr "Icona de tipus d'activitat"
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields,help:partner_identification.field_res_partner_id_number__partner_issued_id
@@ -104,33 +96,31 @@ msgid ""
 "Another partner, who issued this ID. For example, Traffic National "
 "Institution"
 msgstr ""
-"Un altre soci, que va emetre aquest ID. Per exemple, l'Institut Nacional de "
-"Trànsit"
 
 #. module: partner_identification
 #: model:ir.model.fields,field_description:partner_identification.field_res_partner_id_number__message_attachment_count
 msgid "Attachment Count"
-msgstr "Recompte de fitxers adjunts"
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields,field_description:partner_identification.field_res_partner_id_number__category_id
 msgid "Category"
-msgstr "Categoria"
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields,field_description:partner_identification.field_res_partner_id_category__code
 msgid "Code"
-msgstr "Codi"
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields,field_description:partner_identification.field_res_partner_id_category__color
 msgid "Color Index"
-msgstr "Índex de colors"
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model,name:partner_identification.model_res_partner
 msgid "Contact"
-msgstr "Contacte"
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields,field_description:partner_identification.field_res_partner_id_category__create_uid
@@ -153,15 +143,11 @@ msgstr "Veure el nom"
 #. module: partner_identification
 #. odoo-python
 #: code:addons/partner_identification/models/res_partner_id_category.py:0
-#, python-format
 msgid ""
 "Error when evaluating the id_category validation code: \n"
-" {name} \n"
-"({error})"
+" %(name)s \n"
+"(%(error)s)"
 msgstr ""
-"Error en avaluar el codi de validació id_category: \n"
-" {name} \n"
-"({error})"
 
 #. module: partner_identification
 #: model:ir.model.fields,help:partner_identification.field_res_partner_id_number__valid_until
@@ -169,33 +155,31 @@ msgid ""
 "Expiration date. For example, date when person needs to renew his driver "
 "license, 21/10/2019"
 msgstr ""
-"Data de caducitat. Per exemple, la data en què la persona ha de renovar el "
-"seu permís de conduir, 21/10/2019"
 
 #. module: partner_identification
 #: model:ir.model.fields.selection,name:partner_identification.selection__res_partner_id_number__status__close
 msgid "Expired"
-msgstr "Caducat"
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields,field_description:partner_identification.field_res_partner_id_number__message_follower_ids
 msgid "Followers"
-msgstr "Seguidors"
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields,field_description:partner_identification.field_res_partner_id_number__message_partner_ids
 msgid "Followers (Partners)"
-msgstr "Seguidors (Socis)"
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields,help:partner_identification.field_res_partner_id_number__activity_type_icon
 msgid "Font awesome icon e.g. fa-tasks"
-msgstr "Icona de font impressionant, p. ex. tasques-fa"
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields,field_description:partner_identification.field_res_partner_id_number__has_message
 msgid "Has Message"
-msgstr "Té missatge"
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields,field_description:partner_identification.field_res_partner_id_category__id
@@ -206,60 +190,58 @@ msgstr "ID"
 #. module: partner_identification
 #: model:ir.model.fields,field_description:partner_identification.field_res_partner_id_number__name
 msgid "ID Number"
-msgstr "Número d'identificació"
+msgstr ""
 
 #. module: partner_identification
 #: model_terms:ir.ui.view,arch_db:partner_identification.view_partner_form
 msgid "ID Numbers"
-msgstr "Números d'identificació"
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields,field_description:partner_identification.field_res_partner_id_category__name
 msgid "ID name"
-msgstr "Nom ID"
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields,help:partner_identification.field_res_partner_id_number__category_id
 msgid "ID type defined in configuration. For example, Driver License"
 msgstr ""
-"Tipus d'identificació definit a la configuració. Per exemple, carnet de "
-"conduir"
 
 #. module: partner_identification
 #: model:ir.model.fields,field_description:partner_identification.field_res_partner_id_number__activity_exception_icon
 msgid "Icon"
-msgstr "Icona"
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields,help:partner_identification.field_res_partner_id_number__activity_exception_icon
 msgid "Icon to indicate an exception activity."
-msgstr "Icona per indicar una activitat d'excepció."
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields,field_description:partner_identification.field_res_partner__id_numbers
 #: model:ir.model.fields,field_description:partner_identification.field_res_users__id_numbers
 msgid "Identification Numbers"
-msgstr "Números d'identificació"
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields,help:partner_identification.field_res_partner_id_number__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr "Si està marcat, els missatges nous requereixen la vostra atenció."
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields,help:partner_identification.field_res_partner_id_number__message_has_error
 msgid "If checked, some messages have a delivery error."
-msgstr "Si està marcat, alguns missatges tenen un error de lliurament."
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields,field_description:partner_identification.field_res_partner_id_number__message_is_follower
 msgid "Is Follower"
-msgstr "És Seguidor"
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields,field_description:partner_identification.field_res_partner_id_number__partner_issued_id
 msgid "Issued by"
-msgstr "Emès per"
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields,help:partner_identification.field_res_partner_id_number__date_issued
@@ -267,13 +249,11 @@ msgid ""
 "Issued date. For example, date when person approved his driving exam, "
 "21/10/2009"
 msgstr ""
-"Data d'emissió. Per exemple, data en què la persona va aprovar el seu examen "
-"de conduir, 21/10/2009"
 
 #. module: partner_identification
 #: model:ir.model.fields,field_description:partner_identification.field_res_partner_id_number__date_issued
 msgid "Issued on"
-msgstr "Emès el"
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields,field_description:partner_identification.field_res_partner_id_category__write_uid
@@ -290,73 +270,73 @@ msgstr "Darrera Actualització el"
 #. module: partner_identification
 #: model:ir.model.fields,field_description:partner_identification.field_res_partner_id_number__message_has_error
 msgid "Message Delivery error"
-msgstr "Error de lliurament del missatge"
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields,field_description:partner_identification.field_res_partner_id_number__message_ids
 msgid "Messages"
-msgstr "Missatges"
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields,field_description:partner_identification.field_res_partner_id_number__my_activity_date_deadline
 msgid "My Activity Deadline"
-msgstr "Data límit de la meva activitat"
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields,help:partner_identification.field_res_partner_id_category__name
 msgid "Name of this ID type. For example, 'Driver License'"
-msgstr "Nom d'aquest tipus d'identificació. Per exemple, \"Carnet de conduir\""
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields.selection,name:partner_identification.selection__res_partner_id_number__status__draft
 msgid "New"
-msgstr "Nou"
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields,field_description:partner_identification.field_res_partner_id_number__activity_calendar_event_id
 msgid "Next Activity Calendar Event"
-msgstr "Proper esdeveniment del calendari d'activitats"
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields,field_description:partner_identification.field_res_partner_id_number__activity_date_deadline
 msgid "Next Activity Deadline"
-msgstr "Data límit de la propera activitat"
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields,field_description:partner_identification.field_res_partner_id_number__activity_summary
 msgid "Next Activity Summary"
-msgstr "Resum de l'activitat següent"
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields,field_description:partner_identification.field_res_partner_id_number__activity_type_id
 msgid "Next Activity Type"
-msgstr "Tipus d'activitat següent"
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields,field_description:partner_identification.field_res_partner_id_number__comment
 #: model_terms:ir.ui.view,arch_db:partner_identification.view_partner_id_numbers_form
 msgid "Notes"
-msgstr "Notes"
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields,field_description:partner_identification.field_res_partner_id_number__message_needaction_counter
 msgid "Number of Actions"
-msgstr "Nombre d'accions"
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields,field_description:partner_identification.field_res_partner_id_number__message_has_error_counter
 msgid "Number of errors"
-msgstr "Nombre d'errors"
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields,help:partner_identification.field_res_partner_id_number__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr "Nombre de missatges que requereixen una acció"
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields,help:partner_identification.field_res_partner_id_number__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr "Nombre de missatges amb error de lliurament"
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields,field_description:partner_identification.field_res_partner_id_number__partner_id
@@ -367,64 +347,64 @@ msgstr "Empresa"
 #: model:ir.actions.act_window,name:partner_identification.action_partner_id_category
 #: model:ir.ui.menu,name:partner_identification.menu_partner_id_category
 msgid "Partner ID Categories"
-msgstr "Categories d'identificació de soci"
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model,name:partner_identification.model_res_partner_id_category
 msgid "Partner ID Category"
-msgstr "Categoria d'identificació de soci"
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model,name:partner_identification.model_res_partner_id_number
 msgid "Partner ID Number"
-msgstr "Número d'identificació del soci"
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.actions.act_window,name:partner_identification.action_partner_id_numbers_form
 #: model:ir.ui.menu,name:partner_identification.menu_partner_id_numbers
 #: model_terms:ir.ui.view,arch_db:partner_identification.view_partner_id_numbers_form
 msgid "Partner ID Numbers"
-msgstr "Números d'identificació del soci"
+msgstr ""
 
 #. module: partner_identification
 #: model_terms:ir.ui.view,arch_db:partner_identification.view_partner_id_category_form
 msgid "Partner Identification Categories"
-msgstr "Categories d'identificació de socis"
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields,field_description:partner_identification.field_res_partner_id_number__place_issuance
 msgid "Place of Issuance"
-msgstr "Lloc d'emissió"
+msgstr ""
 
 #. module: partner_identification
 #: model_terms:ir.ui.view,arch_db:partner_identification.view_partner_id_category_form
 msgid "Python Validation Code:"
-msgstr "Codi de validació de Python:"
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields,help:partner_identification.field_res_partner_id_category__validation_code
 msgid "Python code called to validate an id number."
-msgstr "Codi Python cridat per validar un número d'identificació."
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields,field_description:partner_identification.field_res_partner_id_category__validation_code
 msgid "Python validation code"
-msgstr "Codi de validació de Python"
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields,field_description:partner_identification.field_res_partner_id_number__activity_user_id
 msgid "Responsible User"
-msgstr "Usuari responsable"
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields.selection,name:partner_identification.selection__res_partner_id_number__status__open
 msgid "Running"
-msgstr "Córrer"
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields,field_description:partner_identification.field_res_partner_id_number__status
 msgid "Status"
-msgstr "Estat"
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields,help:partner_identification.field_res_partner_id_number__activity_state
@@ -434,17 +414,11 @@ msgid ""
 "Today: Activity date is today\n"
 "Planned: Future activities."
 msgstr ""
-"Estat basat en activitats\n"
-"Endarrerit: La data de venciment ja ha passat\n"
-"Avui: La data de l'activitat és avui\n"
-"Planificat: Activitats futures."
 
 #. module: partner_identification
 #: model:ir.model.fields,help:partner_identification.field_res_partner_id_number__name
 msgid "The ID itself. For example, Driver License number of this person"
 msgstr ""
-"El document d'identitat en si. Per exemple, el número de carnet de conduir "
-"d'aquesta persona"
 
 #. module: partner_identification
 #: model:ir.model.fields,help:partner_identification.field_res_partner_id_number__place_issuance
@@ -452,63 +426,50 @@ msgid ""
 "The place where the ID has been issued. For example the country for "
 "passports and visa"
 msgstr ""
-"El lloc on s'ha expedit el document d'identitat. Per exemple, el país on "
-"s'expedeixen els passaports i els visats"
 
 #. module: partner_identification
 #. odoo-python
 #: code:addons/partner_identification/models/res_partner.py:0
-#, python-format
 msgid ""
-"This {record_name} has multiple IDs of this type ({category_code}), so a "
-"write via the {field_name} field is not possible. In order to fix this, "
+"This %(record_name)s has multiple IDs of this type (%(category_code)s), so a "
+"write via the %(field_name)s field is not possible. In order to fix this, "
 "please use the IDs tab."
 msgstr ""
-"Aquest {record_name} té diversos ID d'aquest tipus ({category_code}), per la "
-"qual cosa no és possible escriure a través del camp {field_name}. Per "
-"solucionar-ho, utilitzeu la pestanya ID."
 
 #. module: partner_identification
 #: model:ir.model.fields.selection,name:partner_identification.selection__res_partner_id_number__status__pending
 msgid "To Renew"
-msgstr "Per Renovar"
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields,help:partner_identification.field_res_partner_id_number__activity_exception_decoration
 msgid "Type of the exception activity on record."
-msgstr "Tipus de l'activitat d'excepció registrada."
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields,field_description:partner_identification.field_res_partner_id_number__valid_from
 msgid "Valid from"
-msgstr "Vàlid des de"
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields,field_description:partner_identification.field_res_partner_id_number__valid_until
 msgid "Valid until"
-msgstr "Vàlid fins a"
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields,help:partner_identification.field_res_partner_id_number__valid_from
 msgid "Validation period stating date."
-msgstr "Període de validació amb data indicada."
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields,field_description:partner_identification.field_res_partner_id_number__website_message_ids
 msgid "Website Messages"
-msgstr "Missatges del lloc web"
+msgstr ""
 
 #. module: partner_identification
 #: model:ir.model.fields,help:partner_identification.field_res_partner_id_number__website_message_ids
 msgid "Website communication history"
-msgstr "Historial de comunicacions del lloc web"
-
-#. module: partner_identification
-#. odoo-python
-#: code:addons/partner_identification/models/res_partner_id_category.py:0
-#, python-format
-msgid "{id_name} is not a valid {cat_name} identifier"
-msgstr "{id_name} no és vàlid {cat_name} identificador"
+msgstr ""
 
 #~ msgid "Last Modified on"
 #~ msgstr "Darrera modificació el"

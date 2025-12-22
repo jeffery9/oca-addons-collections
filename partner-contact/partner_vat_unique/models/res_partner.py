@@ -2,9 +2,8 @@
 # Copyright 2020 Manuel Calero - Tecnativa
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
-from odoo.tools import config
 
 
 class ResPartner(models.Model):
@@ -14,15 +13,21 @@ class ResPartner(models.Model):
 
     @api.constrains("vat", "parent_id")
     def _check_vat_unique(self):
+        if (
+            not self.env["ir.config_parameter"]
+            .sudo()
+            .get_param("partner_vat_unique.partner_vat_unique", default=False)
+        ):
+            return
+
         for record in self:
             if record.parent_id or not record.vat:
                 continue
-            test_condition = config["test_enable"] and not self.env.context.get(
-                "test_vat"
-            )
-            if test_condition:
-                continue
+
             if record.same_vat_partner_id:
                 raise ValidationError(
-                    _("The VAT %s already exists in another partner.") % record.vat
+                    self.env._(
+                        "The VAT %(vat)s already exists in another partner.",
+                        vat=record.vat,
+                    )
                 )

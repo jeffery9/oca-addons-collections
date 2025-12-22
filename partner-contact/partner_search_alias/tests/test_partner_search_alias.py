@@ -18,7 +18,8 @@ class TestPartnerAlias(TransactionCase):
         )
 
     def test_name_search_with_alias(self):
-        partner_ids = self.env["res.partner"]._name_search("alias")
+        partners = self.env["res.partner"].name_search("alias")
+        partner_ids = [partner[0] for partner in partners]
         # Ensure the search returns the created partner
         self.assertIn(
             self.partner.id,
@@ -26,7 +27,7 @@ class TestPartnerAlias(TransactionCase):
             "The partner with search_alias 'alias' should be found.",
         )
 
-    def test_get_view(self):
+    def test_get_view_search_filter_domain_modified(self):
         # Ensure that search filter include the search_alias.
         view = self.partner.get_view(view_type="search")
         xml = etree.XML(view["arch"])

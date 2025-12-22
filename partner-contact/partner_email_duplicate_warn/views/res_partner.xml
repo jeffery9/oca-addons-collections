@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <record id="view_partner_form_with_email_warning" model="ir.ui.view">
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form" />
@@ -9,15 +8,14 @@
                 <div
                     class="alert alert-warning"
                     role="alert"
-                    name="warn_duplicate_email"
-                    invisible="not same_email_partner_id"
+                    invisible="not same_email_partner_ids"
                 >
-                        Duplicate warning: partner <field
-                        name="same_email_partner_id"
-                    /> has the same <b>Email</b>.
+                  Duplicate warning: partner(s) <field
+                    name="same_email_partner_ids"
+                    widget="x2many_buttons"
+                /> has/have the same <b>Email</b>.
                 </div>
             </xpath>
         </field>
     </record>
-
 </odoo>
