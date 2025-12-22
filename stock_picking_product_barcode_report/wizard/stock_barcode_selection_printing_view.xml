@@ -39,7 +39,7 @@
                 </div>
                 <group invisible="is_custom_label">
                     <field name="product_print_moves" nolabel="1" colspan="2">
-                        <tree editable="top" create="0">
+                        <list editable="top" create="0">
                             <field
                                 name="product_id"
                                 options="{'no_create': True, 'no_open': True}"
@@ -76,7 +76,7 @@
                                 force_save="1"
                             />
                             <field name="company_id" column_invisible="1" />
-                        </tree>
+                        </list>
                     </field>
                 </group>
                 <footer>

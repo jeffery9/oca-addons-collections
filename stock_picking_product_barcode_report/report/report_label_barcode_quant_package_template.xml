@@ -15,13 +15,13 @@
                 <t t-foreach="label_qty" t-as="i">
                     <br />
                     <div class="page">
-                        <h6 class="text-left">
+                        <h6 class="text-start">
                             <field
                                 t-field="company.display_name"
                                 class="font-weight-bold"
                             />
                         </h6>
-                        <div class="text-left">
+                        <div class="text-start">
                             <span
                                 t-field="company.partner_id"
                                 style="font-size:12px;"
@@ -68,7 +68,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div name="barcode" class="text-left mt8">
+                        <div name="barcode" class="text-start mt8">
                             <span t-esc="barcode" style="font-size: 3em" />
                             <div>
                                 <img
@@ -84,6 +84,17 @@
         </t>
     </template>
     <template id="label_barcode_report_quant_package">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t
+                    t-call="stock_picking_product_barcode_report.report_label_barcode_quant_package"
+                    t-lang="doc.env.user.lang"
+                />
+            </t>
+        </t>
+    </template>
+    <!--  Duplicated by quant or wizard because model is taken from first definition  -->
+    <template id="label_barcode_report_quant_package_wiz">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="doc">
                 <t

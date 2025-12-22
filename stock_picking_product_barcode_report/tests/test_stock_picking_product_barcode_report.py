@@ -3,21 +3,28 @@
 
 from unittest.mock import MagicMock, call
 
-from odoo.tests.common import TransactionCase
+from odoo import Command
+
+from odoo.addons.base.tests.common import BaseCommon
 
 from ..controllers.main import SVGWitoutTextWriter
 
 
-class TestStockPickingProductBarcodeReport(TransactionCase):
+class TestStockPickingProductBarcodeReport(BaseCommon):
     def setUp(self):
         super().setUp()
         self.supplier_location = self.env.ref("stock.stock_location_suppliers")
         self.stock_location = self.env.ref("stock.stock_location_stock")
         self.product_barcode = self.env["product.product"].create(
-            {"name": "Test Product 1", "type": "product", "barcode": "1001"}
+            {
+                "name": "Test Product 1",
+                "type": "consu",
+                "is_storable": True,
+                "barcode": "1001",
+            }
         )
         self.product_no_barcode = self.env["product.product"].create(
-            {"name": "Test Product 2", "type": "product"}
+            {"name": "Test Product 2", "type": "consu", "is_storable": True}
         )
         self.package = self.env["stock.quant.package"].create({"name": "Pack-Test"})
         partner = self.env["res.partner"].create({"name": "Test Partner"})
@@ -30,9 +37,7 @@ class TestStockPickingProductBarcodeReport(TransactionCase):
                     "stock.picking_type_in"
                 ).id,  # Operation type Receipts
                 "move_ids_without_package": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "name": "Test 01",
                             "product_id": self.product_barcode.id,
@@ -42,9 +47,7 @@ class TestStockPickingProductBarcodeReport(TransactionCase):
                             "location_dest_id": self.stock_location.id,
                         },
                     ),
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "name": "Test 02",
                             "product_id": self.product_no_barcode.id,
@@ -63,9 +66,7 @@ class TestStockPickingProductBarcodeReport(TransactionCase):
             move_line_id.result_package_id = self.package
         self.wizard = (
             self.env["stock.picking.print"]
-            .with_context(
-                **{"active_ids": [self.picking.id], "active_model": "stock.picking"}
-            )
+            .with_context(active_ids=self.picking.ids, active_model="stock.picking")
             .create({})
         )
 
