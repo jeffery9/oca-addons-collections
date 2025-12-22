@@ -47,9 +47,7 @@ msgstr ""
 #. module: product_harmonized_system_delivery
 #: model:ir.model.fields,help:product_harmonized_system_delivery.field_product_product__hs_code
 #: model:ir.model.fields,help:product_harmonized_system_delivery.field_product_template__hs_code
-msgid ""
-"Standardized code for international shipping and goods declaration. At the "
-"moment, only used for FedEx and USPS shipping providers."
+msgid "Standardized code for international shipping and goods declaration."
 msgstr ""
 
 #~ msgid ""
