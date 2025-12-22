@@ -116,7 +116,7 @@ class AccountReconcileModel(models.Model):
         base_line_dict["tax_tag_ids"] = [(6, 0, res["base_tags"])]
         return new_aml_dicts
 
-    def _get_write_off_move_lines_dict(self, residual_balance, partner_id):
+    def _get_write_off_move_lines_dict(self, residual_balance, partner_id, label=None):
         """Get move.lines dict corresponding to the reconciliation model's write-off
         lines.
         :param residual_balance: The residual balance of the account on the manual
@@ -142,6 +142,15 @@ class AccountReconcileModel(models.Model):
                 balance = currency.round(
                     line.amount * (1 if residual_balance > 0.0 else -1)
                 )
+            elif line.amount_type == "regex":
+                m = re.findall(line.amount_string, label or "")
+                if m:
+                    extracted_amount = float(m[0])
+                    balance = currency.round(
+                        extracted_amount * (1 if residual_balance > 0.0 else -1)
+                    )
+                else:
+                    balance = 0.0
             else:
                 balance = 0.0
 
@@ -403,7 +412,10 @@ class AccountReconcileModel(models.Model):
 
         aml_domain = self._get_invoice_matching_amls_domain(st_line, partner)
         query = self.env["account.move.line"]._where_calc(aml_domain)
-        tables, where_clause, where_params = query.get_sql()
+        from_string, from_params = query.from_clause
+        where_string, where_params = query.where_clause
+        from_clause = from_string
+        where_clause = where_string
 
         sub_queries = []
         all_params = []
@@ -423,7 +435,7 @@ class AccountReconcileModel(models.Model):
                         account_move_line.name as account_move_line_name,
                         account_move_line__move_id.name as account_move_line__move_id_name,
                         account_move_line__move_id.ref as account_move_line__move_id_ref
-                    FROM {tables}
+                    FROM {from_clause}
                     JOIN account_move account_move_line__move_id
                         ON account_move_line__move_id.id = account_move_line.move_id
                     WHERE {where_clause}
@@ -531,7 +543,7 @@ class AccountReconcileModel(models.Model):
             self._cr.execute(
                 f"""
                     SELECT account_move_line.id
-                    FROM {tables}
+                    FROM {from_clause}
                     WHERE
                         {where_clause}
                         AND account_move_line.currency_id = %s

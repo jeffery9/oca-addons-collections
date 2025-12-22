@@ -5,7 +5,7 @@
     "name": "Account Reconcile Oca",
     "summary": """
         Reconcile addons for Odoo CE accounting""",
-    "version": "17.0.1.5.24",
+    "version": "18.0.1.1.4",
     "license": "AGPL-3",
     "author": "CreuBlanca,Dixmit,Odoo Community Association (OCA)",
     "maintainers": ["etobella"],
@@ -37,7 +37,6 @@
             "account_reconcile_oca/static/src/js/widgets/reconcile_move_line_widget.esm.js",
             "account_reconcile_oca/static/src/js/reconcile_move_line/*.esm.js",
             "account_reconcile_oca/static/src/js/reconcile_form/*.esm.js",
-            "account_reconcile_oca/static/src/js/reconcile_manual/*.esm.js",
             "account_reconcile_oca/static/src/js/reconcile/*.esm.js",
             "account_reconcile_oca/static/src/xml/reconcile.xml",
             "account_reconcile_oca/static/src/scss/reconcile.scss",
