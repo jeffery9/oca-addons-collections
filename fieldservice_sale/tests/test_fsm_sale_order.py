@@ -1,8 +1,10 @@
 # Copyright (C) 2019 Brian McMaster <brian@mcmpest.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+import datetime
 
 from odoo import fields
 from odoo.exceptions import ValidationError
+from odoo.tests import Form
 
 from .test_fsm_sale_common import TestFSMSale
 
@@ -12,6 +14,9 @@ class TestFSMSaleOrder(TestFSMSale):
     def setUpClass(cls):
         super().setUpClass()
         cls.test_location = cls.env.ref("fieldservice.test_location")
+        cls.today = fields.Datetime.now()
+        cls.dt1 = cls.today + datetime.timedelta(days=9)
+        cls.dt2 = cls.today + datetime.timedelta(days=10)
 
         # Setup products that when sold will create some FSM orders
         cls.setUpFSMProducts()
@@ -22,7 +27,8 @@ class TestFSMSaleOrder(TestFSMSale):
             }
         )
         cls.pricelist_usd = cls.env["product.pricelist"].search(
-            [("currency_id.name", "=", "USD")], limit=1
+            [("currency_id.name", "=", "USD"), ("company_id", "=", cls.env.company.id)],
+            limit=1,
         )
         # Create some sale orders that will use the above products
         SaleOrder = cls.env["sale.order"].with_context(tracking_disable=True)
@@ -530,55 +536,37 @@ class TestFSMSaleOrder(TestFSMSale):
         # confirm sale order: ValidationError shouldn't be raised
         self.sale_order.action_confirm()
 
-    def test_sale_order_cancel(self):
-        """Test that canceling a Sale Order cancels related FSM orders,
-        and reconfirming creates a new FSM order while keeping old ones linked.
-        """
-        # Confirm the Sale Order
-        self.sale_order_1.action_confirm()
+    def test_sale_order_6(self):
+        """Test sale order commitment date propagation to FSM orders"""
+        # Confirm the sale order
+        self.sale_order_3.action_confirm()
+        # 2 orders created and SOLs linked to FSM orders
         self.assertEqual(
-            self.sale_order_1.state,
-            "sale",
-            "Sale Order should be confirmed (state=sale)",
-        )
-        self.assertEqual(
-            len(self.sale_order_1.fsm_order_ids),
-            1,
-            "One FSM order should be created upon confirming the Sale Order",
-        )
-
-        fsm_order = self.sale_order_1.fsm_order_ids[0]
-
-        # Cancel the Sale Order
-        self.sale_order_1.with_context(
-            disable_cancel_warning="disable_cancel_warning"
-        ).action_cancel()
-        self.assertEqual(
-            self.sale_order_1.state,
-            "cancel",
-            "Sale Order should be canceled (state=cancel)",
-        )
-
-        self.assertTrue(
-            fsm_order.is_closed,
-            "FSM order should be marked as closed after Sale Order is canceled",
-        )
-
-        # Reconfirm the Sale Order
-        self.sale_order_1.action_draft()
-        self.sale_order_1.action_confirm()
-
-        # Ensure that FSM orders are recomputed after reconfirmation
-        self.sale_order_1._compute_fsm_order_ids()
-
-        self.assertEqual(
-            self.sale_order_1.state,
-            "sale",
-            "Sale Order should be re-confirmed (state=sale)",
-        )
-        self.assertEqual(
-            len(self.sale_order_1.fsm_order_ids),
+            len(self.sale_order_3.fsm_order_ids.ids),
             2,
-            "A new FSM order should be created upon reconfirming the "
-            "Sale Order, while the old one remains linked.",
+            "FSM Sale: Sale Order 3 should create 2 FSM Orders",
+        )
+        self.sale_order_3.commitment_date = self.dt1
+        self.assertEqual(
+            self.sale_order_3.fsm_order_ids.mapped("scheduled_date_start")[0],
+            self.sale_order_3.commitment_date,
+            "FSM Sale: FSM Orders should have the same scheduled start date "
+            "as the Sale Order commitment date",
+        )
+        # Changed commitment_date should be propagated to FSM Orders
+        self.sale_order_3.write({"commitment_date": self.dt2})
+        self.assertEqual(
+            self.sale_order_3.fsm_order_ids.mapped("scheduled_date_start")[0],
+            self.dt2,
+            "FSM Sale: FSM Orders should have the new scheduled start date",
+        )
+        # Using the Form, empty commitment_date should fall back to expected_date
+        with Form(self.sale_order_3) as order_form:
+            order_form.commitment_date = False
+            order_form.save()
+        self.assertEqual(
+            self.sale_order_3.fsm_order_ids.mapped("scheduled_date_start")[0],
+            self.sale_order_3.expected_date,
+            "FSM Sale: FSM Orders should have the same scheduled start date "
+            "as the Sale Order expected date",
         )

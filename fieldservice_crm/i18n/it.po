@@ -6,15 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-05-15 15:25+0000\n"
-"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"PO-Revision-Date: 2023-02-01 18:46+0000\n"
+"Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.10.4\n"
+"X-Generator: Weblate 4.14.1\n"
 
 #. module: fieldservice_crm
 #: model:ir.model.fields,field_description:fieldservice_crm.field_crm_lead__fsm_order_count
@@ -25,28 +25,6 @@ msgstr "N° ordine FSM"
 #: model:ir.model.fields,field_description:fieldservice_crm.field_fsm_location__opportunity_count
 msgid "# Opportunities"
 msgstr "N° opportunità"
-
-#. module: fieldservice_crm
-#: model_terms:ir.ui.view,arch_db:fieldservice_crm.fsm_order_crm_kanban_view
-msgid "<i class=\"fa fa-dollar me-2 fa-lg\" title=\"Salesperson\"/>"
-msgstr "<i class=\"fa fa-dollar me-2 fa-lg\" title=\"Addetto vendite\"/>"
-
-#. module: fieldservice_crm
-#: model_terms:ir.ui.view,arch_db:fieldservice_crm.fieldservice_crm_form_view
-msgid "Create FS Order"
-msgstr "Crea ordine FS"
-
-#. module: fieldservice_crm
-#. odoo-python
-#: code:addons/fieldservice_crm/models/crm_lead.py:0
-#, python-format
-msgid "Create FSM Order"
-msgstr "Crea ordine FSM"
-
-#. module: fieldservice_crm
-#: model:ir.model.fields,field_description:fieldservice_crm.field_fsm_order__opportunity_customer_vat
-msgid "Customer VAT"
-msgstr "P.IVA cliente"
 
 #. module: fieldservice_crm
 #: model_terms:ir.ui.view,arch_db:fieldservice_crm.fieldservice_crm_form_view
@@ -84,29 +62,6 @@ msgid "Opportunity"
 msgstr "Opportunità"
 
 #. module: fieldservice_crm
-#. odoo-python
-#: code:addons/fieldservice_crm/models/crm_lead.py:0
-#, python-format
-msgid "Please select a customer."
-msgstr "Selezionare un cliente."
-
-#. module: fieldservice_crm
-#: model:ir.model.fields,field_description:fieldservice_crm.field_fsm_order__sales_person_id
-msgid "Salesperson"
-msgstr "Addetto vendite"
-
-#. module: fieldservice_crm
 #: model:ir.model.fields,field_description:fieldservice_crm.field_crm_lead__fsm_order_ids
 msgid "Service Orders"
 msgstr "Ordini servizio"
-
-#. module: fieldservice_crm
-#: model:ir.model.fields,help:fieldservice_crm.field_fsm_order__opportunity_customer_vat
-msgid ""
-"The Tax Identification Number. Values here will be validated based on the "
-"country format. You can use '/' to indicate that the partner is not subject "
-"to tax."
-msgstr ""
-"Il numero identificazione imposta. I valori verranno validati nel formato "
-"della nazione. Si può utilizzare '/' per indicare che il partner non è "
-"soggetto all'imposta."

@@ -1,13 +1,13 @@
 # Copyright (C) 2018 Open Source Integrators
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+import warnings
 from datetime import datetime, timedelta
 
-import pytz
+from markupsafe import Markup
 
-from odoo import _, api, fields, models
+from odoo import Command, _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
-from odoo.tools import format_date
 
 from . import fsm_stage
 
@@ -16,7 +16,6 @@ class FSMOrder(models.Model):
     _name = "fsm.order"
     _description = "Field Service Order"
     _inherit = ["mail.thread", "mail.activity.mixin"]
-    _check_company_auto = True
 
     def _default_stage_id(self):
         stage = self.env["fsm.stage"].search(
@@ -42,6 +41,21 @@ class FSMOrder(models.Model):
             return team
         raise ValidationError(_("You must create an FSM team first."))
 
+    @api.depends(
+        "location_id",
+    )
+    def _compute_team_id(self):
+        cached_teams = dict()
+        for order in self:
+            team = order.location_id.team_id
+            if not team:
+                order_key = order.env.company
+                team = cached_teams.get(order_key)
+                if not team:
+                    team = cached_teams[order_key] = order._default_team_id()
+
+            order.team_id = team
+
     def _default_request_early(self):
         return fields.Datetime.now().replace(second=0)
 
@@ -55,6 +69,11 @@ class FSMOrder(models.Model):
                 delta = end - start
                 duration = delta.total_seconds() / 3600
             rec.duration = duration
+
+    @api.depends("stage_id")
+    def _get_stage_color(self):
+        """Get stage color"""
+        self.custom_color = self.stage_id.custom_color or "#FFFFFF"
 
     def _track_subtype(self, init_values):
         self.ensure_one()
@@ -73,7 +92,6 @@ class FSMOrder(models.Model):
         tracking=True,
         index=True,
         copy=False,
-        check_company=True,
         group_expand="_read_group_stage_ids",
         default=lambda self: self._default_stage_id(),
     )
@@ -93,17 +111,18 @@ class FSMOrder(models.Model):
         "tag_id",
         string="Tags",
         help="Classify and analyze your orders",
-        check_company=True,
     )
     color = fields.Integer("Color Index", default=0)
     team_id = fields.Many2one(
         "fsm.team",
         string="Team",
-        default=lambda self: self._default_team_id(),
+        compute="_compute_team_id",
+        precompute=True,
+        store=True,
+        readonly=False,
         index=True,
         required=True,
         tracking=True,
-        check_company=True,
     )
 
     # Request
@@ -117,10 +136,12 @@ class FSMOrder(models.Model):
     location_id = fields.Many2one(
         "fsm.location", string="Location", index=True, required=True
     )
-    location_owner_id = fields.Many2one(
-        related="location_id.owner_id", string="Location Related Owner"
+    location_directions = fields.Char(
+        compute="_compute_location_directions",
+        precompute=True,
+        store=True,
+        readonly=False,
     )
-    location_directions = fields.Html()
     request_early = fields.Datetime(
         string="Earliest Request Date",
         default=lambda self: self._default_request_early(),
@@ -134,6 +155,12 @@ class FSMOrder(models.Model):
         default=lambda self: self.env.company,
         help="Company related to this order",
     )
+
+    # Signature
+    signed_by = fields.Char(copy=False, readonly=True)
+    signed_on = fields.Datetime(copy=False, readonly=True)
+    signature = fields.Image(copy=False, max_width=1024, max_height=1024, readonly=True)
+    require_signature = fields.Boolean(related="stage_id.require_signature")
 
     def _calc_request_late(self, vals):
         if vals.get("request_early", False):
@@ -160,27 +187,14 @@ class FSMOrder(models.Model):
         return vals
 
     request_late = fields.Datetime(string="Latest Request Date")
-    description = fields.Text()
-
-    person_ids = fields.Many2many(
-        "fsm.person",
-        string="Field Service Workers",
-        check_company=True,
+    description = fields.Html(
+        compute="_compute_description",
+        precompute=True,
+        store=True,
+        readonly=False,
     )
 
-    @api.onchange("location_id")
-    def _onchange_location_id_customer(self):
-        if self.location_id:
-            self.territory_id = self.location_id.territory_id or False
-            self.branch_id = self.location_id.branch_id or False
-            self.district_id = self.location_id.district_id or False
-            self.region_id = self.location_id.region_id or False
-            self.copy_notes()
-        if self.company_id.auto_populate_equipments_on_order:
-            fsm_equipment_rec = self.env["fsm.equipment"].search(
-                [("current_location_id", "=", self.location_id.id)]
-            )
-            self.equipment_ids = [(6, 0, fsm_equipment_rec.ids)]
+    person_ids = fields.Many2many("fsm.person", string="Field Service Workers")
 
     # Planning
     person_id = fields.Many2one("fsm.person", string="Assigned To", index=True)
@@ -189,10 +203,16 @@ class FSMOrder(models.Model):
     scheduled_duration = fields.Float(help="Scheduled duration of the work in" " hours")
     scheduled_date_end = fields.Datetime(string="Scheduled End")
     sequence = fields.Integer(default=10)
-    todo = fields.Html(string="Instructions")
+    todo = fields.Html(
+        string="Instructions",
+        compute="_compute_todo",
+        precompute=True,
+        store=True,
+        readonly=False,
+    )
 
     # Execution
-    resolution = fields.Text()
+    resolution = fields.Html()
     date_start = fields.Datetime(string="Actual Start")
     date_end = fields.Datetime(string="Actual End")
     duration = fields.Float(
@@ -237,34 +257,63 @@ class FSMOrder(models.Model):
     # Template
     template_id = fields.Many2one("fsm.template", string="Template")
     category_ids = fields.Many2many("fsm.category", string="Categories")
-
-    # Equipment used for Maintenance and Repair Orders
-    equipment_id = fields.Many2one("fsm.equipment", string="Equipment")
-
-    # Equipment used for all other Service Orders
-    equipment_ids = fields.Many2many("fsm.equipment", string="Equipments")
+    equipment_ids = fields.Many2many(
+        "fsm.equipment",
+        string="Equipments",
+        compute="_compute_equipment_ids",
+        precompute=True,
+        store=True,
+        readonly=False,
+    )
     type = fields.Many2one("fsm.order.type")
 
     internal_type = fields.Selection(related="type.internal_type")
 
-    date_today_order_tz = fields.Date(
-        string="Scheduled Date (User TZ)",
-        compute="_compute_date_today_order_tz",
-        store=True,
-    )
-
-    @api.depends("scheduled_date_start")
-    def _compute_date_today_order_tz(self):
-        tz = pytz.timezone(self.env.user.tz or "UTC")
+    @api.depends("company_id")
+    def _compute_equipment_ids(self):
         for rec in self:
-            if rec.scheduled_date_start:
-                dt_user = rec.scheduled_date_start.astimezone(tz)
-                rec.date_today_order_tz = dt_user.date()
-            else:
-                rec.date_today_order_tz = False
+            # Clear equipments that no longer match the order company
+            to_remove = rec.equipment_ids.filtered(
+                lambda equipment, rec=rec: equipment.company_id != rec.company_id
+            )
+            if to_remove:
+                rec.equipment_ids = [
+                    Command.unlink(equipment.id) for equipment in to_remove
+                ]
+            # If we have no equipments, auto populate if needed
+            if (
+                rec.company_id.auto_populate_equipments_on_order
+                and not rec.equipment_ids
+            ):
+                rec.equipment_ids = self.env["fsm.equipment"].search(
+                    [
+                        ("current_location_id", "=", rec.location_id.id),
+                        ("company_id", "=", rec.company_id.id),
+                    ]
+                )
+
+    @api.depends("location_id")
+    def _compute_location_directions(self):
+        for rec in self:
+            rec.location_directions = rec.location_id.complete_direction
+
+    @api.depends("template_id")
+    def _compute_todo(self):
+        for rec in self:
+            if rec.template_id:
+                rec.todo = rec.template_id.instructions
+
+    @api.depends("equipment_ids", "type")
+    def _compute_description(self):
+        for rec in self:
+            if rec.description:
+                continue
+            rec.description = Markup("<separator />").join(
+                equipment.notes for equipment in rec.equipment_ids if equipment.notes
+            )
 
     @api.model
-    def _read_group_stage_ids(self, stages, domain, order):
+    def _read_group_stage_ids(self, stages, domain, order=None):
         search_domain = [("stage_type", "=", "order")]
         if self.env.context.get("default_team_id"):
             search_domain = [
@@ -285,15 +334,13 @@ class FSMOrder(models.Model):
                 vals = self._calc_request_late(vals)
         return super().create(vals_list)
 
-    is_button = fields.Boolean(default=False)
-
     def write(self, vals):
-        if vals.get("stage_id", False) and vals.get("is_button", False):
-            vals["is_button"] = False
-        else:
-            stage_id = self.env["fsm.stage"].browse(vals.get("stage_id"))
-            if stage_id == self.env.ref("fieldservice.fsm_stage_completed"):
-                raise UserError(_("Cannot move to completed from Kanban"))
+        if (
+            not self.env.context.get("bypass_order_completed_stage")
+            and (stage_id := vals.get("stage_id"))
+            and stage_id == self.env.ref("fieldservice.fsm_stage_completed").id
+        ):
+            raise UserError(_("Cannot move to completed from Kanban"))
         self._calc_scheduled_dates(vals)
         res = super().write(vals)
         return res
@@ -346,7 +393,7 @@ class FSMOrder(models.Model):
                     self.scheduled_date_start != vals.get("scheduled_date_start", False)
                 )
             ):
-                hours = vals.get("scheduled_duration", self.scheduled_duration)
+                hours = vals.get("scheduled_duration", False)
                 start_date_val = vals.get(
                     "scheduled_date_start", self.scheduled_date_start
                 )
@@ -357,10 +404,9 @@ class FSMOrder(models.Model):
             vals["scheduled_date_end"] = False
 
     def action_complete(self):
-        return self.write(
+        return self.with_context(bypass_order_completed_stage=True).write(
             {
                 "stage_id": self.env.ref("fieldservice.fsm_stage_completed").id,
-                "is_button": True,
             }
         )
 
@@ -375,7 +421,7 @@ class FSMOrder(models.Model):
             date_to_with_delta = fields.Datetime.from_string(
                 self.scheduled_date_end
             ) - timedelta(hours=self.scheduled_duration)
-            self.scheduled_date_start = str(date_to_with_delta)
+            self.date_start = str(date_to_with_delta)
 
     @api.onchange("scheduled_date_start", "scheduled_duration")
     def onchange_scheduled_duration(self):
@@ -387,83 +433,40 @@ class FSMOrder(models.Model):
         else:
             self.scheduled_date_end = self.scheduled_date_start
 
-    def copy_notes(self):
-        old_desc = self.description
-        self.location_directions = ""
-        if self.type and self.type.name not in ["repair", "maintenance"]:
-            for equipment_id in self.equipment_ids.filtered(lambda eq: eq.notes):
-                desc = self.description or ""
-                self.description = desc + equipment_id.notes + "\n "
-        else:
-            if self.equipment_id.notes:
-                desc = self.description if self.description else ""
-                self.description = desc + self.equipment_id.notes + "\n "
-        if self.location_id:
-            self.location_directions = self._get_location_directions(self.location_id)
-        if self.template_id:
-            self.todo = self.template_id.instructions
-        if old_desc:
-            self.description = old_desc
-
-    @api.onchange("equipment_ids")
-    def onchange_equipment_ids(self):
-        self.copy_notes()
-
     @api.onchange("template_id")
     def _onchange_template_id(self):
         if self.template_id:
             self.category_ids = self.template_id.category_ids
             self.scheduled_duration = self.template_id.duration
-            self.copy_notes()
             if self.template_id.type_id:
                 self.type = self.template_id.type_id
             if self.template_id.team_id:
                 self.team_id = self.template_id.team_id
 
-    @api.onchange("person_id")
-    def _onchange_person_id(self):
-        if self.person_id and self.person_id.team_id:
-            self.team_id = self.person_id.team_id
-            self._onchange_team_id()
-
-    @api.onchange("team_id")
-    def _onchange_team_id(self):
-        if not self.location_id and self.team_id and self.team_id.location_id:
-            self.location_id = self.team_id.location_id
-
-    def _get_location_directions(self, location_id):
-        self.location_directions = ""
-        s = self.location_id.direction or ""
-        parent_location = self.location_id.fsm_parent_id
-        # ps => Parent Location Directions
-        # s => String to Return
-        while parent_location.id is not False:
-            ps = parent_location.direction
-            if ps:
-                s += parent_location.direction
-            parent_location = parent_location.fsm_parent_id
-        return s
+    def _get_location_directions(self, location_id):  # pragma: no cover
+        # TODO(migration): Remove this method
+        warnings.warn(
+            "Deprecated fsm.order._get_location_directions(), "
+            "use location.complete_direction instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
+        return location_id.complete_direction
 
     @api.constrains("scheduled_date_start")
-    def _check_scheduled_date_calendar_leaves(self):
+    def check_day(self):
         for rec in self:
             if not rec.scheduled_date_start:
                 continue
+
             holidays = self.env["resource.calendar.leaves"].search(
                 [
                     ("date_from", ">=", rec.scheduled_date_start),
                     ("date_to", "<=", rec.scheduled_date_end),
-                    ("resource_id", "=", False),
                 ]
             )
             if holidays:
-                raise ValidationError(
-                    _(
-                        "%(date)s is a holiday: %(holidays)s",
-                        date=format_date(
-                            self.env,
-                            fields.Date.context_today(self, rec.scheduled_date_start),
-                        ),
-                        holidays=", ".join(map(str, holidays.mapped("name"))),
-                    )
+                msg = (
+                    f"{rec.scheduled_date_start.date()} is a holiday {holidays[0].name}"
                 )
+                raise ValidationError(_(msg))

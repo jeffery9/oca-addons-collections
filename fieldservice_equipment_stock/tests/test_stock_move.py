@@ -1,7 +1,7 @@
 # Copyright (C) 2021 Open Source Integrators
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.tests.common import TransactionCase
+from odoo.tests import TransactionCase
 
 
 class TestStockMove(TransactionCase):
@@ -18,7 +18,13 @@ class TestStockMove(TransactionCase):
     def test_action_done(self):
         # Create product template
         templateAB = self.env["product.template"].create(
-            {"name": "templAB", "uom_id": self.uom_unit.id}
+            {
+                "name": "templAB",
+                "uom_id": self.uom_unit.id,
+                "type": "consu",
+                "is_storable": True,
+                "tracking": "none",
+            }
         )
 
         # Create product A and B
@@ -26,7 +32,9 @@ class TestStockMove(TransactionCase):
             {
                 "name": "product A",
                 "standard_price": 1,
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
+                "tracking": "none",
                 "uom_id": self.uom_unit.id,
                 "default_code": "A",
                 "product_tmpl_id": templateAB.id,

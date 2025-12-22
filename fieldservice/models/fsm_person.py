@@ -27,7 +27,6 @@ class FSMPerson(models.Model):
     active_partner = fields.Boolean(
         related="partner_id.active", readonly=True, string="Partner is Active"
     )
-    team_id = fields.Many2one("fsm.team", string="Team")
 
     def toggle_active(self):
         for person in self:
@@ -42,14 +41,12 @@ class FSMPerson(models.Model):
         offset=0,
         limit=None,
         order=None,
-        access_rights_uid=None,
     ):
         res = super()._search(
             args,
             offset=offset,
             limit=limit,
             order=order,
-            access_rights_uid=access_rights_uid,
         )
         # Check for args first having location_ids as default filter
         for arg in args:

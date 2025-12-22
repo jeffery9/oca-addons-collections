@@ -6,9 +6,7 @@
         <field name="arch" type="xml">
             <form string="Order">
                 <header>
-                    <field name="is_button" invisible="1" />
                     <field name="team_id" invisible="1" />
-                    <field name="is_closed" invisible="1" />
                     <button
                         id="action_complete"
                         name="action_complete"
@@ -17,6 +15,21 @@
                         type="object"
                         groups="fieldservice.group_fsm_user"
                         invisible="is_closed"
+                    />
+                    <button
+                        string="Sign"
+                        id="action_sign_1"
+                        type="action"
+                        name="%(fsm_order_sign_wizard_action)d"
+                        class="oe_highlight"
+                        invisible="not require_signature or signature"
+                    />
+                    <button
+                        string="Sign"
+                        id="action_sign_2"
+                        type="action"
+                        name="%(fsm_order_sign_wizard_action)d"
+                        invisible="not require_signature or not signature"
                     />
                     <button
                         id="action_cancel"
@@ -29,7 +42,7 @@
                     <field
                         name="stage_id"
                         widget="statusbar"
-                        options="{'fold_field': 'fold'}"
+                        options="{'fold_field': 'fold', 'clickable': True}"
                         domain="[('stage_type', '=', 'order'), '|', ('team_ids', 'in', team_id), ('team_ids', '=', False)]"
                     />
                 </header>
@@ -60,15 +73,6 @@
                         </group>
                         <group>
                             <field name="location_id" />
-                            <label for="street" string="Address" />
-                            <div class="o_address_format">
-                                <field name="street" class="o_address_street" />
-                                <field name="street2" class="o_address_street" />
-                                <field name="city" class="o_address_city" />
-                                <field name="state_name" class="o_address_state" />
-                                <field name="zip" class="o_address_zip" />
-                                <field name="country_name" class="o_address_country" />
-                            </div>
                             <field
                                 name="territory_id"
                                 invisible='1'
@@ -84,21 +88,9 @@
                             <field name="person_id" />
                             <field name="internal_type" invisible="1" />
                             <field
-                                name="equipment_id"
-                                invisible="internal_type not in ['repair', 'maintenance']"
-                                groups="fieldservice.group_fsm_equipment"
-                                options="{'no_create': True}"
-                                domain="[('current_location_id','=',location_id)]"
-                            />
-                            <field
                                 name="company_id"
                                 options="{'no_create': True}"
                                 groups="base.group_multi_company"
-                            />
-                            <field
-                                name="company_id"
-                                invisible="1"
-                                groups="!base.group_multi_company"
                             />
                         </group>
                     </group>
@@ -145,7 +137,7 @@
                                     colspan="2"
                                     context="{'search_default_location_ids': location_id}"
                                 >
-                                    <tree>
+                                    <list>
                                         <field name="name" />
                                         <field name="phone" />
                                         <field name="email" />
@@ -156,13 +148,18 @@
                                             groups="fieldservice.group_fsm_category"
                                         />
                                         <field name="calendar_id" />
-                                    </tree>
+                                    </list>
                                 </field>
                             </group>
                         </page>
                         <page string="Instructions" name="instructions_page">
                             <group string="Instructions" name="instructions_grp">
-                                <field name="todo" nolabel="1" colspan="2" />
+                                <field
+                                    name="todo"
+                                    nolabel="1"
+                                    colspan="2"
+                                    widget="html"
+                                />
                             </group>
                             <group
                                 string="Location Directions"
@@ -172,6 +169,7 @@
                                     name="location_directions"
                                     nolabel="1"
                                     colspan="2"
+                                    widget="html"
                                 />
                             </group>
                         </page>
@@ -189,60 +187,57 @@
                             string="Equipments"
                             groups="fieldservice.group_fsm_equipment"
                             name="equipements_page"
-                            invisible="internal_type in ['repair', 'maintenance']"
                         >
                             <field
                                 name="equipment_ids"
-                                required="internal_type not in ['repair', 'maintenance']"
                                 options="{'no_create': True}"
                                 domain="[('current_location_id','=',location_id)]"
                             >
-                                <tree>
+                                <list>
                                     <field name="name" />
                                     <field name="person_id" />
                                     <field name="location_id" />
                                     <field name="current_location_id" />
                                     <field name="stage_id" />
-                                </tree>
+                                </list>
                             </field>
+                        </page>
+                        <page
+                            string="Customer Signature"
+                            name="customer_signature"
+                            invisible="not require_signature and not signed_by and not signature and not signed_on"
+                        >
+                            <group>
+                                <field name="signed_by" />
+                                <field name="signed_on" />
+                                <field name="signature" widget="image" />
+                            </group>
                         </page>
                     </notebook>
                 </sheet>
-                <div class="oe_chatter">
-                    <field name="message_follower_ids" widget="mail_followers" />
-                    <field name="activity_ids" widget="mail_activity" />
-                    <field
-                        name="message_ids"
-                        widget="mail_thread"
-                        options="{'post_refresh': 'recipients'}"
-                    />
-                </div>
+                <chatter />
             </form>
         </field>
     </record>
-    <record id="fsm_order_tree_view" model="ir.ui.view">
-        <field name="name">fsm.order.tree</field>
+
+    <record id="fsm_order_list_view" model="ir.ui.view">
+        <field name="name">fsm.order.list</field>
         <field name="model">fsm.order</field>
         <field name="arch" type="xml">
-            <tree name="orders" default_order="scheduled_date_start">
+            <list name="orders" default_order="scheduled_date_start">
                 <field name="scheduled_date_start" />
                 <field name="name" />
                 <field name="location_id" />
                 <field name="person_id" />
                 <field name="stage_id" string="Stage" />
                 <field name="company_id" groups="base.group_multi_company" />
-                <field
-                    name="company_id"
-                    column_invisible="1"
-                    groups="!base.group_multi_company"
-                />
-            </tree>
+            </list>
         </field>
     </record>
     <record id="action_fsm_operation_order" model="ir.actions.act_window">
         <field name="name">Orders</field>
         <field name="res_model">fsm.order</field>
-        <field name="view_mode">tree,form,calendar</field>
+        <field name="view_mode">list,form,calendar</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
                 Create an Order.
@@ -285,7 +280,7 @@
                             </div>
                         </div>
                     </t>
-                    <t t-name="kanban-box">
+                    <t t-name="card">
                         <div
                             t-attf-class="#{kanban_color(record.color.raw_value)} oe_kanban_global_click"
                             name="fsm_equipment"
@@ -344,12 +339,10 @@
                 <separator />
                 <field
                     name="name"
-                    filter_domain="[('name', 'ilike', self)]"
+                    filter_domain="['|', ('name', 'ilike', self), ('name', '=like', str(self) + '%')]"
                     string="FSM Order Name"
                 />
                 <field name="location_id" />
-                <field name="location_owner_id" />
-                <field name="category_ids" />
                 <field name="branch_id" />
                 <field name="district_id" />
                 <field name="region_id" />
@@ -380,39 +373,32 @@
                 <separator />
                 <filter
                     string="Today Orders"
+                    domain="[
+                    ('scheduled_date_start', '&gt;=', (datetime.datetime.combine(datetime.date.today(), datetime.time(0,0,0)))),
+                    ('scheduled_date_start', '&lt;', (datetime.datetime.combine(datetime.date.today(), datetime.time(23,59,59))))
+                    ]"
                     name="order_today"
-                    domain="[('date_today_order_tz', '=', context_today())]"
                 />
-
                 <filter
                     string="Future Orders"
+                    domain="[('scheduled_date_start', '&gt;=', (datetime.datetime.combine(datetime.date.today(), datetime.time(0,0,0))))]"
                     name="order_upcoming_all"
-                    domain="[('date_today_order_tz', '&gt;', context_today())]"
                 />
-
                 <filter
                     string="Due Within 7 Days"
-                    name="order_upcoming_week"
                     domain="[
-                            ('date_today_order_tz', '&gt;=', context_today()),
-                            ('date_today_order_tz', '&lt;=', (context_today() + relativedelta(days=6)))
-                        ]"
+                    ('scheduled_date_start', '&gt;=', (datetime.datetime.combine(datetime.date.today(), datetime.time(0,0,0)))),
+                    ('scheduled_date_start', '&lt;=', (datetime.datetime.combine((datetime.date.today()+relativedelta(days=6)), datetime.time(23,59,59))))
+                    ]"
+                    name="order_upcoming_week"
                 />
-
                 <filter
                     string="Due Within 30 Days"
-                    name="order_upcoming_month"
                     domain="[
-                            ('date_today_order_tz', '&gt;=', context_today()),
-                            ('date_today_order_tz', '&lt;=', (context_today() + relativedelta(days=29)))
-                        ]"
-                />
-
-                <filter
-                    string="Due This Week"
-                    name="this_week_orders"
-                    domain="[('date_today_order_tz', '&lt;=', ((context_today()+relativedelta(weeks=0, weekday=-1)).strftime('%Y-%m-%d'))),
-                    ('date_today_order_tz', '&gt;=', ((context_today()-relativedelta(weeks=1, weekday=0)).strftime('%Y-%m-%d')))]"
+                    ('scheduled_date_start', '&gt;=',(datetime.datetime.combine(datetime.date.today(), datetime.time(0,0,0)))),
+                    ('scheduled_date_start', '&lt;=', (datetime.datetime.combine((datetime.date.today()+relativedelta(days=29)), datetime.time(23,59,59))))
+                    ]"
+                    name="order_upcoming_month"
                 />
                 <separator />
                 <group expand="0" string="Group By">
@@ -462,7 +448,7 @@
                 string="FSM Orders"
                 date_start="scheduled_date_start"
                 date_delay="scheduled_duration"
-                color="custom_color"
+                color="stage_id"
             >
                 <field name="name" />
                 <field name="stage_id" filters="1" />
@@ -476,7 +462,6 @@
                     avatar_field="image_128"
                 />
                 <field name="team_id" filters="1" />
-                <field name="description" />
                 <field name="person_phone" />
                 <field name="city" />
                 <field name="state_name" />
@@ -486,7 +471,7 @@
     <record id="action_fsm_dash_order" model="ir.actions.act_window">
         <field name="name">Orders</field>
         <field name="res_model">fsm.order</field>
-        <field name="view_mode">kanban,tree,form,calendar</field>
+        <field name="view_mode">kanban,list,form,calendar</field>
         <field name="search_view_id" ref="fsm_order_search_view" />
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">

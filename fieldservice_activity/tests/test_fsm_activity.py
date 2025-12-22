@@ -2,10 +2,9 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from datetime import datetime
 
-from freezegun import freeze_time
-
 from odoo.exceptions import ValidationError
-from odoo.tests.common import Form, TransactionCase
+from odoo.tests import Form
+from odoo.tests.common import TransactionCase
 
 
 class TestFSMActivity(TransactionCase):
@@ -38,7 +37,6 @@ class TestFSMActivity(TransactionCase):
             }
         )
 
-    @freeze_time("2025-03-19")
     def test_fsm_activity(self):
         """Test creating new activites, and moving them along thier stages,
         - Don't move FSM Order to complete if Required Activity in 'To Do'
@@ -56,6 +54,16 @@ class TestFSMActivity(TransactionCase):
             }
         )
         order_id = order.id
+        activity_id = self.env["mail.activity"].create(
+            {
+                "summary": "Meeting with partner",
+                "activity_type_id": self.activty_type.id,
+                "res_model_id": self.env["ir.model"]._get("fsm.order").id,
+                "res_id": order2.id,
+                "user_id": self.env.user.id,
+            }
+        )
+        order2.activity_ids = [(6, False, activity_id.ids)]
         self.Activity.create(
             self.get_activity_vals("Activity Test", False, "Ref 1", order2.id)
         )
@@ -105,7 +113,7 @@ class TestFSMActivity(TransactionCase):
             "fsm_order_id": order_id,
         }
 
-    def test_compute_order_activity_ids(self):
+    def test_onchange_template_id(self):
         # Create a Template
         self.template = self.template_obj.create(
             {
@@ -128,24 +136,8 @@ class TestFSMActivity(TransactionCase):
         self.fso = self.Order.create(
             {"location_id": self.test_location.id, "template_id": self.template.id}
         )
-        # Test FSM Order has FSM Activity based on the FSM Template
-        self.assertEqual(
-            len(self.fso.order_activity_ids),
-            len(self.fso.template_id.temp_activity_ids),
-            "Amount of FSM Activites on FSM Order should be the same as FSM Template",
-        )
-        self.assertEqual(
-            self.fso.order_activity_ids[0].name,
-            self.fso.template_id.temp_activity_ids[0].name,
-            "Name of FSM Activity on FSM Order should match FSM Template",
-        )
-        self.assertEqual(
-            self.fso.order_activity_ids[0].required,
-            self.fso.template_id.temp_activity_ids[0].required,
-            "Required field of FSM Activity on FSM Order should match FSM Template",
-        )
-        self.assertEqual(
-            self.fso.order_activity_ids[0].ref,
-            self.fso.template_id.temp_activity_ids[0].ref,
-            "Reference of FSM Activity on FSM Order should match FSM Template",
+        # Test _onchange_template_id()
+        self.fso._onchange_template_id()
+        self.assertNotEqual(
+            self.fso.order_activity_ids.ids, self.fso.template_id.temp_activity_ids.ids
         )

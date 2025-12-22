@@ -1,15 +1,18 @@
 # Copyright (C) 2019 - TODAY, Open Source Integrators
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-from datetime import timedelta
 
-from freezegun import freeze_time
+from datetime import timedelta
 
 from odoo import fields
 from odoo.exceptions import UserError, ValidationError
-from odoo.tests.common import Form, TransactionCase
+from odoo.tests import Form
+from odoo.tests.common import TransactionCase
+from odoo.tools import mute_logger
+
+TEST_IMAGE_BASE64 = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAACklEQVR4nGP4DwABAQEAGN2N9wAAAABJRU5ErkJggg=="  # noqa: E501
 
 
-class TestFSMOrderBase(TransactionCase):
+class TestFSMOrder(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -37,6 +40,14 @@ class TestFSMOrderBase(TransactionCase):
         cls.tag1 = cls.env["fsm.tag"].create(
             {"name": "Test Tag1", "parent_id": cls.tag.id}
         )
+        cls.order = cls.env["fsm.order"].create(
+            {
+                "location_id": cls.test_location.id,
+                "date_start": fields.Datetime.today(),
+                "date_end": fields.Datetime.today() + timedelta(hours=10),
+                "request_early": fields.Datetime.today(),
+            }
+        )
 
     def test_fsm_order_default_stage(self):
         view_id = "fieldservice.fsm_order_form"
@@ -55,14 +66,32 @@ class TestFSMOrderBase(TransactionCase):
 
     def test_fsm_order_default_team(self):
         view_id = "fieldservice.fsm_order_form"
-        with self.assertRaises(ValidationError):
-            team_ids = self.env["fsm.team"].search(
-                [("company_id", "in", (self.env.user.company_id.id, False))],
-                order="sequence asc",
-            )
-            for team in team_ids:
-                team.unlink()
+        with mute_logger("odoo.models.unlink"):
+            self.order.unlink()
+            self.env["fsm.team"].search([]).unlink()
+        with self.assertRaisesRegex(
+            ValidationError, "You must create an FSM team first."
+        ):
             Form(self.Order, view=view_id)
+
+    def test_fsm_order_default_team_from_location(self):
+        """The default team for an order comes from its location."""
+        # Arrange
+        team_form = Form(self.env["fsm.team"])
+        team_form.name = "Test team"
+        team = team_form.save()
+        location = self.test_location
+        location.team_id = team
+        # pre-condition
+        self.assertNotEqual(team, self.Order._default_team_id())
+
+        # Act
+        order_form = Form(self.Order)
+        order_form.location_id = location
+        order = order_form.save()
+
+        # Assert
+        self.assertEqual(order.team_id, team)
 
     def test_fsm_order_create(self):
         priority_vs_late_days = {"0": 3, "1": 2, "2": 1, "3": 1 / 3}
@@ -116,9 +145,6 @@ class TestFSMOrderBase(TransactionCase):
             )
             self.assertRegex(str(res[0]), order.name)
 
-
-class TestFSMOrder(TestFSMOrderBase):
-    @freeze_time("2023-02-01")
     def test_fsm_order(self):
         """Test creating new workorders, and test following functions,
         - _compute_duration() in hrs
@@ -141,6 +167,7 @@ class TestFSMOrder(TestFSMOrderBase):
             f.date_end = f.date_start + timedelta(hours=80)
             f.request_early = fields.Datetime.today()
         order2 = f.save()
+        order._get_stage_color()
         view_id = "fieldservice.fsm_equipment_form_view"
         with Form(self.env["fsm.equipment"], view=view_id) as f:
             f.name = "Equipment 1"
@@ -175,7 +202,6 @@ class TestFSMOrder(TestFSMOrderBase):
         order4.action_complete()
         order3.action_cancel()
         self.env.user.company_id.auto_populate_equipments_on_order = True
-        order._onchange_location_id_customer()
         self.assertEqual(order.custom_color, order.stage_id.custom_color)
         # Test _compute_duration
         self.assertEqual(order.duration, hours_diff)
@@ -193,7 +219,7 @@ class TestFSMOrder(TestFSMOrderBase):
                 order_test.request_late, order.request_early + timedelta(days=late_days)
             )
         # Test scheduled_date_start is not automatically set
-        self.assertFalse(order.scheduled_date_start)
+        self.assertEqual(order.scheduled_date_start, False)
         # Test scheduled_date_end = scheduled_date_start + duration (hrs)
         # Set date start
         order.scheduled_date_start = fields.Datetime.now().replace(
@@ -206,7 +232,8 @@ class TestFSMOrder(TestFSMOrderBase):
         order.onchange_scheduled_duration()
         # Check date end
         self.assertEqual(
-            order.scheduled_date_end, fields.Datetime.from_string("2023-02-01 10:00:00")
+            order.scheduled_date_end,
+            order.scheduled_date_start + timedelta(hours=duration),
         )
         # Set new date end
         order.scheduled_date_end = order.scheduled_date_end.replace(
@@ -216,12 +243,12 @@ class TestFSMOrder(TestFSMOrderBase):
         # Check date start
         self.assertEqual(
             order.scheduled_date_start,
-            fields.Datetime.from_string("2023-01-31 15:01:00"),
+            order.scheduled_date_end - timedelta(hours=duration),
         )
         view_id = "fieldservice.fsm_location_form_view"
         with Form(self.env["fsm.location"], view=view_id) as f:
             f.name = "Child Location"
-            f.fsm_parent_id = self.test_location
+            f.parent_id = self.test_location
         location = f.save()
         self.test_team = self.env["fsm.team"].create({"name": "Test Team"})
         order_type = self.env["fsm.order.type"].create(
@@ -240,43 +267,49 @@ class TestFSMOrder(TestFSMOrderBase):
                     "sequence": 10,
                 }
             )
-        order.description = "description"
-        order.copy_notes()
+        order.description = "<p>Description</p>"
+        order.equipment_ids = equipment
+        self.assertEqual(
+            order.description, "<p>Description</p>", "Shouldn't have changed"
+        )
         order.description = False
-        order.copy_notes()
-        order.type = False
-        order.equipment_id = equipment.id
-        order.onchange_equipment_ids()
+        equipment.notes = "<p>Equipment notes</p>"
+        order.equipment_ids = equipment
+        self.assertEqual(
+            order.description,
+            equipment.notes,
+            "Description should be set from equipment",
+        )
         order.type = False
         order.description = False
         self.location_1.direction = "Test Direction"
-        order2.location_id.fsm_parent_id = self.location_1.id
-        order.copy_notes()
+        order2.location_id.parent_id = self.location_1.id
         data = (
             self.env["fsm.order"]
             .with_context(**{"default_team_id": self.test_team.id})
             .with_user(self.env.user)
             .read_group(
-                [("id", "=", location.id)], fields=["stage_id"], groupby="stage_id"
+                [("id", "=", location.id)],
+                fields=["stage_id"],
+                groupby="stage_id",
             )
         )
         self.assertTrue(data, "It should be able to read group")
-        self.Order.write(
-            {
-                "location_id": self.test_location.id,
-                "stage_id": self.stage1.id,
-                "is_button": True,
-            }
-        )
-        with self.assertRaises(UserError):
-            self.Order.write(
-                {
-                    "location_id": self.test_location.id,
-                    "stage_id": self.stage1.id,
-                }
-            )
         order.can_unlink()
         order.unlink()
+
+    def test_order_move_to_completed(self):
+        """Test move to completed
+
+        An order can't be moved to Completed directly from Kanban or Status bar.
+        Instead, it should go through the "Complete" button (action_complete).
+        """
+        # Can't move to completed directly
+        with self.assertRaisesRegex(UserError, "Cannot move to completed from Kanban"):
+            self.order.stage_id = self.stage1
+        # Instead, it should go through the "Complete" button (action_complete).
+        self.order.action_complete()
+        self.assertEqual(self.order.stage_id, self.stage1)
 
     def test_order_unlink(self):
         with self.assertRaises(ValidationError):
@@ -290,22 +323,22 @@ class TestFSMOrder(TestFSMOrderBase):
             order.can_unlink()
             order.unlink()
 
-    @freeze_time("2025-06-19 22:30:00")  # UTC
-    def test_date_today_order_tz_timezone_dependent(self):
-        self.env.user.tz = "Europe/Madrid"
-
-        dt_utc = fields.Datetime.from_string("2025-06-19 22:30:00")
-
+    def test_order_sign(self):
         order = self.Order.create(
             {
-                "scheduled_date_start": dt_utc,
                 "location_id": self.test_location.id,
                 "stage_id": self.stage1.id,
             }
         )
-
-        self.assertEqual(
-            order.date_today_order_tz,
-            fields.Date.from_string("2025-06-20"),
-            "date_today_order_tz should reflect 2025-06-20 for Europe/Madrid",
+        order.stage_id.require_signature = True
+        # Sign it
+        Wizard = self.env["fsm.order.sign.wizard"].with_context(
+            active_model=order._name, active_id=order.id
         )
+        with Form(Wizard) as wizard_form:
+            wizard_form.signed_by = "Test Customer"
+            wizard_form.signature = TEST_IMAGE_BASE64
+        wizard_form.record.action_sign()
+        # Check that the signature has been updated
+        self.assertEqual(order.signed_by, "Test Customer")
+        self.assertEqual(order.signed_on, fields.Datetime.now())

@@ -1,6 +1,6 @@
 # Copyright (C) 2020 - TODAY, Marcel Savegnago (Escodoo)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-from odoo.tests.common import Form, TransactionCase
+from odoo.tests import Form, TransactionCase
 
 
 class TestFSMEquipment(TransactionCase):
@@ -34,7 +34,8 @@ class TestFSMEquipment(TransactionCase):
         cls.product1 = cls.env["product.product"].create(
             {
                 "name": "Product A",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
                 "tracking": "serial",
             }
         )
