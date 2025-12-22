@@ -5,11 +5,10 @@ from datetime import datetime, timedelta
 from dateutil import relativedelta
 
 from odoo import fields
+from odoo.tests import common
 
-from odoo.addons.base.tests.common import BaseCommon
 
-
-class TestPayrollAccount(BaseCommon):
+class TestPayrollAccount(common.TransactionCase):
     def setUp(self):
         super().setUp()
 

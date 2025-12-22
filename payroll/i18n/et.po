@@ -46,7 +46,6 @@ msgstr ""
 #. module: payroll
 #. odoo-python
 #: code:addons/payroll/models/hr_salary_rule.py:0
-#, python-format
 msgid ""
 "\n"
 "Wrong python code defined for salary rule %(nm)s (%(code)s) for employee "
@@ -59,7 +58,6 @@ msgstr ""
 #. module: payroll
 #. odoo-python
 #: code:addons/payroll/models/hr_salary_rule.py:0
-#, python-format
 msgid ""
 "\n"
 "Wrong python condition defined for salary rule %(nm)s (%(code)s) for "
@@ -72,7 +70,6 @@ msgstr ""
 #. module: payroll
 #. odoo-python
 #: code:addons/payroll/models/hr_payroll_structure.py:0
-#, python-format
 msgid "%s (copy)"
 msgstr "%s (koopia)"
 
@@ -223,30 +220,31 @@ msgstr ""
 #: model:mail.template,body_html:payroll.mail_template_hr_payslip
 msgid ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
-"        <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
-"            Dear <t t-out=\"object.employee_id.name\"></t>,\n"
-"            <br><br>\n"
+"                    <p style=\"margin: 0px; padding: 0px; font-size: 13px;"
+"\">\n"
+"            Dear <t t-out=\"object.employee_id.name\"/>,\n"
+"            <br/><br/>\n"
 "            Please find attached the payslip for <t t-out=\"object."
-"payslip_run_id.name\"></t>.\n"
-"            <br><br>\n"
+"payslip_run_id.name\"/>.\n"
+"            <br/><br/>\n"
 "            Do not hesitate to contact us if you have any questions.\n"
-"            <br><br>\n"
-"            <t t-out=\"user.signature\"></t>\n"
+"            <br/><br/>\n"
+"            <t t-out=\"user.signature\"/>\n"
 "        </p>\n"
-"    </div>\n"
+"                </div>\n"
 "            "
 msgstr ""
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.view_hr_payslip_by_employees
 msgid ""
-"<span colspan=\"2\" nolabel=\"1\">\n"
-"                            This wizard will generate payslips for all "
-"selected employee(s)\n"
-"                            based on the dates and credit note\n"
-"                            specified\n"
-"                            on Payslips Run.\n"
-"                        </span>"
+"<span colspan=\"4\" nolabel=\"1\">\n"
+"                        This wizard will generate payslips for all selected "
+"employee(s)\n"
+"                        based on the dates and credit note\n"
+"                        specified\n"
+"                        on Payslips Run.\n"
+"                    </span>"
 msgstr ""
 
 #. module: payroll
@@ -572,7 +570,6 @@ msgstr "Tühista palgaleht"
 #. module: payroll
 #. odoo-python
 #: code:addons/payroll/models/hr_payslip.py:0
-#, python-format
 msgid "Cannot cancel a payslip that is done."
 msgstr "Tehtud palgalehte ei saa tühistada."
 
@@ -995,14 +992,12 @@ msgstr "Töötajad"
 #. module: payroll
 #. odoo-python
 #: code:addons/payroll/models/hr_salary_rule_category.py:0
-#, python-format
 msgid "Error! You cannot create recursive hierarchy of Salary Rule Category."
 msgstr "Viga! Te ei saa luua rekursiivset palgareegli kategooriat"
 
 #. module: payroll
 #. odoo-python
 #: code:addons/payroll/models/hr_salary_rule.py:0
-#, python-format
 msgid "Error! You cannot create recursive hierarchy of Salary Rules."
 msgstr "Viga! Te ei saa luua rekursiivset palgareeglit"
 
@@ -1057,7 +1052,6 @@ msgstr "Näiteks, 50% sisestamiseks sisestage 50.0 "
 #. module: payroll
 #. odoo-python
 #: code:addons/payroll/report/report_contribution_register.py:0
-#, python-format
 msgid "Form content is missing, this report cannot be printed."
 msgstr "Vormi sisu on puudu, ei saa trükkida aruannet."
 
@@ -1085,7 +1079,6 @@ msgstr "Saa 1% müügist"
 #. module: payroll
 #. odoo-python
 #: code:addons/payroll/models/hr_payslip.py:0
-#, python-format
 msgid "Global Leaves"
 msgstr "Globaalsed puudumised"
 
@@ -1423,7 +1416,6 @@ msgstr ""
 #. module: payroll
 #. odoo-python
 #: code:addons/payroll/models/hr_payslip.py:0
-#, python-format
 msgid "Normal Working Days paid at 100%"
 msgstr "Normaalsed tööpäevad maksta 100% ulatuses"
 
@@ -1475,7 +1467,6 @@ msgstr "Ametnik"
 #. module: payroll
 #. odoo-python
 #: code:addons/payroll/wizard/hr_payslip_change_state.py:0
-#, python-format
 msgid ""
 "Only draft payslips can be verified,the payslip %(nm)s is in %(st)s state"
 msgstr ""
@@ -1483,7 +1474,6 @@ msgstr ""
 #. module: payroll
 #. odoo-python
 #: code:addons/payroll/wizard/hr_payslip_change_state.py:0
-#, python-format
 msgid ""
 "Only payslips in states verify or draft can be confirmed, the payslip %(nm)s "
 "is in %(st)s state"
@@ -1492,7 +1482,6 @@ msgstr ""
 #. module: payroll
 #. odoo-python
 #: code:addons/payroll/wizard/hr_payslip_change_state.py:0
-#, python-format
 msgid ""
 "Only rejected payslips can be reset to draft, the payslip %(nm)s is in "
 "%(st)s state"
@@ -1578,11 +1567,6 @@ msgid "Payroll Accounting"
 msgstr ""
 
 #. module: payroll
-#: model:ir.model.fields,field_description:payroll.field_hr_leave_type__code
-msgid "Payroll Code"
-msgstr ""
-
-#. module: payroll
 #: model:ir.model,name:payroll.model_report_payroll_report_contributionregister
 msgid "Payroll Contribution Register Report"
 msgstr ""
@@ -1607,7 +1591,6 @@ msgstr "Palgaleht"
 #. module: payroll
 #. odoo-python
 #: code:addons/payroll/models/hr_payslip.py:0
-#, python-format
 msgid "Payslip 'Date From' must be earlier than 'Date To'."
 msgstr ""
 
@@ -1707,7 +1690,6 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:payroll.hr_employee_view_form
 #: model_terms:ir.ui.view,arch_db:payroll.hr_payslip_run_view_form
 #: model_terms:ir.ui.view,arch_db:payroll.hr_payslip_view_search
-#, python-format
 msgid "Payslips"
 msgstr "Palgalehed"
 
@@ -1841,7 +1823,6 @@ msgstr "Määr (%)"
 #. module: payroll
 #. odoo-python
 #: code:addons/payroll/models/hr_payslip_line.py:0
-#, python-format
 msgid "Recursion error. Only one line should be parent of %s"
 msgstr ""
 
@@ -1864,14 +1845,12 @@ msgstr "Tagasimaksmine"
 #. module: payroll
 #. odoo-python
 #: code:addons/payroll/models/hr_payslip.py:0
-#, python-format
 msgid "Refund Payslip"
 msgstr ""
 
 #. module: payroll
 #. odoo-python
 #: code:addons/payroll/models/hr_payslip.py:0
-#, python-format
 msgid "Refund: %s"
 msgstr ""
 
@@ -1990,7 +1969,6 @@ msgstr ""
 #. module: payroll
 #. odoo-python
 #: code:addons/payroll/models/hr_payslip.py:0
-#, python-format
 msgid "Salary Slip of %(name)s for %(dt)s"
 msgstr ""
 
@@ -2159,7 +2137,6 @@ msgstr "Minimaalne summa, mida taotletakse selle reegli jaoks."
 #. module: payroll
 #. odoo-python
 #: code:addons/payroll/wizard/hr_payslip_change_state.py:0
-#, python-format
 msgid "The payslip %(nm)s is already canceled please deselect it"
 msgstr ""
 
@@ -2176,14 +2153,8 @@ msgstr ""
 "väiketähtede (hra, ma, lta jne) kui muutujate nimesid ja baasmuutujat."
 
 #. module: payroll
-#: model:ir.model,name:payroll.model_hr_leave_type
-msgid "Time Off Type"
-msgstr ""
-
-#. module: payroll
 #. odoo-python
 #: code:addons/payroll/models/hr_payslip.py:0
-#, python-format
 msgid ""
 "To cancel the Original Payslip the\n"
 "                        Refunded Payslip needs to be canceled first!"
@@ -2265,7 +2236,6 @@ msgstr ""
 #. module: payroll
 #. odoo-python
 #: code:addons/payroll/models/hr_salary_rule.py:0
-#, python-format
 msgid ""
 "Wrong percentage base or quantity defined for salary rule %(nm)s (%(code)s) "
 "for employee %(ee)s."
@@ -2274,7 +2244,6 @@ msgstr ""
 #. module: payroll
 #. odoo-python
 #: code:addons/payroll/models/hr_salary_rule.py:0
-#, python-format
 msgid ""
 "Wrong quantity defined for salary rule %(nm)s (%(code)s) for employee %(ee)s."
 msgstr ""
@@ -2282,7 +2251,6 @@ msgstr ""
 #. module: payroll
 #. odoo-python
 #: code:addons/payroll/models/hr_salary_rule.py:0
-#, python-format
 msgid ""
 "Wrong range condition defined for salary rule %(nm)s (%(code)s) for employee "
 "%(ee)s."
@@ -2291,30 +2259,31 @@ msgstr ""
 #. module: payroll
 #. odoo-python
 #: code:addons/payroll/models/hr_payroll_structure.py:0
-#, python-format
 msgid "You cannot create a recursive salary structure."
 msgstr ""
 
 #. module: payroll
 #. odoo-python
 #: code:addons/payroll/models/hr_payslip.py:0
-#, python-format
 msgid "You cannot delete a payslip which is not draft or cancelled"
 msgstr ""
 
 #. module: payroll
 #. odoo-python
 #: code:addons/payroll/wizard/hr_payroll_payslips_by_employees.py:0
-#, python-format
 msgid "You must select employee(s) to generate payslip(s)."
 msgstr "Te peate valima töötaja(d) palgaleh(ted)e genereerimiseks."
 
 #. module: payroll
 #. odoo-python
 #: code:addons/payroll/models/hr_payslip_line.py:0
-#, python-format
 msgid "You must set a contract to create a payslip line."
 msgstr "Te peate määrama lepingu, et luua palgalehe rida."
+
+#. module: payroll
+#: model_terms:ir.ui.view,arch_db:payroll.hr_payslip_view_form
+msgid "period"
+msgstr ""
 
 #. module: payroll
 #: model:ir.model.fields,help:payroll.field_hr_payslip_line__amount_percentage_base

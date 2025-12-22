@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-10-08 23:24+0000\n"
-"PO-Revision-Date: 2025-09-02 23:42+0000\n"
+"PO-Revision-Date: 2025-09-16 13:42+0000\n"
 "Last-Translator: Tamer Sezgin <tamer.sezgin@gmail.com>\n"
 "Language-Team: Turkish (https://www.transifex.com/odoo/teams/41243/tr/)\n"
 "Language: tr\n"
@@ -38,6 +38,9 @@ msgid ""
 "            'Payslip - %s' % (object.employee_id.name)\n"
 "        "
 msgstr ""
+"\n"
+"            'Ücret Pusulası - %s' % (object.employee_id.name)\n"
+"        "
 
 #. module: payroll
 #: model:ir.actions.report,print_report_name:payroll.payslip_details_report
@@ -46,11 +49,13 @@ msgid ""
 "            'Payslip Details - %s' % (object.employee_id.name)\n"
 "        "
 msgstr ""
+"\n"
+"            'Ücret Pusulası Ayrıntıları - %s' % (object.employee_id.name)\n"
+"        "
 
 #. module: payroll
 #. odoo-python
 #: code:addons/payroll/models/hr_salary_rule.py:0
-#, python-format
 msgid ""
 "\n"
 "Wrong python code defined for salary rule %(nm)s (%(code)s) for employee "
@@ -59,11 +64,16 @@ msgid ""
 "\n"
 "%(err)s\n"
 msgstr ""
+"\n"
+"Personel %(ee)s maaş kuralı için yanlış python kodu tanımlanmış %(nm)s "
+"(%(code)s).\n"
+"Here is the error received:\n"
+"\n"
+"%(err)s\n"
 
 #. module: payroll
 #. odoo-python
 #: code:addons/payroll/models/hr_salary_rule.py:0
-#, python-format
 msgid ""
 "\n"
 "Wrong python condition defined for salary rule %(nm)s (%(code)s) for "
@@ -72,11 +82,16 @@ msgid ""
 "\n"
 "%(err)s\n"
 msgstr ""
+"\n"
+"Personel %(ee)s maaş kuralı %(nm)s (%(code)s) için yanlış python koşulu "
+"tanımlanmış.\n"
+"Alınan hata şöyle:\n"
+"\n"
+"%(err)s\n"
 
 #. module: payroll
 #. odoo-python
 #: code:addons/payroll/models/hr_payroll_structure.py:0
-#, python-format
 msgid "%s (copy)"
 msgstr "%s (kopya)"
 
@@ -91,6 +106,13 @@ msgid ""
 "        \n"
 "* When user cancel payslip the status is 'Rejected'."
 msgstr ""
+"* Ücret pusulası oluşturulduğunda durumu 'Taslak'\n"
+"        \n"
+"* Ücret pusulası doğrulama bekliyorasa, durumu 'Bekliyor'.\n"
+"        \n"
+"* Ücret pusulası onaylandıysa, durumu 'Tamamlandı'.\n"
+"        \n"
+"* Kullanıcı ücret pusulasını reddettiyse, durumu 'Reddedildi'."
 
 #. module: payroll
 #: model:ir.model.fields,help:payroll.field_hr_payslip_change_state__state
@@ -101,6 +123,10 @@ msgid ""
 "* If the payslip is confirmed then status is set to 'Done'.             \n"
 "* When user cancel payslip the status is 'Rejected'."
 msgstr ""
+"* Ücret pusulası oluşturulduğunda durumu 'Taslak'.             \n"
+"* Ücret pusulası doğrulama bekliyorasa, durumu 'Bekliyor'.             \n"
+"* Ücret pusulası onaylandıysa, durumu 'Tamamlandı'.             \n"
+"* Kullanıcı ücret pusulasını reddettiyse, durumu 'Reddedildi'."
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_salary_rule_view_form
@@ -111,6 +137,11 @@ msgid ""
 "number_of_days\n"
 "                                        </code>"
 msgstr ""
+"<code>\n"
+"                                            result = contract.wage\n"
+"                                            result_qty = worked_days.WORK100."
+"number_of_days\n"
+"                                             </code>"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_salary_rule_view_form
@@ -120,6 +151,10 @@ msgid ""
 "                                            result_rate = 10.0\n"
 "                                        </code>"
 msgstr ""
+"<code>\n"
+"                                            result = contract.wage\n"
+"                                            result_rate = 10.0\n"
+"                                            </code>"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_salary_rule_view_form
@@ -127,12 +162,15 @@ msgid ""
 "<code>categories:</code> contains the sum of amount of all rules belonging "
 "to that category"
 msgstr ""
+"<code>kategoriler:</code> o kategoriye ait tüm kuralların tutarlarının "
+"toplamını içerir"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_salary_rule_view_form
 msgid ""
 "<code>contract:</code> contains current contract object data (hr.contract)"
 msgstr ""
+"<code>contract:</code> sözleşme nesnesi (hr.contract) verilerini içerir"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_salary_rule_view_form
@@ -140,38 +178,46 @@ msgid ""
 "<code>current_contract:</code> contains values related/calculated for "
 "current contract"
 msgstr ""
+"<code>current_contract:</code> geçerli sözleşme için hesaplanan veya "
+"ilişkili değerleri içerir"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_salary_rule_view_form
 msgid ""
 "<code>employee:</code> contains current employee object data (hr.employee)"
 msgstr ""
+"<code>employee:</code> geçerli personel nesnesi (hr.employee) verilerini "
+"içerir"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_salary_rule_view_form
 msgid "<code>inputs:</code> contains the computed input data"
-msgstr ""
+msgstr "<code>inputs:</code> hesaplanmış girdi verilerini içerir"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_salary_rule_view_form
 msgid "<code>payroll:</code> contains miscellaneous values related to payroll"
-msgstr ""
+msgstr "<code>payroll:</code> bordro ile ilgili çeşitli değerleri içerir"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_salary_rule_view_form
 msgid "<code>payslip:</code> contains current payslip object data (hr.payslip)"
 msgstr ""
+"<code>payslip:</code> geçerli ücret pusulası nesnesi (hr.payslip) verilerini "
+"içerir"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_salary_rule_view_form
 msgid ""
 "<code>payslips:</code> contains payslips data (Payslips - Browsable Object)"
 msgstr ""
+"<code>payslips:</code> ücret pusulaları verilerini içerir (Ücret Pusulaları "
+"- Görüntülenebilir Nesne)"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_salary_rule_view_form
 msgid "<code>result = contract.wage * 0.10</code>"
-msgstr ""
+msgstr "<code>result = contract.wage * 0.10 </code>"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_salary_rule_view_form
@@ -179,6 +225,8 @@ msgid ""
 "<code>result:</code> the returned value should be in this variable. It "
 "matches with \"amount\" column."
 msgstr ""
+"<code>result:</code> dönen değer bu değişkende olmalı. \"tutar\" kolonu ile "
+"eşleşir."
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_salary_rule_view_form
@@ -186,18 +234,20 @@ msgid ""
 "<code>result_name:</code> overrides the current name of the rule and allows "
 "to make dynamic names"
 msgstr ""
+"<code>result_name:</code> kuralın geçerli adını değiştirir ve dinamik "
+"isimler yapmaya izin verir"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_salary_rule_view_form
 msgid ""
 "<code>result_qty:</code> the quantity of units that will be multiplied to "
 "\"result\""
-msgstr ""
+msgstr "<code>result_qty:</code> \"result\" ile çarpılacak birim adedidir"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_salary_rule_view_form
 msgid "<code>result_rate:</code> the rate that should be applied to \"result\""
-msgstr ""
+msgstr "<code>result_rate:</code> \"result\" değerine uygulanacak orandır"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_salary_rule_view_form
@@ -205,11 +255,13 @@ msgid ""
 "<code>result_rules:</code> contains the values of previusly computed lines "
 "(qty, rate, amount, total)"
 msgstr ""
+"<code>result_rules:</code> önceden hesaplanan satırların (qty, rate, amount, "
+"total) değerini içerir"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_salary_rule_view_form
 msgid "<code>rules:</code> contains the rules code (previusly computed)"
-msgstr ""
+msgstr "<code>rules:</code> kuralların kodunu içerir (önceden hesaplanmış)"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_salary_rule_view_form
@@ -217,46 +269,71 @@ msgid ""
 "<code>tools:</code> contains tools and libraries which help with "
 "mathematical operations"
 msgstr ""
+"<code>tools:</code> matematiksel işlemlere yardımcı olan araç ve "
+"kütüphaneleri içerir"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_salary_rule_view_form
 msgid "<code>worked_days:</code> contains the computed worked days data"
-msgstr ""
+msgstr "<code>worked_days:</code> hesaplanan çalışılan günler verisini içerir"
 
 #. module: payroll
 #: model:mail.template,body_html:payroll.mail_template_hr_payslip
 msgid ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
-"        <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
-"            Dear <t t-out=\"object.employee_id.name\"></t>,\n"
-"            <br><br>\n"
+"                    <p style=\"margin: 0px; padding: 0px; font-size: 13px;"
+"\">\n"
+"            Dear <t t-out=\"object.employee_id.name\"/>,\n"
+"            <br/><br/>\n"
 "            Please find attached the payslip for <t t-out=\"object."
-"payslip_run_id.name\"></t>.\n"
-"            <br><br>\n"
+"payslip_run_id.name\"/>.\n"
+"            <br/><br/>\n"
 "            Do not hesitate to contact us if you have any questions.\n"
-"            <br><br>\n"
-"            <t t-out=\"user.signature\"></t>\n"
+"            <br/><br/>\n"
+"            <t t-out=\"user.signature\"/>\n"
 "        </p>\n"
-"    </div>\n"
+"                </div>\n"
 "            "
 msgstr ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"                    <p style=\"margin: 0px; padding: 0px; font-size: 13px;"
+"\">\n"
+"            Sayın <t t-out=\"object.employee_id.name\"/>,\n"
+"            <br/><br/>\n"
+"            <t t-out=\"object.payslip_run_id.name\"/> dönemine ait ücret "
+"pusulasını ekte bulabilirsiniz.\n"
+"            <br/><br/>\n"
+"            Herhangi bir sorunuz olduğunda çekinmeden iletişime "
+"geçebilirsiniz.\n"
+"            <br/><br/>\n"
+"            <t t-out=\"user.signature\"/>\n"
+"        </p>\n"
+"                </div>\n"
+"            "
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.view_hr_payslip_by_employees
 msgid ""
-"<span colspan=\"2\" nolabel=\"1\">\n"
-"                            This wizard will generate payslips for all "
-"selected employee(s)\n"
-"                            based on the dates and credit note\n"
-"                            specified\n"
-"                            on Payslips Run.\n"
-"                        </span>"
+"<span colspan=\"4\" nolabel=\"1\">\n"
+"                        This wizard will generate payslips for all selected "
+"employee(s)\n"
+"                        based on the dates and credit note\n"
+"                        specified\n"
+"                        on Payslips Run.\n"
+"                    </span>"
 msgstr ""
+"<span colspan=\"4\" nolabel=\"1\">\n"
+"                        Bu yardımcı, seçilen tüm çalışanlar için, \n"
+"                        Ücret Pusulalarını Çalışır'da belirtilen tarihler ve "
+"kredi notu\n"
+"                        üzerinden\n"
+"                        ücret pusulası üretecektir.\n"
+"                    </span>"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_salary_rule_view_form
 msgid "<strong> and </strong>"
-msgstr ""
+msgstr "<strong> ve </strong>"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.report_payslip
@@ -279,7 +356,7 @@ msgstr "<strong>Banka Hesabı</strong>"
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_salary_rule_view_form
 msgid "<strong>Between </strong>"
-msgstr ""
+msgstr "<strong>Arasında </strong>"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.report_contributionregister
@@ -351,6 +428,10 @@ msgid ""
 "the\n"
 "                state or anyone that collect or inject money on payslips."
 msgstr ""
+"Katkı kaydı, çalışanların maaş ödemelerine karışan bir üçüncü taraftır.\n"
+"                Sosyal güvenlik, devlet veya ücret pusulasında para alan "
+"veya\n"
+"                 veren herkes olabilir."
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_payslip_view_form
@@ -366,13 +447,13 @@ msgstr "Muhasebe Bilgisi"
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip_change_state__state
 msgid "Action"
-msgstr ""
+msgstr "Eylem"
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip__message_needaction
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip_run__message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "Eylem Gerekiyor"
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip_line__active
@@ -384,30 +465,30 @@ msgstr "Etkin"
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip__activity_ids
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip_run__activity_ids
 msgid "Activities"
-msgstr ""
+msgstr "Aktiviteler"
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip__activity_exception_decoration
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip_run__activity_exception_decoration
 msgid "Activity Exception Decoration"
-msgstr ""
+msgstr "Aktivite İstisnası Dekorasyonu"
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip__activity_state
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip_run__activity_state
 msgid "Activity State"
-msgstr ""
+msgstr "Ativite Durumu"
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip__activity_type_icon
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip_run__activity_type_icon
 msgid "Activity Type Icon"
-msgstr ""
+msgstr "Aktivite Tipi Simgesi"
 
 #. module: payroll
 #: model_terms:ir.actions.act_window,help:payroll.hr_contribution_register_action
 msgid "Add a new contribution register"
-msgstr ""
+msgstr "Yeni katkı kaydı ekle"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_payslip_view_form
@@ -417,7 +498,7 @@ msgstr "Bir iç not ekle..."
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_salary_rule_category_view_form
 msgid "Add your notes or category explanation here..."
-msgstr ""
+msgstr "Notlarınızı veya kategori açıklamalarınızı buraya ekleyin..."
 
 #. module: payroll
 #: model:ir.actions.act_window,name:payroll.act_children_salary_rules
@@ -427,51 +508,53 @@ msgstr "Tüm Alt Kurallar"
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip__allow_cancel_payslips
 msgid "Allow Canceling Payslips"
-msgstr ""
+msgstr "Ücret Pusulaları İptal Edilebilsin"
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_res_config_settings__allow_cancel_payslips
 #: model_terms:ir.ui.view,arch_db:payroll.res_config_settings_view_form
 msgid "Allow canceling confirmed payslips"
-msgstr ""
+msgstr "Onaylanmış ücret pusulaları iptal edilebilsin"
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip_line__allow_edit_payslip_lines
 msgid "Allow editing"
-msgstr ""
+msgstr "Düzeltmeye izin ver"
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_res_config_settings__allow_edit_payslip_lines
 #: model_terms:ir.ui.view,arch_db:payroll.res_config_settings_view_form
 msgid "Allow editing payslip lines"
-msgstr ""
+msgstr "Ücret pusulası satırlarını düzeltmeye izin ver"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.res_config_settings_view_form
 msgid "Allow users to cancel confirmed payslips"
-msgstr ""
+msgstr "Kullanıcıların onaylanmış ücret pusulalarını iptal etmesine izin ver"
 
 #. module: payroll
 #: model:ir.model.fields,help:payroll.field_res_config_settings__allow_cancel_payslips
 msgid "Allow users to cancel confirmed payslips."
-msgstr ""
+msgstr "Kullanıcıların onaylanmış ücret pusulalarını iptal etmesine izin ver."
 
 #. module: payroll
 #: model:ir.model.fields,help:payroll.field_res_config_settings__allow_edit_payslip_lines
 #: model_terms:ir.ui.view,arch_db:payroll.res_config_settings_view_form
 msgid "Allow users to edit some payslip line fields manually"
 msgstr ""
+"Kullanıcıların bazı ücret pusulası satırı alanlarını elle düzeltmesine izin "
+"ver"
 
 #. module: payroll
 #: model:hr.salary.rule.category,name:payroll.ALW
 msgid "Allowance"
-msgstr "Allowance"
+msgstr "Ödenek"
 
 #. module: payroll
 #: model:ir.model.fields.selection,name:payroll.selection__hr_payslip_line__condition_select__none
 #: model:ir.model.fields.selection,name:payroll.selection__hr_salary_rule__condition_select__none
 msgid "Always True"
-msgstr "Daima Gerçek"
+msgstr "Her zaman Doğru"
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip_input__amount
@@ -485,7 +568,7 @@ msgstr "Tutar"
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip_input__amount_qty
 msgid "Amount Quantity"
-msgstr ""
+msgstr "Tutar Miktarı"
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip_line__amount_select
@@ -503,7 +586,7 @@ msgstr "Yıllık"
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip_line__appears_on_payslip
 #: model:ir.model.fields,field_description:payroll.field_hr_salary_rule__appears_on_payslip
 msgid "Appears on Payslip"
-msgstr "Bordro'da Görünsün"
+msgstr "Ücret Pusulasında Görünür"
 
 #. module: payroll
 #: model:ir.model.fields,help:payroll.field_hr_payslip_line__condition_python
@@ -512,19 +595,19 @@ msgid ""
 "Applied this rule for calculation if condition is true. You can specify "
 "condition like basic > 1000."
 msgstr ""
-"Bu kuralı eğer koşul doğruysa uygulayın. >1000 gibi temel bir koşul "
-"belirtebilirsiniz."
+"Hesaplama için bu kuralı eğer koşul doğruysa uygulayın. >1000 gibi temel bir "
+"koşul belirtebilirsiniz."
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_salary_rule_category_view_form
 msgid "Associated Salary Rules"
-msgstr ""
+msgstr "İlişkili Maaş Kuralları"
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip__message_attachment_count
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip_run__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "Ek Sayısı"
 
 #. module: payroll
 #: model:hr.salary.rule.category,name:payroll.BASIC
@@ -539,7 +622,7 @@ msgstr "Temel Maaş"
 #. module: payroll
 #: model:ir.actions.act_window,name:payroll.action_get_batch_payslip_lines
 msgid "Batch Payslip Lines"
-msgstr ""
+msgstr "Toplu Ücret Pusulası Satırları"
 
 #. module: payroll
 #: model:ir.model.fields.selection,name:payroll.selection__hr_contract__schedule_pay__bi-monthly
@@ -554,7 +637,7 @@ msgstr "İki Haftalık"
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.res_config_settings_view_form
 msgid "Calculation Settings"
-msgstr ""
+msgstr "Hesaplama Ayarları"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_payslip_line_view_form
@@ -571,14 +654,13 @@ msgstr "İptal"
 #: model:ir.model.fields.selection,name:payroll.selection__hr_payslip_change_state__state__cancel
 #: model_terms:ir.ui.view,arch_db:payroll.hr_payslip_view_form
 msgid "Cancel Payslip"
-msgstr "Bordro İptal"
+msgstr "Ücret Pusulası İptal"
 
 #. module: payroll
 #. odoo-python
 #: code:addons/payroll/models/hr_payslip.py:0
-#, python-format
 msgid "Cannot cancel a payslip that is done."
-msgstr "Yapılan bordrolar iptal edilemez."
+msgstr "Tamamlanan ücret pusulaları iptal edilemez."
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip_line__category_id
@@ -591,22 +673,22 @@ msgstr "Kategori"
 #: model:ir.actions.act_window,name:payroll.action_hr_payslip_change_state_form
 #: model_terms:ir.ui.view,arch_db:payroll.hr_payslip_change_state_form
 msgid "Change state"
-msgstr ""
+msgstr "Durum değiştir"
 
 #. module: payroll
 #: model:ir.model,name:payroll.model_hr_payslip_change_state
 msgid "Change state of a payslip"
-msgstr ""
+msgstr "Bir ücret pusulasının durumunu değiştir"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_payslip_line_view_form
 msgid "Child Line Details"
-msgstr ""
+msgstr "Alt Satır Detayları"
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip_line__child_ids
 msgid "Child Payslip Lines"
-msgstr ""
+msgstr "Alt Ücret Pusulası Satırları"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_salary_rule_view_form
@@ -616,7 +698,7 @@ msgstr "Alt Kurallar"
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_salary_rule__child_ids
 msgid "Child Salary Rule"
-msgstr "Alt Ücret Kural"
+msgstr "Alt Ücret Kuralı"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_salary_rule_view_form
@@ -633,6 +715,19 @@ msgid ""
 "                                    salary rule (e.x. rules required for "
 "complex tax computation that needs data from several modules)."
 msgstr ""
+"Alt kural işlevi, üst kuraldan önce başka kuralların hesaplanması "
+"gerektiğinde kullanışlıdır. <br/>\n"
+"                                    Bu, alt kural (bir kuralın üst kuralı) "
+"olarak bildirilen tüm maaş kurallarının, üst kuralı maaş yapısına \n"
+"                                    dahil edilmişse hesaplamaya ekleneceği "
+"anlamına gelir. Dolayısıyla, alt kurallar yalnızca üst kuralı "
+"hesaplandığında\n"
+"                                    hesaplanır. <br/>\n"
+"                                    Bu işlev, üst maaş kuralına bağımlılık "
+"olarak kullanılan yardımcı hesaplamalar yapmak için kullanışlıdır (örn. "
+"birkaç \n"
+"                                    modülden veri gerektiren karmaşık vergi "
+"hesaplamaları için gereken kurallar)."
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_payroll_structure__children_ids
@@ -643,7 +738,7 @@ msgstr "Alt"
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_salary_rule_view_form
 msgid "Children Definition"
-msgstr "Alt Tanımı"
+msgstr "Alt Kural Tanımı"
 
 #. module: payroll
 #: model:ir.model.fields.selection,name:payroll.selection__hr_payslip_run__state__close
@@ -699,7 +794,7 @@ msgstr "Hesaplama"
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip__compute_date
 msgid "Compute Date"
-msgstr ""
+msgstr "Hesaplama Tarihi"
 
 #. module: payroll
 #: model:ir.model.fields.selection,name:payroll.selection__hr_payslip_change_state__state__verify
@@ -711,12 +806,12 @@ msgstr "Tabloyu Hesapla"
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip_line__condition_select
 #: model:ir.model.fields,field_description:payroll.field_hr_salary_rule__condition_select
 msgid "Condition Based on"
-msgstr "Koşul Bazında"
+msgstr "Koşula Baz"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_salary_rule_view_form
 msgid "Condition Range"
-msgstr ""
+msgstr "Koşul Aralığı"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_salary_rule_view_form
@@ -737,13 +832,13 @@ msgstr "Yapılandırma"
 #: model:ir.model.fields.selection,name:payroll.selection__hr_payslip_change_state__state__done
 #: model_terms:ir.ui.view,arch_db:payroll.hr_payslip_view_form
 msgid "Confirm"
-msgstr "Doğrula"
+msgstr "Onayla"
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_res_config_settings__prevent_compute_on_confirm
 #: model_terms:ir.ui.view,arch_db:payroll.res_config_settings_view_form
 msgid "Confirm payslips without recomputing"
-msgstr ""
+msgstr "Ücret pusulalarını yeniden hesaplamadan onayla"
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip__contract_id
@@ -769,7 +864,7 @@ msgstr "Katkı Payı Kaydı"
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.view_payslip_lines_contribution_register
 msgid "Contribution Register's Payslip Lines"
-msgstr "Destek Kayıtlı kullanıcısının bordro Satırları"
+msgstr "Katkı Kaydının Ücret Pusulası Satırları"
 
 #. module: payroll
 #: model:ir.actions.act_window,name:payroll.hr_contribution_register_action
@@ -786,7 +881,7 @@ msgstr "Sevk Ödeneği"
 #. module: payroll
 #: model:hr.salary.rule,name:payroll.hr_salary_rule_ca_demo
 msgid "Conveyance Allowance For Marc Demo"
-msgstr ""
+msgstr "Marc Demo İçin Sevk Ödeneği"
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_contribution_register__create_uid
@@ -826,7 +921,7 @@ msgstr "Oluşturulma"
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip__credit_note
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip_run__credit_note
 msgid "Credit Note"
-msgstr "İade/Fiyat Farkı"
+msgstr "Alacak Notu"
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip_line__currency_id
@@ -836,7 +931,7 @@ msgstr ""
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_payslip_view_search
 msgid "Date"
-msgstr ""
+msgstr "Tarih"
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip__date_from
@@ -844,29 +939,29 @@ msgstr ""
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip_run__date_start
 #: model:ir.model.fields,field_description:payroll.field_payslip_lines_contribution_register__date_from
 msgid "Date From"
-msgstr "Tarihi Itibaren"
+msgstr "Başlangıç Tarihi"
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip__date_to
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip_run__date_end
 #: model:ir.model.fields,field_description:payroll.field_payslip_lines_contribution_register__date_to
 msgid "Date To"
-msgstr "Date To"
+msgstr "Bitiş Tarihi"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_payslip_view_form
 msgid "Days"
-msgstr ""
+msgstr "Gün"
 
 #. module: payroll
 #: model:hr.salary.rule.category,name:payroll.DED
 msgid "Deduction"
-msgstr "Deduction"
+msgstr "Kesinti"
 
 #. module: payroll
 #: model:ir.model.fields,help:payroll.field_hr_contract__schedule_pay
 msgid "Defines the frequency of the wage payment."
-msgstr "Maaş ödemelerinin sıklığını tanımlayınız"
+msgstr "Maaş ödemesinin sıklığını tanımlar."
 
 #. module: payroll
 #: model:ir.model.fields,help:payroll.field_hr_payslip_run__struct_id
@@ -876,6 +971,10 @@ msgid ""
 "isn't mandatory anymore and thus the rules applied will be all the rules set "
 "on the structure of all contracts of the employee valid for the chosen period"
 msgstr ""
+"Seçilen sözleşmeye göre bu toplu ücret pusulalarına uygulanması gereken "
+"kuralları tanımlar. Sözleşme alanını boş bırakırsanız, bu alan artık zorunlu "
+"olmaz ve böylece uygulanan kurallar, seçilen dönem için geçerli olan "
+"çalışanın tüm sözleşmelerinin yapısında belirlenen tüm kurallar olur"
 
 #. module: payroll
 #: model:ir.model.fields,help:payroll.field_hr_payslip__struct_id
@@ -885,10 +984,10 @@ msgid ""
 "mandatory anymore and thus the rules applied will be all the rules set on "
 "the structure of all contracts of the employee valid for the chosen period"
 msgstr ""
-"Seçilen sözleşmeye uygun olarak bu bordroda uygulanacak kuralları "
-"tanımlayın. Sözleşme alanını boş bırakırsanız, bu alan artık zorunlu olmaz "
-"ve böylece uygulanan kurallar, personel sözleşmelerinin yapısında seçilen "
-"dönem için tanımlanan bütün kurallar  için geçerli olacaktır."
+"Seçilen sözleşmeye göre bu ücret pusulasına uygulanması gereken kuralları "
+"tanımlar. Sözleşme alanını boş bırakırsanız, bu alan artık zorunlu olmaz ve "
+"böylece uygulanan kurallar, personel sözleşmelerinin yapısında seçilen dönem "
+"için tanımlanan bütün kurallar için geçerli olacaktır"
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_contribution_register__note
@@ -935,12 +1034,12 @@ msgstr "Tamamlandı"
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_payslip_run_view_search
 msgid "Done Payslip Batches"
-msgstr "Biten Bordrosu Toplu"
+msgstr "Biten Toplu Ücret Pusulası Grubu"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_payslip_view_search
 msgid "Done Slip"
-msgstr "Tamamlanan Fiş"
+msgstr "Tamamlanan Ücret Pusulası"
 
 #. module: payroll
 #: model:ir.model.fields.selection,name:payroll.selection__hr_payslip__state__draft
@@ -953,12 +1052,12 @@ msgstr "Taslak"
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_payslip_run_view_search
 msgid "Draft Payslip Batches"
-msgstr "Taslak Bordro Toplu"
+msgstr "Taslak Toplu Ücret Pusulası Grupları"
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip__dynamic_filtered_payslip_lines
 msgid "Dynamic Filtered Payslip Lines"
-msgstr ""
+msgstr "Dinamik Filtrelenen Ücret Pusulası Satırları"
 
 #. module: payroll
 #: model:ir.model,name:payroll.model_hr_employee
@@ -981,12 +1080,12 @@ msgstr "Personel Fonksiyonu"
 #: model:ir.actions.act_window,name:payroll.hr_payslip_action
 #: model:ir.ui.menu,name:payroll.hr_payslip_menu
 msgid "Employee Payslips"
-msgstr "Personel Bordroları"
+msgstr "Personel Ücret Pusulaları"
 
 #. module: payroll
 #: model:ir.model.fields,help:payroll.field_hr_contract__resource_calendar_id
 msgid "Employee's working schedule."
-msgstr "Personelin çalışma saatleri."
+msgstr "Personelin çalışma takvimi."
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip_employees__employee_ids
@@ -999,7 +1098,6 @@ msgstr "Personeller"
 #. module: payroll
 #. odoo-python
 #: code:addons/payroll/models/hr_salary_rule_category.py:0
-#, python-format
 msgid "Error! You cannot create recursive hierarchy of Salary Rule Category."
 msgstr ""
 "Hata! Maaş Kuralı Kategorisi'nin yinelemeli hiyerarşisini oluşturamazsınız."
@@ -1007,7 +1105,6 @@ msgstr ""
 #. module: payroll
 #. odoo-python
 #: code:addons/payroll/models/hr_salary_rule.py:0
-#, python-format
 msgid "Error! You cannot create recursive hierarchy of Salary Rules."
 msgstr "Hata! Maaş Kuralı'nın yinelemeli hiyerarşisini oluşturamazsınız."
 
@@ -1015,17 +1112,17 @@ msgstr "Hata! Maaş Kuralı'nın yinelemeli hiyerarşisini oluşturamazsınız."
 #: model:ir.model.fields,help:payroll.field_hr_payslip_line__register_id
 #: model:ir.model.fields,help:payroll.field_hr_salary_rule__register_id
 msgid "Eventual third party involved in the salary payment of the employees."
-msgstr "Nihai üçüncü parti Personellerin maaş ödemeleri dahil."
+msgstr "Personellerin maaş ödemelerine nihai üçüncü parti dahil."
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_salary_rule_view_form
 msgid "Examples"
-msgstr ""
+msgstr "Örnekler"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_payslip_change_state_form
 msgid "Execute"
-msgstr ""
+msgstr "Çalıştır"
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip_line__amount_fix
@@ -1039,19 +1136,19 @@ msgstr "Sabit Tutar"
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip__message_follower_ids
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip_run__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "Takipciler"
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip__message_partner_ids
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip_run__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "Takipçiler (İş Ortakları)"
 
 #. module: payroll
 #: model:ir.model.fields,help:payroll.field_hr_payslip__activity_type_icon
 #: model:ir.model.fields,help:payroll.field_hr_payslip_run__activity_type_icon
 msgid "Font awesome icon e.g. fa-tasks"
-msgstr ""
+msgstr "Font awesome simgesi örn. fa-tasks"
 
 #. module: payroll
 #: model:ir.model.fields,help:payroll.field_hr_payslip_line__amount_percentage
@@ -1062,7 +1159,6 @@ msgstr "Örenk, 50% yüzdesi uygulamak için 50,0 girin"
 #. module: payroll
 #. odoo-python
 #: code:addons/payroll/report/report_contribution_register.py:0
-#, python-format
 msgid "Form content is missing, this report cannot be printed."
 msgstr "Form içeriği eksik, bu rapor yazdırılamıyor."
 
@@ -1075,22 +1171,21 @@ msgstr "Genel"
 #: model:ir.actions.act_window,name:payroll.action_hr_payslip_by_employees
 #: model_terms:ir.ui.view,arch_db:payroll.hr_payslip_run_view_form
 msgid "Generate Payslips"
-msgstr "Bordroları Oluştur"
+msgstr "Ücret Pusulalarını Oluştur"
 
 #. module: payroll
 #: model:ir.model,name:payroll.model_hr_payslip_employees
 msgid "Generate payslips for all selected employees"
-msgstr "Seçilen tüm personeller için maaş bordroları oluştur"
+msgstr "Seçilen tüm personeller için ücret pusulalarını oluştur"
 
 #. module: payroll
 #: model:hr.salary.rule,name:payroll.hr_salary_rule_sales_commission
 msgid "Get 1% of sales"
-msgstr "Satışların %1'ini alın."
+msgstr "Satışların %1'ini alın"
 
 #. module: payroll
 #. odoo-python
 #: code:addons/payroll/models/hr_payslip.py:0
-#, python-format
 msgid "Global Leaves"
 msgstr "Resmi Tatiller"
 
@@ -1111,22 +1206,22 @@ msgstr "Grupla"
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip__has_message
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip_run__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "Mesaj Var mı"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_salary_rule_view_form
 msgid "Help"
-msgstr ""
+msgstr "Yardım"
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip__hide_child_lines
 msgid "Hide Child Lines"
-msgstr ""
+msgstr "Alt Satırları Gizle"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_payslip_view_form
 msgid "Hours"
-msgstr ""
+msgstr "Saat"
 
 #. module: payroll
 #: model:hr.salary.rule,name:payroll.hr_salary_rule_houserentallowance1
@@ -1154,25 +1249,25 @@ msgstr "ID"
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip__activity_exception_icon
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip_run__activity_exception_icon
 msgid "Icon"
-msgstr ""
+msgstr "Simge"
 
 #. module: payroll
 #: model:ir.model.fields,help:payroll.field_hr_payslip__activity_exception_icon
 #: model:ir.model.fields,help:payroll.field_hr_payslip_run__activity_exception_icon
 msgid "Icon to indicate an exception activity."
-msgstr ""
+msgstr "İstisna etkinliğini gösteren simge."
 
 #. module: payroll
 #: model:ir.model.fields,help:payroll.field_hr_payslip__message_needaction
 #: model:ir.model.fields,help:payroll.field_hr_payslip_run__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "İşaretliyse, yeni mesajlar ilgilenmenizi bekliyor."
 
 #. module: payroll
 #: model:ir.model.fields,help:payroll.field_hr_payslip__message_has_error
 #: model:ir.model.fields,help:payroll.field_hr_payslip_run__message_has_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "İşaretliyse,bazı mesajlar gönderi hatası içermektedir."
 
 #. module: payroll
 #: model:ir.model.fields,help:payroll.field_hr_payslip_run__credit_note
@@ -1180,8 +1275,8 @@ msgid ""
 "If its checked, indicates that all payslips generated from here are refund "
 "payslips."
 msgstr ""
-"Bu İşaretliyse, buradan oluşturulan tüm maaş bordroları iade olduğunu "
-"gösterir"
+"İşaretliyse, buradan oluşturulan tüm ücret pusulalarının iade pusulası "
+"olduğunu gösterir."
 
 #. module: payroll
 #: model:ir.model.fields,help:payroll.field_hr_payslip_line__active
@@ -1190,8 +1285,8 @@ msgid ""
 "If the active field is set to false, it will allow you to hide the salary "
 "rule without removing it."
 msgstr ""
-"Etkin alanda yanlış ayarlanırsa, size maaş gizleme sağlayacak bu kural "
-"kaldırmadan."
+"Etkin alanına 'yanlış/hayır' değeri atanırsa, maaş kuralını kaldırmadan "
+"gizlemenize izin verir."
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_salary_rule_view_form
@@ -1199,12 +1294,16 @@ msgid ""
 "If you have doubts about coding salary rules, check the \"Help\" tab in this "
 "form."
 msgstr ""
+"Maaş kurallarının kodlanması hakkında şüpheleriniz varsa, bu formdaki "
+"\"Yardım\" sekmesini kontrol edin."
 
 #. module: payroll
 #: model:ir.model.fields,help:payroll.field_res_config_settings__leaves_positive
 #: model_terms:ir.ui.view,arch_db:payroll.res_config_settings_view_form
 msgid "In payslip worked days, leave days/hours have positive values"
 msgstr ""
+"Ücret pusulasındaki çalışılan günler, izinli günler/saatler alanları pozitif "
+"değerler alır"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_salary_rule_view_form
@@ -1214,11 +1313,16 @@ msgid ""
 "                                    in python. Any methematical operation or "
 "python function is supported."
 msgstr ""
+"Maaş kurallarının Python tanımında, Python'da yapacağınız şekilde "
+"istediğiniz kodu\n"
+"                                    yazabilirsiniz. Her tür matematik işlemi "
+"veya Python fonksiyonu desteklenmektedir."
 
 #. module: payroll
 #: model:ir.model.fields,help:payroll.field_hr_payslip__credit_note
 msgid "Indicates this payslip has a refund of another"
-msgstr "Bu bordrosunu başka bir geri ödemesi varsa gösterir"
+msgstr ""
+"Bu ücret pusulasının, bir başka pusulanın geri ödemesi olduğunu gösterir"
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip_line__input_ids
@@ -1236,17 +1340,17 @@ msgstr "İç Not"
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip__message_is_follower
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip_run__message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "Takipçi mi"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_payslip_run_view_kanban
 msgid "Is a Blocking Reason?"
-msgstr "Bir duruş nedeni mi?"
+msgstr "Bloke Nedeni mi?"
 
 #. module: payroll
 #: model:ir.model.fields,help:payroll.field_hr_payslip_input__amount_qty
 msgid "It can be used in computation for other inputs"
-msgstr ""
+msgstr "Diğer girdiler için hesaplamada kullanılabilir"
 
 #. module: payroll
 #: model:ir.model.fields,help:payroll.field_hr_salary_rule__quantity
@@ -1254,7 +1358,10 @@ msgid ""
 "It is used in computation for percentage and fixed amount. For e.g. A rule "
 "for Meal Voucher having fixed amount of 1€ per worked day can have its "
 "quantity defined in expression like worked_days.WORK100.number_of_days."
-msgstr "Bu, yüzde ve sabitlenmiş miktarların hesabı için kullanıldı."
+msgstr ""
+"Yüzde ve sabit tutar hesaplama için kullanılır. Örneğin, Çalışılan gün "
+"başına sabit 1€ tutarında bir Yemek Çeki kuralı için miktar şöyle bir ifade "
+"ile tanımlanabilir worked_days.WORK100.number_of_days."
 
 #. module: payroll
 #: model:ir.model.fields,help:payroll.field_hr_payslip_input__amount
@@ -1263,9 +1370,9 @@ msgid ""
 "basic salary for per product can defined in expression like result = inputs."
 "SALEURO.amount * contract.wage*0.01."
 msgstr ""
-"Bu hesaplama kullanılır. = % 1 komisyon temel maaşları ürün ifade sonucu "
-"gibi tanımlanmış satış sahip için e.g. A kuralı için girdi. SALEURO.amount * "
-"contract.wage*0.01."
+"Hesaplamada kullanılır. Örneğin, ürün başına baz maaşın %1'i oranında "
+"komisyon uygulanan bir satış kuralı şöyle tanımlanabilir: result = inputs."
+"SALEURO.amount * contract.wage*0.01."
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_contribution_register__write_uid
@@ -1305,24 +1412,26 @@ msgstr "Son Güncelleme"
 #: model:ir.model.fields,field_description:payroll.field_res_config_settings__leaves_positive
 #: model_terms:ir.ui.view,arch_db:payroll.res_config_settings_view_form
 msgid "Leaves with positive values"
-msgstr ""
+msgstr "İzinler pozitif değer ile"
 
 #. module: payroll
 #: model:ir.model.fields,help:payroll.field_hr_salary_rule_category__parent_id
 msgid ""
 "Linking a salary category to its parent is used only for the reporting "
 "purpose."
-msgstr "Amaç üst bir ücret kategori bağlantı raporlama için kullanılır."
+msgstr ""
+"Bir maaş kategorisinin ana kategorisine bağlanması yalnızca raporlama "
+"amacıyla kullanılır."
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip__paid
 msgid "Made Payment Order ? "
-msgstr "Made Payment Order ? "
+msgstr "Ödeme Emri Yapıldı mı ? "
 
 #. module: payroll
 #: model:ir.module.category,description:payroll.module_category_payroll
 msgid "Manage employee payroll"
-msgstr ""
+msgstr "Personel bordrosunu yönet"
 
 #. module: payroll
 #: model:res.groups,name:payroll.group_payroll_manager
@@ -1344,13 +1453,13 @@ msgstr "Yemek Fişi"
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip__message_has_error
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip_run__message_has_error
 msgid "Message Delivery error"
-msgstr ""
+msgstr "Mesaj Teslimat hatası"
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip__message_ids
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip_run__message_ids
 msgid "Messages"
-msgstr ""
+msgstr "Mesajlar"
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip_line__condition_range_min
@@ -1372,7 +1481,7 @@ msgstr "Aylık"
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip__my_activity_date_deadline
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip_run__my_activity_date_deadline
 msgid "My Activity Deadline"
-msgstr ""
+msgstr "Aktivitemin Son Tarihi"
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_contribution_register__name
@@ -1401,30 +1510,29 @@ msgstr "Net Maaş"
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip__activity_calendar_event_id
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip_run__activity_calendar_event_id
 msgid "Next Activity Calendar Event"
-msgstr ""
+msgstr "Sonraki Aktivite Takvim Etkinliği"
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip__activity_date_deadline
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip_run__activity_date_deadline
 msgid "Next Activity Deadline"
-msgstr ""
+msgstr "Sonraki Aktivite Son Tarihi"
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip__activity_summary
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip_run__activity_summary
 msgid "Next Activity Summary"
-msgstr ""
+msgstr "Sonraki Etkinliğin Özeti"
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip__activity_type_id
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip_run__activity_type_id
 msgid "Next Activity Type"
-msgstr ""
+msgstr "Sonraki Etkinliğin Türü"
 
 #. module: payroll
 #. odoo-python
 #: code:addons/payroll/models/hr_payslip.py:0
-#, python-format
 msgid "Normal Working Days paid at 100%"
 msgstr "Normal Çalışma Günleri %100 ödenmektedir"
 
@@ -1438,7 +1546,7 @@ msgstr "Notlar"
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip__message_needaction_counter
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip_run__message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "Eylem Sayısı"
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip_worked_days__number_of_days
@@ -1454,19 +1562,19 @@ msgstr "Süre (Saat)"
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip__message_has_error_counter
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip_run__message_has_error_counter
 msgid "Number of errors"
-msgstr ""
+msgstr "Hata adedi"
 
 #. module: payroll
 #: model:ir.model.fields,help:payroll.field_hr_payslip__message_needaction_counter
 #: model:ir.model.fields,help:payroll.field_hr_payslip_run__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "Eylem gerektiren mesaj sayısı"
 
 #. module: payroll
 #: model:ir.model.fields,help:payroll.field_hr_payslip__message_has_error_counter
 #: model:ir.model.fields,help:payroll.field_hr_payslip_run__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
+msgstr "Teslimat hatası olan mesaj sayısı"
 
 #. module: payroll
 #: model:res.groups,name:payroll.group_payroll_user
@@ -1476,28 +1584,31 @@ msgstr "Yetkili"
 #. module: payroll
 #. odoo-python
 #: code:addons/payroll/wizard/hr_payslip_change_state.py:0
-#, python-format
 msgid ""
 "Only draft payslips can be verified,the payslip %(nm)s is in %(st)s state"
 msgstr ""
+"Sadece taslak ücret pusulaları doğrulanabilir, %(nm)s ücret pusulası %(st)s "
+"durumundadır"
 
 #. module: payroll
 #. odoo-python
 #: code:addons/payroll/wizard/hr_payslip_change_state.py:0
-#, python-format
 msgid ""
 "Only payslips in states verify or draft can be confirmed, the payslip %(nm)s "
 "is in %(st)s state"
 msgstr ""
+"Sadece doğrulama ve taslak durumundaki ücret pusulaları onaylanabilir, "
+"%(nm)s ücret pusulası %(st)s durumundadır"
 
 #. module: payroll
 #. odoo-python
 #: code:addons/payroll/wizard/hr_payslip_change_state.py:0
-#, python-format
 msgid ""
 "Only rejected payslips can be reset to draft, the payslip %(nm)s is in "
 "%(st)s state"
 msgstr ""
+"Sadece reddedilmiş ücret pusulaları taslak durumuna alınabilir, %(nm)s ücret "
+"pusulası %(st)s durumundadır"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_payslip_view_form
@@ -1513,7 +1624,7 @@ msgstr "Üst"
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip_line__parent_line_id
 msgid "Parent Payslip Line"
-msgstr ""
+msgstr "Üst Ücret Pusulası Satırı"
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip_line__parent_rule_id
@@ -1533,37 +1644,37 @@ msgstr "İş Ortağı"
 #: model_terms:ir.ui.view,arch_db:payroll.report_payslip
 #: model_terms:ir.ui.view,arch_db:payroll.report_payslipdetails
 msgid "Pay Slip"
-msgstr "Pay Slip"
+msgstr "Ücret Pusulası"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_payslip_view_search
 msgid "PaySlip Batch"
-msgstr "Bordro Toplu İşlemi"
+msgstr "Ücret Pusulası Paketi"
 
 #. module: payroll
 #: model:ir.actions.report,name:payroll.payslip_details_report
 msgid "PaySlip Details"
-msgstr "Bordrosu Detayları"
+msgstr "Ücret Pusulası Detayları"
 
 #. module: payroll
 #: model:ir.actions.act_window,name:payroll.action_payslip_lines_contribution_register
 msgid "PaySlip Lines"
-msgstr "Bordro Satırları"
+msgstr "Ücret Pusulası Satırları"
 
 #. module: payroll
 #: model:ir.actions.report,print_report_name:payroll.action_contribution_register
 msgid "PaySlip Lines By Contribution Register"
-msgstr ""
+msgstr "Katkı Kaydına Göre Ücret Pusulası Satırları"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.report_contributionregister
 msgid "PaySlip Lines by Contribution Register"
-msgstr "Destek Kayıtlı kullanıcısının maaş bordro Satırları"
+msgstr "Katkı Kaydına Göre Ücret Pusulası Satırları"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.report_contributionregister
 msgid "PaySlip Name"
-msgstr "Bordro Adı"
+msgstr "Ücret Pusulası Adı"
 
 #. module: payroll
 #: model:ir.actions.act_window,name:payroll.open_payroll_modules
@@ -1576,12 +1687,7 @@ msgstr "Bordro"
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_res_config_settings__module_payroll_account
 msgid "Payroll Accounting"
-msgstr ""
-
-#. module: payroll
-#: model:ir.model.fields,field_description:payroll.field_hr_leave_type__code
-msgid "Payroll Code"
-msgstr ""
+msgstr "Bordro Muhasebesi"
 
 #. module: payroll
 #: model:ir.model,name:payroll.model_report_payroll_report_contributionregister
@@ -1603,65 +1709,64 @@ msgstr "Bordro Yapısı"
 #: model:ir.model,name:payroll.model_hr_payslip
 #: model_terms:ir.ui.view,arch_db:payroll.hr_payslip_view_form
 msgid "Payslip"
-msgstr "Bordro"
+msgstr "Ücret Pusulası"
 
 #. module: payroll
 #. odoo-python
 #: code:addons/payroll/models/hr_payslip.py:0
-#, python-format
 msgid "Payslip 'Date From' must be earlier than 'Date To'."
-msgstr ""
+msgstr "Ücret pusulası 'Başlangıç Tarihi' 'Bitiş Tarihi'nden önce olmalıdır."
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip_line__payslip_run_id
 msgid "Payslip Batch"
-msgstr ""
+msgstr "Ücret Pusulası Paketi"
 
 #. module: payroll
 #: model:ir.model,name:payroll.model_hr_payslip_run
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip__payslip_run_id
 #: model_terms:ir.ui.view,arch_db:payroll.hr_payslip_run_view_search
 msgid "Payslip Batches"
-msgstr "Toplu Bordro"
+msgstr "Ücret Pusulası Paketleri"
 
 #. module: payroll
 #: model:ir.actions.act_window,name:payroll.hr_payslip_line_action_computation_details
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip__payslip_count
 #: model_terms:ir.ui.view,arch_db:payroll.hr_payslip_view_form
 msgid "Payslip Computation Details"
-msgstr "Bordro Hesaplama Ayrıntıları"
+msgstr "Ücret Pusulası Hesaplama Ayrıntıları"
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_employee__payslip_count
 msgid "Payslip Count"
-msgstr "Ücret Bordrosu Sayısı"
+msgstr "Ücret Pusulası Sayısı"
 
 #. module: payroll
 #: model:ir.model,name:payroll.model_report_payroll_report_payslipdetails
 msgid "Payslip Details Report"
-msgstr ""
+msgstr "Ücret Pusulası Ayrıntıları Raporu"
 
 #. module: payroll
 #: model:ir.model,name:payroll.model_hr_payslip_input
 msgid "Payslip Input"
-msgstr "Bordro Girdisi"
+msgstr "Ücret Pusulası Girdisi"
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip__input_line_ids
 msgid "Payslip Inputs"
-msgstr "Bordros Girdileri"
+msgstr "Ücret Pusulası Girdileri"
 
 #. module: payroll
 #: model:ir.model,name:payroll.model_hr_payslip_line
 #: model_terms:ir.ui.view,arch_db:payroll.hr_payslip_line_view_form
 #: model_terms:ir.ui.view,arch_db:payroll.hr_payslip_view_form
 msgid "Payslip Line"
-msgstr "Bordro Satırı"
+msgstr "Ücret Pusulası Satırı"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_payslip_line_view_form
 msgid "Payslip Line Details"
-msgstr ""
+msgstr "Ücret Pusulası Ayrıntıları"
 
 #. module: payroll
 #: model:ir.actions.act_window,name:payroll.hr_payslip_line_action
@@ -1670,34 +1775,36 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:payroll.hr_payslip_line_view_search
 #: model_terms:ir.ui.view,arch_db:payroll.hr_payslip_view_form
 msgid "Payslip Lines"
-msgstr "Bordro Satırları"
+msgstr "Ücret Pusulası Satırları"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.report_payslipdetails
 msgid "Payslip Lines by Contribution Register"
-msgstr "Destek Kayıtlı kullanıcısının maaş bordro Satırları"
+msgstr "Katkı Kaydına Göre Ücret Pusulası Satırları"
 
 #. module: payroll
 #: model:ir.model,name:payroll.model_payslip_lines_contribution_register
 msgid "Payslip Lines by Contribution Registers"
-msgstr ""
+msgstr "Katkı Kaydına Göre Ücret Pusulası Satırları"
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip__name
 msgid "Payslip Name"
-msgstr "Bordro Adı"
+msgstr "Ücret Pusulası Adı"
 
 #. module: payroll
 #: model:ir.model,name:payroll.model_hr_payslip_worked_days
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip__worked_days_line_ids
 msgid "Payslip Worked Days"
-msgstr "Bordro Çalışılan Günler"
+msgstr "Ücret Pusulası Çalışılan Günler"
 
 #. module: payroll
 #: model:mail.template,subject:payroll.mail_template_hr_payslip
 msgid ""
 "Payslip for {{object.payslip_run_id.name}} from {{object.company_id.name}}"
 msgstr ""
+"{{object.company_id.name}} şirketinde çalışan {{object.payslip_run_id.name}} "
+"için ücret pusulası"
 
 #. module: payroll
 #. odoo-python
@@ -1708,26 +1815,25 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:payroll.hr_employee_view_form
 #: model_terms:ir.ui.view,arch_db:payroll.hr_payslip_run_view_form
 #: model_terms:ir.ui.view,arch_db:payroll.hr_payslip_view_search
-#, python-format
 msgid "Payslips"
-msgstr "Bordroları"
+msgstr "Ücret Pusulaları"
 
 #. module: payroll
 #: model:ir.actions.act_window,name:payroll.hr_payslip_run_action
 #: model:ir.ui.menu,name:payroll.hr_payslip_run_menu
 #: model_terms:ir.ui.view,arch_db:payroll.hr_payslip_run_view_form
 msgid "Payslips Batches"
-msgstr "Bordroların Toplu-İşlemi"
+msgstr "Ücret Pusulası Paketleri"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.view_hr_payslip_by_employees
 msgid "Payslips by Employees"
-msgstr "Personel Bordrolarına"
+msgstr "Çalışan bazında Ücret Pusulaları"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_payslip_view_search
 msgid "Pending Review"
-msgstr ""
+msgstr "İnceleme Bekliyor"
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip_line__amount_percentage
@@ -1752,18 +1858,18 @@ msgstr "Dönem"
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.res_config_settings_view_form
 msgid "Post payslips in accounting"
-msgstr ""
+msgstr "Ücret pusulalarını muhasebeleştir"
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip__prevent_compute_on_confirm
 msgid "Prevent Compute on Confirm"
-msgstr ""
+msgstr "Onay'da Hesaplama Engelle"
 
 #. module: payroll
 #: model:ir.model.fields,help:payroll.field_res_config_settings__prevent_compute_on_confirm
 #: model_terms:ir.ui.view,arch_db:payroll.res_config_settings_view_form
 msgid "Prevent payslips from being recomputed when confirming them"
-msgstr ""
+msgstr "Ücret pusulaları onay aşamasındayken yeniden hesaplamayı engelle"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.view_payslip_lines_contribution_register
@@ -1842,9 +1948,8 @@ msgstr "Oran (%)"
 #. module: payroll
 #. odoo-python
 #: code:addons/payroll/models/hr_payslip_line.py:0
-#, python-format
 msgid "Recursion error. Only one line should be parent of %s"
-msgstr ""
+msgstr "Kendine dönme hatası. %s için üst satır bir tane olmalı"
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_payroll_structure__code
@@ -1855,7 +1960,7 @@ msgstr "Referans"
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_payslip_view_form
 msgid "Refetch Payslip Data"
-msgstr ""
+msgstr "Ücret Pusulası Verilerini Yeniden Yükle"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_payslip_view_form
@@ -1865,31 +1970,29 @@ msgstr "İade"
 #. module: payroll
 #. odoo-python
 #: code:addons/payroll/models/hr_payslip.py:0
-#, python-format
 msgid "Refund Payslip"
-msgstr ""
+msgstr "İade Ücret Pusulası"
 
 #. module: payroll
 #. odoo-python
 #: code:addons/payroll/models/hr_payslip.py:0
-#, python-format
 msgid "Refund: %s"
-msgstr ""
+msgstr "İade: %s"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_payslip_view_search
 msgid "Refunded"
-msgstr ""
+msgstr "İade Edildi"
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip__refunded_id
 msgid "Refunded Payslip"
-msgstr ""
+msgstr "İade Edilen Ücret Pusulası"
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_contribution_register__register_line_ids
 msgid "Register Line"
-msgstr "Kayıt Satırı"
+msgstr "Katkı Kaydı Satırı"
 
 #. module: payroll
 #: model:ir.model.fields.selection,name:payroll.selection__hr_payslip__state__cancel
@@ -1900,31 +2003,31 @@ msgstr "Reddedildi"
 #: model:ir.model.fields,field_description:payroll.field_hr_payroll_structure__require_code
 #: model:ir.model.fields,field_description:payroll.field_hr_salary_rule_category__require_code
 msgid "Require code"
-msgstr ""
+msgstr "Kod iste"
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip_line__require_code_and_category
 #: model:ir.model.fields,field_description:payroll.field_hr_salary_rule__require_code_and_category
 msgid "Require code and category"
-msgstr ""
+msgstr "Kod ve kategori iste"
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_res_config_settings__require_code_and_category
 #: model_terms:ir.ui.view,arch_db:payroll.res_config_settings_view_form
 msgid "Require code/category on rules, categories and structures"
-msgstr ""
+msgstr "Kurallar, kategoriler ve yapılarda kod/kategori iste"
 
 #. module: payroll
 #: model:ir.model.fields,help:payroll.field_res_config_settings__require_code_and_category
 #: model_terms:ir.ui.view,arch_db:payroll.res_config_settings_view_form
 msgid "Require rule.code, rule.category, category.code, structure.code"
-msgstr ""
+msgstr "rule.code, rule.category, category.code, structure.code iste"
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip__activity_user_id
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip_run__activity_user_id
 msgid "Responsible User"
-msgstr ""
+msgstr "Sorumlu Kullanıcı"
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip_line__salary_rule_id
@@ -1934,17 +2037,17 @@ msgstr "Kural"
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_salary_rule_view_form
 msgid "Rule Configuration"
-msgstr ""
+msgstr "Kural Yapılandırma"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_salary_rule_category_view_form
 msgid "Salary Categories"
-msgstr "Ücret Kategoriler"
+msgstr "Maaş Kategorileri"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_payslip_view_form
 msgid "Salary Computation"
-msgstr "Ücret Hesaplama"
+msgstr "Maaş Hesaplama"
 
 #. module: payroll
 #: model:ir.model,name:payroll.model_hr_salary_rule
@@ -1986,14 +2089,13 @@ msgstr "Ücret Kuralları"
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_salary_rule_view_form
 msgid "Salary Rules formula definition (Python)"
-msgstr ""
+msgstr "Maaş Kuralları formül tanımı (Python)"
 
 #. module: payroll
 #. odoo-python
 #: code:addons/payroll/models/hr_payslip.py:0
-#, python-format
 msgid "Salary Slip of %(name)s for %(dt)s"
-msgstr ""
+msgstr "%(dt)s için %(name)s Maaş Pusulası"
 
 #. module: payroll
 #: model:ir.model,name:payroll.model_hr_payroll_structure
@@ -2010,27 +2112,27 @@ msgstr "Ücret Yapısı"
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_contract__schedule_pay
 msgid "Scheduled Pay"
-msgstr "Ücret Ödeme Türü"
+msgstr "Zamanı Planlanmış Ödeme"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_payslip_run_view_search
 msgid "Search Payslip Batches"
-msgstr "Bordros Toplu İşlemi Arama"
+msgstr "Ücret Pusulasu Paketleri Ara"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_payslip_line_view_search
 msgid "Search Payslip Lines"
-msgstr "Arama Bordro Satırları"
+msgstr "Ücret Pusulası Satırları Ara"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_payslip_view_search
 msgid "Search Payslips"
-msgstr "Arama Bordroları"
+msgstr "Ücret Pusulaları Ara"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_salary_rule_view_search
 msgid "Search Salary Rule"
-msgstr "Maaş Arama Kuralı"
+msgstr "Maaş Kuralı Ara"
 
 #. module: payroll
 #: model:ir.model.fields.selection,name:payroll.selection__hr_contract__schedule_pay__semi-annually
@@ -2040,12 +2142,12 @@ msgstr "Altı Aylık"
 #. module: payroll
 #: model:ir.actions.act_window,name:payroll.action_partner_mass_mail
 msgid "Send email with payslip"
-msgstr ""
+msgstr "Ücret pusulası içeren mail gönder"
 
 #. module: payroll
 #: model:mail.template,name:payroll.mail_template_hr_payslip
 msgid "Send payslip by email"
-msgstr ""
+msgstr "Ücret pusulasını email ile gönder"
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip_input__sequence
@@ -2071,7 +2173,7 @@ msgstr "Ayarlar"
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip__hide_invisible_lines
 msgid "Show only lines that appear on payslip"
-msgstr ""
+msgstr "Sadece ücret pusulasında görünen satırları göster"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_payslip_view_search
@@ -2093,12 +2195,16 @@ msgid ""
 "Today: Activity date is today\n"
 "Planned: Future activities."
 msgstr ""
+"Aktivitelere dayalı Durum:\n"
+"Overdue: Son günü geçmiş\n"
+"Today: Aktivite günü bugün\n"
+"Planned: Gelecek aktiviteler."
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip__struct_id
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip_run__struct_id
 msgid "Structure"
-msgstr "Structure"
+msgstr "Yapı"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_salary_rule_view_form
@@ -2108,6 +2214,12 @@ msgid ""
 "variables which will store the data\n"
 "                                    for salary rule computation."
 msgstr ""
+"Hesaplamalar aşağıdaki nesne ve değişkenler kullanılarak "
+"gerçekleştirilmeli.\n"
+"                                    Sonra, maaş kural hesaplaması için "
+"kullanılacak verileri kaydeden\n"
+"                                    belirli hesap değişkenleri kullanmak "
+"zorundasınız."
 
 #. module: payroll
 #: model:ir.model.fields,help:payroll.field_hr_payslip_line__code
@@ -2116,27 +2228,27 @@ msgid ""
 "The code of salary rules can be used as reference in computation of other "
 "rules. In that case, it is case sensitive."
 msgstr ""
-"Maaş kurallarının kodu, hesaplama diğer kurallar başvuru olarak "
-"kullanılabilir. Bu durumda, büyük küçük harf duyarlı."
+"Maaş kurallarının kodları, diğer kuralların hesaplanmasında referans olarak "
+"kullanılabilir. Bu kullanım, büyük küçük harf duyarlıdır."
 
 #. module: payroll
 #: model:ir.model.fields,help:payroll.field_hr_payslip_input__code
 #: model:ir.model.fields,help:payroll.field_hr_payslip_worked_days__code
 #: model:ir.model.fields,help:payroll.field_hr_rule_input__code
 msgid "The code that can be used in the salary rules"
-msgstr "Ücret kurallar için kullanılabilir kod"
+msgstr "Maaş kurallarında kullanılabilen kod"
 
 #. module: payroll
 #: model:ir.model.fields,help:payroll.field_hr_payslip_line__amount_select
 #: model:ir.model.fields,help:payroll.field_hr_salary_rule__amount_select
 msgid "The computation method for the rule amount."
-msgstr "Kural miktarı hesaplama yöntemi."
+msgstr "Kural miktarı için hesaplama yöntemi."
 
 #. module: payroll
 #: model:ir.model.fields,help:payroll.field_hr_payslip_input__contract_id
 #: model:ir.model.fields,help:payroll.field_hr_payslip_worked_days__contract_id
 msgid "The contract for which applied this input"
-msgstr "Sözleşme bu giriş uygulandı"
+msgstr "Bu girdilere uygulanan sözleşme"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_salary_rule_view_form
@@ -2144,6 +2256,8 @@ msgid ""
 "The following objects and variables are available to you to use it in salary "
 "rules calculations."
 msgstr ""
+"Maaş kuralları hesaplamalarında kullanabileceğiniz aşağıdaki nesneler ve "
+"değişkenler mevcuttur."
 
 #. module: payroll
 #: model:ir.model.fields,help:payroll.field_hr_payslip_line__condition_range_max
@@ -2155,14 +2269,13 @@ msgstr "Bu kural için uygulanan azami tutar."
 #: model:ir.model.fields,help:payroll.field_hr_payslip_line__condition_range_min
 #: model:ir.model.fields,help:payroll.field_hr_salary_rule__condition_range_min
 msgid "The minimum amount, applied for this rule."
-msgstr "Bu kural için uygulanan minimum tutar,."
+msgstr "Bu kural için uygulanan minimum tutar."
 
 #. module: payroll
 #. odoo-python
 #: code:addons/payroll/wizard/hr_payslip_change_state.py:0
-#, python-format
 msgid "The payslip %(nm)s is already canceled please deselect it"
-msgstr ""
+msgstr "Ücret pusulası %(nm)s zaten iptal edilmiş, lütfen seçimi kaldırın"
 
 #. module: payroll
 #: model:ir.model.fields,help:payroll.field_hr_payslip_line__condition_range
@@ -2172,23 +2285,19 @@ msgid ""
 "but you can also use categories code fields in lowercase as a variable names "
 "(hra, ma, lta, etc.) and the variable basic."
 msgstr ""
-"Bu % alanlarının değerlerini hesaplamak için kullanılacaktır; Genel olarak "
-"bu temel temel, ama küçük Kategoriler kod alanları (hra, ma, lta, vb) bir "
-"değişken adları ve temel değişkeni kullanabilirsiniz."
-
-#. module: payroll
-#: model:ir.model,name:payroll.model_hr_leave_type
-msgid "Time Off Type"
-msgstr ""
+"Bu, % alanlarının değerlerini hesaplamak için kullanılır; genellikle "
+"temeldir, ancak değişken adı (hra, ma, lta, vb.) ve temel değişken olarak "
+"küçük harfli kategori kodu alanlarını da kullanabilirsiniz."
 
 #. module: payroll
 #. odoo-python
 #: code:addons/payroll/models/hr_payslip.py:0
-#, python-format
 msgid ""
 "To cancel the Original Payslip the\n"
 "                        Refunded Payslip needs to be canceled first!"
 msgstr ""
+"Asıl Ücret Pusulasını iptal etmek için\n"
+"                        önce İade Ücret Pusulası iptal edilmelidir!"
 
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip_line__total
@@ -2202,7 +2311,7 @@ msgstr "Toplam"
 #: model:ir.model.fields,help:payroll.field_hr_payslip__activity_exception_decoration
 #: model:ir.model.fields,help:payroll.field_hr_payslip_run__activity_exception_decoration
 msgid "Type of the exception activity on record."
-msgstr ""
+msgstr "Kayıttaki istisna aktivitesinin türü."
 
 #. module: payroll
 #: model:ir.model.fields,help:payroll.field_hr_payslip_line__sequence
@@ -2214,7 +2323,7 @@ msgstr "Hesaplama sırasını düzenlemek için kullanın"
 #: model:ir.model.fields,help:payroll.field_hr_payslip_line__appears_on_payslip
 #: model:ir.model.fields,help:payroll.field_hr_salary_rule__appears_on_payslip
 msgid "Used to display the salary rule on payslip."
-msgstr "Maaş bordrosu üzerinde maaş kuralı göstermek için kullanılır."
+msgstr "Ücret pusulası üzerinde maaş kuralını göstermek için kullanılır."
 
 #. module: payroll
 #: model:ir.model.fields.selection,name:payroll.selection__hr_payslip__state__verify
@@ -2225,13 +2334,13 @@ msgstr "Bekleyen"
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip__website_message_ids
 #: model:ir.model.fields,field_description:payroll.field_hr_payslip_run__website_message_ids
 msgid "Website Messages"
-msgstr ""
+msgstr "Web Sitesi Mesajları"
 
 #. module: payroll
 #: model:ir.model.fields,help:payroll.field_hr_payslip__website_message_ids
 #: model:ir.model.fields,help:payroll.field_hr_payslip_run__website_message_ids
 msgid "Website communication history"
-msgstr ""
+msgstr "Web Sitesi iletişim geçmişi"
 
 #. module: payroll
 #: model:ir.model.fields.selection,name:payroll.selection__hr_contract__schedule_pay__weekly
@@ -2256,74 +2365,78 @@ msgstr "Çalışılan Gün ve Girişler"
 #. module: payroll
 #: model:ir.model.fields,field_description:payroll.field_hr_contract__resource_calendar_id
 msgid "Working Schedule"
-msgstr "Çalışma Saatleri"
+msgstr "Çalışma Takvimi"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_salary_rule_view_form
 msgid "Write salary rule notes or observations here..."
-msgstr ""
+msgstr "Maaş kuralı notlarını veya gözlemleri buraya yazın..."
 
 #. module: payroll
 #. odoo-python
 #: code:addons/payroll/models/hr_salary_rule.py:0
-#, python-format
 msgid ""
 "Wrong percentage base or quantity defined for salary rule %(nm)s (%(code)s) "
 "for employee %(ee)s."
 msgstr ""
+"Çalışan %(ee)s için maaş kuralı %(nm)s (%(kod)s) için yanlış yüzdelik taban "
+"veya miktar tanımlandı."
 
 #. module: payroll
 #. odoo-python
 #: code:addons/payroll/models/hr_salary_rule.py:0
-#, python-format
 msgid ""
 "Wrong quantity defined for salary rule %(nm)s (%(code)s) for employee %(ee)s."
 msgstr ""
+"Çalışan %(ee)s için maaş kuralı %(nm)s (%(kod)s) için yanlış miktar "
+"tanımlandı."
 
 #. module: payroll
 #. odoo-python
 #: code:addons/payroll/models/hr_salary_rule.py:0
-#, python-format
 msgid ""
 "Wrong range condition defined for salary rule %(nm)s (%(code)s) for employee "
 "%(ee)s."
 msgstr ""
+"Çalışan %(ee)s için maaş kuralı %(nm)s (%(kod)s) için yanlış aralık koşulu "
+"tanımlandı."
 
 #. module: payroll
 #. odoo-python
 #: code:addons/payroll/models/hr_payroll_structure.py:0
-#, python-format
 msgid "You cannot create a recursive salary structure."
 msgstr "Özyinelemeli bir maaş yapısı oluşturamazsınız."
 
 #. module: payroll
 #. odoo-python
 #: code:addons/payroll/models/hr_payslip.py:0
-#, python-format
 msgid "You cannot delete a payslip which is not draft or cancelled"
-msgstr ""
+msgstr "Taslak olmayan veya iptal edilmemiş bir ücret pusulasını silemezsiniz"
 
 #. module: payroll
 #. odoo-python
 #: code:addons/payroll/wizard/hr_payroll_payslips_by_employees.py:0
-#, python-format
 msgid "You must select employee(s) to generate payslip(s)."
-msgstr "Bu bordroyu üretmek için persone(ler) seçmelisiniz."
+msgstr "Ücret pusulalarını üretmek için çalışan(lar) seçmelisiniz."
 
 #. module: payroll
 #. odoo-python
 #: code:addons/payroll/models/hr_payslip_line.py:0
-#, python-format
 msgid "You must set a contract to create a payslip line."
-msgstr "Bordro satırı oluşturmak için sözleşme düzenlenmelisiniz."
+msgstr "Ücret pusulası satırı oluşturmak için sözleşme belirlemelisiniz."
+
+#. module: payroll
+#: model_terms:ir.ui.view,arch_db:payroll.hr_payslip_view_form
+msgid "period"
+msgstr "dönem"
 
 #. module: payroll
 #: model:ir.model.fields,help:payroll.field_hr_payslip_line__amount_percentage_base
 #: model:ir.model.fields,help:payroll.field_hr_salary_rule__amount_percentage_base
 msgid "result will be affected to a variable"
-msgstr "sonuç bir değişkene etkilenecektir"
+msgstr "sonuç seçilen değişkene göre hesaplanacaktır"
 
 #. module: payroll
 #: model_terms:ir.ui.view,arch_db:payroll.hr_payslip_line_view_form
 msgid "total_net"
-msgstr ""
+msgstr "total_net"
