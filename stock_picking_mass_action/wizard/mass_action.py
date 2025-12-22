@@ -21,7 +21,7 @@ class StockPickingMassAction(TransientModel):
     confirm = fields.Boolean(
         string="Mark as Todo",
         default=True,
-        help="check this box if you want to mark as Todo the selected Pickings.",
+        help="check this box if you want to mark as Todo the" " selected Pickings.",
     )
     transfer = fields.Boolean(
         default=lambda self: self._default_transfer(),
@@ -39,7 +39,6 @@ class StockPickingMassAction(TransientModel):
 
     def mass_action(self):
         self.ensure_one()
-
         # Get draft pickings and confirm them if asked
         if self.confirm:
             draft_picking_lst = self.picking_ids.filtered(

@@ -5,12 +5,12 @@
         <field name="arch" type="xml">
             <form string="Mass Action for the selected stock picking">
                 <field name="nothing_todo" invisible="1" />
-                <field name="details" nolabel="1" invisible="nothing_todo" />
+                <field name="details" nolabel="1" invisible="nothing_todo == True" />
                 <group name="valid_pickings">
                     <field name="selected_picking_ids" invisible="1" />
                     <separator string="Valid pickings" colspan="4" />
                     <field name="valid_picking_ids" nolabel="1" colspan="4">
-                        <tree>
+                        <list>
                             <field name="name" />
                             <field name="partner_id" />
                             <field name="carrier_id" />
@@ -18,7 +18,7 @@
                             <field name="location_dest_id" optional="hide" />
                             <field name="picking_type_id" optional="hide" />
                             <field name="state" />
-                        </tree>
+                        </list>
                     </field>
                 </group>
                 <group name="discarded_pickings" invisible="not discarded_picking_ids">
@@ -37,7 +37,7 @@
                         colspan="4"
                         invisible="not show_discarded_detail"
                     >
-                        <tree>
+                        <list>
                             <field name="name" />
                             <field name="partner_id" />
                             <field name="carrier_id" />
@@ -46,7 +46,7 @@
                             <field name="picking_type_id" optional="hide" />
                             <field name="state" />
                             <field name="printed" />
-                        </tree>
+                        </list>
                     </field>
                 </group>
                 <footer>

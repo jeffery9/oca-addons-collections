@@ -19,9 +19,8 @@ msgstr ""
 #. module: stock_no_negative
 #. odoo-python
 #: code:addons/stock_no_negative/models/stock_quant.py:0
-#, python-format
-msgid " lot {}"
-msgstr " lote {}"
+msgid " lot %(name)s"
+msgstr ""
 
 #. module: stock_no_negative
 #: model:ir.model.fields,field_description:stock_no_negative.field_product_category__allow_negative_stock
@@ -84,7 +83,6 @@ msgstr "Količine"
 #. module: stock_no_negative
 #. odoo-python
 #: code:addons/stock_no_negative/models/stock_quant.py:0
-#, python-format
 msgid ""
 "You cannot validate this stock operation because the stock level of the "
 "product '{name}'{name_lot} would become negative ({q_quantity}) on the stock "
@@ -95,3 +93,6 @@ msgstr ""
 "'{name}'{name_lot} na stanju postale negativne ({q_quantity}) na skladišnoj "
 "lokaciji '{complete_name}' a negativna zaliha nije dozvoljena za taj "
 "proizvod i/ili lokaciju."
+
+#~ msgid " lot {}"
+#~ msgstr " lote {}"

@@ -12,10 +12,7 @@ class TestMassAction(BaseCommon):
         super().setUpClass()
         cls.partner = cls.env["res.partner"].create({"name": "Test Partner"})
         cls.product = cls.env["product.product"].create(
-            {
-                "name": "Product Test",
-                "type": "product",
-            }
+            {"name": "Product Test", "is_storable": True}
         )
         cls.picking_type_out = cls.env.ref("stock.picking_type_out")
         cls.stock_location = cls.env.ref("stock.stock_location_stock")
@@ -29,7 +26,6 @@ class TestMassAction(BaseCommon):
         cls.env["stock.quant"]._update_available_quantity(
             cls.product, cls.stock_location, 600.0, lot_id=cls.lot1
         )
-
         # Force Odoo not to automatically reserve the products on the pickings
         # so we can test stock.picking.mass.action
         cls.picking_type_out.reservation_method = "manual"
@@ -40,6 +36,7 @@ class TestMassAction(BaseCommon):
                 "picking_type_id": cls.picking_type_out.id,
                 "location_id": cls.stock_location.id,
                 "location_dest_id": cls.customer_location.id,
+                "state": "draft",
                 "move_ids": [
                     Command.create(
                         {

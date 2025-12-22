@@ -1,5 +1,5 @@
 # Copyright 2017 Camptocamp SA - Damien Crier, Alexandre Fayolle
-# Copyright 2017 Eficent Business and IT Consulting Services S.L.
+# Copyright 2017 ForgeFlow, S.L.
 # Copyright 2017 Serpent Consulting Services Pvt. Ltd.
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 from lxml import etree
@@ -32,7 +32,7 @@ class StockPicking(models.Model):
             current_sequence = 1
             for line in rec.move_ids_without_package:
                 # Check if the record ID is an integer (real ID)
-                # or a string (virtual ID)
+                # not NewId
                 if isinstance(line.id, int):
                     line.sequence = current_sequence
                     current_sequence += 1
