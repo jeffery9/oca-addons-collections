@@ -1,11 +1,11 @@
 # Copyright 2019 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import fields
-from odoo.tests.common import TransactionCase
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestContractVariableQtyTimesheet(TransactionCase):
+class TestContractVariableQtyTimesheet(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -47,7 +47,6 @@ class TestContractVariableQtyTimesheet(TransactionCase):
                 "contract_variable_qty_timesheet.contract_line_qty_formula_project_timesheet"
             ).id,
             "sequence": 10,
-            "state": "in-progress",
             "company_id": cls.company.id,
             "qty_type": "variable",
             "analytic_distribution": {str(cls.analytic_account.id): 100},
@@ -56,7 +55,7 @@ class TestContractVariableQtyTimesheet(TransactionCase):
         cls.project = cls.env["project.project"].create(
             {
                 "name": "Test project",
-                "analytic_account_id": cls.analytic_account.id,
+                "account_id": cls.analytic_account.id,
                 "company_id": cls.company.id,
             }
         )
@@ -67,11 +66,6 @@ class TestContractVariableQtyTimesheet(TransactionCase):
                 "company_id": cls.company.id,
             }
         )
-
-    def _contract_invoicing(self, contract):
-        date_ref = fields.Date.from_string("2020-01-01")
-        contract._recurring_create_invoice(date_ref)
-        return contract._get_related_invoices()
 
     def _create_analytic_line(self, project, task, date, product, unit_amount):
         return self.env["account.analytic.line"].create(

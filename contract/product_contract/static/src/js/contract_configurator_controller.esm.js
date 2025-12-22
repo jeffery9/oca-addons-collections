@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import {formView} from "@web/views/form/form_view";
 import {registry} from "@web/core/registry";
 import {useService} from "@web/core/utils/hooks";
@@ -10,10 +8,14 @@ export class ProductContractConfiguratorController extends formView.Controller {
         this.action = useService("action");
     }
 
-    async onRecordSaved(record) {
-        await super.onRecordSaved(...arguments);
+    _getProductContractConfiguration(record) {
         const {
             product_uom_qty,
+            recurrence_number,
+            recurring_interval,
+            recurring_rule_type,
+            recurrence_interval,
+            recurring_invoicing_type,
             contract_id,
             date_start,
             date_end,
@@ -21,22 +23,33 @@ export class ProductContractConfiguratorController extends formView.Controller {
             is_auto_renew,
             auto_renew_interval,
             auto_renew_rule_type,
-            recurring_interval,
+            contract_start_date_method,
         } = record.data;
+        return {
+            product_uom_qty,
+            recurrence_number,
+            recurring_interval,
+            recurring_rule_type,
+            recurrence_interval,
+            recurring_invoicing_type,
+            contract_id,
+            date_start,
+            date_end,
+            contract_line_id,
+            is_auto_renew,
+            auto_renew_interval,
+            auto_renew_rule_type,
+            contract_start_date_method,
+        };
+    }
+
+    async onRecordSaved(record) {
+        await super.onRecordSaved(...arguments);
         return this.action.doAction({
             type: "ir.actions.act_window_close",
             infos: {
-                productContractConfiguration: {
-                    product_uom_qty,
-                    contract_id,
-                    date_start,
-                    date_end,
-                    contract_line_id,
-                    is_auto_renew,
-                    auto_renew_interval,
-                    auto_renew_rule_type,
-                    recurring_interval,
-                },
+                productContractConfiguration:
+                    this._getProductContractConfiguration(record),
             },
         });
     }

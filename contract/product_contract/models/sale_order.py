@@ -61,6 +61,7 @@ class SaleOrder(models.Model):
             "fiscal_position_id": self.fiscal_position_id.id,
             "invoice_partner_id": self.partner_invoice_id.id,
             "line_recurrence": True,
+            "contract_type": "sale",
         }
 
     def action_create_contract(self):
@@ -99,7 +100,6 @@ class SaleOrder(models.Model):
                 )
                 contracts.append(contract.id)
                 contract._onchange_contract_template_id()
-                contract._onchange_contract_type()
                 order_lines.create_contract_line(contract)
                 order_lines.write({"contract_id": contract.id})
             for line in line_to_update_contract:
@@ -109,7 +109,6 @@ class SaleOrder(models.Model):
                     rec._prepare_contract_value(self.env["contract.template"])
                 )
                 contracts.append(contract.id)
-                contract._onchange_contract_type()
                 lines_without_contract.create_contract_line(contract)
                 lines_without_contract.write({"contract_id": contract.id})
         return contract_model.browse(contracts)
@@ -137,16 +136,16 @@ class SaleOrder(models.Model):
             .search([("sale_order_line_id", "in", self.order_line.ids)])
             .mapped("contract_id")
         )
-        action["domain"] = [
-            ("contract_line_ids.sale_order_line_id", "in", self.order_line.ids)
-        ]
+        action["domain"] = [("id", "in", contracts.ids)]
         if len(contracts) == 1:
             # If there is only one contract, open it directly
             action.update(
                 {
                     "res_id": contracts.id,
                     "view_mode": "form",
-                    "views": filter(lambda view: view[1] == "form", action["views"]),
+                    "views": list(
+                        filter(lambda view: view[1] == "form", action["views"])
+                    ),
                 }
             )
         return action

@@ -10,18 +10,10 @@ class SaleOrder(models.Model):
 
     def _get_invoiceable_lines(self, final=False):
         lines = super()._get_invoiceable_lines(final)
-        # Filter lines:
-        # - If the line has an analytic_distribution and it matches the contract
-        # - Or if the line does not have an analytic_distribution,
-        #   but the order has an analytic_account_id that matches the contract
         if analytic_account := self.env.context.get("filter_on_analytic_account"):
             for line in lines:
                 if not line.analytic_distribution:
-                    if line.order_id.analytic_account_id:
-                        if line.order_id.analytic_account_id.id != analytic_account:
-                            lines -= line
-                    else:
-                        lines -= line
+                    lines -= line
                     continue
                 for account_ids, percent in line.analytic_distribution.items():
                     if analytic_account not in [

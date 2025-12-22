@@ -7,11 +7,7 @@ class TestContractAnalyticTag(TestContractBase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.plan = cls.env["account.analytic.plan"].create(
-            {
-                "name": "Projects Plan",
-            }
-        )
+        cls.plan = cls.env["account.analytic.plan"].create({"name": "Projects Plan"})
         cls.analytic_account_1 = cls.env["account.analytic.account"].create(
             {
                 "name": "Test account 1",

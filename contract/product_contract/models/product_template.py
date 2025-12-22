@@ -15,7 +15,28 @@ class ProductTemplate(models.Model):
         string="Contract Template",
         company_dependent=True,
     )
-    default_qty = fields.Integer(string="Default Quantity", default=1)
+    recurrence_number = fields.Integer(
+        string="Number of Recurrences",
+        default=1,
+        help="Total number of recurrence periods for the contract.",
+    )
+    recurrence_interval = fields.Selection(
+        [
+            ("monthly", "Month(s)"),
+            ("quarterly", "Quarter(s)"),
+            ("semesterly", "Semester(s)"),
+            ("yearly", "Year(s)"),
+        ],
+        default="monthly",
+        help="Define the length of each recurrence period (e.g., every 1 month, every 3"
+        " months).",
+    )
+    recurring_interval = fields.Integer(
+        default=1,
+        string="Invoice Every",
+        help="Frequency at which invoices are generated (e.g., every 1 month, every 2"
+        " weeks).",
+    )
     recurring_rule_type = fields.Selection(
         [
             ("daily", "Day(s)"),
@@ -27,14 +48,16 @@ class ProductTemplate(models.Model):
             ("yearly", "Year(s)"),
         ],
         default="monthly",
-        string="Invoice Every",
-        help="Specify Interval for automatic invoice generation.",
+        string="Invoicing Recurrence",
+        help="Specify the time unit for generating recurring invoices (days, weeks, "
+        "months, etc.).",
     )
     recurring_invoicing_type = fields.Selection(
         [("pre-paid", "Pre-paid"), ("post-paid", "Post-paid")],
         default="pre-paid",
         string="Invoicing type",
-        help="Specify if process date is 'from' or 'to' invoicing date",
+        help="Define whether invoices are issued before (prepaid) or after (postpaid) "
+        "the service period.",
     )
     is_auto_renew = fields.Boolean(string="Auto Renew", default=False)
     termination_notice_interval = fields.Integer(
@@ -113,7 +136,7 @@ class ProductTemplate(models.Model):
             ("2", "Second month"),
             ("3", "Third month"),
         ],
-        "Force Month",
+        "Force Month (quarterly)",
         help="Force the month to be used inside the quarter",
     )
     force_month_semesterly = fields.Selection(
@@ -125,7 +148,7 @@ class ProductTemplate(models.Model):
             ("5", "Fifth month"),
             ("6", "Sixth month"),
         ],
-        "Force Month",
+        "Force Month (semesterly)",
         help="Force the month to be used inside the semester",
     )
 

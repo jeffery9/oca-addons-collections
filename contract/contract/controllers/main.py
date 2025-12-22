@@ -16,7 +16,7 @@ class PortalContract(CustomerPortal):
             contract_model = request.env["contract.contract"]
             contract_count = (
                 contract_model.search_count([])
-                if contract_model.check_access_rights("read", raise_exception=False)
+                if contract_model.has_access("read")
                 else 0
             )
             values["contract_count"] = contract_count
@@ -46,7 +46,7 @@ class PortalContract(CustomerPortal):
         values = self._prepare_portal_layout_values()
         contract_obj = request.env["contract.contract"]
         # Avoid error if the user does not have access.
-        if not contract_obj.check_access_rights("read", raise_exception=False):
+        if not contract_obj.has_access("read"):
             return request.redirect("/my")
         domain = self._get_filter_domain(kw)
         searchbar_sortings = {
