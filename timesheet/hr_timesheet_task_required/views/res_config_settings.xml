@@ -12,7 +12,7 @@ License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
             <xpath expr="//block[@name='project_time']" position="inside">
                 <setting
                     id="is_timesheet_task_required_setting"
-                    help="Require task selection on each timesheet entry by default"
+                    help="Default value for 'Require Tasks on Timesheets' on new projects"
                 >
                     <field name="is_timesheet_task_required" />
                 </setting>
