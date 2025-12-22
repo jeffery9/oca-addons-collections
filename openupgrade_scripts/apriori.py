@@ -5,100 +5,114 @@ to help the matching process
 # Renamed modules is a mapping from old module name to new module name
 renamed_modules = {
     # odoo
-    "note": "project_todo",
-    "website_sale_delivery_mondialrelay": "website_sale_mondialrelay",
+    "l10n_es_pos_tbai": "l10n_es_edi_tbai_pos",
+    "mrp_subonctracting_landed_costs": "mrp_subcontracting_landed_costs",
+    "spreadsheet_dashboard_purchase": "spreadsheet_dashboard_purchase_oca",
+    "spreadsheet_dashboard_purchase_stock": "spreadsheet_dashboard_purchase_stock_oca",
+    "website_sale_picking": "website_sale_collect",
+    "website_form_project": "website_project",
     # odoo/enterprise
-    # OCA/delivery-carrier
-    "delivery_carrier_customer_info": "partner_delivery_info",
-    # OCA/social
-    "mail_activity_unlink_log": "mail_activity_cancel_tracking",
+    # OCA/commission
+    "account_commission": "account_commission_oca",
+    "commission": "commission_oca",
+    "hr_commission": "hr_commission_oca",
+    "sale_commission": "sale_commission_oca",
+    # OCA/edi
+    "pdf_helper": "pdf_xml_attachment",
+    # OCA/l10n-italy
+    "account_vat_period_end_statement": "l10n_it_account_vat_period_end_settlement",
+    "l10n_it_vat_statement_communication": "l10n_it_vat_settlement_communication",
+    # OCA/product-attribute
+    "product_packaging_type_vendor": "product_packaging_level_vendor",
+    "product_supplierinfo_for_customer": "product_customerinfo",
+    "product_supplierinfo_import_by_barcode": "product_supplierinfo_import",
+    "product_supplierinfo_import_by_barcode_margin": "product_supplierinfo_import_margin",  # noqa: E501
+    "product_template_tags_code": "product_tags_code",
+    "stock_packaging_calculator": "product_packaging_calculator",
+    # OCA/project
+    "project_stock": "project_task_stock",
+    "project_stock_product_set": "project_task_stock_product_set",
+    # OCA/sale-promotion
+    "coupon_chatter": "loyalty_program_chatter",
+    # OCA/sale-workflow
+    "product_supplierinfo_for_customer_sale": "product_customerinfo_sale",
+    "product_supplierinfo_for_customer_elaboration": "product_customerinfo_elaboration",
+    "sale_product_set_sale_by_packaging": "product_set_sell_only_by_packaging",
+    # OCA/stock-logistics-workflow
+    "stock_picking_type_shipping_policy": "stock_picking_type_force_move_type",
+    # OCA/web
+    "web_widget_product_label_section_and_note": "web_widget_product_label_section_and_note_name_visibility",  # noqa: E501
+    # OCA/...
 }
 
 # Merged modules contain a mapping from old module names to other,
 # preexisting module names
 merged_modules = {
     # odoo
-    "account_payment_invoice_online_payment_patch": "account_payment",
-    "account_sequence": "account",
-    "association": "membership",
-    "l10n_de_skr03": "l10n_de",
-    "l10n_de_skr04": "l10n_de",
-    "l10n_generic_coa": "account",
-    "l10n_hr_euro": "l10n_hr",
-    "l10n_in_tcs_tds": "l10n_in",
-    "l10n_in_upi": "l10n_in",
-    "l10n_latam_account_sequence": "l10n_latam_invoice_document",
-    "l10n_multilang": "account",
-    "loyalty_delivery": "sale_loyalty_delivery",
-    "pos_cache": "point_of_sale",
-    "pos_daily_sales_reports": "point_of_sale",
-    "pos_epson_printer_restaurant": "point_of_sale",
-    "purchase_price_diff": "purchase_stock",
-    "spreadsheet_dashboard_sale_expense": "spreadsheet_dashboard_hr_expense",
-    "web_kanban_gauge": "web",
-    "website_event_crm_questions": "website_event_crm",
-    "website_event_questions": "website_event",
-    "website_sale_delivery": "website_sale",
-    "website_sale_digital": "website_sale",
-    "website_sale_loyalty_delivery": "website_sale_loyalty",
-    "website_sale_stock_product_configurator": "website_sale_product_configurator",
+    "account_audit_trail": "account",
+    "account_debit_note_sequence": "account_debit_note",
+    "account_lock": "account",
+    "account_payment_term": "account",
+    "l10n_br_pix": "l10n_br",
+    "l10n_de_audit_trail": "l10n_de",
+    "l10n_dk_audit_trail": "l10n_dk",
+    "l10n_dk_bookkeeping": "account",
+    "l10n_es_edi_facturae_adm_centers": "l10n_es_edi_facturae",
+    "l10n_es_edi_facturae_invoice_period": "l10n_es_edi_facturae",
+    "l10n_es_edi_tbai_multi_refund": "l10n_es_edi_tbai",
+    "l10n_fr_fec": "l10n_fr_account",
+    "l10n_fr_invoice_addr": "l10n_fr_account",
+    "l10n_ro_efactura": "l10n_ro_edi",
+    "im_livechat_mail_bot": "mail_bot",
+    "payment_ogone": "payment_worldline",
+    "payment_sips": "payment_worldline",
+    "pos_sale_product_configurator": "pos_sale",
+    "sale_product_configurator": "sale",
+    "stock_landed_costs_company": "stock_landed_costs",
+    "website_sale_product_configurator": "website_sale",
+    # odoo/enterprise
     # OCA/account-invoicing
-    "account_invoice_fiscal_position_update": "account",
+    "account_invoice_mass_sending": "account",
+    "account_invoice_supplierinfo_update_discount": "account_invoice_supplierinfo_update",  # noqa: E501
     # OCA/e-commerce
-    "website_sale_invoice_address": "website_sale",
+    "website_sale_product_attachment": "website_sale",
+    "website_sale_product_attribute_filter_collapse": "website_sale",
+    "website_sale_filter_product_brand": "website_sale_product_brand",
     # OCA/hr-attendance
-    "hr_attendance_geolocation": "hr_attendance",
-    # OCA/l10n-germany
-    "l10n_de_skr03_mis_reports": "l10n_de_mis_reports",
-    "l10n_de_skr04_mis_reports": "l10n_de_mis_reports",
-    # OCA/l10n-spain
-    "l10n_es_dua": "l10n_es",
-    "l10n_es_dua_sii": "l10n_es_aeat_sii_oca",
-    "l10n_es_irnr": "l10n_es",
-    "l10n_es_irnr_sii": "l10n_es_aeat_sii_oca",
-    # OCA/maintenance
-    "base_maintenance_config": "maintenance",
-    "maintenance_plan": "maintenance",
-    "maintenance_plan_activity": "maintenance",
-    "maintenance_plan_employee": "maintenance",
-    # OCA/product-attribute
-    "product_catalog": "product",
-    "product_catalog_sale": "sale",
-    # OCA/purchase-workflow
-    "purchase_discount": "purchase",
-    # OCA/sale-promotion
-    "loyalty_initial_date_validity": "loyalty",
-    "sale_loyalty_initial_date_validity": "sale_loyalty",
-    # OCA/sale-reporting
-    "sale_report_country_state": "sale",
-    # OCA/social
-    "mail_activity_plan": "mail",
-    "mass_mailing_custom_unsubscribe_event": "mass_mailing",
-    # OCA/stock-logistics-warehouse
-    "stock_lot_filter_available": "stock",
-    # OCA/web
-    "web_advanced_search": "web",
-    "web_listview_range_select": "web",
-    "web_pwa_oca": "web",
+    "hr_attendance_autoclose": "hr_attendance",
+    # OCA/knowledge
+    "document_page_group": "document_page_access_group",
+    # OCA/l10n-france
+    "l10n_fr_pos_cert_update_draft_order_line": "l10n_fr_pos_cert",
+    # OCA/sale-workflow
+    "sale_order_qty_change_no_recompute": "sale",
+    # OCA/server-brand
+    "hr_expense_remove_mobile_link": "hr_expense",
     # OCA/...
 }
 
 # only used here for upgrade_analysis
 renamed_models = {
     # odoo
-    "hr.leave.stress.day": "hr.leave.mandatory.day",
-    "mail.channel": "discuss.channel",
-    "mail.channel.member": "discuss.channel.member",
-    "mail.channel.rtc.session": "discuss.channel.rtc.session",
-    "mailing.contact.subscription": "mailing.subscription",
-    "payment.icon": "payment.method",
-    "restaurant.printer": "pos.printer",
+    "hr.applicant.skill": "hr.candidate.skill",
+    "l10n_es_edi_facturae_adm_centers.ac_role_type": ""
+    "l10n_es_edi_facturae.ac_role_type",
+    "mail.notification.web.push": "mail.push",
+    "mail.partner.device": "mail.push.device",
+    "mail.shortcode": "mail.canned.response",
+    "pos.combo": "product.combo",
+    "pos.combo.line": "product.combo.item",
     # OCA/...
 }
 
 # only used here for upgrade_analysis
 merged_models = {
     # odoo
-    "repair.line": "stock.move",
+    "google.calendar.credentials": "res.users.settings",
+    "l10n_es_edi.certificate": "certificate.certificate",
+    "l10n_es_edi_facturae.certificate": "certificate.certificate",
+    "l10n_es_edi_verifactu.certificate": "certificate.certificate",
+    "microsoft.calendar.credentials": "res.users.settings",
+    "mrp.document": "product.document",
     # OCA/...
 }
