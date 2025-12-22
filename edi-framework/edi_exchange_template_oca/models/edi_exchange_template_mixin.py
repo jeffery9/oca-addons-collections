@@ -1,4 +1,5 @@
 # Copyright 2020 ACSONE SA
+# Copyright 2025 Camptocamp SA
 # @author Simone Orsi <simahawk@gmail.com>
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 import datetime
@@ -41,11 +42,13 @@ class EDIExchangeTemplateMixin(models.AbstractModel):
         ondelete="restrict",
         required=True,
     )
-    type_id = fields.Many2one(
-        string="EDI Exchange type",
+    allowed_type_ids = fields.Many2many(
         comodel_name="edi.exchange.type",
-        ondelete="cascade",
-        auto_join=True,
+        relation="edi_exchange_template_type_rel",
+        column1="template_id",
+        column2="type_id",
+        string="Allowed Exchange Types",
+        help="Types allowed to use this template.",
     )
     backend_id = fields.Many2one(
         comodel_name="edi.backend",
@@ -138,12 +141,21 @@ class EDIExchangeTemplateMixin(models.AbstractModel):
         if not isinstance(result, dict):
             _logger.error("code_snippet should return a dict into `result`")
             return {}
+        validator = getattr(
+            self,
+            f"_evaluate_code_snippet_validate_{self.generator}",
+            lambda result: False,
+        )
+        err_msg = validator(result)
+        if err_msg:
+            _logger.error("code_snippet validation error: %s", err_msg)
+            return {}
         return result
 
-    def _get_validator(self, exchange_record):
-        # TODO: lookup for validator (
-        # can be to validate received file or generated file)
-        pass
+    def _evaluate_code_snippet_validate_json(self, result):
+        if "payload" not in result.keys():
+            return "JSON code_snippet should return a dict with a 'payload' key"
+        return False
 
     def validate(self, exchange_record):
         pass

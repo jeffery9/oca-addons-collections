@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 17.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -107,6 +107,11 @@ msgstr ""
 #. module: edi_storage_oca
 #: model_terms:ir.ui.view,arch_db:edi_storage_oca.edi_backend_view_form
 msgid "Storage"
+msgstr ""
+
+#. module: edi_storage_oca
+#: model:ir.model,name:edi_storage_oca.model_edi_oca_storage_handler
+msgid "Storage Handler for EDI"
 msgstr ""
 
 #. module: edi_storage_oca
