@@ -1,8 +1,0 @@
-- [Tecnativa](https://www.tecnativa.com):
-  - Carlos Dauden
-  - Ernesto Tejeda
-- Lorenzo Battistini \<lorenzo.battistini@agilebg.com\>
-- [NextERP Romania](https://www.nexterp.ro):
-  - Fekete Mihai \<feketemihai@nexterp.ro\>
-- [ArcheTI](https://www.archeti.com):
-  - Cécile Jallais \<cjallais@archeti.com\>

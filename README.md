@@ -1,15 +1,15 @@
 
-[![Runboat](https://img.shields.io/badge/runboat-Try%20me-875A7B.png)](https://runboat.odoo-community.org/builds?repo=OCA/commission&target_branch=17.0)
-[![Pre-commit Status](https://github.com/OCA/commission/actions/workflows/pre-commit.yml/badge.svg?branch=17.0)](https://github.com/OCA/commission/actions/workflows/pre-commit.yml?query=branch%3A17.0)
-[![Build Status](https://github.com/OCA/commission/actions/workflows/test.yml/badge.svg?branch=17.0)](https://github.com/OCA/commission/actions/workflows/test.yml?query=branch%3A17.0)
-[![codecov](https://codecov.io/gh/OCA/commission/branch/17.0/graph/badge.svg)](https://codecov.io/gh/OCA/commission)
-[![Translation Status](https://translation.odoo-community.org/widgets/commission-17-0/-/svg-badge.svg)](https://translation.odoo-community.org/engage/commission-17-0/?utm_source=widget)
+[![Runboat](https://img.shields.io/badge/runboat-Try%20me-875A7B.png)](https://runboat.odoo-community.org/builds?repo=OCA/commission&target_branch=18.0)
+[![Pre-commit Status](https://github.com/OCA/commission/actions/workflows/pre-commit.yml/badge.svg?branch=18.0)](https://github.com/OCA/commission/actions/workflows/pre-commit.yml?query=branch%3A18.0)
+[![Build Status](https://github.com/OCA/commission/actions/workflows/test.yml/badge.svg?branch=18.0)](https://github.com/OCA/commission/actions/workflows/test.yml?query=branch%3A18.0)
+[![codecov](https://codecov.io/gh/OCA/commission/branch/18.0/graph/badge.svg)](https://codecov.io/gh/OCA/commission)
+[![Translation Status](https://translation.odoo-community.org/widgets/commission-18-0/-/svg-badge.svg)](https://translation.odoo-community.org/engage/commission-18-0/?utm_source=widget)
 
 <!-- /!\ do not modify above this line -->
 
 # commission
 
-TODO: add repo description.
+commission
 
 <!-- /!\ do not modify below this line -->
 
@@ -21,13 +21,11 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[account_commission](account_commission/) | 17.0.1.0.1 | <a href='https://github.com/pedrobaeza'><img src='https://github.com/pedrobaeza.png' width='32' height='32' style='border-radius:50%;' alt='pedrobaeza'/></a> | Account commissions
-[commission](commission/) | 17.0.1.1.2 | <a href='https://github.com/pedrobaeza'><img src='https://github.com/pedrobaeza.png' width='32' height='32' style='border-radius:50%;' alt='pedrobaeza'/></a> | Commissions
-[commission_formula](commission_formula/) | 17.0.1.0.0 |  | Commissions computed by formulas
-[hr_commission](hr_commission/) | 17.0.1.0.0 |  | HR commissions
-[sale_commission](sale_commission/) | 17.0.1.1.0 | <a href='https://github.com/pedrobaeza'><img src='https://github.com/pedrobaeza.png' width='32' height='32' style='border-radius:50%;' alt='pedrobaeza'/></a> | Sales commissions
-[sale_commission_pricelist](sale_commission_pricelist/) | 17.0.1.0.0 |  | Sales commissions by pricelist
-[sale_commission_salesman](sale_commission_salesman/) | 17.0.1.0.1 |  | Sales commissions from salesman
+[account_commission_oca](account_commission_oca/) | 18.0.1.0.0 | <a href='https://github.com/pedrobaeza'><img src='https://github.com/pedrobaeza.png' width='32' height='32' style='border-radius:50%;' alt='pedrobaeza'/></a> | Account commissions OCA
+[commission_oca](commission_oca/) | 18.0.1.0.2 | <a href='https://github.com/pedrobaeza'><img src='https://github.com/pedrobaeza.png' width='32' height='32' style='border-radius:50%;' alt='pedrobaeza'/></a> | Commissions OCA
+[hr_commission_oca](hr_commission_oca/) | 18.0.1.0.0 |  | HR commissions OCA
+[sale_commission_oca](sale_commission_oca/) | 18.0.1.0.0 | <a href='https://github.com/pedrobaeza'><img src='https://github.com/pedrobaeza.png' width='32' height='32' style='border-radius:50%;' alt='pedrobaeza'/></a> | Sales commissions OCA
+[sale_commission_salesman](sale_commission_salesman/) | 18.0.1.0.0 |  | Sales commissions from salesman
 
 [//]: # (end addons)
 

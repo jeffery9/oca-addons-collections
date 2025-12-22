@@ -1,17 +1,15 @@
 [project]
 name = "odoo-addons-oca-commission"
-version = "17.0.20250303.0"
+version = "18.0.20250916.0"
 dependencies = [
-    "odoo-addon-account_commission>=17.0dev,<17.1dev",
-    "odoo-addon-commission>=17.0dev,<17.1dev",
-    "odoo-addon-commission_formula>=17.0dev,<17.1dev",
-    "odoo-addon-hr_commission>=17.0dev,<17.1dev",
-    "odoo-addon-sale_commission>=17.0dev,<17.1dev",
-    "odoo-addon-sale_commission_pricelist>=17.0dev,<17.1dev",
-    "odoo-addon-sale_commission_salesman>=17.0dev,<17.1dev",
+    "odoo-addon-account_commission_oca==18.0.*",
+    "odoo-addon-commission_oca==18.0.*",
+    "odoo-addon-hr_commission_oca==18.0.*",
+    "odoo-addon-sale_commission_oca==18.0.*",
+    "odoo-addon-sale_commission_salesman==18.0.*",
 ]
 classifiers=[
     "Programming Language :: Python",
     "Framework :: Odoo",
-    "Framework :: Odoo :: 17.0",
+    "Framework :: Odoo :: 18.0",
 ]
