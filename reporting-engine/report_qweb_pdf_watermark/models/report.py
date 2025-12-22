@@ -1,6 +1,5 @@
 # © 2016 Therp BV <http://therp.nl>
 # Copyright 2023 Onestein - Anjeel Haria
-# Copyright 2025 NuoBiT - Deniz Gallo <dgallo@nuobit.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from base64 import b64decode
 from io import BytesIO
@@ -32,7 +31,7 @@ try:
         )
         from PyPDF2.utils import PdfReadError  # pypdf < 2.0
 except ImportError:
-    logger.debug("Can not import PyPDF2")
+    logger.warning("Can not import PyPDF2")
 
 
 class Report(models.Model):
@@ -54,9 +53,7 @@ class Report(models.Model):
 
     def _render_qweb_pdf(self, report_ref, res_ids=None, data=None):
         if not self.env.context.get("res_ids"):
-            return super(Report, self.with_context(res_ids=res_ids))._render_qweb_pdf(
-                report_ref, res_ids=res_ids, data=data
-            )
+            self = self.with_context(res_ids=res_ids)
         return super()._render_qweb_pdf(report_ref, res_ids=res_ids, data=data)
 
     @staticmethod

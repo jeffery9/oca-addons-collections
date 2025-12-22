@@ -1,5 +1,5 @@
 The py3o reporting engine is a reporting engine for Odoo based on
-[Libreoffice](http://www.libreoffice.org/):
+\[Libreoffice\](<http://www.libreoffice.org/>):
 
 - the report is created with Libreoffice (ODT or ODS),
 - the report is stored on the server in OpenDocument format (.odt or
@@ -39,7 +39,7 @@ generate PDF forms, PDF/A documents, password-protected PDFs,
 watermarked PDFs, etc.).
 
 This reporting engine is an alternative to
-[Aeroo](https://github.com/aeroo-community/aeroo_reports): these two
+\[Aeroo\](<https://github.com/aeroo-community/aeroo_reports>): these two
 reporting engines have similar features but their implementation is
 entirely different. You cannot use aeroo templates as drop in
 replacement though, you'll have to change a few details.

@@ -4,17 +4,15 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 17.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-11-20 14:42+0000\n"
-"Last-Translator: Ryoko Tsuda <ryoko@quartile.co>\n"
+"Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.10.4\n"
 
 #. module: report_qweb_field_option
 #: model:ir.model.fields,help:report_qweb_field_option.field_qweb_field_options__field_options
@@ -24,138 +22,130 @@ msgid ""
 "{'widget': 'monetary'}\n"
 "{'widget': 'contact', 'fields': ['name', 'phone']}"
 msgstr ""
-"フィールドの書式設定オプションを指定するための辞書型の文字列。例:\n"
-"{'widget': 'date'}\n"
-"{'widget': 'monetary'}\n"
-"{'widget': 'contact', 'fields': ['name', 'phone']}"
 
 #. module: report_qweb_field_option
 #: model:ir.model.fields,field_description:report_qweb_field_option.field_qweb_field_options__company_id
 msgid "Company"
-msgstr "会社"
+msgstr ""
 
 #. module: report_qweb_field_option
 #: model:ir.model.fields,field_description:report_qweb_field_option.field_qweb_field_options__create_uid
 msgid "Created by"
-msgstr "作成者"
+msgstr ""
 
 #. module: report_qweb_field_option
 #: model:ir.model.fields,field_description:report_qweb_field_option.field_qweb_field_options__create_date
 msgid "Created on"
-msgstr "作成日"
+msgstr ""
 
 #. module: report_qweb_field_option
 #: model:ir.model.fields,field_description:report_qweb_field_option.field_qweb_field_options__currency_id
 msgid "Currency"
-msgstr "通貨"
+msgstr ""
 
 #. module: report_qweb_field_option
 #: model:ir.model.fields,field_description:report_qweb_field_option.field_qweb_field_options__currency_field_id
 msgid "Currency Field"
-msgstr "通貨フィールド"
+msgstr ""
 
 #. module: report_qweb_field_option
 #: model:ir.model.fields,field_description:report_qweb_field_option.field_qweb_field_options__digits
 msgid "Digits"
-msgstr "小数点桁数"
+msgstr ""
 
 #. module: report_qweb_field_option
 #: model:ir.model.fields,field_description:report_qweb_field_option.field_qweb_field_options__display_name
 msgid "Display Name"
-msgstr "表示名"
+msgstr ""
 
 #. module: report_qweb_field_option
 #: model:ir.model.fields,field_description:report_qweb_field_option.field_qweb_field_options__field_id
 msgid "Field"
-msgstr "フィールド"
+msgstr ""
 
 #. module: report_qweb_field_option
 #: model:ir.model.fields,field_description:report_qweb_field_option.field_qweb_field_options__field_name
 msgid "Field Name"
-msgstr "フィールド名"
+msgstr ""
 
 #. module: report_qweb_field_option
 #: model:ir.model.fields,field_description:report_qweb_field_option.field_qweb_field_options__field_type
 msgid "Field Type"
-msgstr "フィールドタイプ"
+msgstr ""
 
 #. module: report_qweb_field_option
 #: model_terms:ir.ui.view,arch_db:report_qweb_field_option.view_qweb_field_options_searh
 msgid "Group By"
-msgstr "グループ化"
+msgstr ""
 
 #. module: report_qweb_field_option
 #: model:ir.model.fields,field_description:report_qweb_field_option.field_qweb_field_options__id
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #. module: report_qweb_field_option
 #. odoo-python
 #: code:addons/report_qweb_field_option/models/qweb_field_options.py:0
-#, python-format
 msgid ""
 "Invalid string for the Options field: %(field_options)s.\n"
 "Error: %(error)s"
 msgstr ""
-"オプションフィールドに無効な文字列があります: %(field_options)s.\n"
-"エラー: %(error)s"
 
 #. module: report_qweb_field_option
 #: model:ir.model.fields,field_description:report_qweb_field_option.field_qweb_field_options__write_uid
 msgid "Last Updated by"
-msgstr "最終更新者"
+msgstr ""
 
 #. module: report_qweb_field_option
 #: model:ir.model.fields,field_description:report_qweb_field_option.field_qweb_field_options__write_date
 msgid "Last Updated on"
-msgstr "最終更新日"
+msgstr ""
 
 #. module: report_qweb_field_option
 #: model:ir.model.fields,field_description:report_qweb_field_option.field_qweb_field_options__res_model_id
 #: model_terms:ir.ui.view,arch_db:report_qweb_field_option.view_qweb_field_options_searh
 msgid "Model"
-msgstr "モデル"
+msgstr ""
 
 #. module: report_qweb_field_option
 #: model:ir.model.fields,field_description:report_qweb_field_option.field_qweb_field_options__res_model_name
 msgid "Model Name"
-msgstr "モデル名"
+msgstr ""
 
 #. module: report_qweb_field_option
 #: model:ir.model.fields,field_description:report_qweb_field_option.field_qweb_field_options__field_options
 msgid "Options"
-msgstr "オプション"
+msgstr ""
 
 #. module: report_qweb_field_option
 #. odoo-python
 #: code:addons/report_qweb_field_option/models/qweb_field_options.py:0
-#, python-format
 msgid "Options must be a dictionary, but got %s"
-msgstr "オプションは辞書形式である必要があります。 %s"
+msgstr ""
 
 #. module: report_qweb_field_option
 #: model:ir.model,name:report_qweb_field_option.model_ir_qweb
 msgid "Qweb"
-msgstr "Qweb"
+msgstr ""
 
 #. module: report_qweb_field_option
 #: model:ir.actions.act_window,name:report_qweb_field_option.action_qweb_field_options_view
 #: model:ir.model,name:report_qweb_field_option.model_qweb_field_options
 #: model:ir.ui.menu,name:report_qweb_field_option.menu_qweb_field_options
 msgid "Qweb Field Options"
-msgstr "Qwebフィールドオプション"
+msgstr ""
 
 #. module: report_qweb_field_option
 #: model_terms:ir.ui.view,arch_db:report_qweb_field_option.view_qweb_field_options_searh
 msgid "Qweb Field Options Search"
-msgstr "Qweb Field Options Search"
+msgstr ""
 
 #. module: report_qweb_field_option
 #: model:ir.model.fields,field_description:report_qweb_field_option.field_qweb_field_options__uom_id
 msgid "UoM"
-msgstr "単位"
+msgstr ""
 
 #. module: report_qweb_field_option
 #: model:ir.model.fields,field_description:report_qweb_field_option.field_qweb_field_options__uom_field_id
 msgid "UoM Field"
-msgstr "単位フィールド"
+msgstr ""

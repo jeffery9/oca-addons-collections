@@ -86,12 +86,6 @@ class BiSQLViewField(models.Model):
 
     index_name = fields.Char(compute="_compute_index_name")
 
-    is_many2one_clickable = fields.Boolean(
-        default=False,
-        help="If the field is of type Many2one and the option is enabled, the"
-        " field will be clickable on the list view.",
-    )
-
     graph_type = fields.Selection(
         selection=_GRAPH_TYPE_SELECTION,
     )
@@ -105,7 +99,6 @@ class BiSQLViewField(models.Model):
     field_description = fields.Char(
         help="This will be used as the name of the Odoo field, displayed for users",
         required=True,
-        translate=True,
     )
 
     ttype = fields.Selection(
@@ -156,9 +149,8 @@ class BiSQLViewField(models.Model):
     # Compute Section
     def _compute_index_name(self):
         for sql_field in self:
-            sql_field.index_name = "{}_{}".format(
-                sql_field.bi_sql_view_id.view_name,
-                sql_field.name,
+            sql_field.index_name = (
+                f"{sql_field.bi_sql_view_id.view_name}_{sql_field.name}"
             )
 
     # Overload Section
@@ -216,8 +208,8 @@ class BiSQLViewField(models.Model):
         field name. Sample :
         {'account_id': 'account.account'; 'product_id': 'product.product'}
         """
-        relation_fields = self.env["ir.model.fields"].search(
-            [("ttype", "=", "many2one")]
+        relation_fields = (
+            self.env["ir.model.fields"].sudo().search([("ttype", "=", "many2one")])
         )
         res = {}
         keys_to_pop = []
@@ -246,10 +238,6 @@ class BiSQLViewField(models.Model):
             or False,
         }
 
-    def _prepare_form_field(self):
-        self.ensure_one()
-        return f"""<field name="{self.name}" context="{self.field_context}"/>\n"""
-
     def _prepare_tree_field(self):
         self.ensure_one()
         if self.tree_visibility == "unavailable":
@@ -262,18 +250,9 @@ class BiSQLViewField(models.Model):
         elif self.tree_visibility == "optional_show":
             visibility_text = 'optional="show"'
 
-        operator_text = ""
-        if self.group_operator == "sum":
-            operator_text = f'sum="{_("Total")}"'
-        elif self.group_operator == "avg":
-            operator_text = f'avg="{_("Average")}"'
-
-        options_text = ""
-        if self.ttype == "many2one" and self.is_many2one_clickable:
-            options_text = 'widget="many2one"'
         return (
-            f"""<field name="{self.name}" {visibility_text} {operator_text} """
-            f"""{options_text} context="{self.field_context}"/>\n"""
+            f"""<field name="{self.name}" {visibility_text}"""
+            f""" context="{self.field_context}"/>\n"""
         )
 
     def _prepare_graph_field(self):

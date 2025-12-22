@@ -3,7 +3,7 @@
 # Copyright 2020 NextERP Romania SRL
 # Copyright 2021-2022 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-from odoo import _, api, fields, models
+from odoo import Command, api, fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -49,7 +49,6 @@ class BaseCommentTemplate(models.Model):
         column1="base_comment_template_id",
         column2="res_partner_id",
         string="Partner",
-        readonly=True,
         help="If set, the comment template will be available only for the selected "
         "partner.",
     )
@@ -105,7 +104,7 @@ class BaseCommentTemplate(models.Model):
             models = im_model.browse()
             if item.models:
                 models = self._get_ir_model_items(item.models.split(","))
-            item.model_ids = [(6, 0, models.ids)]
+            item.model_ids = [Command.set(models.ids)]
 
     @api.constrains("models")
     def check_models(self):
@@ -114,7 +113,9 @@ class BaseCommentTemplate(models.Model):
             models = item.models.split(",")
             res = self._get_ir_model_items(item.models.split(","))
             if not res or len(res) != len(models):
-                raise ValidationError(_("Some model (%s) not found") % item.models)
+                raise ValidationError(
+                    self.env._(f"Some model ({item.models}) not found")
+                )
 
     @api.depends("position", "model_ids")
     def _compute_display_name(self):

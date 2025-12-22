@@ -22,21 +22,18 @@ msgstr ""
 #. module: bi_sql_editor
 #. odoo-python
 #: code:addons/bi_sql_editor/models/bi_sql_view.py:0
-#, python-format
 msgid "%(model_name)s Access %(full_name)s"
 msgstr "%(model_name)s Acceso %(full_name)s"
 
 #. module: bi_sql_editor
 #. odoo-python
 #: code:addons/bi_sql_editor/models/bi_sql_view.py:0
-#, python-format
 msgid "%s (Copy)"
 msgstr "%s (Copia)"
 
 #. module: bi_sql_editor
 #. odoo-python
 #: code:addons/bi_sql_editor/models/bi_sql_view.py:0
-#, python-format
 msgid "Access %s"
 msgstr "Acceso %s"
 
@@ -132,9 +129,7 @@ msgstr "Columna"
 
 #. module: bi_sql_editor
 #: model:ir.model.fields,help:bi_sql_editor.field_bi_sql_view__view_order
-msgid ""
-"Comma-separated text. Possible values: \"graph\", \"pivot\", \"tree\" or "
-"\"form\""
+msgid "Comma-separated text. Possible values: \"graph\", \"pivot\" or \"list\""
 msgstr ""
 
 #. module: bi_sql_editor
@@ -341,16 +336,15 @@ msgid "If checked, some messages have a delivery error."
 msgstr "si está marcada, algunos mensajes tienen un error de entrega."
 
 #. module: bi_sql_editor
-#: model:ir.model.fields,help:bi_sql_editor.field_bi_sql_view_field__is_many2one_clickable
+#: model:ir.model.fields,help:bi_sql_editor.field_bi_sql_view__use_external_database
 msgid ""
-"If the field is of type Many2one and the option is enabled, the field will "
-"be clickable on the list view."
+"If filled, the query will be executed against an external database, "
+"configured in Odoo main configuration file. "
 msgstr ""
 
 #. module: bi_sql_editor
 #. odoo-python
 #: code:addons/bi_sql_editor/models/bi_sql_view_field.py:0
-#, python-format
 msgid ""
 "Impossible to delete fields if the view is in the state 'Model Valid' or 'UI "
 "Valid'."
@@ -382,11 +376,6 @@ msgstr "Se agrupa por"
 #: model:ir.model.fields,field_description:bi_sql_editor.field_bi_sql_view_field__is_index
 msgid "Is Index"
 msgstr "Es Índice"
-
-#. module: bi_sql_editor
-#: model:ir.model.fields,field_description:bi_sql_editor.field_bi_sql_view_field__is_many2one_clickable
-msgid "Is Many2One Clickable"
-msgstr ""
 
 #. module: bi_sql_editor
 #: model:ir.model.fields,field_description:bi_sql_editor.field_bi_sql_view__is_materialized
@@ -464,7 +453,6 @@ msgstr "Nombre"
 #. module: bi_sql_editor
 #. odoo-python
 #: code:addons/bi_sql_editor/models/bi_sql_view.py:0
-#, python-format
 msgid ""
 "No Column was found.\n"
 "Columns name should be prefixed by 'x_'."
@@ -508,14 +496,14 @@ msgid "Odoo Cron"
 msgstr "Cron de Odoo"
 
 #. module: bi_sql_editor
-#: model:ir.model.fields,field_description:bi_sql_editor.field_bi_sql_view__form_view_id
-msgid "Odoo Form View"
-msgstr ""
-
-#. module: bi_sql_editor
 #: model:ir.model.fields,field_description:bi_sql_editor.field_bi_sql_view__graph_view_id
 msgid "Odoo Graph View"
 msgstr "Vista gráfica Odoo"
+
+#. module: bi_sql_editor
+#: model:ir.model.fields,field_description:bi_sql_editor.field_bi_sql_view__tree_view_id
+msgid "Odoo List View"
+msgstr ""
 
 #. module: bi_sql_editor
 #: model:ir.model.fields,field_description:bi_sql_editor.field_bi_sql_view__menu_id
@@ -543,15 +531,9 @@ msgid "Odoo Search View"
 msgstr "Vista de búsqueda Odoo"
 
 #. module: bi_sql_editor
-#: model:ir.model.fields,field_description:bi_sql_editor.field_bi_sql_view__tree_view_id
-msgid "Odoo Tree View"
-msgstr "Vista en árbol de Odoo"
-
-#. module: bi_sql_editor
 #. odoo-python
 #: code:addons/bi_sql_editor/models/bi_sql_view.py:0
-#, python-format
-msgid "Only graph, pivot, tree or form views are supported"
+msgid "Only graph, pivot or list views are supported"
 msgstr ""
 
 #. module: bi_sql_editor
@@ -577,7 +559,6 @@ msgstr ""
 #. module: bi_sql_editor
 #. odoo-python
 #: code:addons/bi_sql_editor/models/bi_sql_view.py:0
-#, python-format
 msgid "Please set related models on the following fields %s"
 msgstr "Por favor, establezca modelos relacionados en los siguientes campos %s"
 
@@ -599,7 +580,6 @@ msgstr "Refrescar vista materializada"
 #. module: bi_sql_editor
 #. odoo-python
 #: code:addons/bi_sql_editor/models/bi_sql_view.py:0
-#, python-format
 msgid "Refresh Materialized View %s"
 msgstr "Refrescar vista materializada %s"
 
@@ -616,7 +596,6 @@ msgstr "Definición de regla"
 #. module: bi_sql_editor
 #. odoo-python
 #: code:addons/bi_sql_editor/models/bi_sql_view.py:0
-#, python-format
 msgid ""
 "SQL Error while creating %(materialized_text)s VIEW %(view_name)s :\n"
 " %(error)s"
@@ -802,6 +781,11 @@ msgstr ""
 "después de haber creado el modelo"
 
 #. module: bi_sql_editor
+#: model:ir.model.fields,field_description:bi_sql_editor.field_bi_sql_view__use_external_database
+msgid "Use External Database"
+msgstr ""
+
+#. module: bi_sql_editor
 #: model_terms:ir.ui.view,arch_db:bi_sql_editor.view_bi_sql_view_form
 msgid "User Interface"
 msgstr "Interfaz de usuario"
@@ -835,20 +819,16 @@ msgstr "Historial de comunicación del sitio web"
 #. odoo-python
 #: code:addons/bi_sql_editor/models/bi_sql_view.py:0
 #: code:addons/bi_sql_editor/models/bi_sql_view_field.py:0
-#, python-format
 msgid "You can not create indexes on non materialized views"
 msgstr "No se pueden crear índices en vistas no materializadas"
 
 #. module: bi_sql_editor
 #. odoo-python
 #: code:addons/bi_sql_editor/models/bi_sql_view.py:0
-#, python-format
 msgid ""
-"You can only unlink draft views.If you want to delete them, first set them "
+"You can only unlink draft views. If you want to delete them, first set them "
 "to draft."
 msgstr ""
-"Sólo puedes desvincular vistas borrador.Si quieres eliminarlas, primero "
-"ponlas en borrador."
 
 #. module: bi_sql_editor
 #: model:ir.model.fields.selection,name:bi_sql_editor.selection__bi_sql_view_field__ttype__boolean
@@ -896,18 +876,29 @@ msgstr "selección"
 msgid "sequence"
 msgstr "secuencia"
 
+#~ msgid "SMS Delivery error"
+#~ msgstr "Error en la entrega de sms"
+
 #~ msgid ""
 #~ "Comma-separated text. Possible values: \"graph\", \"pivot\" or \"tree\""
 #~ msgstr ""
 #~ "Texto separado por comas. Posibles valores: \"graph\", \"pivot\" o "
 #~ "\"tree\""
 
+#~ msgid "Odoo Tree View"
+#~ msgstr "Vista en árbol de Odoo"
+
 #, python-format
 #~ msgid "Only graph, pivot or tree views are supported"
 #~ msgstr "Sólo se admiten las vistas de gráfico, pivote o árbol"
 
-#~ msgid "SMS Delivery error"
-#~ msgstr "Error en la entrega de sms"
+#, python-format
+#~ msgid ""
+#~ "You can only unlink draft views.If you want to delete them, first set "
+#~ "them to draft."
+#~ msgstr ""
+#~ "Sólo puedes desvincular vistas borrador.Si quieres eliminarlas, primero "
+#~ "ponlas en borrador."
 
 #~ msgid ""
 #~ "Are you sure you want to set to draft this SQL View. It will delete the "

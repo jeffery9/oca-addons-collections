@@ -58,7 +58,7 @@ class SqlFileWizard(models.TransientModel):
 
         # Call different method depending on file_type since the logic will be
         # different
-        method_name = "%s_get_data_from_query" % sql_export.file_format
+        method_name = f"{sql_export.file_format}_get_data_from_query"
         data = getattr(sql_export, method_name)(variable_dict)
         extension = sql_export._get_file_extension()
         self.write(
@@ -82,11 +82,12 @@ class SqlFileWizard(models.TransientModel):
                 sql_export.id,
             ),
         )
-        return {
-            "view_mode": "form",
-            "res_model": "sql.file.wizard",
-            "res_id": self.id,
-            "type": "ir.actions.act_window",
-            "target": "new",
-            "context": self.env.context,
+        action = {
+            "name": "SQL Export",
+            "type": "ir.actions.act_url",
+            "url": "web/content/?model=%s&id=%d&filename_field=filename&"
+            "field=binary_file&download=true&filename=%s"
+            % (self._name, self.id, self.file_name),
+            "target": "self",
         }
+        return action
