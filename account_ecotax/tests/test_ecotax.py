@@ -7,7 +7,7 @@
 from random import choice
 
 from odoo import Command
-from odoo.tests.common import Form
+from odoo.tests import Form
 
 from odoo.addons.base.tests.common import BaseCommon
 
@@ -25,14 +25,14 @@ class TestInvoiceEcotaxCommon(BaseCommon):
                 "code": "47590",
                 "name": "Invoice Tax Account",
                 "account_type": "liability_current",
-                "company_id": cls.env.user.company_id.id,
+                "company_ids": [Command.link(cls.env.user.company_id.id)],
             }
         )
         # 2- Invoice tax with included price to avoid unwanted amounts in tests
         cls.invoice_tax = cls.env["account.tax"].create(
             {
                 "name": "Tax 10%",
-                "price_include": True,
+                "price_include_override": "tax_included",
                 "type_tax_use": "sale",
                 "company_id": cls.env.user.company_id.id,
                 "amount": 10,

@@ -1,18 +1,20 @@
 [project]
 name = "odoo-addons-oca-account-fiscal-rule"
-version = "17.0.20250314.0"
+version = "18.0.20251017.0"
 dependencies = [
-    "odoo-addon-account_avatax_oca>=17.0dev,<17.1dev",
-    "odoo-addon-account_avatax_sale_oca>=17.0dev,<17.1dev",
-    "odoo-addon-account_avatax_website_sale>=17.0dev,<17.1dev",
-    "odoo-addon-account_ecotax>=17.0dev,<17.1dev",
-    "odoo-addon-account_ecotax_sale>=17.0dev,<17.1dev",
-    "odoo-addon-account_fiscal_position_autodetect_optional_vies>=17.0dev,<17.1dev",
-    "odoo-addon-account_fiscal_position_partner_type>=17.0dev,<17.1dev",
-    "odoo-addon-l10n_eu_oss_oca>=17.0dev,<17.1dev",
+    "odoo-addon-account_avatax_exemption==18.0.*",
+    "odoo-addon-account_avatax_exemption_base==18.0.*",
+    "odoo-addon-account_avatax_oca==18.0.*",
+    "odoo-addon-account_avatax_oca_log==18.0.*",
+    "odoo-addon-account_avatax_sale_oca==18.0.*",
+    "odoo-addon-account_avatax_website_sale==18.0.*",
+    "odoo-addon-account_ecotax==18.0.*",
+    "odoo-addon-account_fiscal_position_partner_type==18.0.*",
+    "odoo-addon-account_fiscal_position_vies_warning==18.0.*",
+    "odoo-addon-l10n_eu_oss_oca==18.0.*",
 ]
 classifiers=[
     "Programming Language :: Python",
     "Framework :: Odoo",
-    "Framework :: Odoo :: 17.0",
+    "Framework :: Odoo :: 18.0",
 ]

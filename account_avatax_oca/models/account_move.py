@@ -1,6 +1,6 @@
 import logging
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError
 from odoo.tools import float_compare
 
@@ -263,11 +263,19 @@ class AccountMove(models.Model):
 
             # Set Taxes on lines in a way that properly triggers onchanges
             # This same approach is also used by the official account_taxcloud connector
-            with self.with_context(
-                avatax_invoice=self, check_move_validity=False
-            )._sync_dynamic_lines(container), self.line_ids.mapped(
-                "move_id"
-            )._check_balanced(container):
+
+            # for index, taxes in taxes_to_set:
+            #     # Access the invoice line by index
+            #     line = self.invoice_line_ids[index]
+            #     # Update the tax_ids field
+            #     line.write({"tax_ids": [(6, 0, [tax.id for tax in taxes])]})
+
+            with (
+                self.with_context(
+                    avatax_invoice=self, check_move_validity=False
+                )._sync_dynamic_lines(container),
+                self.line_ids.mapped("move_id")._check_balanced(container),
+            ):
                 for line_id in taxes_to_set.keys():
                     line = self.invoice_line_ids.filtered(
                         lambda x, line_id=line_id: x.id == line_id
@@ -332,7 +340,9 @@ class AccountMove(models.Model):
                         if not addr.date_validation:
                             # The Validate action will be interrupted
                             # if the address is not validated
-                            raise UserError(_("Avatax address is not validated!"))
+                            raise UserError(
+                                self.env._("Avatax address is not validated!")
+                            )
                 # We should compute taxes before validating the invoice
                 # to ensure correct account moves
                 # However, we can't save the invoice because it wasn't assigned a
