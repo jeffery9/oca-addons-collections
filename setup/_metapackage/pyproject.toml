@@ -1,15 +1,15 @@
 [project]
 name = "odoo-addons-oca-hr-holidays"
-version = "17.0.20250314.0"
+version = "18.0.20251030.0"
 dependencies = [
-    "odoo-addon-hr_holidays_natural_period>=17.0dev,<17.1dev",
-    "odoo-addon-hr_holidays_public>=17.0dev,<17.1dev",
-    "odoo-addon-hr_holidays_public_city>=17.0dev,<17.1dev",
-    "odoo-addon-hr_holidays_settings>=17.0dev,<17.1dev",
-    "odoo-addon-hr_leave_custom_hour_interval>=17.0dev,<17.1dev",
+    "odoo-addon-hr_holidays_leave_repeated==18.0.*",
+    "odoo-addon-hr_holidays_natural_period==18.0.*",
+    "odoo-addon-hr_holidays_public==18.0.*",
+    "odoo-addon-hr_holidays_public_city==18.0.*",
+    "odoo-addon-hr_holidays_settings==18.0.*",
 ]
 classifiers=[
     "Programming Language :: Python",
     "Framework :: Odoo",
-    "Framework :: Odoo :: 17.0",
+    "Framework :: Odoo :: 18.0",
 ]
