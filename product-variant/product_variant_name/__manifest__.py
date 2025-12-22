@@ -3,7 +3,7 @@
 
 {
     "name": "Product Variant Name",
-    "version": "17.0.1.0.0",
+    "version": "18.0.1.0.0",
     "category": "Product",
     "author": "ForgeFlow, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/product-variant",
@@ -13,5 +13,5 @@
     ],
     "data": ["views/product_view.xml"],
     "installable": True,
-    "post_init_hook": "post_init_hook",
+    "pre_init_hook": "pre_init_hook",
 }

@@ -5,7 +5,7 @@
 
 import logging
 
-from odoo import _, api, exceptions, fields, models
+from odoo import Command, api, exceptions, fields, models
 from odoo.osv.expression import TRUE_DOMAIN
 
 _logger = logging.getLogger(__name__)
@@ -26,7 +26,7 @@ class ProductConfigurator(models.AbstractModel):
         copy=True,
     )
     price_extra = fields.Float(
-        compute="_compute_can_be_created",
+        compute="_compute_price_extra",
         digits="Product Price",
         help="Price Extra: Extra price for the variant with the currently "
         "selected attributes values on sale price. eg. 200 price extra, "
@@ -43,6 +43,11 @@ class ProductConfigurator(models.AbstractModel):
     can_create_product = fields.Boolean(compute="_compute_can_be_created")
     create_product_variant = fields.Boolean(string="Create product now!")
 
+    @api.depends("product_attribute_ids", "product_attribute_ids.price_extra")
+    def _compute_price_extra(self):
+        for rec in self:
+            rec.price_extra = sum(rec.mapped("product_attribute_ids.price_extra"))
+
     @api.depends(
         "product_attribute_ids", "product_attribute_ids.value_id", "product_id"
     )
@@ -56,7 +61,6 @@ class ProductConfigurator(models.AbstractModel):
                 len(rec.product_tmpl_id.attribute_line_ids.mapped("attribute_id"))
                 - len(list(filter(None, rec.product_attribute_ids.mapped("value_id"))))
             )
-            rec.price_extra = sum(rec.mapped("product_attribute_ids.price_extra"))
 
     @api.depends("product_tmpl_id", "product_attribute_ids")
     def _compute_product_id_configurator_domain(self):
@@ -104,7 +108,6 @@ class ProductConfigurator(models.AbstractModel):
     def _onchange_product_tmpl_id_configurator(self):
         self.ensure_one()
         if not self.product_tmpl_id._origin:
-            self.product_id = False
             self.product_id = False
             self._empty_attributes()
 
@@ -192,7 +195,12 @@ class ProductConfigurator(models.AbstractModel):
                 self.product_id = self.create_variant_if_needed()
         except exceptions.ValidationError as e:
             _logger.exception("Product not created!")
-            return {"warning": {"title": _("Product not created!"), "message": e.name}}
+            return {
+                "warning": {
+                    "title": self.env._("Product not created!"),
+                    "message": e.name,
+                }
+            }
 
     @api.model
     def _order_attributes(self, template, product_attribute_values):
@@ -210,7 +218,7 @@ class ProductConfigurator(models.AbstractModel):
     @api.model
     def _get_product_description(self, template, product, product_attributes):
         name = product and product.name or template.name
-        extended = self.user_has_groups(
+        extended = self.env.user.has_groups(
             "product_variant_configurator.group_product_variant_extended_description"
         )
         if not product_attributes and product:
@@ -246,7 +254,7 @@ class ProductConfigurator(models.AbstractModel):
                 }
                 for att_val in product._get_product_attributes_values_dict():
                     att_val.update(gen_dict)
-                    vals["product_attribute_ids"].append((0, 0, att_val))
+                    vals["product_attribute_ids"].append(Command.create(att_val))
         return super().create(vals_list)
 
     def unlink(self):
@@ -288,7 +296,7 @@ class ProductConfigurator(models.AbstractModel):
                 )
                 product_template_attribute_values |= existing_attribute_line.product_template_value_ids.filtered(  # noqa
                     lambda v,
-                    prod_attr_val=product_attribute_value: v.product_attribute_value_id
+                    prod_attr_val=product_attribute_value: v.product_attribute_value_id  # noqa
                     == prod_attr_val
                 )
             product = product_obj.create(
@@ -296,7 +304,7 @@ class ProductConfigurator(models.AbstractModel):
                     "name": self.product_tmpl_id.name,
                     "product_tmpl_id": self.product_tmpl_id.id,
                     "product_template_attribute_value_ids": [
-                        (6, 0, product_template_attribute_values.ids)
+                        Command.set(product_template_attribute_values.ids)
                     ],
                 }
             )

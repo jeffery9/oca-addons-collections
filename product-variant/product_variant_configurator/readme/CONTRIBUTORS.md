@@ -9,5 +9,6 @@
 - Simone Versienti \<<s.versienti@apuliasoftware.it>\>
 - Adria Gil Sorribes \<<adria.gil@forgeflow.com>\>
 - Héctor Villarreal Ortega \<<hector.villarreal@forgeflow.com>\>
-- Manuel Regidor \<<manuel.regidor@sygel.es>\>
-- Valentín Vinagre \<<valentin.vinagre@sygel.es>\>
+- [Heliconia Solutions Pvt. Ltd.](https://www.heliconia.io)
+  - Bhavesh Heliconia
+

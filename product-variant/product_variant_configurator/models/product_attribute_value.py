@@ -1,7 +1,7 @@
 # Copyright 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3
 
-from odoo import api, models
+from odoo import Command, api, models
 
 
 class ProductAttributeValue(models.Model):
@@ -22,5 +22,5 @@ class ProductAttributeValue(models.Model):
                 line = template.attribute_line_ids.filtered(
                     lambda x, attr=attr: x.attribute_id == attr.attribute_id
                 )
-                line.value_ids = [(4, attr.id)]
+                line.value_ids = [Command.link(attr.id)]
         return attr_values

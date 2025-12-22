@@ -3,7 +3,7 @@
 # Copyright 2016 ACSONE SA/NV
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3
 
-from odoo import _, api, exceptions, models
+from odoo import Command, api, exceptions, models
 from odoo.tools import config
 
 
@@ -94,7 +94,7 @@ class ProductProduct(models.Model):
                     and other_product != product
                 ):
                     raise exceptions.ValidationError(
-                        _("There's another product with the same attributes.")
+                        self.env._("There's another product with the same attributes.")
                     )
 
     @api.constrains("product_tmpl_id", "product_template_attribute_value_ids")
@@ -121,23 +121,22 @@ class ProductProduct(models.Model):
             )
             if errors:
                 raise exceptions.ValidationError(
-                    _("You have to fill the following attributes:\n%s")
+                    self.env._("You have to fill the following attributes:\n%s")
                     % "\n".join(errors.mapped("name"))
                 )
 
-    def name_get(self):
+    def _compute_display_name(self):
         """We need to add this for avoiding an odoo.exceptions.AccessError due
         to some refactoring done upstream on read method + variant name_get
         in Odoo. With this, we avoid to call super on the specific case of
         virtual records, providing simply the name, which is acceptable.
         """
-        res = []
+        _self = self
         for product in self:
             if isinstance(product.id, models.NewId):
-                res.append((product.id, product.name))
-            else:
-                res.append(super(ProductProduct, product).name_get()[0])
-        return res
+                product.display_name = product.name or ""
+                _self -= product
+        return super(ProductProduct, _self)._compute_display_name()
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -170,5 +169,7 @@ class ProductProduct(models.Model):
                 .ids
             )
             vals.pop("product_attribute_ids")
-            vals["product_template_attribute_value_ids"] = [(4, x) for x in ptav]
+            vals["product_template_attribute_value_ids"] = [
+                Command.link(x) for x in ptav
+            ]
         return super().create(vals_list)

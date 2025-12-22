@@ -1,28 +1,29 @@
 # © 2016 Oihane Crucelaegui - AvanzOSC
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
-from odoo.tests.common import TransactionCase
+from odoo import Command
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestProductVariant(TransactionCase):
-    def setUp(self):
-        super().setUp()
-        self.tmpl_model = self.env["product.template"].with_context(
+class TestProductVariant(BaseCommon):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.tmpl_model = cls.env["product.template"].with_context(
             check_variant_creation=True
         )
-        self.categ_model = self.env["product.category"]
-        self.categ1 = self.categ_model.create({"name": "No create variants category"})
-        self.categ2 = self.categ_model.create(
+        cls.categ_model = cls.env["product.category"]
+        cls.categ1 = cls.categ_model.create({"name": "No create variants category"})
+        cls.categ2 = cls.categ_model.create(
             {"name": "Create variants category", "no_create_variants": False}
         )
-        self.attribute = self.env["product.attribute"].create(
-            {"name": "Test Attribute"}
+        cls.attribute = cls.env["product.attribute"].create({"name": "Test Attribute"})
+        cls.value1 = cls.env["product.attribute.value"].create(
+            {"name": "Value 1", "attribute_id": cls.attribute.id}
         )
-        self.value1 = self.env["product.attribute.value"].create(
-            {"name": "Value 1", "attribute_id": self.attribute.id}
-        )
-        self.value2 = self.env["product.attribute.value"].create(
-            {"name": "Value 2", "attribute_id": self.attribute.id}
+        cls.value2 = cls.env["product.attribute.value"].create(
+            {"name": "Value 2", "attribute_id": cls.attribute.id}
         )
 
     def test_no_create_variants(self):
@@ -31,12 +32,12 @@ class TestProductVariant(TransactionCase):
                 "name": "No create variants template",
                 "no_create_variants": "yes",
                 "attribute_line_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "attribute_id": self.attribute.id,
-                            "value_ids": [(6, 0, [self.value1.id, self.value2.id])],
+                            "value_ids": [
+                                Command.set([self.value1.id, self.value2.id])
+                            ],
                         },
                     )
                 ],
@@ -57,12 +58,12 @@ class TestProductVariant(TransactionCase):
                 "categ_id": self.categ1.id,
                 "no_create_variants": "empty",
                 "attribute_line_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "attribute_id": self.attribute.id,
-                            "value_ids": [(6, 0, [self.value1.id, self.value2.id])],
+                            "value_ids": [
+                                Command.set([self.value1.id, self.value2.id])
+                            ],
                         },
                     )
                 ],
@@ -86,12 +87,12 @@ class TestProductVariant(TransactionCase):
                 "name": "Create variants template",
                 "no_create_variants": "no",
                 "attribute_line_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "attribute_id": self.attribute.id,
-                            "value_ids": [(6, 0, [self.value1.id, self.value2.id])],
+                            "value_ids": [
+                                Command.set([self.value1.id, self.value2.id])
+                            ],
                         },
                     )
                 ],
@@ -111,12 +112,12 @@ class TestProductVariant(TransactionCase):
                 "categ_id": self.categ2.id,
                 "no_create_variants": "empty",
                 "attribute_line_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "attribute_id": self.attribute.id,
-                            "value_ids": [(6, 0, [self.value1.id, self.value2.id])],
+                            "value_ids": [
+                                Command.set([self.value1.id, self.value2.id])
+                            ],
                         },
                     )
                 ],
@@ -142,12 +143,12 @@ class TestProductVariant(TransactionCase):
                 "categ_id": self.categ1.id,
                 "no_create_variants": "empty",
                 "attribute_line_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "attribute_id": self.attribute.id,
-                            "value_ids": [(6, 0, [self.value1.id, self.value2.id])],
+                            "value_ids": [
+                                Command.set([self.value1.id, self.value2.id])
+                            ],
                         },
                     )
                 ],

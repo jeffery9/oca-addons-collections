@@ -1,11 +1,12 @@
 # Copyright 2016 ACSONE SA/NV
 # Copyright 2017 Tecnativa - David Vidal
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+from odoo import Command
 
-from odoo.tests.common import TransactionCase
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestProductConfiguratorAttribute(TransactionCase):
+class TestProductConfiguratorAttribute(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -34,12 +35,10 @@ class TestProductConfiguratorAttribute(TransactionCase):
                 "name": "Product template 1",
                 "no_create_variants": "no",
                 "attribute_line_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "attribute_id": cls.attribute1.id,
-                            "value_ids": [(6, 0, [cls.value1.id, cls.value2.id])],
+                            "value_ids": [Command.set([cls.value1.id, cls.value2.id])],
                         },
                     )
                 ],
