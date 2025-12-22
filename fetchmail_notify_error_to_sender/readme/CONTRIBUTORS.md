@@ -7,4 +7,3 @@
 - Denis Valenchyts \<<denis@ventor.tech>\> (VentorTech OU
   \<<https://ventor.tech>\>)
 - Helly kapatel \<<helly.kapatel@initos.com>\>
-- Carlos Jimeno \<<carlos.jimeno@braintec.com>\> (https://braintec.com/)

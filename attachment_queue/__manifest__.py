@@ -3,7 +3,7 @@
 
 {
     "name": "Attachment Queue",
-    "version": "17.0.1.0.0",
+    "version": "18.0.1.0.0",
     "author": "Akretion,Odoo Community Association (OCA)",
     "summary": "Base module adding the concept of queue for processing files",
     "website": "https://github.com/OCA/server-tools",
@@ -20,4 +20,9 @@
     ],
     "demo": ["demo/attachment_queue.xml"],
     "installable": True,
+    "external_dependencies": {
+        "python": [
+            "openupgradelib",
+        ],
+    },
 }

@@ -4,8 +4,8 @@ from unittest import mock
 
 from odoo_test_helper import FakeModelLoader
 
-from odoo import registry
 from odoo.exceptions import UserError
+from odoo.modules.registry import Registry
 from odoo.tools import mute_logger
 
 from odoo.addons.base.tests.common import BaseCommon
@@ -64,7 +64,7 @@ class TestAttachmentBaseQueue(BaseCommon):
         retry later
         """
         attachment = self.env.ref("attachment_queue.dummy_attachment_queue")
-        with registry(self.env.cr.dbname).cursor() as new_cr:
+        with Registry(self.env.cr.dbname).cursor() as new_cr:
             new_cr.execute(
                 """
                 SELECT id
@@ -81,7 +81,7 @@ class TestAttachmentBaseQueue(BaseCommon):
         """If an attachment is already running, and a user tries to run it manually,
         raise error window"""
         attachment = self.env.ref("attachment_queue.dummy_attachment_queue")
-        with registry(self.env.cr.dbname).cursor() as new_cr:
+        with Registry(self.env.cr.dbname).cursor() as new_cr:
             new_cr.execute(
                 """
                 SELECT id
@@ -109,8 +109,11 @@ class TestAttachmentBaseQueue(BaseCommon):
 
     def test_run_fails(self):
         """Attachment queue should have correct state/error message"""
-        with mock.patch.object(
-            type(self.aq_model), "_run", self.env["attachment.queue"].mock_run_fail
+        with (
+            mock.patch.object(
+                type(self.aq_model), "_run", self.env["attachment.queue"].mock_run_fail
+            ),
+            mute_logger("odoo.addons.attachment_queue.models.attachment_queue"),
         ):
             attachment = self._create_dummy_attachment(no_job=True)
             self.assertEqual(attachment.state, "failed")
@@ -119,10 +122,13 @@ class TestAttachmentBaseQueue(BaseCommon):
     def test_run_fails_rollback(self):
         """In case of failure, no side effects should occur"""
         partners_initial = len(self.env["res.partner"].search([]))
-        with mock.patch.object(
-            type(self.aq_model),
-            "_run",
-            self.env["attachment.queue"].mock_run_create_partners_and_fail,
+        with (
+            mock.patch.object(
+                type(self.aq_model),
+                "_run",
+                self.env["attachment.queue"].mock_run_create_partners_and_fail,
+            ),
+            mute_logger("odoo.addons.attachment_queue.models.attachment_queue"),
         ):
             self._create_dummy_attachment(no_job=True)
             partners_after = len(self.env["res.partner"].search([]))

@@ -104,14 +104,12 @@ msgstr "Elija el método de almacenamiento para esta copia de seguridad."
 #. module: auto_backup
 #. odoo-python
 #: code:addons/auto_backup/models/db_backup.py:0
-#, python-format
 msgid "Connection Test Failed!"
 msgstr "Error en la prueba de conexión!"
 
 #. module: auto_backup
 #. odoo-python
 #: code:addons/auto_backup/models/db_backup.py:0
-#, python-format
 msgid "Connection Test Succeeded!"
 msgstr "Prueba de conexión correcta!"
 
@@ -139,7 +137,6 @@ msgstr "La copia de seguridad de la base de datos ha fallado."
 #. odoo-python
 #: code:addons/auto_backup/models/db_backup.py:0
 #: model:mail.message.subtype,description:auto_backup.mail_message_subtype_success
-#, python-format
 msgid "Database backup succeeded."
 msgstr "La copia de seguridad de la base de datos se realizo correctamente."
 
@@ -156,7 +153,6 @@ msgstr "Nombre a mostrar"
 #. module: auto_backup
 #. odoo-python
 #: code:addons/auto_backup/models/db_backup.py:0
-#, python-format
 msgid ""
 "Do not save backups on your filestore, or you will backup your backups too!"
 msgstr ""
@@ -222,7 +218,6 @@ msgstr "Si está marcado. nuevos mensajes requieren su atención."
 
 #. module: auto_backup
 #: model:ir.model.fields,help:auto_backup.field_db_backup__message_has_error
-#: model:ir.model.fields,help:auto_backup.field_db_backup__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr "Si esta marcado, algunos mensajes tienen un error de entrega."
 
@@ -324,11 +319,6 @@ msgstr "Servidor SFTP"
 #: model_terms:ir.ui.view,arch_db:auto_backup.view_backup_conf_form
 msgid "SFTP Settings"
 msgstr "Configuración de SFTP"
-
-#. module: auto_backup
-#: model:ir.model.fields,field_description:auto_backup.field_db_backup__message_has_sms_error
-msgid "SMS Delivery error"
-msgstr "Error en la entrega de SMS"
 
 #. module: auto_backup
 #: model_terms:ir.ui.view,arch_db:auto_backup.view_backup_conf_form
@@ -437,6 +427,9 @@ msgstr "sftp.example.com"
 #: model:ir.model.fields.selection,name:auto_backup.selection__db_backup__backup_format__zip
 msgid "zip (includes filestore)"
 msgstr "zip (incluye almacén de archivos)"
+
+#~ msgid "SMS Delivery error"
+#~ msgstr "Error en la entrega de SMS"
 
 #~ msgid "Changeset Changes"
 #~ msgstr "Cambios en el conjunto de modificaciones"

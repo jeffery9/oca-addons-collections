@@ -3,11 +3,11 @@ name: tests
 on:
   pull_request:
     branches:
-      - "17.0*"
+      - "18.0*"
   push:
     branches:
-      - "17.0"
-      - "17.0-ocabot-*"
+      - "18.0"
+      - "18.0-ocabot-*"
 
 jobs:
   unreleased-deps:
@@ -35,20 +35,11 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - container: ghcr.io/oca/oca-ci/py3.10-odoo17.0:latest
-            include: "database_cleanup"
-            makepot: "true"
-            name: Rebel test with Odoo
-          - container: ghcr.io/oca/oca-ci/py3.10-ocb17.0:latest
-            include: "database_cleanup"
-            name: Rebel test with OCB
-          - container: ghcr.io/oca/oca-ci/py3.10-odoo17.0:latest
-            exclude: "database_cleanup"
-            makepot: "true"
+          - container: ghcr.io/oca/oca-ci/py3.10-odoo18.0:latest
             name: test with Odoo
-          - container: ghcr.io/oca/oca-ci/py3.10-ocb17.0:latest
-            exclude: "database_cleanup"
+          - container: ghcr.io/oca/oca-ci/py3.10-ocb18.0:latest
             name: test with OCB
+            makepot: "true"
     services:
       postgres:
         image: postgres:12.0
@@ -59,8 +50,7 @@ jobs:
         ports:
           - 5432:5432
     env:
-      INCLUDE: "${{ matrix.include }}"
-      EXCLUDE: "${{ matrix.exclude }}"
+      OCA_ENABLE_CHECKLOG_ODOO: "1"
     steps:
       - uses: actions/checkout@v4
         with:

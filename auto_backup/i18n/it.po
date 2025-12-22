@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-03 10:08+0000\n"
-"PO-Revision-Date: 2025-09-18 17:42+0000\n"
+"PO-Revision-Date: 2025-05-20 09:26+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
@@ -102,14 +102,12 @@ msgstr "Scegliere il metodo di archiviazione per questo backup."
 #. module: auto_backup
 #. odoo-python
 #: code:addons/auto_backup/models/db_backup.py:0
-#, python-format
 msgid "Connection Test Failed!"
 msgstr "Prova di connessione non riuscita!"
 
 #. module: auto_backup
 #. odoo-python
 #: code:addons/auto_backup/models/db_backup.py:0
-#, python-format
 msgid "Connection Test Succeeded!"
 msgstr "Test connessione avvenuto con successo!"
 
@@ -137,7 +135,6 @@ msgstr "Backup del database non riuscito."
 #. odoo-python
 #: code:addons/auto_backup/models/db_backup.py:0
 #: model:mail.message.subtype,description:auto_backup.mail_message_subtype_success
-#, python-format
 msgid "Database backup succeeded."
 msgstr "Backup del database riuscito."
 
@@ -154,7 +151,6 @@ msgstr "Nome visualizzato"
 #. module: auto_backup
 #. odoo-python
 #: code:addons/auto_backup/models/db_backup.py:0
-#, python-format
 msgid ""
 "Do not save backups on your filestore, or you will backup your backups too!"
 msgstr ""
@@ -220,7 +216,6 @@ msgstr "Se selezionata, nuovi messaggi richiedono attenzione."
 
 #. module: auto_backup
 #: model:ir.model.fields,help:auto_backup.field_db_backup__message_has_error
-#: model:ir.model.fields,help:auto_backup.field_db_backup__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr "Se selezionata, alcuni messaggi hanno un errore di consegna."
 
@@ -322,11 +317,6 @@ msgstr "Server SFTP"
 #: model_terms:ir.ui.view,arch_db:auto_backup.view_backup_conf_form
 msgid "SFTP Settings"
 msgstr "Impostazioni SFTP"
-
-#. module: auto_backup
-#: model:ir.model.fields,field_description:auto_backup.field_db_backup__message_has_sms_error
-msgid "SMS Delivery error"
-msgstr "Errore consegna SMS"
 
 #. module: auto_backup
 #: model_terms:ir.ui.view,arch_db:auto_backup.view_backup_conf_form
@@ -434,18 +424,21 @@ msgstr "sftp.example.com"
 msgid "zip (includes filestore)"
 msgstr "zip (include filestore)"
 
+#~ msgid "SMS Delivery error"
+#~ msgstr "Errore consegna SMS"
+
 #~ msgid "Changeset Changes"
 #~ msgstr "Modifiche dell'insieme di modifiche"
 
 #~ msgid "Changesets"
-#~ msgstr "Insieme di modifiche"
+#~ msgstr "Insiemi di modifiche"
 
 #, python-format
 #~ msgid "Cleanup of old database backups failed."
 #~ msgstr "Pulizia dei vecchi backup del database non riuscita."
 
 #~ msgid "Count Changesets"
-#~ msgstr "Conteggio insieme di modifiche"
+#~ msgstr "Conta insiemi di modifiche"
 
 #~ msgid "Count Pending Changeset Changes"
 #~ msgstr "Conteggio modifiche dell'insieme di modifiche in attesa"

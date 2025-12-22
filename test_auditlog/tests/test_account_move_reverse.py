@@ -8,16 +8,18 @@ from odoo.addons.auditlog.tests.common import AuditLogRuleCommon
 @tagged("post_install", "-at_install")
 class TestAccountMoveReverse(AccountTestInvoicingCommon, AuditLogRuleCommon):
     @classmethod
-    def setUpClass(cls, chart_template_ref=None):
+    def setUpClass(cls):
         # Class setup taken from account/tests/test_account_move_in_invoice.py
-        super().setUpClass(chart_template_ref=chart_template_ref)
+        super().setUpClass()
+
+        cls.other_currency = cls.setup_other_currency("EUR")
 
         cls.invoice = cls.init_invoice(
             "in_invoice", products=cls.product_a + cls.product_b
         )
 
         cls.product_line_vals_1 = {
-            "name": cls.product_a.name,
+            "name": "product_a",
             "product_id": cls.product_a.id,
             "account_id": cls.product_a.property_account_expense_id.id,
             "partner_id": cls.partner_a.id,
@@ -36,7 +38,7 @@ class TestAccountMoveReverse(AccountTestInvoicingCommon, AuditLogRuleCommon):
             "date_maturity": False,
         }
         cls.product_line_vals_2 = {
-            "name": cls.product_b.name,
+            "name": "product_b",
             "product_id": cls.product_b.id,
             "account_id": cls.product_b.property_account_expense_id.id,
             "partner_id": cls.partner_a.id,
@@ -93,7 +95,7 @@ class TestAccountMoveReverse(AccountTestInvoicingCommon, AuditLogRuleCommon):
             "date_maturity": False,
         }
         cls.term_line_vals_1 = {
-            "name": "",
+            "name": False,
             "product_id": False,
             "account_id": cls.company_data["default_account_payable"].id,
             "partner_id": cls.partner_a.id,
@@ -117,7 +119,7 @@ class TestAccountMoveReverse(AccountTestInvoicingCommon, AuditLogRuleCommon):
             "journal_id": cls.company_data["default_journal_purchase"].id,
             "date": fields.Date.from_string("2019-01-01"),
             "fiscal_position_id": False,
-            "payment_reference": "",
+            "payment_reference": False,
             "invoice_payment_term_id": cls.pay_terms_a.id,
             "amount_untaxed": 960.0,
             "amount_tax": 168.0,

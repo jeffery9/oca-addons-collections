@@ -49,6 +49,11 @@ def _get_modules_dict_auto_install_config(config_value):
 
 def _overload_load_manifest(module, mod_path=None):
     res = _original_load_manifest(module, mod_path=None)
+    if not res:
+        # Specific case where a previously available module marked as auto installable
+        # is NOT available in the addons path.
+        # In that case, avoid to crash when trying to get 'depends' key.
+        return res
     auto_install = res.get("auto_install", False)
 
     modules_auto_install_enabled_dict = _get_modules_dict_auto_install_config(
@@ -65,14 +70,14 @@ def _overload_load_manifest(module, mod_path=None):
     )
 
     if auto_install and module in modules_auto_install_disabled_dict.keys():
-        _logger.info("Module '%s' has been marked as NOT auto installable." % module)
+        _logger.info(f"Module '{module}' has been marked as NOT auto installable.")
         res["auto_install"] = False
 
     if not auto_install and module in modules_auto_install_enabled_dict.keys():
         specific_dependencies = modules_auto_install_enabled_dict.get(module)
         if isinstance(specific_dependencies, bool):
             # Classical case
-            _logger.info("Module '%s' has been marked as auto installable." % module)
+            _logger.info(f"Module '{module}' has been marked as auto installable.")
             res["auto_install"] = set(res["depends"])
         else:
             if specific_dependencies:
@@ -92,6 +97,6 @@ def _overload_load_manifest(module, mod_path=None):
 
 
 def post_load():
-    _logger.info("Aplying patch module_change_auto_intall ...")
+    _logger.info("Applying patch module_change_auto_install ...")
     modules.module.load_manifest = _overload_load_manifest
     modules.load_manifest = _overload_load_manifest

@@ -104,14 +104,9 @@ class DbBackup(models.Model):
         """Get the right summary for this job."""
         for rec in self:
             if rec.method == "local":
-                rec.name = "%s @ localhost" % rec.folder
+                rec.name = f"{rec.folder} @ localhost"
             elif rec.method == "sftp":
-                rec.name = "sftp://%s@%s:%d%s" % (
-                    rec.sftp_user,
-                    rec.sftp_host,
-                    rec.sftp_port,
-                    rec.folder,
-                )
+                rec.name = f"sftp://{rec.sftp_user}@{rec.sftp_host}:{rec.sftp_port}{rec.folder}"
 
     @api.constrains("folder", "method")
     def _check_folder(self):
@@ -121,7 +116,7 @@ class DbBackup(models.Model):
                 tools.config.filestore(self.env.cr.dbname)
             ):
                 raise exceptions.ValidationError(
-                    _(
+                    self.env._(
                         "Do not save backups on your filestore, or you will "
                         "backup your backups too!"
                     )
@@ -139,7 +134,7 @@ class DbBackup(models.Model):
             pysftp.SSHException,
         ) as exc:
             _logger.info("Connection Test Failed!", exc_info=True)
-            raise UserError(_("Connection Test Failed!")) from exc
+            raise UserError(self.env._("Connection Test Failed!")) from exc
 
     def action_backup(self):
         """Run selected backups."""
@@ -152,9 +147,9 @@ class DbBackup(models.Model):
             with rec.backup_log():
                 # Directory must exist
                 try:
-                    os.makedirs(rec.folder)
+                    os.makedirs(rec.folder, exist_ok=True)
                 except OSError as exc:
-                    _logger.exception("Action backup - OSError: %s" % exc)
+                    _logger.exception(f"Action backup - OSError: {exc}")
 
                 with open(os.path.join(rec.folder, filename), "wb") as destiny:
                     # Copy the cached backup
@@ -181,13 +176,10 @@ class DbBackup(models.Model):
 
                     with cached:
                         with rec.sftp_connection() as remote:
-                            # Directory must exist
                             try:
                                 remote.makedirs(rec.folder)
                             except pysftp.ConnectionException as exc:
-                                _logger.exception(
-                                    "pysftp ConnectionException: %s" % exc
-                                )
+                                _logger.exception(f"pysftp ConnectionException: {exc}")
 
                             # Copy cached backup to remote server
                             with remote.open(
@@ -208,17 +200,17 @@ class DbBackup(models.Model):
     def backup_log(self):
         """Log a backup result."""
         try:
-            _logger.info("Starting database backup: %s", self.name)
+            _logger.info(f"Starting database backup: {self.name}")
             yield
         except Exception:
-            _logger.exception("Database backup failed: %s", self.name)
+            _logger.exception(f"Database backup failed: {self.name}")
             escaped_tb = tools.html_escape(traceback.format_exc())
             self.message_post(  # pylint: disable=translation-required
                 body=f"<p>{_('Database backup failed.')}</p><pre>{escaped_tb}</pre>",
                 subtype_id=self.env.ref("auto_backup.mail_message_subtype_failure").id,
             )
         else:
-            _logger.info("Database backup succeeded: %s", self.name)
+            _logger.info(f"Database backup succeeded: {self.name}")
             self.message_post(body=_("Database backup succeeded."))
 
     def cleanup(self):
@@ -227,15 +219,13 @@ class DbBackup(models.Model):
         for rec in self.filtered("days_to_keep"):
             with rec.cleanup_log():
                 bu_format = rec.backup_format
-                file_extension = bu_format == "zip" and "dump.zip" or bu_format
+                file_extension = "dump.zip" if bu_format == "zip" else bu_format
                 oldest = self.filename(
                     now - timedelta(days=rec.days_to_keep), bu_format
                 )
 
                 if rec.method == "local":
-                    for name in iglob(
-                        os.path.join(rec.folder, "*.%s" % file_extension)
-                    ):
+                    for name in iglob(os.path.join(rec.folder, f"*.{file_extension}")):
                         if os.path.basename(name) < oldest:
                             os.unlink(name)
 
@@ -243,7 +233,7 @@ class DbBackup(models.Model):
                     with rec.sftp_connection() as remote:
                         for name in remote.listdir(rec.folder):
                             if (
-                                name.endswith(".%s" % file_extension)
+                                name.endswith(f".{file_extension}")
                                 and os.path.basename(name) < oldest
                             ):
                                 remote.unlink(f"{rec.folder}/{name}")
@@ -253,20 +243,20 @@ class DbBackup(models.Model):
         """Log a possible cleanup failure."""
         self.ensure_one()
         try:
-            _logger.info(
-                "Starting cleanup process after database backup: %s", self.name
-            )
+            _logger.info(f"Starting cleanup process after database backup: {self.name}")
             yield
         except Exception:
-            _logger.exception("Cleanup of old database backups failed: %s")
+            _logger.exception(f"Cleanup of old database backups failed: {self.name}")
             escaped_tb = tools.html_escape(traceback.format_exc())
             self.message_post(  # pylint: disable=translation-required
-                body=f"<p>{_('Cleanup of old database backups failed.')}</p>"
-                f"<pre>{escaped_tb}</pre>",
+                body=(
+                    f"<p>{_('Cleanup of old database backups failed.')}</p>"
+                    f"<pre>{escaped_tb}</pre>"
+                ),
                 subtype_id=self.env.ref("auto_backup.failure").id,
             )
         else:
-            _logger.info("Cleanup of old database backups succeeded: %s", self.name)
+            _logger.info(f"Cleanup of old database backups succeeded: {self.name}")
 
     @staticmethod
     def filename(when, ext="zip"):

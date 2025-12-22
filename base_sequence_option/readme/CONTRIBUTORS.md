@@ -1,3 +1,2 @@
 - Kitti U. \<<kittiu@ecosoft.co.th>\>
-- \[APSL-Nagarro\](<https://apsl.tech>):
-  - Antoni Marroig \<<amarroig@apsl.net>\>
+- Grall F. \<<fgr@apik.cloud>\>

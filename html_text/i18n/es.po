@@ -24,11 +24,6 @@ msgstr ""
 msgid "Fields Converter"
 msgstr "Convertidor de Campos"
 
-#. module: html_text
-#: model:ir.model.fields,field_description:html_text.field_ir_fields_converter__smart_search
-msgid "Smart Search"
-msgstr "Búsqueda Inteligente"
-
 #~ msgid "Display Name"
 #~ msgstr "Mostrar Nombre"
 
@@ -37,3 +32,6 @@ msgstr "Búsqueda Inteligente"
 
 #~ msgid "Last Modified on"
 #~ msgstr "Última Modifiación el"
+
+#~ msgid "Smart Search"
+#~ msgstr "Búsqueda Inteligente"

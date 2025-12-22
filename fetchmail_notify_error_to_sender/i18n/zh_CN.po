@@ -26,18 +26,42 @@ msgid ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "                <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
 "                <div>\n"
-"                <p>Hello <t t-out=\"ctx.get('sender_message')."
-"get('from')\"></t>,</p>\n"
+"                <p>Hello <t t-out=\"ctx.get('sender_message').get('from')\"/"
+">,</p>\n"
 "                <p>we got a problem with your email: <i><t t-out=\"ctx."
-"get('sender_message').get('subject')\"></t></i></p>\n"
+"get('sender_message').get('subject')\"/></i></p>\n"
 "                <p>Maybe you used a wrong recipient address?</p>\n"
-"                <p><br></p>\n"
+"                <p><br/></p>\n"
 "                <p>Technical details:</p>\n"
-"                <p><i><t t-out=\"ctx.get('route_exception')\"></t></i></p>\n"
+"                <p><i><t t-out=\"ctx.get('route_exception')\"/></i></p>\n"
 "                </div>\n"
 "                </p>\n"
 "            </div>\n"
 "        "
+msgstr ""
+
+#. module: fetchmail_notify_error_to_sender
+#: model:ir.model.fields,field_description:fetchmail_notify_error_to_sender.field_fetchmail_server__changeset_change_ids
+#: model:ir.model.fields,field_description:fetchmail_notify_error_to_sender.field_mail_thread__changeset_change_ids
+msgid "Changeset Changes"
+msgstr ""
+
+#. module: fetchmail_notify_error_to_sender
+#: model:ir.model.fields,field_description:fetchmail_notify_error_to_sender.field_fetchmail_server__changeset_ids
+#: model:ir.model.fields,field_description:fetchmail_notify_error_to_sender.field_mail_thread__changeset_ids
+msgid "Changesets"
+msgstr ""
+
+#. module: fetchmail_notify_error_to_sender
+#: model:ir.model.fields,field_description:fetchmail_notify_error_to_sender.field_fetchmail_server__count_pending_changeset_changes
+#: model:ir.model.fields,field_description:fetchmail_notify_error_to_sender.field_mail_thread__count_pending_changeset_changes
+msgid "Count Pending Changeset Changes"
+msgstr ""
+
+#. module: fetchmail_notify_error_to_sender
+#: model:ir.model.fields,field_description:fetchmail_notify_error_to_sender.field_fetchmail_server__count_pending_changesets
+#: model:ir.model.fields,field_description:fetchmail_notify_error_to_sender.field_mail_thread__count_pending_changesets
+msgid "Count Pending Changesets"
 msgstr ""
 
 #. module: fetchmail_notify_error_to_sender
@@ -73,7 +97,39 @@ msgid ""
 msgstr "在此处设置模板，用于在获取电子邮件时发生错误时向发件人发送通知"
 
 #. module: fetchmail_notify_error_to_sender
-#: model:ir.model.fields,field_description:fetchmail_notify_error_to_sender.field_fetchmail_server__smart_search
-#: model:ir.model.fields,field_description:fetchmail_notify_error_to_sender.field_mail_thread__smart_search
-msgid "Smart Search"
+#: model:ir.model.fields,field_description:fetchmail_notify_error_to_sender.field_fetchmail_server__user_can_see_changeset
+#: model:ir.model.fields,field_description:fetchmail_notify_error_to_sender.field_mail_thread__user_can_see_changeset
+msgid "User Can See Changeset"
 msgstr ""
+
+#~ msgid ""
+#~ "\n"
+#~ "            <div>\n"
+#~ "            <p>Hello ${ctx.get('sender_message').get('from')},</p>\n"
+#~ "            <p>we got a problem with your email: <i>${ctx."
+#~ "get('sender_message').get('subject')}</i></p>\n"
+#~ "            <p>Maybe you used a wrong recipient address?</p>\n"
+#~ "            <p><br/></p>\n"
+#~ "            <p>Technical details:</p>\n"
+#~ "            <p><i>${ctx.get('route_exception')}</i></p>\n"
+#~ "            </div>\n"
+#~ "        "
+#~ msgstr ""
+#~ "\n"
+#~ "            <div>\n"
+#~ "            <p>你好${ctx.get('sender_message').get('from')},</p>\n"
+#~ "            <p>我们的电子邮件出了问题:<i>${ctx.get('sender_message')."
+#~ "get('subject')}</i></p>\n"
+#~ "            <p>也许您使用了错误的收件人地址？</p>\n"
+#~ "            <p><br/></p>\n"
+#~ "            <p>技术细节:</p>\n"
+#~ "            <p><i>${ctx.get('route_exception')}</i></p>\n"
+#~ "            </div>\n"
+#~ "        "
+
+#~ msgid ""
+#~ "Receiving error with: ${ctx.get('sender_message').get('subject')|safe}"
+#~ msgstr "接收错误: ${ctx.get('sender_message').get('subject')|safe}"
+
+#~ msgid "POP/IMAP Server"
+#~ msgstr "POP/IMAP 服务器"
