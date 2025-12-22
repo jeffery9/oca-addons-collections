@@ -75,9 +75,8 @@ class StockBuffer(models.Model):
                 rec.pre_daf_adu = rec.adu
                 rec.adu *= rec.daf_applied
                 _logger.debug(
-                    "DAF={} applied to {}. ADU: {} -> {}".format(
-                        rec.daf_applied, rec.name, rec.pre_daf_adu, rec.adu
-                    )
+                    f"DAF={rec.daf_applied} applied to {rec.name}."
+                    f" ADU: {rec.pre_daf_adu} -> {rec.adu}"
                 )
             # Compute generated demand to be applied to components:
             dafs_to_explode = self.env["ddmrp.adjustment"].search(
@@ -136,10 +135,10 @@ class StockBuffer(models.Model):
         return True
 
     @api.model
-    def cron_ddmrp_adu(self, automatic=False):
+    def cron_ddmrp_adu(self, automatic=False, domain=None):
         """Apply extra demand originated by Demand Adjustment Factors to
         components after the cron update of all the buffers."""
-        res = super().cron_ddmrp_adu(automatic)
+        res = super().cron_ddmrp_adu(automatic=automatic, domain=domain)
         today = fields.Date.today()
         self.search(
             [("parent_daf_applied", "!=", -1), ("extra_demand_ids", "=", False)]
@@ -155,9 +154,8 @@ class StockBuffer(models.Model):
                 op.parent_daf_applied = daf_parent
                 op.adu += op.parent_daf_applied
                 _logger.debug(
-                    "DAFs-originated demand applied. {}: ADU += {}".format(
-                        op.name, op.parent_daf_applied
-                    )
+                    f"DAFs-originated demand applied. {op.name}:"
+                    f" ADU += {op.parent_daf_applied}"
                 )
         return res
 

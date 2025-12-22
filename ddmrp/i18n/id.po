@@ -89,7 +89,6 @@ msgstr "Diarsipkan"
 #. module: ddmrp
 #. odoo-python
 #: code:addons/ddmrp/models/product_template.py:0
-#, python-format
 msgid ""
 "At least one stock buffer for this product has a different Procurement unit "
 "of measure category."
@@ -145,7 +144,6 @@ msgstr ""
 #. module: ddmrp
 #. odoo-python
 #: code:addons/ddmrp/models/product_adu_calculation_method.py:0
-#, python-format
 msgid "Blended"
 msgstr "Campuran"
 
@@ -212,7 +210,6 @@ msgstr ""
 #: code:addons/ddmrp/static/src/components/bom_overview_table/mrp_bom_overview_table.xml:0
 #: model_terms:ir.ui.view,arch_db:ddmrp.purchase_order_line_search
 #: model_terms:ir.ui.view,arch_db:ddmrp.report_mrp_bom_inherit_ddmrp
-#, python-format
 msgid "Buffered"
 msgstr ""
 
@@ -267,7 +264,6 @@ msgstr ""
 #. module: ddmrp
 #. odoo-python
 #: code:addons/ddmrp/models/mrp_bom.py:0
-#, python-format
 msgid "Change MRP BoM Location"
 msgstr ""
 
@@ -455,7 +451,6 @@ msgstr ""
 #. module: ddmrp
 #. odoo-javascript
 #: code:addons/ddmrp/static/src/components/bom_overview_table/mrp_bom_overview_table.xml:0
-#, python-format
 msgid "DLT"
 msgstr ""
 
@@ -467,7 +462,6 @@ msgstr ""
 #. module: ddmrp
 #. odoo-javascript
 #: code:addons/ddmrp/static/src/components/bom_overview_line/mrp_bom_overview_line.xml:0
-#, python-format
 msgid "Days"
 msgstr ""
 
@@ -481,7 +475,6 @@ msgstr ""
 #. module: ddmrp
 #. odoo-javascript
 #: code:addons/ddmrp/static/src/components/bom_overview_table/mrp_bom_overview_table.xml:0
-#, python-format
 msgid "Decoupled Lead Time of the BoM."
 msgstr ""
 
@@ -528,7 +521,6 @@ msgstr ""
 #. module: ddmrp
 #. odoo-python
 #: code:addons/ddmrp/wizards/ddmrp_duplicate_buffer.py:0
-#, python-format
 msgid "Duplicated Buffers"
 msgstr ""
 
@@ -540,7 +532,6 @@ msgstr ""
 #. module: ddmrp
 #. odoo-python
 #: code:addons/ddmrp/models/stock_buffer.py:0
-#, python-format
 msgid ""
 "Error: The product default Unit of Measure and the procurement Unit of "
 "Measure must be in the same category."
@@ -587,7 +578,6 @@ msgstr ""
 #. odoo-python
 #: code:addons/ddmrp/models/product_adu_calculation_method.py:0
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__adu_fixed
-#, python-format
 msgid "Fixed ADU"
 msgstr ""
 
@@ -615,7 +605,6 @@ msgstr ""
 #. module: ddmrp
 #. odoo-python
 #: code:addons/ddmrp/models/product_adu_calculation_method.py:0
-#, python-format
 msgid "Future-looking"
 msgstr ""
 
@@ -627,6 +616,13 @@ msgstr ""
 #. module: ddmrp
 #: model_terms:ir.ui.view,arch_db:ddmrp.view_move_tree
 msgid "Go to Source"
+msgstr ""
+
+#. module: ddmrp
+#: model:ir.model.fields,help:ddmrp.field_stock_buffer__product_type
+msgid ""
+"Goods are tangible materials and merchandise you provide.\n"
+"A service is a non-material product you provide."
 msgstr ""
 
 #. module: ddmrp
@@ -732,7 +728,6 @@ msgstr ""
 #. module: ddmrp
 #. odoo-python
 #: code:addons/ddmrp/models/product_adu_calculation_method.py:0
-#, python-format
 msgid ""
 "In blended method, past and future factors must be positive and sum exactly "
 "1,0."
@@ -911,6 +906,11 @@ msgid "Manufactured"
 msgstr ""
 
 #. module: ddmrp
+#: model:ir.model,name:ddmrp.model_mrp_production
+msgid "Manufacturing Order"
+msgstr ""
+
+#. module: ddmrp
 #: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__mrp_production_ids
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_view_form
 msgid "Manufacturing Orders"
@@ -1006,7 +1006,6 @@ msgstr ""
 #. module: ddmrp
 #. odoo-python
 #: code:addons/ddmrp/models/stock_buffer.py:0
-#, python-format
 msgid "No demand detected."
 msgstr ""
 
@@ -1018,21 +1017,18 @@ msgstr ""
 #. module: ddmrp
 #. odoo-python
 #: code:addons/ddmrp/wizards/make_procurement_buffer.py:0
-#, python-format
 msgid "No stock buffer found."
 msgstr ""
 
 #. module: ddmrp
 #. odoo-python
 #: code:addons/ddmrp/models/stock_buffer.py:0
-#, python-format
 msgid "No supply detected."
 msgstr ""
 
 #. module: ddmrp
 #. odoo-python
 #: code:addons/ddmrp/models/stock_buffer.py:0
-#, python-format
 msgid "Non-completed Moves"
 msgstr ""
 
@@ -1114,7 +1110,6 @@ msgstr ""
 #. module: ddmrp
 #. odoo-python
 #: code:addons/ddmrp/models/product_adu_calculation_method.py:0
-#, python-format
 msgid "Past-looking"
 msgstr ""
 
@@ -1141,42 +1136,36 @@ msgstr ""
 #. module: ddmrp
 #. odoo-python
 #: code:addons/ddmrp/models/product_adu_calculation_method.py:0
-#, python-format
 msgid "Please indicate a Future Horizon."
 msgstr ""
 
 #. module: ddmrp
 #. odoo-python
 #: code:addons/ddmrp/models/product_adu_calculation_method.py:0
-#, python-format
 msgid "Please indicate a Future Source."
 msgstr ""
 
 #. module: ddmrp
 #. odoo-python
 #: code:addons/ddmrp/models/product_adu_calculation_method.py:0
-#, python-format
 msgid "Please indicate a Past Horizon."
 msgstr ""
 
 #. module: ddmrp
 #. odoo-python
 #: code:addons/ddmrp/models/product_adu_calculation_method.py:0
-#, python-format
 msgid "Please indicate a Past Source."
 msgstr ""
 
 #. module: ddmrp
 #. odoo-python
 #: code:addons/ddmrp/wizards/ddmrp_duplicate_buffer.py:0
-#, python-format
 msgid "Please select a New Location."
 msgstr ""
 
 #. module: ddmrp
 #. odoo-python
 #: code:addons/ddmrp/wizards/ddmrp_duplicate_buffer.py:0
-#, python-format
 msgid "Please select a New Product."
 msgstr ""
 
@@ -1250,13 +1239,13 @@ msgid "Product Moves (Stock Move Line)"
 msgstr ""
 
 #. module: ddmrp
-#: model:ir.model,name:ddmrp.model_product_product
-msgid "Product Variant"
+#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__product_type
+msgid "Product Type"
 msgstr ""
 
 #. module: ddmrp
-#: model:ir.model,name:ddmrp.model_mrp_production
-msgid "Production Order"
+#: model:ir.model,name:ddmrp.model_product_product
+msgid "Product Variant"
 msgstr ""
 
 #. module: ddmrp
@@ -1345,7 +1334,6 @@ msgstr ""
 #. module: ddmrp
 #. odoo-python
 #: code:addons/ddmrp/wizards/make_procurement_buffer.py:0
-#, python-format
 msgid "Quantity must be positive."
 msgstr ""
 
@@ -1680,7 +1668,6 @@ msgstr ""
 #. module: ddmrp
 #. odoo-python
 #: code:addons/ddmrp/models/stock_move.py:0
-#, python-format
 msgid "Stock Move Source"
 msgstr ""
 
@@ -1809,7 +1796,6 @@ msgid "True when the product has an DDMRP buffer associated."
 msgstr ""
 
 #. module: ddmrp
-#: model:ir.model.fields,field_description:ddmrp.field_stock_buffer__product_type
 #: model_terms:ir.ui.view,arch_db:ddmrp.stock_buffer_search
 msgid "Type"
 msgstr ""
@@ -1823,7 +1809,6 @@ msgstr ""
 #. module: ddmrp
 #. odoo-python
 #: code:addons/ddmrp/models/stock_buffer.py:0
-#, python-format
 msgid "Unsupported operator %s"
 msgstr ""
 
@@ -2016,7 +2001,6 @@ msgstr ""
 #. module: ddmrp
 #. odoo-python
 #: code:addons/ddmrp/models/stock_buffer.py:0
-#, python-format
 msgid ""
 "You have to select a product unit of measure that is inthe same category "
 "than the default unit ofmeasure of the product"

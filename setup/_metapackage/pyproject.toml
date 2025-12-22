@@ -1,22 +1,28 @@
 [project]
 name = "odoo-addons-oca-ddmrp"
-version = "17.0.20250512.0"
+version = "18.0.20250327.0"
 dependencies = [
-    "odoo-addon-ddmrp>=17.0dev,<17.1dev",
-    "odoo-addon-ddmrp_adjustment>=17.0dev,<17.1dev",
-    "odoo-addon-ddmrp_chatter>=17.0dev,<17.1dev",
-    "odoo-addon-ddmrp_cron_actions_as_job>=17.0dev,<17.1dev",
-    "odoo-addon-ddmrp_exclude_moves_adu_calc>=17.0dev,<17.1dev",
-    "odoo-addon-ddmrp_exclude_moves_adu_calc_sales>=17.0dev,<17.1dev",
-    "odoo-addon-ddmrp_history>=17.0dev,<17.1dev",
-    "odoo-addon-ddmrp_include_location_final>=17.0dev,<17.1dev",
-    "odoo-addon-ddmrp_product_replace>=17.0dev,<17.1dev",
-    "odoo-addon-ddmrp_report_part_flow_index>=17.0dev,<17.1dev",
-    "odoo-addon-ddmrp_warning>=17.0dev,<17.1dev",
-    "odoo-addon-ddmrp_warning_as_job>=17.0dev,<17.1dev",
+    "odoo-addon-ddmrp==18.0.*",
+    "odoo-addon-ddmrp_adjustment==18.0.*",
+    "odoo-addon-ddmrp_chatter==18.0.*",
+    "odoo-addon-ddmrp_coverage_days==18.0.*",
+    "odoo-addon-ddmrp_cron_actions_as_job==18.0.*",
+    "odoo-addon-ddmrp_exclude_moves_adu_calc==18.0.*",
+    "odoo-addon-ddmrp_exclude_moves_adu_calc_sales==18.0.*",
+    "odoo-addon-ddmrp_history==18.0.*",
+    "odoo-addon-ddmrp_packaging==18.0.*",
+    "odoo-addon-ddmrp_packaging_product_replace==18.0.*",
+    "odoo-addon-ddmrp_product_replace==18.0.*",
+    "odoo-addon-ddmrp_purchase_hide_onhand_status==18.0.*",
+    "odoo-addon-ddmrp_report_part_flow_index==18.0.*",
+    "odoo-addon-ddmrp_warning==18.0.*",
+    "odoo-addon-ddmrp_warning_as_job==18.0.*",
+    "odoo-addon-stock_buffer_capacity_limit==18.0.*",
+    "odoo-addon-stock_buffer_route==18.0.*",
+    "odoo-addon-stock_buffer_sales_analysis==18.0.*",
 ]
 classifiers=[
     "Programming Language :: Python",
     "Framework :: Odoo",
-    "Framework :: Odoo :: 17.0",
+    "Framework :: Odoo :: 18.0",
 ]
