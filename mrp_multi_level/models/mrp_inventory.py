@@ -54,16 +54,12 @@ class MrpInventory(models.Model):
         "This quantity is included in the supply quantity "
         "but it is not confirmed yet.",
     )
-    initial_on_hand_qty = fields.Float(
-        string="Starting Inventory", group_operator="avg"
-    )
-    final_on_hand_qty = fields.Float(
-        string="Forecasted Inventory", group_operator="avg"
-    )
+    initial_on_hand_qty = fields.Float(string="Starting Inventory", aggregator="avg")
+    final_on_hand_qty = fields.Float(string="Forecasted Inventory", aggregator="avg")
     to_procure = fields.Float(compute="_compute_to_procure", store=True)
     running_availability = fields.Float(
         string="Planned Availability",
-        group_operator="avg",
+        aggregator="avg",
         help="Theoretical inventory level if all planned orders were released.",
     )
     order_release_date = fields.Date(compute="_compute_order_release_date", store=True)
@@ -140,7 +136,7 @@ class MrpInventory(models.Model):
             "name": _("Planned Orders"),
             "type": "ir.actions.act_window",
             "res_model": "mrp.planned.order",
-            "view_mode": "tree,form",
+            "view_mode": "list,form",
             "domain": domain,
         }
 

@@ -104,7 +104,7 @@ class TestMrpMultiLevelCommon(TransactionCase):
         cls.prod_test = cls.product_obj.create(
             {
                 "name": "Test Top Seller",
-                "type": "product",
+                "is_storable": True,
                 "list_price": 150.0,
                 "route_ids": [(6, 0, [route_buy])],
                 "seller_ids": [(0, 0, {"partner_id": vendor1.id, "price": 20.0})],
@@ -124,7 +124,7 @@ class TestMrpMultiLevelCommon(TransactionCase):
         cls.prod_min = cls.product_obj.create(
             {
                 "name": "Product with minimum order qty",
-                "type": "product",
+                "is_storable": True,
                 "list_price": 50.0,
                 "route_ids": [(6, 0, [route_buy])],
                 "seller_ids": [(0, 0, {"partner_id": vendor1.id, "price": 10.0})],
@@ -143,7 +143,7 @@ class TestMrpMultiLevelCommon(TransactionCase):
         cls.prod_max = cls.product_obj.create(
             {
                 "name": "Product with maximum order qty",
-                "type": "product",
+                "is_storable": True,
                 "list_price": 50.0,
                 "route_ids": [(6, 0, [route_buy])],
                 "seller_ids": [(0, 0, {"partner_id": vendor1.id, "price": 10.0})],
@@ -161,7 +161,7 @@ class TestMrpMultiLevelCommon(TransactionCase):
         cls.prod_multiple = cls.product_obj.create(
             {
                 "name": "Product with qty multiple",
-                "type": "product",
+                "is_storable": True,
                 "list_price": 50.0,
                 "route_ids": [(6, 0, [route_buy])],
                 "seller_ids": [(0, 0, {"partner_id": vendor1.id, "price": 10.0})],
@@ -180,7 +180,7 @@ class TestMrpMultiLevelCommon(TransactionCase):
         cls.product_scenario_1 = cls.product_obj.create(
             {
                 "name": "Product Special Scenario 1",
-                "type": "product",
+                "is_storable": True,
                 "list_price": 100.0,
                 "route_ids": [(6, 0, [route_buy])],
                 "seller_ids": [(0, 0, {"partner_id": vendor1.id, "price": 20.0})],
@@ -198,7 +198,7 @@ class TestMrpMultiLevelCommon(TransactionCase):
         cls.product_tz = cls.product_obj.create(
             {
                 "name": "Product Timezone",
-                "type": "product",
+                "is_storable": True,
                 "list_price": 100.0,
                 "route_ids": [(6, 0, [route_buy])],
                 "seller_ids": [(0, 0, {"partner_id": vendor1.id, "price": 20.0})],
@@ -211,7 +211,7 @@ class TestMrpMultiLevelCommon(TransactionCase):
         cls.prod_uom_test = cls.product_obj.create(
             {
                 "name": "Product Uom Test",
-                "type": "product",
+                "is_storable": True,
                 "uom_id": cls.env.ref("uom.product_uom_unit").id,
                 "uom_po_id": cls.env.ref("uom.product_uom_dozen").id,
                 "list_price": 150.0,
@@ -226,7 +226,7 @@ class TestMrpMultiLevelCommon(TransactionCase):
         cls.product_lots = cls.product_obj.create(
             {
                 "name": "Product Tracked by Lots",
-                "type": "product",
+                "is_storable": True,
                 "tracking": "lot",
                 "uom_id": cls.env.ref("uom.product_uom_unit").id,
                 "list_price": 100.0,
@@ -266,6 +266,20 @@ class TestMrpMultiLevelCommon(TransactionCase):
                 "quantity": 110.0,
                 "location_id": cls.stock_location.id,
             }
+        )
+        # Product to test multi-step routes
+        cls.product_routes = cls.product_obj.create(
+            {
+                "name": "Product Multi-step Routes",
+                "is_storable": True,
+                "uom_id": cls.env.ref("uom.product_uom_unit").id,
+                "list_price": 100.0,
+                "route_ids": [(6, 0, [route_buy])],
+                "seller_ids": [(0, 0, {"partner_id": vendor1.id, "price": 35.0})],
+            }
+        )
+        cls.product_mrp_area_obj.create(
+            {"product_id": cls.product_routes.id, "mrp_area_id": cls.mrp_area.id}
         )
 
         # Product MRP Parameter to test supply method computation
@@ -654,3 +668,27 @@ class TestMrpMultiLevelCommon(TransactionCase):
         # Confirm the MO to generate stock moves:
         mo.action_confirm()
         return mo
+
+    @classmethod
+    def _run_procurement(
+        cls, product, location=None, product_qty=10.0, extra_values=None
+    ):
+        if not location:
+            location = cls.customer_location
+        values = {"warehouse_id": cls.wh}
+        if extra_values and isinstance(extra_values, dict):
+            values.update(extra_values)
+        return cls.env["procurement.group"].run(
+            [
+                cls.env["procurement.group"].Procurement(
+                    product,
+                    product_qty,
+                    product.uom_id,
+                    location,
+                    product.name,
+                    "/",
+                    cls.env.company,
+                    values,
+                )
+            ]
+        )

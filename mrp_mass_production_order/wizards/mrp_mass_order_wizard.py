@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 
 
 class MassMrpProductionOrderEntryWizard(models.TransientModel):
@@ -12,7 +12,7 @@ class MassMrpProductionOrderEntryWizard(models.TransientModel):
     product_id = fields.Many2one(
         "product.product",
         "Manufactured Product",
-        domain="[('type', 'in', ['product', 'consu'])]",
+        domain="[('type', 'in', ['consu'])]",
         required=True,
     )
     product_qty = fields.Float(
@@ -64,7 +64,7 @@ class MassMrpProductionOrderEntryWizard(models.TransientModel):
     product_consumed_id = fields.Many2one(
         "product.product",
         "Consumed Product",
-        domain="[('type', 'in', ['product', 'consu']), ('id', '!=', product_id)]",
+        domain="[('type', 'in', ['consu']), ('id', '!=', product_id)]",
     )
     quantity = fields.Float(
         "Consumed Quantity", digits="Product Unit of Measure", default=1
@@ -260,9 +260,9 @@ class MassMrpProductionOrderWizard(models.TransientModel):
             mrp.button_mark_done() if self.produce_all else mrp.action_confirm()
             mrp_ids.append(mrp.id)
         return {
-            "name": _("MRP Production Orders Created"),
+            "name": self.env._("MRP Production Orders Created"),
             "type": "ir.actions.act_window",
-            "view_mode": "tree,form",
+            "view_mode": "list,form",
             "res_model": "mrp.production",
             "domain": [("id", "in", mrp_ids)],
         }

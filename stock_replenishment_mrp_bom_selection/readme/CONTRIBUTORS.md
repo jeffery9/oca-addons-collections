@@ -1,4 +1,0 @@
-- [Tecnativa](https://www.tecnativa.com):
-  - Pedro Baeza
-  - Pilar Vargas
-  - Carlos Roca

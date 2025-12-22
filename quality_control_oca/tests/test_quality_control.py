@@ -6,7 +6,9 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import exceptions
+from odoo.tests import new_test_user
 
+from odoo.addons.base.models.ir_model import MODULE_UNINSTALL_FLAG
 from odoo.addons.base.tests.common import BaseCommon
 
 from ..models.qc_trigger_line import _filter_trigger_lines
@@ -37,6 +39,11 @@ class TestQualityControlOcaBase(BaseCommon):
                 ),
             }
         )
+        cls.user = new_test_user(
+            cls.env,
+            login="test_quality_control_oca",
+            groups="quality_control_oca.group_quality_control_user",
+        )
 
 
 class TestQualityControlOca(TestQualityControlOcaBase):
@@ -58,12 +65,14 @@ class TestQualityControlOca(TestQualityControlOcaBase):
         self.inspection1.action_confirm()
         for line in self.inspection1.inspection_lines:
             self.assertTrue(
-                line.success, "Incorrect state in inspection line %s" % line.name
+                line.success, f"Incorrect state in inspection line {line.name}"
             )
+
         self.assertTrue(
             self.inspection1.success,
-            "Incorrect state in inspection %s" % self.inspection1.name,
+            f"Incorrect state in inspection {self.inspection1.name}",
         )
+
         self.assertEqual(self.inspection1.state, "success")
         self.inspection1.action_approve()
         self.assertEqual(self.inspection1.state, "success")
@@ -81,12 +90,13 @@ class TestQualityControlOca(TestQualityControlOcaBase):
         self.inspection1.action_confirm()
         for line in self.inspection1.inspection_lines:
             self.assertFalse(
-                line.success, "Incorrect state in inspection line %s" % line.name
+                line.success, f"Incorrect state in inspection line {line.name}"
             )
         self.assertFalse(
             self.inspection1.success,
-            "Incorrect state in inspection %s" % self.inspection1.name,
+            f"Incorrect state in inspection {self.inspection1.name}",
         )
+
         self.assertEqual(self.inspection1.state, "waiting")
         self.inspection1.action_approve()
         self.assertEqual(self.inspection1.state, "failed")
@@ -207,11 +217,19 @@ class TestQualityControlOca(TestQualityControlOcaBase):
         self.assertEqual(inspection2.state, "draft")
         inspection2.unlink()
 
-    def test_qc_inspection_auto_generate_unlink(self):
+    def test_qc_inspection_auto_generate_manual_unlink(self):
         inspection2 = self.inspection1.copy()
         inspection2.write({"auto_generated": True})
         with self.assertRaises(exceptions.UserError):
-            inspection2.unlink()
+            inspection2.with_user(self.user).unlink()
+        self.assertTrue(inspection2.unlink())
+
+    def test_qc_inspection_auto_generate_uninstall_unlink(self):
+        uninstall = {MODULE_UNINSTALL_FLAG: True}
+
+        inspection2 = self.inspection1.copy()
+        inspection2.write({"auto_generated": True})
+        self.assertTrue(inspection2.with_context(**uninstall).unlink())
 
     def test_qc_inspection_product(self):
         self.inspection1.write(

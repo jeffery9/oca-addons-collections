@@ -251,7 +251,6 @@ msgstr "Dự thảo"
 #. module: quality_control_oca
 #. odoo-python
 #: code:addons/quality_control_oca/models/qc_test_category.py:0
-#, python-format
 msgid "Error! You can not create recursive categories."
 msgstr ""
 
@@ -263,6 +262,12 @@ msgstr ""
 #. module: quality_control_oca
 #: model_terms:ir.ui.view,arch_db:quality_control_oca.qc_inspection_form_view
 msgid "External notes"
+msgstr ""
+
+#. module: quality_control_oca
+#: model_terms:ir.ui.view,arch_db:quality_control_oca.qc_inspection_kanban_view
+#: model_terms:ir.ui.view,arch_db:quality_control_oca.qc_inspection_line_kanban_view
+msgid "Failed"
 msgstr ""
 
 #. module: quality_control_oca
@@ -787,7 +792,14 @@ msgstr ""
 #. module: quality_control_oca
 #. odoo-python
 #: code:addons/quality_control_oca/models/qc_test.py:0
-#, python-format
+msgid ""
+"Question '%(line_name)s' is not valid: you have to define at least one "
+"possible value."
+msgstr ""
+
+#. module: quality_control_oca
+#. odoo-python
+#: code:addons/quality_control_oca/models/qc_test.py:0
 msgid ""
 "Question '%s' is not valid: minimum value can't be higher than maximum value."
 msgstr ""
@@ -795,7 +807,6 @@ msgstr ""
 #. module: quality_control_oca
 #. odoo-python
 #: code:addons/quality_control_oca/models/qc_test.py:0
-#, python-format
 msgid "Question '%s' is not valid: you have to mark at least one value as OK."
 msgstr ""
 
@@ -808,16 +819,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:quality_control_oca.field_qc_test__test_lines
 #: model_terms:ir.ui.view,arch_db:quality_control_oca.qc_inspection_form_view
 msgid "Questions"
-msgstr ""
-
-#. module: quality_control_oca
-#: model:ir.model.fields,field_description:quality_control_oca.field_qc_inspection__rating_ids
-#: model:ir.model.fields,field_description:quality_control_oca.field_qc_test__rating_ids
-#: model:ir.model.fields,field_description:quality_control_oca.field_qc_trigger_line__rating_ids
-#: model:ir.model.fields,field_description:quality_control_oca.field_qc_trigger_product_category_line__rating_ids
-#: model:ir.model.fields,field_description:quality_control_oca.field_qc_trigger_product_line__rating_ids
-#: model:ir.model.fields,field_description:quality_control_oca.field_qc_trigger_product_template_line__rating_ids
-msgid "Ratings"
 msgstr ""
 
 #. module: quality_control_oca
@@ -919,6 +920,8 @@ msgstr ""
 
 #. module: quality_control_oca
 #: model:ir.model.fields,field_description:quality_control_oca.field_qc_inspection__success
+#: model_terms:ir.ui.view,arch_db:quality_control_oca.qc_inspection_kanban_view
+#: model_terms:ir.ui.view,arch_db:quality_control_oca.qc_inspection_line_kanban_view
 #: model_terms:ir.ui.view,arch_db:quality_control_oca.qc_inspection_line_search_view
 #: model_terms:ir.ui.view,arch_db:quality_control_oca.qc_inspection_search_view
 msgid "Success"
@@ -1093,35 +1096,30 @@ msgstr ""
 #. module: quality_control_oca
 #. odoo-python
 #: code:addons/quality_control_oca/models/qc_inspection.py:0
-#, python-format
 msgid "You cannot remove an auto-generated inspection."
 msgstr ""
 
 #. module: quality_control_oca
 #. odoo-python
 #: code:addons/quality_control_oca/models/qc_inspection.py:0
-#, python-format
 msgid "You cannot remove an inspection that is not in draft state."
 msgstr ""
 
 #. module: quality_control_oca
 #. odoo-python
 #: code:addons/quality_control_oca/models/qc_inspection.py:0
-#, python-format
 msgid "You must first set the test to perform."
 msgstr ""
 
 #. module: quality_control_oca
 #. odoo-python
 #: code:addons/quality_control_oca/models/qc_inspection.py:0
-#, python-format
 msgid "You should provide a unit of measure for quantitative questions."
 msgstr ""
 
 #. module: quality_control_oca
 #. odoo-python
 #: code:addons/quality_control_oca/models/qc_inspection.py:0
-#, python-format
 msgid "You should provide an answer for all qualitative questions."
 msgstr ""
 

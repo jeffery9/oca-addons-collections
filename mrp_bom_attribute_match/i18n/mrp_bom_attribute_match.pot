@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 17.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -39,6 +39,11 @@ msgid "Component (product template)"
 msgstr ""
 
 #. module: mrp_bom_attribute_match
+#: model:ir.model,name:mrp_bom_attribute_match.model_mrp_production
+msgid "Manufacturing Order"
+msgstr ""
+
+#. module: mrp_bom_attribute_match
 #: model:ir.model.fields,field_description:mrp_bom_attribute_match.field_mrp_bom_line__match_on_attribute_ids
 msgid "Match on Attributes"
 msgstr ""
@@ -46,7 +51,6 @@ msgstr ""
 #. module: mrp_bom_attribute_match
 #. odoo-python
 #: code:addons/mrp_bom_attribute_match/models/mrp_bom.py:0
-#, python-format
 msgid ""
 "No match on attribute has been detected for Component (Product Template) %s"
 msgstr ""
@@ -67,14 +71,13 @@ msgid "Product Uom Category"
 msgstr ""
 
 #. module: mrp_bom_attribute_match
-#: model:ir.model,name:mrp_bom_attribute_match.model_mrp_production
-msgid "Production Order"
+#: model:ir.model,name:mrp_bom_attribute_match.model_product_product
+msgid "Product Variant"
 msgstr ""
 
 #. module: mrp_bom_attribute_match
 #. odoo-python
 #: code:addons/mrp_bom_attribute_match/models/mrp_bom.py:0
-#, python-format
 msgid ""
 "Recursion error!  A product with a Bill of Material should not have itself "
 "in its BoM or child BoMs!"
@@ -83,7 +86,6 @@ msgstr ""
 #. module: mrp_bom_attribute_match
 #. odoo-python
 #: code:addons/mrp_bom_attribute_match/models/mrp_bom.py:0
-#, python-format
 msgid ""
 "Some attributes of the dynamic component are not included into production "
 "product attributes."
@@ -97,7 +99,6 @@ msgstr ""
 #. module: mrp_bom_attribute_match
 #. odoo-python
 #: code:addons/mrp_bom_attribute_match/models/product.py:0
-#, python-format
 msgid ""
 "The attributes you're trying to remove are used in the BoM as a match with Component (Product Template). To remove these attributes, first remove the BOM line with the matching component.\n"
 "Attributes: %(attributes)s\n"
@@ -107,7 +108,6 @@ msgstr ""
 #. module: mrp_bom_attribute_match
 #. odoo-python
 #: code:addons/mrp_bom_attribute_match/models/product.py:0
-#, python-format
 msgid ""
 "This product template is used as a component in the BOMs for %(bom)s and "
 "attribute(s) %(attributes)s is not present in all such product(s), and this "
@@ -117,7 +117,6 @@ msgstr ""
 #. module: mrp_bom_attribute_match
 #. odoo-python
 #: code:addons/mrp_bom_attribute_match/models/mrp_bom.py:0
-#, python-format
 msgid ""
 "You cannot use an attribute value for attribute(s) %(attributes)s in the "
 "field “Apply on Variants” as it's the same attribute used in the field "
