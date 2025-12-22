@@ -153,7 +153,7 @@ class Zpl2:
 
     def configuration_update(self, active_configuration):
         """Set the active configuration on the printer"""
-        self._write_command("^JU%s" % active_configuration)
+        self._write_command(f"^JU{active_configuration}")
 
     def label_start(self):
         """Adds the label start command to the buffer"""
@@ -369,22 +369,22 @@ class Zpl2:
         block = ""
         if field_format.get(ARG_IN_BLOCK, False):
             block = self._field_block(field_format)
-        command = "{origin}{font_format}{reverse}{block}{data}".format(
-            origin=self._field_origin(right, down),
-            font_format=self._font_format(field_format),
-            reverse=reverse,
-            block=block,
-            data=self._field_data(data),
+        command = (
+            f"{self._field_origin(right, down)}"
+            f"{self._font_format(field_format)}"
+            f"{reverse}"
+            f"{block}"
+            f"{self._field_data(data)}"
         )
         self._write_command(command)
 
     def barcode_data(self, right, down, barcodeType, barcode_format, data):
         """Add a full barcode in the buffer, with needed formatting commands"""
-        command = "{default}{origin}{barcode_format}{data}".format(
-            default=self._barcode_field_default(barcode_format),
-            origin=self._field_origin(right, down),
-            barcode_format=self._barcode_format(barcodeType, barcode_format),
-            data=self._field_data(data),
+        command = (
+            f"{self._barcode_field_default(barcode_format)}"
+            f"{self._field_origin(right, down)}"
+            f"{self._barcode_format(barcodeType, barcode_format)}"
+            f"{self._field_data(data)}"
         )
         self._write_command(command)
 
@@ -499,9 +499,9 @@ class Zpl2:
             f"^GFA,{total_bytes},{total_bytes},{bytes_per_row},{ascii_data}"
         )
         # Generate the ZPL II command
-        command = "{origin}{data}{stop}".format(
-            origin=self._field_origin(right, down),
-            data=graphic_image_command,
-            stop=self._field_data_stop(),
+        command = (
+            f"{self._field_origin(right, down)}"
+            f"{graphic_image_command}"
+            f"{self._field_data_stop()}"
         )
         self._write_command(command)

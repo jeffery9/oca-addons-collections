@@ -14,7 +14,7 @@ class TestWizardPrintRecordLabel(PrinterZpl2Common):
         super().setUpClass()
         cls.Wizard = cls.env["wizard.print.record.label"]
 
-    @patch("%s.cups" % model)
+    @patch(f"{model}.cups")
     def test_print_record_label(self, cups):
         """Check that printing a label using the generic wizard works"""
         wizard_obj = self.Wizard.with_context(

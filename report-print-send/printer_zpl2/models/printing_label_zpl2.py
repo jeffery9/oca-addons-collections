@@ -10,7 +10,7 @@ from collections import defaultdict
 import requests
 from PIL import Image, ImageOps
 
-from odoo import _, api, exceptions, fields, models
+from odoo import api, exceptions, fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools.safe_eval import safe_eval, wrap_module
 
@@ -115,7 +115,9 @@ class PrintingLabelZpl2(models.Model):
                     [id1] + list(preds[id1]), [id2] + list(succs[id2])
                 ):
                     if x == y:
-                        raise ValidationError(_("You can not create recursive labels."))
+                        raise ValidationError(
+                            self.env._("You can not create recursive labels.")
+                        )
                     succs[x].add(y)
                     preds[y].add(x)
                 if id2 not in done:
@@ -172,7 +174,7 @@ class PrintingLabelZpl2(models.Model):
             ):
                 printed_data = data
                 # Pick the right value if data is a collection
-                if isinstance(data, list | tuple | set | models.BaseModel):
+                if isinstance(data, (list, tuple, set, models.BaseModel)):  # noqa: UP038
                     # If we reached the end of data, quit the loop
                     if idx >= len(data):
                         break
@@ -370,7 +372,9 @@ class PrintingLabelZpl2(models.Model):
         for label in self:
             if record._name != label.model_id.model:
                 raise exceptions.UserError(
-                    _("This label cannot be used on {model}").format(model=record._name)
+                    self.env._("This label cannot be used on {model}").format(
+                        model=record._name
+                    )
                 )
             # Send the label to printer
             label_contents = label._generate_zpl2_data(
@@ -385,13 +389,13 @@ class PrintingLabelZpl2(models.Model):
     def new_action(self, model_id):
         return self.env["ir.actions.act_window"].create(
             {
-                "name": _("Print Label"),
+                "name": self.env._("Print Label"),
                 "binding_model_id": model_id,
                 "res_model": "wizard.print.record.label",
                 "view_mode": "form",
                 "target": "new",
                 "binding_type": "action",
-                "context": "{'default_active_model_id': %s}" % model_id,
+                "context": f"{{'default_active_model_id': {model_id}}}",
             }
         )
 
@@ -425,10 +429,12 @@ class PrintingLabelZpl2(models.Model):
             ]
         )
         for model in models:
-            action = actions.filtered(lambda a, m=model: a.binding_model_id == m)
+            action = actions.filtered(
+                lambda act, mod=model: act.binding_model_id == mod
+            )
             if not action:
                 action = self.new_action(model.id)
-            for label in labels.filtered(lambda x, m=model: x.model_id == m):
+            for label in labels.filtered(lambda lab, mod=model: lab.model_id == mod):
                 label.action_window_id = action
         return True
 
@@ -520,9 +526,9 @@ class PrintingLabelZpl2(models.Model):
                     return base64.b64encode(imgByteArr.getvalue())
                 else:
                     _logger.warning(
-                        _("Error with Labelary API. %s") % response.status_code
+                        self.env._("Error with Labelary API. %s") % response.status_code
                     )
 
             except Exception as e:
-                _logger.warning(_("Error with Labelary API. %s") % e)
+                _logger.warning(self.env._("Error with Labelary API. %s") % e)
         return False
