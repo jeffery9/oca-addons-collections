@@ -1,7 +1,7 @@
 # Copyright 2017 - 2018 Modoolar <info@modoolar.com>
 # License LGPLv3.0 or later (https://www.gnu.org/licenses/lgpl-3.0.en.html).
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.tools import config
 
 
@@ -13,7 +13,9 @@ class Project(models.Model):
         comodel_name="ir.sequence", string="Key Sequence", ondelete="restrict"
     )
 
-    key = fields.Char(size=10, required=False, index=True, copy=False)
+    key = fields.Char(size=10, index=True, copy=False)
+
+    show_key_warning = fields.Boolean(store=False, compute="_compute_show_key_warning")
 
     _sql_constraints = [
         ("project_key_unique", "UNIQUE(key)", "Project key must be unique")
@@ -40,34 +42,36 @@ class Project(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
+        new_projects = self.env["project.project"]
         for vals in vals_list:
             key = vals.get("key", False)
             if not key:
                 vals["key"] = self.generate_project_key(vals["name"])
 
             # Tasks must be created after the project.
-            if vals.get("task_ids", False):
-                task_vals = vals.pop("task_ids")
-            else:
-                task_vals = []
+            task_vals = vals.pop("task_ids", [])
 
-        # The key sequences to create stories and tasks with keys, created with
-        # a project, must be linked to the project company to avoid security
-        # issues.
-        # Propagate the company ID, using the context key, to fill the
-        # sequences company.
-        company_id = vals.get("company_id")
-        if company_id:
-            self = self.with_context(project_sequence_company=company_id)
+            new_project = super().create(vals)
+            new_projects |= new_project
 
-        new_project = super().create(vals)
-        new_project.create_sequence()
+            # The key sequences to create stories and tasks with keys, created with
+            # a project, must be linked to the project company to avoid security
+            # issues.
+            # Propagate the company ID, using the context key, to fill the
+            # sequences company.
+            company_id = vals.get("company_id")
+            if company_id:
+                new_project = new_project.with_context(
+                    project_sequence_company=company_id
+                )
 
-        # Tasks must be created after the project.
-        if task_vals:
-            new_project.write({"task_ids": task_vals})
+            new_project.create_sequence()
 
-        return new_project
+            # Tasks must be created after the project.
+            if task_vals:
+                new_project.write({"task_ids": task_vals})
+
+        return new_projects
 
     def write(self, values):
         update_key = False
@@ -119,7 +123,9 @@ class Project(models.Model):
         for number_increment and number_next_actual
         """
         values = {
-            "name": "{} {}".format(_("Project task sequence for project"), self.name),
+            "name": "{} {}".format(
+                self.env._("Project task sequence for project"), self.name
+            ),
             "implementation": "standard",
             "code": f"project.task.key.{self.id}",
             "prefix": f"{self.key}-",
@@ -166,13 +172,14 @@ class Project(models.Model):
         return self._generate_project_unique_key("".join(key))
 
     def _generate_project_unique_key(self, text):
+        self_context = self.with_context(active_test=False)
         res = text
         unique_key = False
         counter = 0
         while not unique_key:
             if counter != 0:
                 res = f"{text}{counter}"
-            unique_key = not bool(self.search([("key", "=", res)]))
+            unique_key = not bool(self_context.search([("key", "=", res)]))
             counter += 1
 
         return res
@@ -207,11 +214,13 @@ class Project(models.Model):
         installation.
         :return:
         """
-        for project in self.with_context(active_test=False).search(
-            [("key", "=", False)]
-        ):
+        for project in self.search([("key", "=", False)]):
             project.key = self.generate_project_key(project.name)
             project.create_sequence()
 
             for task in project.task_ids:
                 task.key = project.get_next_task_key()
+
+    @api.depends("key")
+    def _compute_show_key_warning(self):
+        self.show_key_warning = self.key and "-" in self.key

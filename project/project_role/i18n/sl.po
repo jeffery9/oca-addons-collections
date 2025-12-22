@@ -20,28 +20,24 @@ msgstr ""
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_assignment.py:0
-#, python-format
 msgid "%(USER)s as %(ROLE)s"
 msgstr ""
 
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_assignment.py:0
-#, python-format
 msgid "%(USER)s as %(ROLE)s in %(PROJECT)s"
 msgstr ""
 
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_assignment.py:0
-#, python-format
 msgid "%(USER)s as %(ROLE)s on %(PROJECT)s"
 msgstr ""
 
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_role.py:0
-#, python-format
 msgid "%(parent)s / %(own)s"
 msgstr "%(parent)s / %(own)s"
 
@@ -93,7 +89,6 @@ msgstr "Arhivirano"
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_assignment.py:0
-#, python-format
 msgid ""
 "Assignment %(ASSIGNMENT)s conflicts with another assignment: "
 "%(OTHER_ASSIGNMENT)s"
@@ -308,7 +303,6 @@ msgstr "Nadrejena vloga"
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_role.py:0
-#, python-format
 msgid "Please activate first parent role %s"
 msgstr "Najprej aktivirajte nadrejeno vlogo %s"
 
@@ -366,7 +360,6 @@ msgstr "Vloga"
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_role.py:0
-#, python-format
 msgid "Role \"%s\" conflicts with another role due to same name."
 msgstr "Vloga \"%s\" je v konfliktu z drugo vlogo z istim nazivom."
 
@@ -399,14 +392,12 @@ msgstr "Uporabnik"
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_assignment.py:0
-#, python-format
 msgid "User %(USER)s can not be assigned to role %(ROLE)s on %(PROJECT)s."
 msgstr ""
 
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_assignment.py:0
-#, python-format
 msgid "User %(USER)s can not be assigned to role %(ROLE)s."
 msgstr ""
 
@@ -435,15 +426,15 @@ msgstr "Sporočila spletne strani"
 msgid "Website communication history"
 msgstr "Kronologija komunikacij spletne strani"
 
+#, fuzzy
+#~ msgid "SMS Delivery error"
+#~ msgstr "Napaka ob dostavi sporočila"
+
 #~ msgid "Last Modified on"
 #~ msgstr "Zadnjič spremenjeno"
 
 #~ msgid "Main Attachment"
 #~ msgstr "Glavna priponka"
-
-#, fuzzy
-#~ msgid "SMS Delivery error"
-#~ msgstr "Napaka ob dostavi sporočila"
 
 #~ msgid "Number of messages which requires an action"
 #~ msgstr "Število sporočil, kjer je potrebno ukrepati"

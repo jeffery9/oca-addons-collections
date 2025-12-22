@@ -33,11 +33,11 @@ class TestTask(TestCommon):
         self.assertEqual(self.task12.key, "ODOO-3")
 
     def test_06_name_search(self):
-        oca_tasks = self.Task.name_search("OCA")
+        oca_tasks = self.Task.name_search("OCA-")
         self.assertEqual(len(oca_tasks), 2)
 
         non_oca_task_ids = [
-            x[0] for x in self.Task.name_search("OCA", operator="not ilike")
+            x[0] for x in self.Task.name_search("OCA-", operator="not ilike")
         ]
 
         oca_tasks = self.Task.browse(non_oca_task_ids).filtered(

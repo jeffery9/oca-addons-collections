@@ -19,28 +19,24 @@ msgstr ""
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_assignment.py:0
-#, python-format
 msgid "%(USER)s as %(ROLE)s"
 msgstr "%(USER)s als %(ROLE)s"
 
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_assignment.py:0
-#, python-format
 msgid "%(USER)s as %(ROLE)s in %(PROJECT)s"
 msgstr "%(USER)s als %(ROLE)s in %(PROJECT)s"
 
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_assignment.py:0
-#, python-format
 msgid "%(USER)s as %(ROLE)s on %(PROJECT)s"
 msgstr "%(USER)s als %(ROLE)s auf %(PROJECT)s"
 
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_role.py:0
-#, python-format
 msgid "%(parent)s / %(own)s"
 msgstr "%(parent)s / %(own)s"
 
@@ -92,7 +88,6 @@ msgstr "Archiviert"
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_assignment.py:0
-#, python-format
 msgid ""
 "Assignment %(ASSIGNMENT)s conflicts with another assignment: "
 "%(OTHER_ASSIGNMENT)s"
@@ -311,7 +306,6 @@ msgstr "Übergeordnete Rolle"
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_role.py:0
-#, python-format
 msgid "Please activate first parent role %s"
 msgstr "Bitte zuerst die übergeordnete Rolle %s aktivieren"
 
@@ -371,7 +365,6 @@ msgstr "Rolle"
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_role.py:0
-#, python-format
 msgid "Role \"%s\" conflicts with another role due to same name."
 msgstr ""
 "Die Rolle \"%s\" steht im Konflikt mit einer anderen Rolle, die denselben "
@@ -406,7 +399,6 @@ msgstr "Benutzer"
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_assignment.py:0
-#, python-format
 msgid "User %(USER)s can not be assigned to role %(ROLE)s on %(PROJECT)s."
 msgstr ""
 "Benutzer %(USER)s kann keiner Rolle zugeordnet werden: %(ROLE)s in "
@@ -415,7 +407,6 @@ msgstr ""
 #. module: project_role
 #. odoo-python
 #: code:addons/project_role/models/project_assignment.py:0
-#, python-format
 msgid "User %(USER)s can not be assigned to role %(ROLE)s."
 msgstr "Benutzer %(USER)s kann der Rolle nicht zugeordnet werden: %(ROLE)s."
 
@@ -448,15 +439,15 @@ msgstr "Website-Nachrichten"
 msgid "Website communication history"
 msgstr "Website-Kommunikationshistorie"
 
+#, fuzzy
+#~ msgid "SMS Delivery error"
+#~ msgstr "Nachrichten-Übertragungsfehler"
+
 #~ msgid "Last Modified on"
 #~ msgstr "Zuletzt geändert am"
 
 #~ msgid "Main Attachment"
 #~ msgstr "Haupt-Anhang"
-
-#, fuzzy
-#~ msgid "SMS Delivery error"
-#~ msgstr "Nachrichten-Übertragungsfehler"
 
 #~ msgid "Number of messages which requires an action"
 #~ msgstr "Dies ist die Anzahl von Nachrichten, die eine Aktion benötigen."
