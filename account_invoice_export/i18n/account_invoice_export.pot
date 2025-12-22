@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 17.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -14,9 +14,14 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: account_invoice_export
+#. odoo-python
+#: code:addons/account_invoice_export/models/account_move.py:0
+msgid "%(name)s (Invoice Record ID: %(id)s)"
+msgstr ""
+
+#. module: account_invoice_export
 #: model:ir.model.fields,help:account_invoice_export.field_account_bank_statement_line__send_through_http
 #: model:ir.model.fields,help:account_invoice_export.field_account_move__send_through_http
-#: model:ir.model.fields,help:account_invoice_export.field_account_payment__send_through_http
 #: model:ir.model.fields,help:account_invoice_export.field_transmit_method__send_through_http
 msgid "Adds a Send eBill button on the invoice"
 msgstr ""
@@ -24,7 +29,6 @@ msgstr ""
 #. module: account_invoice_export
 #. odoo-python
 #: code:addons/account_invoice_export/models/account_move.py:0
-#, python-format
 msgid "An error of type {} occured."
 msgstr ""
 
@@ -36,6 +40,17 @@ msgid ""
 msgstr ""
 
 #. module: account_invoice_export
+#: model:ir.model.fields,field_description:account_invoice_export.field_transmit_method__export_connection_timeout
+msgid "Connection timeout"
+msgstr ""
+
+#. module: account_invoice_export
+#. odoo-python
+#: code:addons/account_invoice_export/models/account_move.py:0
+msgid "Draft"
+msgstr ""
+
+#. module: account_invoice_export
 #: model_terms:ir.ui.view,arch_db:account_invoice_export.view_move_form
 msgid "Ebill has already been sent. Are you sure you want to send it again ?"
 msgstr ""
@@ -43,7 +58,6 @@ msgstr ""
 #. module: account_invoice_export
 #: model:ir.model.fields,field_description:account_invoice_export.field_account_bank_statement_line__send_through_http
 #: model:ir.model.fields,field_description:account_invoice_export.field_account_move__send_through_http
-#: model:ir.model.fields,field_description:account_invoice_export.field_account_payment__send_through_http
 #: model:ir.model.fields,field_description:account_invoice_export.field_transmit_method__send_through_http
 msgid "Enable send eBill"
 msgstr ""
@@ -56,8 +70,7 @@ msgstr ""
 #. module: account_invoice_export
 #. odoo-python
 #: code:addons/account_invoice_export/models/account_move.py:0
-#, python-format
-msgid "HTTP error {status_code} sending invoice to {method_name}"
+msgid "HTTP error %s sending invoice to %s"
 msgstr ""
 
 #. module: account_invoice_export
@@ -70,22 +83,33 @@ msgstr ""
 #. module: account_invoice_export
 #: model:ir.model.fields,field_description:account_invoice_export.field_account_bank_statement_line__invoice_export_confirmed
 #: model:ir.model.fields,field_description:account_invoice_export.field_account_move__invoice_export_confirmed
-#: model:ir.model.fields,field_description:account_invoice_export.field_account_payment__invoice_export_confirmed
 msgid "Invoice Export Confirmed"
 msgstr ""
 
 #. module: account_invoice_export
 #: model:ir.model.fields,field_description:account_invoice_export.field_account_bank_statement_line__invoice_exported
 #: model:ir.model.fields,field_description:account_invoice_export.field_account_move__invoice_exported
-#: model:ir.model.fields,field_description:account_invoice_export.field_account_payment__invoice_exported
 msgid "Invoice Exported"
 msgstr ""
 
 #. module: account_invoice_export
 #. odoo-python
 #: code:addons/account_invoice_export/models/account_move.py:0
-#, python-format
 msgid "Invoice successfuly sent to {}"
+msgstr ""
+
+#. module: account_invoice_export
+#. odoo-python
+#: code:addons/account_invoice_export/models/account_move.py:0
+msgid "Invoices not in 'Posted' state: %s"
+msgstr ""
+
+#. module: account_invoice_export
+#. odoo-python
+#: code:addons/account_invoice_export/models/account_move.py:0
+msgid ""
+"Invoices with unsupported type (only Customer Invoice or Refund are "
+"allowed): %s"
 msgstr ""
 
 #. module: account_invoice_export
@@ -96,7 +120,12 @@ msgstr ""
 #. module: account_invoice_export
 #. odoo-python
 #: code:addons/account_invoice_export/models/account_move.py:0
-#, python-format
+msgid "No valid URL configured on transmit method '%s'."
+msgstr ""
+
+#. module: account_invoice_export
+#. odoo-python
+#: code:addons/account_invoice_export/models/account_move.py:0
 msgid "Nothing done, invoice has already been exported before."
 msgstr ""
 
@@ -122,6 +151,11 @@ msgid "The failed job has the uuid"
 msgstr ""
 
 #. module: account_invoice_export
+#: model:ir.model.fields,help:account_invoice_export.field_transmit_method__export_connection_timeout
+msgid "Timeout in seconds, use 0 (zero) for no timeout."
+msgstr ""
+
+#. module: account_invoice_export
 #: model:mail.activity.type,name:account_invoice_export.mail_activity_transmit_warning
 msgid "Transmission Error"
 msgstr ""
@@ -134,7 +168,6 @@ msgstr ""
 #. module: account_invoice_export
 #. odoo-python
 #: code:addons/account_invoice_export/models/account_move.py:0
-#, python-format
 msgid "Transmit method is not configured to send through HTTP"
 msgstr ""
 

@@ -4,7 +4,7 @@
 
 {
     "name": "Base Business Document Import",
-    "version": "17.0.1.0.0",
+    "version": "18.0.2.0.0",
     "category": "Tools",
     "license": "AGPL-3",
     "summary": "Provides technical tools to import sale orders or supplier invoices",
@@ -15,6 +15,5 @@
         # OCA/community-data-files
         "account_tax_unece",
         "uom_unece",
-        "pdf_helper",
     ],
 }
