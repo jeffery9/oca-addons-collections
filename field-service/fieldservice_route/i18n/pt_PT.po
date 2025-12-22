@@ -233,7 +233,6 @@ msgstr "Nome"
 #. odoo-python
 #: code:addons/fieldservice_route/models/fsm_route_dayroute.py:0
 #: model:fsm.stage,name:fieldservice_route.fsm_stage_route_new
-#, python-format
 msgid "New"
 msgstr "Novo"
 
@@ -324,14 +323,12 @@ msgstr "Equipa"
 #. module: fieldservice_route
 #. odoo-python
 #: code:addons/fieldservice_route/models/fsm_route_dayroute.py:0
-#, python-format
 msgid "The day route is exceeding the maximum number of orders of the route."
 msgstr "A rota do dia excede o número máximo de ordens para a rota."
 
 #. module: fieldservice_route
 #. odoo-python
 #: code:addons/fieldservice_route/models/fsm_route_dayroute.py:0
-#, python-format
 msgid "The route %(route_name)s does not run on %(name)s!"
 msgstr ""
 
@@ -368,7 +365,6 @@ msgstr "Quarta"
 #. module: fieldservice_route
 #. odoo-python
 #: code:addons/fieldservice_route/models/fsm_route_dayroute.py:0
-#, python-format
 msgid "You must create a FSM team first."
 msgstr "Antes deve criar uma Equipa FSM."
 

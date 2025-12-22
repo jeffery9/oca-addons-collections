@@ -15,7 +15,7 @@
                     name="%(fieldservice.action_fsm_dash_order)d"
                     icon="fa-truck"
                     groups="fieldservice.group_fsm_user"
-                    context="{'search_default_opportunity_id': active_id,
+                    context="{'search_default_opportunity_id': id,
                               'default_location_id': fsm_location_id}"
                 >
                     <field
@@ -24,18 +24,6 @@
                         widget="statinfo"
                     />
                 </button>
-            </xpath>
-            <xpath
-                expr="//header/button[@name='action_set_won_rainbowman']"
-                position="before"
-            >
-                <button
-                    string="Create FS Order"
-                    name="create_fsm_order"
-                    type="object"
-                    class="oe_highlight"
-                    groups="fieldservice.group_fsm_user"
-                />
             </xpath>
             <xpath
                 expr="//group[@name='lead_partner']/field[@name='partner_id']"

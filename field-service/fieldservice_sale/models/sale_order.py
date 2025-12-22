@@ -32,7 +32,7 @@ class SaleOrder(models.Model):
             fsm = self.env["fsm.order"].search(
                 [
                     "|",
-                    ("sale_id", "=", sale.id),
+                    ("sale_id", "in", sale.ids),
                     ("sale_line_id", "in", sale.order_line.ids),
                 ]
             )
@@ -89,7 +89,7 @@ class SaleOrder(models.Model):
             "location_id": self.fsm_location_id.id,
             "location_directions": self.fsm_location_id.direction,
             "request_early": self.expected_date,
-            "scheduled_date_start": self.expected_date,
+            "scheduled_date_start": self.commitment_date or self.expected_date,
             "todo": note,
             "category_ids": [(6, 0, categories.ids)],
             "scheduled_duration": hours,
@@ -108,11 +108,7 @@ class SaleOrder(models.Model):
 
         if new_fsm_sol:
             fsm_by_sale = self.env["fsm.order"].search(
-                [
-                    ("sale_id", "=", self.id),
-                    ("sale_line_id", "=", False),
-                    ("is_closed", "=", False),
-                ]
+                [("sale_id", "=", self.id), ("sale_line_id", "=", False)]
             )
             if not fsm_by_sale:
                 templates = new_fsm_sol.product_id.fsm_order_template_id
@@ -153,15 +149,15 @@ class SaleOrder(models.Model):
 
         # Process lines set to FSM Sale
         new_fsm_sale_sol = self.order_line.filtered(
-            lambda x: x.product_id.field_service_tracking == "sale"
-            and (not x.fsm_order_id or x.fsm_order_id.is_closed)
+            lambda L: L.product_id.field_service_tracking == "sale"
+            and not L.fsm_order_id
         )
         new_fsm_orders |= self._field_service_generate_sale_fsm_orders(new_fsm_sale_sol)
 
         # Create new FSM Order for lines set to FSM Line
         new_fsm_line_sol = self.order_line.filtered(
-            lambda x: x.product_id.field_service_tracking == "line"
-            and (not x.fsm_order_id or x.fsm_order_id.is_closed)
+            lambda L: L.product_id.field_service_tracking == "line"
+            and not L.fsm_order_id
         )
 
         new_fsm_orders |= self._field_service_generate_line_fsm_orders(new_fsm_line_sol)
@@ -191,16 +187,19 @@ class SaleOrder(models.Model):
         Post messages to the Sale Order and the newly created FSM Orders
         """
         self.ensure_one()
+        msg_fsm_links = ""
         for fsm_order in fsm_orders:
-            fsm_order.message_post_with_source(
+            fsm_order.message_mail_with_source(
                 "mail.message_origin_link",
                 render_values={"self": fsm_order, "origin": self},
-                subtype_xmlid="mail.mt_note",
+                subtype_id=self.env.ref("mail.mt_note").id,
+                author_id=self.env.user.partner_id.id,
             )
-        so_msg_body = _(
-            "Field Service Order(s) Created: %s",
-            fsm_order._get_html_link(title=fsm_order.name),
-        )
+            msg_fsm_links += (
+                f" <a href=# data-oe-model=fsm.order data-oe-id={fsm_order.id}>"
+                f"{fsm_order.name}</a>,"
+            )
+        so_msg_body = _("Field Service Order(s) Created: %s", msg_fsm_links)
         self.message_post(body=so_msg_body[:-1])
 
     def _action_confirm(self):
@@ -231,9 +230,13 @@ class SaleOrder(models.Model):
             action = {"type": "ir.actions.act_window_close"}
         return action
 
-    def _action_cancel(self):
-        res = super()._action_cancel()
-
-        [fsm_order.action_cancel() for fsm_order in self.mapped("fsm_order_ids")]
-
+    def write(self, values):
+        res = super().write(values)
+        if "commitment_date" in values:
+            scheduled_date_start = values["commitment_date"]
+            for order in self:
+                for fsm_order in order.fsm_order_ids:
+                    fsm_order.scheduled_date_start = (
+                        scheduled_date_start or order.expected_date
+                    )
         return res

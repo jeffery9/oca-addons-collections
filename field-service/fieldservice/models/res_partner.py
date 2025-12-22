@@ -10,7 +10,7 @@ class ResPartner(models.Model):
     type = fields.Selection(selection_add=[("fsm_location", "Location")])
     fsm_location = fields.Boolean("Is a FS Location")
     fsm_person = fields.Boolean("Is a FS Worker")
-    fsm_location_id = fields.One2many(
+    fsm_location_ids = fields.One2many(
         comodel_name="fsm.location",
         string="Related FS Location",
         inverse_name="partner_id",
@@ -23,7 +23,7 @@ class ResPartner(models.Model):
         "fsm.location",
         "owner_id",
         string="Owned Locations",
-        domain=[("fsm_parent_id", "=", False)],
+        domain=[("parent_id", "=", False)],
     )
     owned_location_count = fields.Integer(
         compute="_compute_owned_location_count", string="# of Owned Locations"
@@ -51,23 +51,23 @@ class ResPartner(models.Model):
                 action["res_id"] = owned_location_ids.ids[0]
             return action
 
-    def _convert_fsm_location(self):
-        """Build service location when adding child partner with type=fsm_location."""
-        if self.env.context.get("creating_fsm_location"):
-            return  # partner created by inheritance from fsm.location
-        for partner in self:
-            if partner.type == "fsm_location" and not partner.fsm_location_id:
-                self.env["fsm.wizard"].action_convert_location(partner)
+    def _create_missing_fsm_location(self):
+        for rec in self:
+            if rec.type != "fsm_location":
+                continue
+            if not rec.fsm_location_ids:
+                self.env["fsm.wizard"].action_convert_location(rec)
+
+    def write(self, vals):
+        # OVERRIDE to create the fsm.location for partners of type = fsm_location
+        res = super().write(vals)
+        if "type" in vals:
+            self._create_missing_fsm_location()
+        return res
 
     @api.model_create_multi
     def create(self, vals_list):
-        partners = super().create(vals_list)
-        if any(vals.get("type") == "fsm_location" for vals in vals_list):
-            partners._convert_fsm_location()
-        return partners
-
-    def write(self, vals):
-        res = super().write(vals)
-        if vals.get("type") == "fsm_location":
-            self._convert_fsm_location()
-        return res
+        # OVERRIDE to create the fsm.location for partners of type = fsm_location
+        records = super().create(vals_list)
+        records._create_missing_fsm_location()
+        return records

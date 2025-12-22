@@ -18,14 +18,17 @@ class SaleOrder(models.Model):
 
     def _link_pickings_to_fsm(self):
         for rec in self:
+            # TODO: We may want to split the picking to have one picking
+            # per FSM order
             fsm_order = self.env["fsm.order"].search(
                 [
                     ("sale_id", "=", rec.id),
                     ("sale_line_id", "=", False),
-                    ("is_closed", "=", False),
                 ]
             )
-            for picking in rec.picking_ids.filtered(lambda r: r.state != "cancel"):
+            if rec.procurement_group_id:
+                rec.procurement_group_id.fsm_order_id = fsm_order.id or False
+            for picking in rec.picking_ids:
                 picking.write(rec.prepare_fsm_values_for_stock_picking(fsm_order))
                 for move in picking.move_ids:
                     move.write(rec.prepare_fsm_values_for_stock_move(fsm_order))

@@ -3,7 +3,7 @@
 {
     "name": "Field Service",
     "summary": "Manage Field Service Locations, Workers and Orders",
-    "version": "17.0.2.7.1",
+    "version": "18.0.5.6.0",
     "license": "AGPL-3",
     "category": "Field Service",
     "author": "Open Source Integrators, Odoo Community Association (OCA)",
@@ -27,6 +27,7 @@
         "views/fsm_location.xml",
         "views/fsm_location_person.xml",
         "views/fsm_person.xml",
+        "wizard/fsm_order_sign_wizard.xml",
         "views/fsm_order.xml",
         "views/fsm_order_type.xml",
         "views/fsm_category.xml",
@@ -35,7 +36,6 @@
         "views/fsm_team.xml",
         "views/menu.xml",
         "wizard/fsm_wizard.xml",
-        "wizard/fsm_create_sublocation_wizard.xml",
     ],
     "demo": [
         "demo/fsm_demo.xml",

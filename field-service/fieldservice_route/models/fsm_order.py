@@ -3,8 +3,6 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 from datetime import datetime
 
-import pytz
-
 from odoo import api, fields, models
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 
@@ -42,18 +40,16 @@ class FSMOrder(models.Model):
         date = False
         if vals.get("scheduled_date_start"):
             if isinstance(vals.get("scheduled_date_start"), str):
-                date = self.get_utc_date(
-                    datetime.strptime(
-                        vals.get("scheduled_date_start"), DEFAULT_SERVER_DATETIME_FORMAT
-                    )
+                date = datetime.strptime(
+                    vals.get("scheduled_date_start"), DEFAULT_SERVER_DATETIME_FORMAT
                 ).date()
             elif isinstance(vals.get("scheduled_date_start"), datetime):
-                date = self.get_utc_date(vals.get("scheduled_date_start")).date()
+                date = vals.get("scheduled_date_start").date()
         return {
             "person_id": vals.get("person_id")
             or self.person_id.id
             or self.fsm_route_id.fsm_person_id.id,
-            "date": date or self.get_utc_date(self.scheduled_date_start).date(),
+            "date": date or self.scheduled_date_start.date(),
             "route_id": vals.get("fsm_route_id") or self.fsm_route_id.id,
         }
 
@@ -66,11 +62,6 @@ class FSMOrder(models.Model):
 
     def _can_create_dayroute(self, values):
         return values["person_id"] and values["date"]
-
-    def get_utc_date(self, date):
-        if date:
-            date = pytz.utc.localize(date)
-            return date.astimezone(pytz.timezone(self.env.user.tz or "UTC"))
 
     def _manage_fsm_route(self, vals):
         dayroute_obj = self.env["fsm.route.dayroute"]

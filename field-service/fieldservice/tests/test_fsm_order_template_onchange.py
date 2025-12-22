@@ -5,7 +5,7 @@ from odoo import fields
 from . import test_fsm_order
 
 
-class TestTemplateOnchange(test_fsm_order.TestFSMOrderBase):
+class TestTemplateOnchange(test_fsm_order.TestFSMOrder):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -17,7 +17,7 @@ class TestTemplateOnchange(test_fsm_order.TestFSMOrderBase):
     def test_fsm_order_onchange_template(self):
         """Test the onchange function for FSM Template
         - Category IDs, Scheduled Duration,and Type should update
-        - The copy_notes() method should be called and instructions copied
+        - The instructions should be copied
         """
         categories = []
         categories.append(self.fsm_category_a.id)
@@ -29,7 +29,6 @@ class TestTemplateOnchange(test_fsm_order.TestFSMOrderBase):
                 "category_ids": [(6, 0, categories)],
                 "duration": 2.25,
                 "type_id": self.fsm_type_a.id,
-                "company_id": self.env.company.id,
             }
         )
         self.fsm_template_2 = self.env["fsm.template"].create(
@@ -39,7 +38,6 @@ class TestTemplateOnchange(test_fsm_order.TestFSMOrderBase):
                 "category_ids": [(6, 0, categories)],
                 "duration": 2.25,
                 "team_id": self.fsm_team_a.id,
-                "company_id": self.env.company.id,
             }
         )
         self.fso = self.Order.create(
