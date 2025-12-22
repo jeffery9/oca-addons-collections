@@ -1,15 +1,19 @@
 
-[![Runboat](https://img.shields.io/badge/runboat-Try%20me-875A7B.png)](https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-orderpoint&target_branch=17.0)
-[![Pre-commit Status](https://github.com/OCA/stock-logistics-orderpoint/actions/workflows/pre-commit.yml/badge.svg?branch=17.0)](https://github.com/OCA/stock-logistics-orderpoint/actions/workflows/pre-commit.yml?query=branch%3A17.0)
-[![Build Status](https://github.com/OCA/stock-logistics-orderpoint/actions/workflows/test.yml/badge.svg?branch=17.0)](https://github.com/OCA/stock-logistics-orderpoint/actions/workflows/test.yml?query=branch%3A17.0)
-[![codecov](https://codecov.io/gh/OCA/stock-logistics-orderpoint/branch/17.0/graph/badge.svg)](https://codecov.io/gh/OCA/stock-logistics-orderpoint)
-[![Translation Status](https://translation.odoo-community.org/widgets/stock-logistics-orderpoint-17-0/-/svg-badge.svg)](https://translation.odoo-community.org/engage/stock-logistics-orderpoint-17-0/?utm_source=widget)
+[![Runboat](https://img.shields.io/badge/runboat-Try%20me-875A7B.png)](https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-orderpoint&target_branch=18.0)
+[![Pre-commit Status](https://github.com/OCA/stock-logistics-orderpoint/actions/workflows/pre-commit.yml/badge.svg?branch=18.0)](https://github.com/OCA/stock-logistics-orderpoint/actions/workflows/pre-commit.yml?query=branch%3A18.0)
+[![Build Status](https://github.com/OCA/stock-logistics-orderpoint/actions/workflows/test.yml/badge.svg?branch=18.0)](https://github.com/OCA/stock-logistics-orderpoint/actions/workflows/test.yml?query=branch%3A18.0)
+[![codecov](https://codecov.io/gh/OCA/stock-logistics-orderpoint/branch/18.0/graph/badge.svg)](https://codecov.io/gh/OCA/stock-logistics-orderpoint)
+[![Translation Status](https://translation.odoo-community.org/widgets/stock-logistics-orderpoint-18-0/-/svg-badge.svg)](https://translation.odoo-community.org/engage/stock-logistics-orderpoint-18-0/?utm_source=widget)
 
 <!-- /!\ do not modify above this line -->
 
-# Stock Logistics Orderpoint
+# Stock Orderpoint
 
-This repository contains modules to extend reordering rules (available on warehouses locations) functionalities.
+Reordering rules
+
+Are you looking for modules related to logistics? Or would like to contribute
+to? There are many repositories with specific purposes. Have a look at this
+[README](https://github.com/OCA/wms/blob/18.0/README.md).
 
 <!-- /!\ do not modify below this line -->
 
@@ -21,7 +25,15 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[stock_orderpoint_generator](stock_orderpoint_generator/) | 17.0.1.0.0 |  | Mass configuration of stock order points
+[purchase_stock_product_replenish_supplier](purchase_stock_product_replenish_supplier/) | 18.0.1.0.0 |  | Set default supplier in product replenish wizard
+[stock_location_orderpoint](stock_location_orderpoint/) | 18.0.1.0.3 | <a href='https://github.com/mt-software-de'><img src='https://github.com/mt-software-de.png' width='32' height='32' style='border-radius:50%;' alt='mt-software-de'/></a> <a href='https://github.com/jbaudoux'><img src='https://github.com/jbaudoux.png' width='32' height='32' style='border-radius:50%;' alt='jbaudoux'/></a> | Declare orderpoint on a location allowing to replenish any product with the same criteria.
+[stock_orderpoint_default_location](stock_orderpoint_default_location/) | 18.0.1.0.1 |  | This module allows to define a different default location than the stock location
+[stock_orderpoint_manual_procurement](stock_orderpoint_manual_procurement/) | 18.0.1.0.0 |  | Allows to create procurement orders from orderpoints instead of relying only on the scheduler.
+[stock_orderpoint_move_link](stock_orderpoint_move_link/) | 18.0.1.0.0 |  | Link Reordering rules to stock moves
+[stock_orderpoint_mto_as_mts](stock_orderpoint_mto_as_mts/) | 18.0.1.1.0 |  | Materialize need from MTO route through orderpoint
+[stock_orderpoint_no_horizon](stock_orderpoint_no_horizon/) | 18.0.1.0.0 |  | Consider all future moves, do not limit horizon to the rule lead days.
+[stock_orderpoint_purchase_link](stock_orderpoint_purchase_link/) | 18.0.1.0.0 |  | Link Reordering rules to purchase orders
+[stock_orderpoint_uom](stock_orderpoint_uom/) | 18.0.1.0.0 |  | Allows to create procurement orders in the UoM indicated in the orderpoint
 
 [//]: # (end addons)
 
