@@ -15,14 +15,7 @@ class MailMessageGatewayLink(models.TransientModel):
 
     @api.model
     def _selection_target_model(self):
-        allowed_models = self.env["ir.model.access"]._get_allowed_models(mode="write")
-        models = (
-            self.sudo()
-            .env["ir.model"]
-            .search(
-                [("model", "in", list(allowed_models)), ("is_mail_thread", "=", True)]
-            )
-        )
+        models = self.env["ir.model"].search([("is_mail_thread", "=", True)])
         return [(model.model, model.name) for model in models]
 
     def link_message(self):
@@ -38,11 +31,9 @@ class MailMessageGatewayLink(models.TransientModel):
             gateway_notifications=[],  # Avoid sending notifications
         )
         self.message_id.gateway_message_id = new_message
-        self.env["bus.bus"]._sendone(
-            self.env.user.partner_id,
-            "mail.message/insert",
+        self.message_id._bus_send_store(
+            self.message_id,
             {
-                "id": self.message_id.id,
                 "gateway_thread_data": self.message_id.sudo().gateway_thread_data,
             },
         )

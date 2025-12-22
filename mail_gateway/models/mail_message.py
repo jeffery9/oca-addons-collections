@@ -3,7 +3,8 @@
 
 
 from odoo import api, fields, models
-from odoo.tests import RecordCapturer
+
+from odoo.addons.mail.tools.discuss import Store
 
 
 class MailMessage(models.Model):
@@ -79,9 +80,36 @@ class MailMessage(models.Model):
                     0
                 ].gateway_channel_id
 
-    def _get_message_format_fields(self):
-        result = super()._get_message_format_fields()
-        result += ["gateway_type", "gateway_channel_data", "gateway_thread_data"]
+    def _to_store(
+        self,
+        store: Store,
+        /,
+        *,
+        fields=None,
+        format_reply=True,
+        msg_vals=None,
+        for_current_user=False,
+        add_followers=False,
+        followers=None,
+    ):
+        result = super()._to_store(
+            store,
+            fields=fields,
+            format_reply=format_reply,
+            msg_vals=msg_vals,
+            for_current_user=for_current_user,
+            add_followers=add_followers,
+            followers=followers,
+        )
+        for record in self:
+            store.add(
+                record,
+                {
+                    "gateway_type": record.gateway_type,
+                    "gateway_channel_data": record.gateway_channel_data,
+                    "gateway_thread_data": record.gateway_thread_data,
+                },
+            )
         return result
 
     def _send_to_gateway_thread(self, gateway_channel_id):
@@ -89,43 +117,17 @@ class MailMessage(models.Model):
             gateway_channel_id.gateway_token
         )
         channel = self.env["discuss.channel"].browse(chat_id)
-        with RecordCapturer(
-            self.env["mail.notification"], [("gateway_channel_id", "=", channel.id)]
-        ) as capt:
-            channel.message_post(**self._get_gateway_thread_message_vals())
+        channel.message_post(**self._get_gateway_thread_message_vals())
         if not self.gateway_type:
             self.gateway_type = gateway_channel_id.gateway_id.gateway_type
-        notification_vals = {
-            "notification_status": "sent",
-            "mail_message_id": self.id,
-            "gateway_channel_id": channel.id,
-            "notification_type": "gateway",
-            "gateway_type": gateway_channel_id.gateway_id.gateway_type,
-        }
-        notification = capt.records
-        if notification:
-            # Set the same gateway_message_id for both notifications.
-            # When the webhook is received, both notifications must be updated.
-            # For example, when a message is sent from a document(sale.order),
-            # one notification is linked to the document,
-            # and another notification is linked to the channel.
-            notification_vals["gateway_message_id"] = notification.gateway_message_id
-            # If there is a notification with status "exception", set failure details
-            if notification.failure_type == "unknown":
-                notification_vals["failure_type"] = "unknown"
-                notification_vals["notification_status"] = "exception"
-                notification_vals["failure_reason"] = notification.failure_reason
-        self.env["mail.notification"].create(notification_vals)
-        self.env["bus.bus"]._sendone(
-            self.env.user.partner_id,
-            "mail.message/insert",
+        self.env["mail.notification"].create(
             {
-                "id": self.id,
-                "gateway_type": self.gateway_type,
-                "notifications": self.sudo()
-                .notification_ids._filtered_for_web_client()
-                ._notification_format(),
-            },
+                "notification_status": "sent",
+                "mail_message_id": self.id,
+                "gateway_channel_id": channel.id,
+                "notification_type": "gateway",
+                "gateway_type": gateway_channel_id.gateway_id.gateway_type,
+            }
         )
         return {}
 
