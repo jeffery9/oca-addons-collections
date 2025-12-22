@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 17.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -312,7 +312,6 @@ msgstr ""
 #. module: delivery_schenker
 #. odoo-python
 #: code:addons/delivery_schenker/models/schenker_request.py:0
-#, python-format
 msgid ""
 "Error in the request to the Schenker API. This is the thrown message:\n"
 "\n"
@@ -422,14 +421,12 @@ msgstr ""
 #. module: delivery_schenker
 #. odoo-python
 #: code:addons/delivery_schenker/models/delivery_carrier.py:0
-#, python-format
 msgid "Only land shipping is currently supported"
 msgstr ""
 
 #. module: delivery_schenker
 #. odoo-python
 #: code:addons/delivery_schenker/models/delivery_carrier.py:0
-#, python-format
 msgid "Only volume is currently supported"
 msgstr ""
 
@@ -476,8 +473,6 @@ msgstr ""
 #. module: delivery_schenker
 #. odoo-python
 #: code:addons/delivery_schenker/models/delivery_carrier.py:0
-#: code:addons/delivery_schenker/models/delivery_carrier.py:0
-#, python-format
 msgid ""
 "Schenker API doesn't provide methods to compute delivery rates, so you "
 "should relay on another price method instead or override this one in your "
@@ -502,14 +497,12 @@ msgstr ""
 #. module: delivery_schenker
 #. odoo-python
 #: code:addons/delivery_schenker/models/delivery_carrier.py:0
-#, python-format
 msgid "Schenker Shipping barcode document"
 msgstr ""
 
 #. module: delivery_schenker
 #. odoo-python
 #: code:addons/delivery_schenker/models/stock_picking.py:0
-#, python-format
 msgid "Schenker label for %s"
 msgstr ""
 

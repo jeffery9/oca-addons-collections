@@ -2,4 +2,4 @@
   - David Vidal
 - [Studio73](https://www.studio73.es):
   - Ethan Hildick
-- Michael Tietz (MT Software) \<mtietz@mt-software.de\>
+- Michael Tietz (MT Software) \<<mtietz@mt-software.de>\>

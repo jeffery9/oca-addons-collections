@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 16.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-01-23 15:06+0000\n"
+"PO-Revision-Date: 2025-10-15 09:43+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.6.2\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: delivery_schenker
 #: model:ir.model.fields.selection,name:delivery_schenker.selection__delivery_carrier__schenker_barcode_format__a4
@@ -321,7 +321,6 @@ msgstr "Porta-a-porto"
 #. module: delivery_schenker
 #. odoo-python
 #: code:addons/delivery_schenker/models/schenker_request.py:0
-#, python-format
 msgid ""
 "Error in the request to the Schenker API. This is the thrown message:\n"
 "\n"
@@ -336,7 +335,7 @@ msgstr ""
 #. module: delivery_schenker
 #: model:ir.model.fields,field_description:delivery_schenker.field_delivery_carrier__schenker_express
 msgid "Express"
-msgstr "Espressa"
+msgstr "Espresso"
 
 #. module: delivery_schenker
 #: model:ir.model.fields,field_description:delivery_schenker.field_delivery_carrier__schenker_food_related
@@ -440,14 +439,12 @@ msgstr "LCL oceano"
 #. module: delivery_schenker
 #. odoo-python
 #: code:addons/delivery_schenker/models/delivery_carrier.py:0
-#, python-format
 msgid "Only land shipping is currently supported"
 msgstr "Solo la spedizione terrestre è supportata attualmente"
 
 #. module: delivery_schenker
 #. odoo-python
 #: code:addons/delivery_schenker/models/delivery_carrier.py:0
-#, python-format
 msgid "Only volume is currently supported"
 msgstr "Solo il volume è supportato attualmente"
 
@@ -469,7 +466,7 @@ msgstr "Spazio pallet"
 #. module: delivery_schenker
 #: model:ir.model.fields,field_description:delivery_schenker.field_delivery_carrier__schenker_pharmaceuticals
 msgid "Pharmaceuticals"
-msgstr "Farmaci"
+msgstr "Farmaceutici"
 
 #. module: delivery_schenker
 #: model:ir.model.fields.selection,name:delivery_schenker.selection__delivery_carrier__schenker_measure_unit__pieces
@@ -484,7 +481,7 @@ msgstr "Porto-a-porta"
 #. module: delivery_schenker
 #: model:ir.model.fields,field_description:delivery_schenker.field_delivery_carrier__delivery_type
 msgid "Provider"
-msgstr "Provider"
+msgstr "Fornitore"
 
 #. module: delivery_schenker
 #: model:ir.model.fields.selection,name:delivery_schenker.selection__delivery_carrier__schenker_service_land__ecsp
@@ -494,8 +491,6 @@ msgstr "SCHENKERsystem-plus"
 #. module: delivery_schenker
 #. odoo-python
 #: code:addons/delivery_schenker/models/delivery_carrier.py:0
-#: code:addons/delivery_schenker/models/delivery_carrier.py:0
-#, python-format
 msgid ""
 "Schenker API doesn't provide methods to compute delivery rates, so you "
 "should relay on another price method instead or override this one in your "
@@ -523,14 +518,12 @@ msgstr "Etichetta Schenker"
 #. module: delivery_schenker
 #. odoo-python
 #: code:addons/delivery_schenker/models/delivery_carrier.py:0
-#, python-format
 msgid "Schenker Shipping barcode document"
 msgstr "Documento codice a barre spedizione Schenker"
 
 #. module: delivery_schenker
 #. odoo-python
 #: code:addons/delivery_schenker/models/stock_picking.py:0
-#, python-format
 msgid "Schenker label for %s"
 msgstr "Etichetta Schenker per %s"
 

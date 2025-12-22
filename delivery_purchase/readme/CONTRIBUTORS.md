@@ -3,7 +3,5 @@
   - Pedro M. Baeza
   - Vicent Cubells
   - Carolina Fernandez
-  - Carlos Roca
-
-- [Sodexis](https://www.sodexis.com):
-  - Sandeep J
+- [Heliconia Solutions Pvt. Ltd.](https://www.heliconia.io)
+  - Bhavesh Heliconia

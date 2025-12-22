@@ -28,7 +28,7 @@ class TestCorreosExpressParcel(common.SingleTransactionCase):
             }
         )
         cls.product = cls.env["product.product"].create(
-            {"type": "product", "name": "Test product"}
+            {"type": "consu", "is_storable": True, "name": "Test product"}
         )
         cls.partner = cls.env["res.partner"].create(
             {
@@ -37,6 +37,7 @@ class TestCorreosExpressParcel(common.SingleTransactionCase):
                 "zip": "28001",
                 "street": "Calle de La Rua, 3",
                 "email": "test@test.com",
+                "street2": "Calle de La Rua, 4",
             }
         )
         order_form = Form(cls.env["sale.order"].with_context(tracking_disable=True))
@@ -51,7 +52,7 @@ class TestCorreosExpressParcel(common.SingleTransactionCase):
         cls.picking.move_ids.quantity = 20
 
     @mock.patch(
-        "%s.create_shipment" % request_model,
+        f"{request_model}.create_shipment",
         return_value={
             "codigoRetorno": 0,
             "mensajeRetorno": "",
@@ -68,7 +69,7 @@ class TestCorreosExpressParcel(common.SingleTransactionCase):
         )
 
     @mock.patch(
-        "%s.track_shipment" % request_model,
+        f"{request_model}.track_shipment",
         return_value={
             "estadoEnvios": [
                 {
@@ -98,7 +99,7 @@ class TestCorreosExpressParcel(common.SingleTransactionCase):
         self.assertTrue(tracking)
 
     @mock.patch(
-        "%s.print_shipment" % request_model,
+        f"{request_model}.print_shipment",
         return_value=["JVBERiasdasdsdcfnsdhfbasdf=="],
     )
     def test_04_correos_express_get_label(self, redirect_mock, *args):
@@ -110,3 +111,14 @@ class TestCorreosExpressParcel(common.SingleTransactionCase):
             order=self.env["sale.order"]
         )
         self.assertIsInstance(msg, dict)
+
+    def test_06_correos_express_no_carrier(self):
+        result = self.carrier_correos_express.correos_express_get_label(None)
+        self.assertFalse(result)
+
+    def test_correos_express_tracking_state_update_no_tracking_ref(self):
+        self.picking.carrier_tracking_ref = False
+        result = self.carrier_correos_express.correos_express_tracking_state_update(
+            self.picking
+        )
+        self.assertFalse(result)

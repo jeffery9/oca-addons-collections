@@ -1,6 +1,8 @@
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
+from odoo import Command
 from odoo.tests import Form
+from odoo.tools import mute_logger
 
 from odoo.addons.base.tests.common import BaseCommon
 
@@ -26,9 +28,7 @@ class TestDeliveryPurchaseBase(BaseCommon):
                 "product_id": cls.delivery_product.id,
                 "delivery_type": "base_on_rule",
                 "price_rule_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "variable": "weight",
                             "operator": ">",
@@ -36,9 +36,7 @@ class TestDeliveryPurchaseBase(BaseCommon):
                             "list_base_price": "30",
                         },
                     ),
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "variable": "weight",
                             "operator": "<=",
@@ -64,6 +62,9 @@ class TestDeliveryPurchaseBase(BaseCommon):
         cls.purchase = purchase_form.save()
         cls.purchase_line = cls.purchase.order_line
 
+    def _action_picking_validate(self, picking):
+        picking.button_validate()
+
 
 class TestDeliveryPurchase(TestDeliveryPurchaseBase):
     def test_onchange_partner_id(self):
@@ -80,9 +81,52 @@ class TestDeliveryPurchase(TestDeliveryPurchaseBase):
         self.assertEqual(self.purchase.invoice_status, "no")
         picking = self.purchase.picking_ids
         picking.carrier_id = False
-        picking.button_validate()
+        self._action_picking_validate(picking)
         self.assertEqual(delivery_line.qty_to_invoice, 1)
         self.assertEqual(self.purchase.invoice_status, "to invoice")
+
+    @mute_logger("odoo.models.unlink")
+    def test_purchase_picking_price(self):
+        carrier = self.env["delivery.carrier"].create(
+            {
+                "name": "Carrier Rule custom",
+                "product_id": self.delivery_product.id,
+                "delivery_type": "base_on_rule",
+                "price_rule_ids": [
+                    Command.create(
+                        {
+                            "variable": "quantity",
+                            "operator": ">=",
+                            "max_value": 1,
+                            "list_base_price": 0,
+                            "list_price": 1,
+                            "variable_factor": "quantity",
+                        },
+                    )
+                ],
+            }
+        )
+        self.purchase.carrier_id = carrier
+        self.assertEqual(self.purchase.delivery_price, 1)
+        self.purchase.button_confirm()
+        self.assertEqual(self.purchase.delivery_price, 1)
+        picking = self.purchase.picking_ids
+        self.assertEqual(picking.carrier_id, carrier)
+        self.assertEqual(picking.carrier_price, 1)
+        purchase_form = Form(self.purchase)
+        with purchase_form.order_line.edit(0) as line_form:
+            line_form.product_qty = 2
+        purchase_form.save()
+        self.assertEqual(self.purchase.delivery_price, 1)
+        self.assertEqual(picking.carrier_price, 1)
+        res = picking.button_validate()
+        if isinstance(res, dict):
+            wizard = (
+                self.env[res["res_model"]].with_context(**res["context"]).create({})
+            )
+            wizard.process()
+        self.assertEqual(picking.state, "done")
+        self.assertEqual(picking.carrier_price, 2)
 
     def test_delivery_purchase(self):
         self.assertEqual(self.purchase.delivery_price, 20)
@@ -100,7 +144,7 @@ class TestDeliveryPurchase(TestDeliveryPurchaseBase):
         self.assertEqual(picking.carrier_id, self.carrier_fixed)
         self.assertEqual(picking.carrier_price, 20)
         picking.carrier_id = self.carrier_rules.id
-        picking.button_validate()
+        self._action_picking_validate(picking)
         self.assertEqual(picking.carrier_price, 10)
         self.assertEqual(
             len(self.purchase.order_line.filtered(lambda x: x.is_delivery)), 1
@@ -112,12 +156,13 @@ class TestDeliveryPurchase(TestDeliveryPurchaseBase):
         self.purchase.button_confirm()
         picking = self.purchase.picking_ids
         picking.carrier_id = self.carrier_fixed
-        picking.button_validate()
+        self._action_picking_validate(picking)
         self.assertEqual(picking.carrier_price, 20)
         delivery_line = self.purchase.order_line.filtered(lambda x: x.is_delivery)
         self.assertEqual(delivery_line.delivery_picking_orig_id, picking)
         self.assertEqual(self.purchase.delivery_price, 20)
 
+    @mute_logger("odoo.models.unlink")
     def test_picking_carrier_multi(self):
         self.purchase.order_line.product_qty = 2
         self.purchase.button_confirm()
@@ -134,7 +179,7 @@ class TestDeliveryPurchase(TestDeliveryPurchaseBase):
         self.assertEqual(self.purchase.delivery_price, 20)
         new_picking = self.purchase.picking_ids - picking
         new_picking.carrier_id = self.carrier_rules
-        new_picking.button_validate()
+        self._action_picking_validate(new_picking)
         self.assertEqual(new_picking.carrier_price, 10)
         new_delivery_line = (
             self.purchase.order_line.filtered(lambda x: x.is_delivery) - delivery_line
@@ -148,42 +193,10 @@ class TestDeliveryPurchase(TestDeliveryPurchaseBase):
         self.purchase.button_confirm()
         picking = self.purchase.picking_ids
         picking.carrier_id = self.carrier_rules.id
-        picking.button_validate()
+        self._action_picking_validate(picking)
         self.assertEqual(picking.carrier_id, self.carrier_rules)
         self.assertEqual(picking.carrier_price, 10)
         self.assertEqual(self.purchase.carrier_id, self.carrier_rules)
         delivery_line = self.purchase.order_line.filtered(lambda x: x.is_delivery)
         self.assertEqual(delivery_line.delivery_picking_orig_id, picking)
         self.assertEqual(self.purchase.delivery_price, 10)
-
-    def test_picking_with_backorders(self):
-        self.env["ir.config_parameter"].set_param(
-            "delivery_purchase.use_delivered_qty_to_set_cost", "True"
-        )
-        self.product.weight = 1
-        purchase_form = Form(self.env["purchase.order"])
-        purchase_form.partner_id = self.partner
-        purchase_form.carrier_id = self.carrier_rules
-        with purchase_form.order_line.new() as purchase_line_form:
-            purchase_line_form.product_id = self.product
-            purchase_line_form.product_qty = 10
-            purchase_line_form.price_unit = 1
-        purchase = purchase_form.save()
-        self.assertEqual(purchase.delivery_price, 30)
-        purchase.button_confirm()
-        picking = purchase.picking_ids
-        picking.move_ids.quantity = 4
-        backorder_wizard_dict = picking.button_validate()
-        backorder_wizard = Form(
-            self.env[backorder_wizard_dict["res_model"]].with_context(
-                **backorder_wizard_dict["context"]
-            )
-        ).save()
-        backorder_wizard.process()
-        self.assertEqual(picking.carrier_price, 10)
-        other_picking = purchase.picking_ids - picking
-        other_picking.move_ids.filtered(
-            lambda ml: ml.product_id == self.product
-        ).quantity = 6
-        other_picking.button_validate()
-        self.assertEqual(other_picking.carrier_price, 30)

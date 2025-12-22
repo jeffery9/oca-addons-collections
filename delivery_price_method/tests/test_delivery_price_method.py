@@ -1,72 +1,18 @@
 # Copyright 2020 Trey, Kilobytes de Soluciones
 # Copyright 2020 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from odoo.tests import Form
-from odoo.tests.common import TransactionCase
+
 from odoo.tools import float_compare
 
+from .common import TestDeliveryPriceMethodCommon
 
-class TestDeliveryPriceMethod(TransactionCase):
+
+class TestDeliveryPriceMethod(TestDeliveryPriceMethodCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        self = cls
-        product_shipping_cost = self.env["product.product"].create(
-            {
-                "type": "service",
-                "name": "Shipping costs",
-                "standard_price": 10,
-                "list_price": 100,
-            }
-        )
-        self.carrier = self.env["delivery.carrier"].create(
-            {
-                "name": "Test carrier",
-                "delivery_type": "fixed",
-                "product_id": product_shipping_cost.id,
-                "fixed_price": 99.99,
-            }
-        )
-        self.pricelist = self.env["product.pricelist"].create(
-            {
-                "name": "Test pricelist",
-                "item_ids": [
-                    (
-                        0,
-                        0,
-                        {
-                            "applied_on": "3_global",
-                            "compute_price": "formula",
-                            "base": "list_price",
-                        },
-                    )
-                ],
-            }
-        )
-        self.product = self.env.ref("product.product_delivery_01")
-        self.partner = self.env.ref("base.res_partner_12")
-        self.sale = self.env["sale.order"].create(
-            {
-                "partner_id": self.partner.id,
-                "pricelist_id": self.pricelist.id,
-                "carrier_id": self.carrier.id,
-                "order_line": [
-                    (0, 0, {"product_id": self.product.id, "product_uom_qty": 1})
-                ],
-            }
-        )
 
-    def _add_delivery(self):
-        sale = self.sale
-        delivery_wizard = Form(
-            self.env["choose.delivery.carrier"].with_context(
-                default_order_id=sale.id, default_carrier_id=self.carrier
-            )
-        )
-        choose_delivery_carrier = delivery_wizard.save()
-        choose_delivery_carrier.button_confirm()
-
-    def test_delivery_price_fixed(self):
+    def test_01_delivery_price_fixed(self):
         sale = self.sale
         self._add_delivery()
         delivery_lines = sale.order_line.filtered(lambda r: r.is_delivery)
@@ -84,7 +30,7 @@ class TestDeliveryPriceMethod(TransactionCase):
         picking.send_to_shipper()
         self.assertEqual(picking.carrier_price, 99.99)
 
-    def test_delivery_price_method(self):
+    def test_02_delivery_price_method(self):
         self.carrier.write({"price_method": "fixed", "fixed_price": 99.99})
         sale = self.sale
         self._add_delivery()
@@ -118,3 +64,38 @@ class TestDeliveryPriceMethod(TransactionCase):
         delivery_lines = sale.order_line.filtered(lambda r: r.is_delivery)
         delivery_price = sum(delivery_lines.mapped("price_unit"))
         self.assertEqual(delivery_price, 11.11)
+
+    def test_03_delivery_price_method_free_over(self):
+        free_price = self.carrier_free._get_price_from_picking(
+            total=50, weight=20, volume=10, quantity=10, wv=0.0
+        )
+        self.assertEqual(free_price, 0.0)
+        prices = self.carrier_free.rate_shipment(self.sale_2)
+        self.assertEqual(prices["price"], 0.0)
+        self.assertEqual(prices["carrier_price"], 0.0)
+        self.carrier_free.write(
+            {
+                "price_method": "base_on_rule",
+                "amount": 100,
+                "free_over": False,
+                "price_rule_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "variable": "quantity",
+                            "operator": "==",
+                            "max_value": 1,
+                            "list_base_price": 11.11,
+                        },
+                    )
+                ],
+            }
+        )
+        base_price = self.carrier_free._get_price_from_picking(
+            total=70.0, weight=0.01, volume=0.0, quantity=1.0, wv=0.0
+        )
+        prices = self.carrier_free.rate_shipment(self.sale_2)
+        self.assertEqual(prices["price"], 11.11)
+        self.assertEqual(prices["carrier_price"], 11.11)
+        self.assertEqual(base_price, 11.11)

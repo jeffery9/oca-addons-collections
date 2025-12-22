@@ -1,9 +1,6 @@
 # Copyright 2021 Tecnativa - Ernesto Tejeda
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from markupsafe import Markup
-
-from odoo import _, models
-from odoo.tools.misc import str2bool
+from odoo import models
 
 
 class StockPicking(models.Model):
@@ -32,27 +29,23 @@ class StockPicking(models.Model):
         if res["tracking_number"]:
             self.carrier_tracking_ref = res["tracking_number"]
         order_currency = self.purchase_id.currency_id or self.company_id.currency_id
-        msg = Markup(
-            _(
-                "Shipment sent to carrier %(carrier_name)s for shipping with tracking "
-                "number %(tracking_ref)s<br/>Cost: %(carrier_price)s %(currency_name)s",
-                carrier_name=self.carrier_id.name,
-                tracking_ref=self.carrier_tracking_ref,
-                carrier_price="%.2f" % self.carrier_price,
-                currency_name=order_currency.name,
-            )
+        msg = self.env._(
+            "Shipment sent to carrier %(carrier_name)s for shipping with tracking "
+            "number %(tracking_ref)s<br/>Cost: %(carrier_price)s %(currency_name)s"
+        ) % (
+            {
+                "carrier_name": self.carrier_id.name,
+                "tracking_ref": self.carrier_tracking_ref,
+                "carrier_price": f"{self.carrier_price}.2f",
+                "currency_name": order_currency.name,
+            }
         )
         self.message_post(body=msg)
         self._add_delivery_cost_to_po()
 
     def _add_delivery_cost_to_po(self):
         self.ensure_one()
-        avoid_create_line = str2bool(
-            self.env["ir.config_parameter"]
-            .sudo()
-            .get_param("delivery_purchase.no_create_delivery_line_on_po", "False")
-        )
-        if not avoid_create_line and self.purchase_id and self.carrier_price:
+        if self.purchase_id and self.carrier_price:
             carrier_price = self.carrier_price
             # Re-set carrier price
             if self.carrier_id.invoice_policy == "real":
