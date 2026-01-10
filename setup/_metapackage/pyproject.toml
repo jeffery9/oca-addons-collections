@@ -1,0 +1,20 @@
+[project]
+name = "odoo-addons-oca-account-reconcile"
+version = "18.0.20251202.0"
+dependencies = [
+    "odoo-addon-account_in_payment==18.0.*",
+    "odoo-addon-account_move_base_import==18.0.*",
+    "odoo-addon-account_move_reconcile_forbid_cancel==18.0.*",
+    "odoo-addon-account_partner_reconcile==18.0.*",
+    "odoo-addon-account_reconcile_analytic_tag==18.0.*",
+    "odoo-addon-account_reconcile_model_oca==18.0.*",
+    "odoo-addon-account_reconcile_oca==18.0.*",
+    "odoo-addon-account_reconcile_oca_queue==18.0.*",
+    "odoo-addon-account_statement_base==18.0.*",
+    "odoo-addon-base_transaction_id==18.0.*",
+]
+classifiers=[
+    "Programming Language :: Python",
+    "Framework :: Odoo",
+    "Framework :: Odoo :: 18.0",
+]
