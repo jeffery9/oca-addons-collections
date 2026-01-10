@@ -1,1 +1,0 @@
-Adds a Smart Button in the Partner to see the related repairs

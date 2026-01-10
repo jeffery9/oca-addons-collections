@@ -1,2 +1,0 @@
--   Rafael Blasco ([Moduon](https://www.moduon.team/))
--   David Vidal ([Moduon](https://www.moduon.team/))

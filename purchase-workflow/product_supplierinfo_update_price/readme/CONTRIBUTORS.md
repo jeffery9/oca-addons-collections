@@ -1,2 +1,0 @@
-- [Dixmit](https://www.dixmit.com):
-  - Luis Rodríguez \<<luis.rodriguez@dixmit.com>\>

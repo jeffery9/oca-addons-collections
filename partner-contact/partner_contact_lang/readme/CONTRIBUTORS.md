@@ -1,9 +1,0 @@
-- [Tecnativa](https://www.tecnativa.com):
-  - Javier Iniesta
-  - Vicent Cubells
-  - David Vidal
-  - Cristina Martín
-  - Pedro Evaristo Gonzalez Sanchez \<<pedro.gonzalez@pesol.es>\>
-- Tharathip Chaweewongphan \<<tharathipc@ecosoft.co.th>\>
-- [APSL-Nagarro](https://apsl.tech):
-  - Antoni Marroig \<<amarroig@apsl.net>\>

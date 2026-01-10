@@ -1,4 +1,0 @@
-- [Tecnativa](https://www.tecnativa.com):
-  - Carlos Roca
-  - Sergio Teruel
-- Dhara Solanki \<<dhara.solanki@initos.com>\>

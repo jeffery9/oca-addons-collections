@@ -1,4 +1,0 @@
-- Enric Tobella \<etobella@creublanca.es\>
-- Joan Mateu \<joan.mateu@forgeflow.com\>
-- [Heliconia Solutions Pvt. Ltd.](https://www.heliconia.io)
-  - Bhavesh Heliconia

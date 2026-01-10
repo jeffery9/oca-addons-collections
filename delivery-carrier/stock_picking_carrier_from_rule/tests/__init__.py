@@ -1,1 +1,0 @@
-from . import test_stock_picking_carrier_from_rule

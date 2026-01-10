@@ -1,2 +1,0 @@
-This module add default values to contract products for variable
-quantity formula.

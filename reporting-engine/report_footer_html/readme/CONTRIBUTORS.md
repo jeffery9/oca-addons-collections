@@ -1,4 +1,0 @@
-- Eduardo de Miguel ([Moduon](https://www.moduon.team/))
-- Rafael Blasco ([Moduon](https://www.moduon.team/))
-- David Vidal ([Moduon](https://www.moduon.team/))
-- Joel Estrada ([Moduon](https://www.moduon.team/))

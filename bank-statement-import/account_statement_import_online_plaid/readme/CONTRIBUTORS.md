@@ -1,4 +1,0 @@
-- [Binhex](https://binhex.cloud):
-  - Adasat Torres de León \<a.torres@binhex.cloud\>
-  - Rolando Rebollo \ <rrebollo@binhex.cloud\>
-  - Antonio Ruban \ <a.ruban@binhex.cloud\>

@@ -1,1 +1,0 @@
-Sometimes you may need to change the order of lines in a repair order—for example, to arrange them in accordance with how the parts will be used during the repair.

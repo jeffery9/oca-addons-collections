@@ -1,4 +1,0 @@
-- [ForgeFlow](https://www.forgeflow.com):
-  - Thiago Mulero \<<thiago.mulero@forgeflow.com>\>
-- [Trobz](https://www.trobz.com):
-  - Do Anh Duy \<<duyda@trobz.com>\>

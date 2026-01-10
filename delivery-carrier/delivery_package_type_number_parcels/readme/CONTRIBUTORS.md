@@ -1,4 +1,0 @@
-- Hughes Damry \<<hughes.damry@acsone.eu>\>
-- Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
-- [Heliconia Solutions Pvt. Ltd.](https://www.heliconia.io)
-  - Bhavesh Heliconia

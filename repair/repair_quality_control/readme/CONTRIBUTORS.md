@@ -1,4 +1,0 @@
-- [APSL-Nagarro](https://www.apsl.tech):
-  - Antoni Marroig \<<amarroig@apsl.net>\>
-- [ForgeFlow](https://www.forgeflow.com):
-  - Laura Cazorla \<<laura.cazorla@forgeflow.com>\>

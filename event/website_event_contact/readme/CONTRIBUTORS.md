@@ -1,2 +1,0 @@
-- Eduardo de Miguel ([Moduon](https://www.moduon.team/))
-- Joel Estrada ([Moduon](https://www.moduon.team/))

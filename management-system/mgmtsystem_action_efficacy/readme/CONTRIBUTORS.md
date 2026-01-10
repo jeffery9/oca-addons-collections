@@ -1,3 +1,0 @@
-- Marcelo Frare \<<mf2965@gmail.com>\>
-- Stefano Consolaro \<<stefano.consolaro@mymage.it>\>
-- [Heliconia Solutions Pvt. Ltd.\](<https://www.heliconia.io>)

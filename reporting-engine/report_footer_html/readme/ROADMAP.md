@@ -1,2 +1,0 @@
-- Due to Odoo limitations, hyperlinked text does not work in report footers.
-- Links can only be added by pasting the full URL directly into the footer.

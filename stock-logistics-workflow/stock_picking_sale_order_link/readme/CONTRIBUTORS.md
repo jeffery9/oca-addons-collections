@@ -1,3 +1,0 @@
-- Sergio Teruel \<<sergio.teruel@tecnativa.com>\>
-- Daniel Reis \<<dreis@opensourceintegrators.com>\>
-- Rami Ben Hadj Ahmed \<<hadjahmedrami@gmail.com>\>

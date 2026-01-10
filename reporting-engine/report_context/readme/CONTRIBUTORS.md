@@ -1,2 +1,0 @@
-- Jaime Arroyo \<<jaime.arroyo@creublanca.es>\>
-- Do Anh Duy \<<duyda@trobz.com>\>

@@ -1,2 +1,0 @@
-- [Coop IT Easy SC](https://coopiteasy.be):
-  - Carmen Bianca BAKKER

@@ -1,4 +1,0 @@
-- [Tecnativa](https://www.tecnativa.com):
-  - Carlos Roca
-  - Pilar Vargas
-  - Stefan Ungureanu

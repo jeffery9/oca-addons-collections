@@ -1,4 +1,0 @@
-- Marcel Savegnago \<<marcel.savegnago@escodoo.com.br>\>
-- [APSL-Nagarro](https://www.apsl.tech):
-  - Patryk Pyczko \<<ppyczko@apsl.net>\>
-- `Heliconia Solutions Pvt. Ltd. <https://www.heliconia.io>`_

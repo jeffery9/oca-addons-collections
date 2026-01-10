@@ -1,5 +1,0 @@
-- [APSL-Nagarro](https://www.apsl.tech):
-  - Patryk Pyczko \<<ppyczko@apsl.net>\>
-  - Antoni Marroig \<<amarroig@apsl.net>\>
-- [Heliconia Solutions Pvt. Ltd.](https://www.heliconia.io)
-  - Bhavesh Heliconia

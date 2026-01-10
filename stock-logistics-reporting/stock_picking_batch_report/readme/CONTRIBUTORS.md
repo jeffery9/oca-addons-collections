@@ -1,4 +1,0 @@
-- Chanakya Soni <csoni@opensourceintegrators.com>
-- Maxime Chambreuil <mchambreuil@opensourceintegrators.com>
-- [Heliconia Solutions Pvt. Ltd.](https://www.heliconia.io)
-  - Bhavesh Heliconia

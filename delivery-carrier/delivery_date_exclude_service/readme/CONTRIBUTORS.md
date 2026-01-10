@@ -1,3 +1,0 @@
-- Tomasz Walter \<<tomasz.walter@camptocamp.com>\>
-- Simone Orsi \<<simone.orsi@camptocamp.com>\>
-- Jacques-Etienne Baudoux (BCIM) \<<je@bcim.be>\>

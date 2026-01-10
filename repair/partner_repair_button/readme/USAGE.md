@@ -1,1 +1,0 @@
-In any contact you will see a smart button to see the related repairs.

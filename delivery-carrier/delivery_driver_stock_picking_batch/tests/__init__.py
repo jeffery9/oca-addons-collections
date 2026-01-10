@@ -1,1 +1,0 @@
-from . import test_delivery_driver_stock_picking_batch

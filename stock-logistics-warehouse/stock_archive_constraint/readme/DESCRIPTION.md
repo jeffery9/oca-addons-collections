@@ -1,1 +1,0 @@
-Prevents archiving products or storage locations that have existing inventory or related transactions.

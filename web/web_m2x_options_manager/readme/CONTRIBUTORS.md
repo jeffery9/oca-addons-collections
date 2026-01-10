@@ -1,2 +1,0 @@
-- [Camptocamp](https://www.camptocamp.com):
-  - Silvio Gregorini

@@ -1,1 +1,0 @@
-This module implements a calendar view for repair orders. The view is based on the scheduled date. If you need to use calendar view based on the date when the order was done consider using the repair_calendar_view module instead.

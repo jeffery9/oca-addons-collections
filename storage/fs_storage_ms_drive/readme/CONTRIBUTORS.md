@@ -1,2 +1,0 @@
-- Laurent Mignon \<<laurent.mignon@acsone.eu>\>
-- Pierre Halleux \<<pierre.halleux@acsone.eu>\>

@@ -1,5 +1,0 @@
-- [Tecnativa](https://www.tecnativa.com):
-  - Víctor Martínez
-  - Pedro M. Baeza
-- [Heliconia Solutions Pvt. Ltd.](https://www.heliconia.io)
-  - Bhavesh Heliconia

@@ -1,4 +1,0 @@
-- Denis Roussel <denis.roussel@acsone.eu>
-- Guewen Baconnier
-- Akim Juillerat <akim.juillerat@camptocamp.com>
-- Alexandre Fayolle <alexandre.faoylle@camptocamp.com>

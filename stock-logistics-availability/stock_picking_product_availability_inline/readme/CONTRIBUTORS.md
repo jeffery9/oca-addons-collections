@@ -1,4 +1,0 @@
-- [Tecnativa](https://www.tecnativa.com):
-  - Ernesto Tejeda
-  - Sergio Teruel
-  - Carlos Roca

@@ -1,3 +1,0 @@
-- [Camptocamp](https://www.camptocamp.com)
-  - Iván Todorovich \<<ivan.todorovich@gmail.com>\>
-- Dhara Solanki \<<dhara.solanki@initos.com>\>

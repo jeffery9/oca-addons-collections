@@ -1,1 +1,0 @@
-from . import test_procurement_auto_create_group_carrier

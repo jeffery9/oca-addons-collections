@@ -1,2 +1,0 @@
-- Silvio Gregorini \<silvio.gregorini@camptocamp.com\>
-- Simone Orsi \<simone.orsi@camptocamp.com\>

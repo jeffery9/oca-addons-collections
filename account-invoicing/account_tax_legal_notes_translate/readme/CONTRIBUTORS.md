@@ -1,2 +1,0 @@
-- Rafael Blasco ([Moduon](https://www.moduon.team/))
-- Sabrina Rodriguez ([Moduon](https://www.moduon.team/))

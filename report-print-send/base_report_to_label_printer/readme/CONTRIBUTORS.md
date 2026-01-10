@@ -1,2 +1,0 @@
-- Hughes Damry \<<hughes.damry@acsone.eu>\>
-- Khoi (Kien Kim) khoikk@trobz.com

@@ -1,3 +1,0 @@
-- [APSL-Nagarro ](https://apsl.tech):
-  - Miquel Alzanillas
-  - Antoni Marroig \<<amarroig@apsl.net>\>

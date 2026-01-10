@@ -1,5 +1,0 @@
-- [CorporateHub](https://corporatehub.eu/)
-  - Alexey Pelykh \<alexey.pelykh@corphub.eu\>
-  - Dhara Solanki \<dhara.solanki@initos.com\>
-- [Innovara](https://innovara.tech)
-  - Manuel Fombuena \<mfombuena@innovara.tech\>

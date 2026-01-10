@@ -1,3 +1,0 @@
-- Sylvain LE GAL (<https://www.twitter.com/legalsylvain>)
-- [Pyxiris](https://github.com/Pyxiris)
-  - [Liam Noonan](https://github.com/ljmnoonan)

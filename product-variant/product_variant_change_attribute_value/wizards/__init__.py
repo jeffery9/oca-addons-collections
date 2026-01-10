@@ -1,2 +1,0 @@
-from . import product_variant_attribute_value_action
-from . import product_variant_attribute_value_wizard

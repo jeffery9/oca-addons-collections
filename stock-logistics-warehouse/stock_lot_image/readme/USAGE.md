@@ -1,1 +1,0 @@
-Go to a lot and in the Images tab you can add linked files.

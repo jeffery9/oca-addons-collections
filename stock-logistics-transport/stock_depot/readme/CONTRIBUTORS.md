@@ -1,4 +1,0 @@
-- Telmo Santos \<telmo.santos@camptocamp.com\>
-- Jacques-Etienne Baudoux \<je@bcim.be\>
-- [Heliconia Solutions Pvt. Ltd.](https://www.heliconia.io)
-  - Bhavesh Heliconia

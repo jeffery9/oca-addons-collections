@@ -1,3 +1,0 @@
-- Florian da Costa \<<florian.dacosta@akretion.com>\>
-- [Heliconia Solutions Pvt. Ltd.](https://www.heliconia.io)
-  - Bhavesh Heliconia

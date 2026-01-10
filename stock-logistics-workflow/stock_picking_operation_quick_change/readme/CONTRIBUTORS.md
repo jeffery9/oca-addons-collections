@@ -1,4 +1,0 @@
-- [Tecnativa](https://www.tecnativa.com):
-  - Sergio Teruel
-  - Carlos Roca
-- Lois Rilo \<lois.rilo@forgeflow.com\>

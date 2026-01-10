@@ -1,5 +1,0 @@
-- [Tecnativa](https://www.tecnativa.com):
-  - Carlos Dauden
-  - Víctor Martínez
-- [Trobz](https://trobz.com):
-  - Do Anh Duy \<<duyda@trobz.com>\>

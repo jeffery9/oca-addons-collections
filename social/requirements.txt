@@ -1,5 +1,0 @@
-# generated from manifests external_dependencies
-cairosvg
-lottie
-python-telegram-bot
-requests_toolbelt

@@ -1,8 +1,0 @@
-- [Trey](https://www.trey.es):
-  - Roberto Lizana \<<roberto@trey.es>\>
-- [Tecnativa](https://www.tecnativa.com):
-  - Pedro M. Baeza
-- [QubiQ 2010](https://www.quibq.es):
-  - Marçal Isern
-- [Open Source Integrators](https://opensourceintegrators.com):
-  - Daniel Reis \<<dreis@opensourceintegrators.com>\>

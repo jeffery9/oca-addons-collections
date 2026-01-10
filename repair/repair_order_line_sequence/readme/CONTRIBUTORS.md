@@ -1,3 +1,0 @@
-- Cetmix <https://cetmix.com>
-- Ivan Sokolov
-- Andrei Loukachov

@@ -1,1 +1,0 @@
-This module allows you to change the line order in repair orders by adding a drag-and-drop widget in the form view.

@@ -1,1 +1,0 @@
-from . import test_stock_picking_report_internal_delivery_address

@@ -1,7 +1,0 @@
-- [ForgeFlow, S.L.](https://www.forgeflow.com)
-  - Jordi Ballester Alomar
-  - Adria Gil Sorribes
-  - Núria Martín Xifré
-  - Bernat Puig Font
-- [Heliconia Solutions Pvt. Ltd.](https://www.heliconia.io)
-  - Bhavesh Heliconia

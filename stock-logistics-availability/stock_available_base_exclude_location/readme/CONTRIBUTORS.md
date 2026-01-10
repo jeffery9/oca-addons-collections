@@ -1,4 +1,0 @@
-- Denis Roussel \<denis.roussel@acsone.eu\>
-- Xavier Bouquiaux \<xavier.bouquiaux@acsone.eu\>
-- [Heliconia Solutions Pvt. Ltd.](https://www.heliconia.io)
-  - Bhavesh Heliconia

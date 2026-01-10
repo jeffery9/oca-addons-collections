@@ -1,6 +1,0 @@
-- [Tecnativa](https://www.tecnativa.com):
-  - Ernesto Tejeda
-  - Pedro M. Baeza
-  - David Vidal
-  - Carlos Lopez
-- Iván Todorovich
