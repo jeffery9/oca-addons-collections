@@ -1,0 +1,4 @@
+odoo_test_helper
+numpy
+--prefer-binary
+opencv-python-headless
