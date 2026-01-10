@@ -1,0 +1,35 @@
+[project]
+name = "odoo-addons-oca-crm"
+version = "18.0.20251111.0"
+dependencies = [
+    "odoo-addon-crm_claim==18.0.*",
+    "odoo-addon-crm_date_deadline_required==18.0.*",
+    "odoo-addon-crm_industry==18.0.*",
+    "odoo-addon-crm_lead_code==18.0.*",
+    "odoo-addon-crm_lead_currency==18.0.*",
+    "odoo-addon-crm_lead_firstname==18.0.*",
+    "odoo-addon-crm_lead_product==18.0.*",
+    "odoo-addon-crm_lead_to_task==18.0.*",
+    "odoo-addon-crm_lead_vat==18.0.*",
+    "odoo-addon-crm_location==18.0.*",
+    "odoo-addon-crm_partner_assign==18.0.*",
+    "odoo-addon-crm_partner_required==18.0.*",
+    "odoo-addon-crm_phonecall==18.0.*",
+    "odoo-addon-crm_phonecall_planner==18.0.*",
+    "odoo-addon-crm_phonecall_result==18.0.*",
+    "odoo-addon-crm_phonecall_summary_predefined==18.0.*",
+    "odoo-addon-crm_project_create==18.0.*",
+    "odoo-addon-crm_salesperson_planner==18.0.*",
+    "odoo-addon-crm_security_group==18.0.*",
+    "odoo-addon-crm_stage_mail==18.0.*",
+    "odoo-addon-crm_stage_multi_team==18.0.*",
+    "odoo-addon-crm_stage_probability==18.0.*",
+    "odoo-addon-crm_team_parent==18.0.*",
+    "odoo-addon-crm_won_restrict_per_stage==18.0.*",
+    "odoo-addon-marketing_crm_partner==18.0.*",
+]
+classifiers=[
+    "Programming Language :: Python",
+    "Framework :: Odoo",
+    "Framework :: Odoo :: 18.0",
+]
