@@ -1,0 +1,32 @@
+[project]
+name = "odoo-addons-oca-stock-logistics-reporting"
+version = "18.0.20251129.0"
+dependencies = [
+    "odoo-addon-delivery_line_sale_line_position==18.0.*",
+    "odoo-addon-printing_auto_stock_picking==18.0.*",
+    "odoo-addon-stock_account_valuation_report==18.0.*",
+    "odoo-addon-stock_delivery_note==18.0.*",
+    "odoo-addon-stock_move_delay_report==18.0.*",
+    "odoo-addon-stock_move_value_report==18.0.*",
+    "odoo-addon-stock_picking_batch_report==18.0.*",
+    "odoo-addon-stock_picking_comment_template==18.0.*",
+    "odoo-addon-stock_picking_group_by_partner_by_carrier_sale_line_position==18.0.*",
+    "odoo-addon-stock_picking_operations_multilang==18.0.*",
+    "odoo-addon-stock_picking_report_custom_description==18.0.*",
+    "odoo-addon-stock_picking_report_delivery_driver==18.0.*",
+    "odoo-addon-stock_picking_report_external_note==18.0.*",
+    "odoo-addon-stock_picking_report_header_repeater==18.0.*",
+    "odoo-addon-stock_picking_report_incoming_delivery_address==18.0.*",
+    "odoo-addon-stock_picking_report_internal_delivery_address==18.0.*",
+    "odoo-addon-stock_picking_report_product_sticker==18.0.*",
+    "odoo-addon-stock_picking_report_salesperson==18.0.*",
+    "odoo-addon-stock_picking_report_summary==18.0.*",
+    "odoo-addon-stock_picking_report_valued==18.0.*",
+    "odoo-addon-stock_portal_lot_list_download==18.0.*",
+    "odoo-addon-stock_quantity_history_location==18.0.*",
+]
+classifiers=[
+    "Programming Language :: Python",
+    "Framework :: Odoo",
+    "Framework :: Odoo :: 18.0",
+]
