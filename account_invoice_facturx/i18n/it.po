@@ -1,0 +1,226 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_invoice_facturx
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2026-01-05 21:43+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.10.4\n"
+
+#. module: account_invoice_facturx
+#. odoo-python
+#: code:addons/account_invoice_facturx/models/account_move.py:0
+msgid "(no date)"
+msgstr "(nessuna data)"
+
+#. module: account_invoice_facturx
+#: model:ir.model,name:account_invoice_facturx.model_res_company
+msgid "Companies"
+msgstr "Aziende"
+
+#. module: account_invoice_facturx
+#. odoo-python
+#: code:addons/account_invoice_facturx/models/account_move.py:0
+msgid ""
+"Country is not set on partner '%s'. In the Factur-X standard, the country is "
+"required for buyer and seller."
+msgstr ""
+"La nazione non è impostata nel partner '%s'. Nello standard Fatture-X, la "
+"nazione è richiesta per gli acquisitori e i venditori."
+
+#. module: account_invoice_facturx
+#. odoo-python
+#: code:addons/account_invoice_facturx/models/account_move.py:0
+msgid "Discount"
+msgstr "Sconto"
+
+#. module: account_invoice_facturx
+#. odoo-python
+#: code:addons/account_invoice_facturx/models/account_move.py:0
+msgid "Factur-X"
+msgstr "Factur-X"
+
+#. module: account_invoice_facturx
+#: model:ir.model.fields.selection,name:account_invoice_facturx.selection__res_company__xml_format_in_pdf_invoice__factur-x
+msgid "Factur-X (CII)"
+msgstr "Factur-X (CII)"
+
+#. module: account_invoice_facturx
+#: model:ir.model.fields,field_description:account_invoice_facturx.field_res_company__facturx_logo
+msgid "Factur-X Logo"
+msgstr "Logo Factur-X"
+
+#. module: account_invoice_facturx
+#. odoo-python
+#: code:addons/account_invoice_facturx/models/account_move.py:0
+msgid ""
+"Factur-X {invoice_type} {invoice_number} dated {invoice_date} issued by "
+"{company_name}"
+msgstr ""
+"Factur-X {invoice_type} {invoice_number} datato {invoice_date} emesso da "
+"{company_name}"
+
+#. module: account_invoice_facturx
+#. odoo-python
+#: code:addons/account_invoice_facturx/models/account_move.py:0
+msgid "Invoice"
+msgstr "Fattura"
+
+#. module: account_invoice_facturx
+#: model:ir.model,name:account_invoice_facturx.model_account_move
+msgid "Journal Entry"
+msgstr "Registrazione contabile"
+
+#. module: account_invoice_facturx
+#: model:ir.model.fields,help:account_invoice_facturx.field_res_company__facturx_logo
+msgid "Logo to include in the visible part of Factur-X invoices"
+msgstr "Logo da includere nella parte visibile delle fatture Factur-X"
+
+#. module: account_invoice_facturx
+#. odoo-python
+#: code:addons/account_invoice_facturx/models/account_move.py:0
+msgid "Missing UNECE Tax Category on tax '%s'"
+msgstr "Categoria imposta UNECE non presente nell'imposta '%s'"
+
+#. module: account_invoice_facturx
+#. odoo-python
+#: code:addons/account_invoice_facturx/models/account_move.py:0
+msgid "Missing UNECE Tax Type on tax '%s'"
+msgstr "Tipo imposta UNECE non presente nell'imposta '%s'"
+
+#. module: account_invoice_facturx
+#. odoo-python
+#: code:addons/account_invoice_facturx/models/account_move.py:0
+msgid "Missing UNECE code on payment method '%s'."
+msgstr "Codice UNECE non presente nel metodo di pagamento '%s'."
+
+#. module: account_invoice_facturx
+#. odoo-python
+#: code:addons/account_invoice_facturx/models/account_move.py:0
+msgid "No invoice line label"
+msgstr "Nessuna etichetta riga fattura"
+
+#. module: account_invoice_facturx
+#. odoo-python
+#: code:addons/account_invoice_facturx/models/account_move.py:0
+msgid "No specific payment term selected"
+msgstr "Nessun termine di pagamento specifico selezionato"
+
+#. module: account_invoice_facturx
+#. odoo-python
+#: code:addons/account_invoice_facturx/models/account_move.py:0
+msgid ""
+"On invoice %(invoice)s, the invoice line '%(line)s' has a tax '%(tax)s' "
+"which is not a VAT tax and is not configured with the option 'Affect Base of "
+"Subsequent Taxes'. This is not supported."
+msgstr ""
+"Nella fattura %(invoice)s, la riga della fattura '%(line)s' presenta "
+"un'imposta '%(tax)s' che non è un'imposta IVA e non è configurata con "
+"l'opzione 'Influenza la base imponibile delle imposte successive'. Questa "
+"opzione non è supportata."
+
+#. module: account_invoice_facturx
+#. odoo-python
+#: code:addons/account_invoice_facturx/models/account_move.py:0
+msgid ""
+"On invoice %(invoice)s, there are several VAT taxes on invoice line "
+"%(line)s. This should not happen."
+msgstr ""
+"Nella fattura %(invoice)s, sono presenti diverse imposte IVA sulla riga "
+"%(line)s della fattura. Ciò non dovrebbe accadere."
+
+#. module: account_invoice_facturx
+#. odoo-python
+#: code:addons/account_invoice_facturx/models/account_move.py:0
+msgid "Refund"
+msgstr "Rimborso"
+
+#. module: account_invoice_facturx
+#: model:ir.model,name:account_invoice_facturx.model_ir_actions_report
+msgid "Report Action"
+msgstr "Azione resoconto"
+
+#. module: account_invoice_facturx
+#. odoo-python
+#: code:addons/account_invoice_facturx/models/account_move.py:0
+msgid "Wire transfer"
+msgstr "Bonifico bancario"
+
+#. module: account_invoice_facturx
+#: model:ir.model.fields,field_description:account_invoice_facturx.field_res_company__xml_format_in_pdf_invoice
+msgid "XML Format embedded in PDF invoice"
+msgstr "Formato XML incorporato nella fattura PDF"
+
+#. module: account_invoice_facturx
+#. odoo-python
+#: code:addons/account_invoice_facturx/models/account_move.py:0
+msgid "{company_name}: {invoice_type} {invoice_number} dated {invoice_date}"
+msgstr "{company_name}: {invoice_type} {invoice_number} datata {invoice_date}"
+
+#~ msgid "Basic"
+#~ msgstr "Base"
+
+#~ msgid "Basic without lines"
+#~ msgstr "Base senza righe"
+
+#~ msgid "Config Settings"
+#~ msgstr "Impostazioni configurazione"
+
+#~ msgid "EN 16931 (Comfort)"
+#~ msgstr "EN 16931 (Comfort)"
+
+#~ msgid "Extended"
+#~ msgstr "Esteso"
+
+#~ msgid "Factur-X Level"
+#~ msgstr "Livello Factur-X"
+
+#~ msgid "Factur-X Refund Type"
+#~ msgstr "Tipo rimborso Factur-X"
+
+#~ msgid "Minimum"
+#~ msgstr "Minimo"
+
+#, python-format
+#~ msgid "Missing UNECE code on payment method '%s'"
+#~ msgstr "Codice UNECE non presente nel metodo di pagamento '%s'"
+
+#~ msgid "Select the profile used for Factur-X invoice generation"
+#~ msgstr ""
+#~ "Selezionare il profilo utilizzato per la generazione della fattura Factur-"
+#~ "X"
+
+#~ msgid "Select the type used for Factur-X customer refunds"
+#~ msgstr "Selezionare il tipo utilizzato per i rimborsi cliente Factur-X"
+
+#, python-format
+#~ msgid ""
+#~ "The Factur-X standard specify that unit prices can't be negative. The "
+#~ "unit price of line '%s' is negative. You should generate a customer "
+#~ "refund for that line."
+#~ msgstr ""
+#~ "Lo standard Factur-X indica che il prezzo unitario non può essere "
+#~ "negativo. Il prezzo unitario della riga '%s' è negativo. Bisogna generare "
+#~ "un rimborso cliente per la riga."
+
+#~ msgid "Type 380 with negative amounts"
+#~ msgstr "Tipo 380 con valori negativi"
+
+#~ msgid "Type 381 with positive amounts"
+#~ msgstr "Tipo 381 con valori positivi"
+
+#~ msgid ""
+#~ "Unless if you have a good reason, you should always select 'EN 16931 "
+#~ "(Comfort)', which is the default value."
+#~ msgstr ""
+#~ "Se non si ha un buon motivo, si dovrebbe sempre selezionare 'EN 16931 "
+#~ "(Comfort)', che è il valore predefinito."
